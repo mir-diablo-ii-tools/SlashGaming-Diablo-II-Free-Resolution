@@ -43,59 +43,16 @@
  *  work.
  */
 
-#include "../include/sgd2modl_exports.h"
+#include "patches.hpp"
 
-#include <mutex>
+namespace sgd2fr {
 
-#include <sgd2mapi.hpp>
-#include "config.hpp"
-#include "patches/patches.hpp"
+std::vector<mapi::GamePatch> MakeGamePatches() {
+  std::vector<mapi::GamePatch> game_patches;
 
-namespace {
+  // TODO (Mir Drualga): Call make for other patches.
 
-bool is_loaded = false;
-std::mutex load_unload_mutex;
-std::vector<mapi::GamePatch> game_patches;
-
-} // namespace
-
-bool SGD2ModL_OnLoad() {
-  std::lock_guard lock_guard(load_unload_mutex);
-
-  if (is_loaded) {
-    return false;
-  }
-
-  game_patches = sgd2fr::MakeGamePatches();
-
-  for (auto& game_patch : game_patches) {
-    game_patch.Apply();
-  }
-
-  is_loaded = true;
-  return true;
+  return game_patches;
 }
 
-bool SGD2ModL_OnUnload() {
-  std::lock_guard lock_guard(load_unload_mutex);
-
-  if (!is_loaded) {
-    return false;
-  }
-
-  for (auto& game_patch : game_patches) {
-    game_patch.Remove();
-  }
-
-  game_patches.clear();
-
-  is_loaded = false;
-  return true;
-}
-
-void SGD2ModL_LoadConfig(const char* config_path) {
-  static std::mutex refresh_config_mutex;
-  std::lock_guard lock_guard(refresh_config_mutex);
-
-  sgd2fr::config::LoadConfig();
-}
+} // namespace sgd2fr
