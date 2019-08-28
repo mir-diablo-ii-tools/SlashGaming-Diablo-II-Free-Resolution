@@ -43,59 +43,20 @@
  *  work.
  */
 
-#include "../include/sgd2modl_exports.h"
+#include "set_screen_shift_patch.hpp"
 
-#include <mutex>
+#include "set_screen_shift_patch_1_09d.hpp"
 
-#include <sgd2mapi.hpp>
-#include "config.hpp"
-#include "patches/patches.hpp"
+namespace sgd2fr::patches {
 
-namespace {
+std::vector<mapi::GamePatch> MakeSetScreenShiftPatch() {
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
-bool is_loaded = false;
-std::mutex load_unload_mutex;
-std::vector<mapi::GamePatch> game_patches;
-
-} // namespace
-
-bool SGD2ModL_OnLoad() {
-  std::lock_guard lock_guard(load_unload_mutex);
-
-  if (is_loaded) {
-    return false;
+  switch (running_game_version_id) {
+    case d2::GameVersion::k1_09D: {
+      return MakeSetScreenShiftPatch_1_09D();
+    }
   }
-
-  game_patches = sgd2fr::patches::MakeGamePatches();
-
-  for (auto& game_patch : game_patches) {
-    game_patch.Apply();
-  }
-
-  is_loaded = true;
-  return true;
 }
 
-bool SGD2ModL_OnUnload() {
-  std::lock_guard lock_guard(load_unload_mutex);
-
-  if (!is_loaded) {
-    return false;
-  }
-
-  for (auto& game_patch : game_patches) {
-    game_patch.Remove();
-  }
-
-  game_patches.clear();
-
-  is_loaded = false;
-  return true;
-}
-
-void SGD2ModL_LoadConfig(const char* config_path) {
-  static std::mutex refresh_config_mutex;
-  std::lock_guard lock_guard(refresh_config_mutex);
-
-  sgd2fr::config::LoadConfig();
-}
+} // namespace sgd2fr::patches

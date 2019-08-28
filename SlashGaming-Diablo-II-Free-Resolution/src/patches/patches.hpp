@@ -48,10 +48,10 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr {
+namespace sgd2fr::patches {
 
 std::vector<mapi::GamePatch> MakeGamePatches();
 
-} // namespace sgd2fr
+} // namespace sgd2fr::patches
 
 #endif // SGD2FR_PATCHES_PATCHES_HPP_

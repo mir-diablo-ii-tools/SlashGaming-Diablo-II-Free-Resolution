@@ -45,14 +45,17 @@
 
 #include "patches.hpp"
 
-namespace sgd2fr {
+#include "set_screen_shift_patch/set_screen_shift_patch.hpp"
+
+namespace sgd2fr::patches {
 
 std::vector<mapi::GamePatch> MakeGamePatches() {
   std::vector<mapi::GamePatch> game_patches;
 
   // TODO (Mir Drualga): Call make for other patches.
+  game_patches = MakeSetScreenShiftPatch();
 
   return game_patches;
 }
 
-} // namespace sgd2fr
+} // namespace sgd2fr::patches

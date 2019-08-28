@@ -43,59 +43,52 @@
  *  work.
  */
 
-#include "../include/sgd2modl_exports.h"
+#include "set_screen_shift_patch_1_09d.hpp"
 
-#include <mutex>
+#include "../../asm_x86_macro.h"
+#include "set_screen_shift.hpp"
 
-#include <sgd2mapi.hpp>
-#include "config.hpp"
-#include "patches/patches.hpp"
-
+namespace sgd2fr::patches {
 namespace {
 
-bool is_loaded = false;
-std::mutex load_unload_mutex;
-std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_SetScreenShift));
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
 
 } // namespace
 
-bool SGD2ModL_OnLoad() {
-  std::lock_guard lock_guard(load_unload_mutex);
+std::vector<mapi::GamePatch> MakeSetScreenShiftPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
 
-  if (is_loaded) {
-    return false;
-  }
+  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x865BF
+  );
 
-  game_patches = sgd2fr::patches::MakeGamePatches();
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          game_address,
+          mapi::BranchType::kCall,
+          &InterceptionFunc,
+          0x865E6 - 0x865BF
+      )
+  );
 
-  for (auto& game_patch : game_patches) {
-    game_patch.Apply();
-  }
-
-  is_loaded = true;
-  return true;
+  return patches;
 }
 
-bool SGD2ModL_OnUnload() {
-  std::lock_guard lock_guard(load_unload_mutex);
-
-  if (!is_loaded) {
-    return false;
-  }
-
-  for (auto& game_patch : game_patches) {
-    game_patch.Remove();
-  }
-
-  game_patches.clear();
-
-  is_loaded = false;
-  return true;
-}
-
-void SGD2ModL_LoadConfig(const char* config_path) {
-  static std::mutex refresh_config_mutex;
-  std::lock_guard lock_guard(refresh_config_mutex);
-
-  sgd2fr::config::LoadConfig();
-}
+} // namespace sgd2fr::patches
