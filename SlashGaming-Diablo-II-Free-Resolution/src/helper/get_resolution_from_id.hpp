@@ -43,13 +43,16 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
-#define SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
+#ifndef SGD2FR_HELPER_GET_RESOLUTION_FROM_ID_HPP_
+#define SGD2FR_HELPER_GET_RESOLUTION_FROM_ID_HPP_
 
-namespace sgd2fr::patches {
+#include <cstddef>
+#include <tuple>
 
-extern "C" void __cdecl SGD2FR_SetScreenShift();
+namespace sgd2fr {
 
-} // namespace sgd2fr::patches
+std::tuple<int, int> GetResolutionFromId(std::size_t id);
 
-#endif // SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
+} // namespace sgd2fr
+
+#endif // SGD2FR_HELPER_GET_RESOLUTION_FROM_ID_HPP_

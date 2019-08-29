@@ -351,10 +351,9 @@ const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
           );
         }
 
-        std::move(
-            sorted_distinct_ingame_resolutions.begin(),
-            sorted_distinct_ingame_resolutions.end(),
-            ingame_resolutions.begin()
+        ingame_resolutions = std::vector(
+            std::make_move_iterator(sorted_distinct_ingame_resolutions.begin()),
+            std::make_move_iterator(sorted_distinct_ingame_resolutions.end())
         );
       }
   );

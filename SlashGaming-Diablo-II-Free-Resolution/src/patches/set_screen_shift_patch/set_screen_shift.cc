@@ -49,7 +49,7 @@
 
 namespace sgd2fr::patches {
 
-void SGD2FR_SetScreenShift() {
+void __cdecl SGD2FR_SetScreenShift() {
   int general_display_width = d2::d2client::GetGeneralDisplayWidth();
   int general_display_height = d2::d2client::GetGeneralDisplayHeight();
 

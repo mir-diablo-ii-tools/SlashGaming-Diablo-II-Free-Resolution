@@ -43,13 +43,22 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
-#define SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
+#include "set_d2gdi_bit_block_width_and_height.hpp"
+
+#include <sgd2mapi.hpp>
+
+#include "../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_SetScreenShift();
+void __cdecl SGD2FR_SetD2GDIBitBlockWidthAndHeight(std::size_t resolution_mode) {
+  const auto& resolution = GetResolutionFromId(resolution_mode);
+
+  int bit_block_width = std::get<0>(resolution);
+  int bit_block_height = std::get<1>(resolution);
+
+  d2::d2gdi::SetBitBlockWidth(bit_block_width);
+  d2::d2gdi::SetBitBlockHeight(bit_block_height);
+}
 
 } // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_

@@ -63,7 +63,7 @@ bool SGD2ModL_OnLoad() {
   std::lock_guard lock_guard(load_unload_mutex);
 
   if (is_loaded) {
-    return false;
+    return true;
   }
 
   game_patches = sgd2fr::patches::MakeGamePatches();
@@ -80,7 +80,7 @@ bool SGD2ModL_OnUnload() {
   std::lock_guard lock_guard(load_unload_mutex);
 
   if (!is_loaded) {
-    return false;
+    return true;
   }
 
   for (auto& game_patch : game_patches) {

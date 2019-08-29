@@ -43,13 +43,25 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
-#define SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
+#include "get_resolution_from_id.hpp"
 
-namespace sgd2fr::patches {
+#include "../config.hpp"
 
-extern "C" void __cdecl SGD2FR_SetScreenShift();
+namespace sgd2fr {
 
-} // namespace sgd2fr::patches
+std::tuple<int, int> GetResolutionFromId(std::size_t id) {
+  const auto& ingame_resolutions = config::GetIngameResolutions();
 
-#endif // SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
+  if (id == 1) {
+    // TODO: Pull menu resolution from configuration.
+    return std::make_tuple(800, 600);
+  }
+
+  std::size_t ingame_resolution_index = (id == 0)
+      ? id
+      : id - 1;
+
+  return ingame_resolutions.at(ingame_resolution_index);
+}
+
+} // namespace sgd2fr

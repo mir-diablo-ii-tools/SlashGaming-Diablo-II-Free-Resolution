@@ -43,13 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
-#define SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
+#include "set_gdi_bit_block_width_and_height_patch.hpp"
+
+#include "set_gdi_bit_block_width_and_height_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_SetScreenShift();
+std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeightPatch() {
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+
+  switch (running_game_version_id) {
+    case d2::GameVersion::k1_09D: {
+      return MakeSetD2GDIBitBlockWidthAndHeight_1_09D();
+    }
+  }
+}
 
 } // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_HPP_
