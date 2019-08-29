@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "set_gdi_bit_block_width_and_height_patch_1_09d.hpp"
+#include "set_d2gdi_bit_block_width_and_height_patch_1_09d.hpp"
 
 #include "../../../asm_x86_macro.h"
 #include "set_d2gdi_bit_block_width_and_height.hpp"

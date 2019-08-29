@@ -43,9 +43,9 @@
  *  work.
  */
 
-#include "set_gdi_bit_block_width_and_height_patch.hpp"
+#include "set_d2gdi_bit_block_width_and_height_patch.hpp"
 
-#include "set_gdi_bit_block_width_and_height_patch_1_09d.hpp"
+#include "set_d2gdi_bit_block_width_and_height_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
