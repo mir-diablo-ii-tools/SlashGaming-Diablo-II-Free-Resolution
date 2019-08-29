@@ -47,8 +47,8 @@
 
 #include <algorithm>
 
-#include "set_d2gdi_bit_block_width_and_height_patch/set_gdi_bit_block_width_and_height_patch.hpp"
-#include "set_screen_shift_patch/set_screen_shift_patch.hpp"
+#include "required/set_d2gdi_bit_block_width_and_height_patch/set_gdi_bit_block_width_and_height_patch.hpp"
+#include "required/set_screen_shift_patch/set_screen_shift_patch.hpp"
 
 namespace sgd2fr::patches {
 

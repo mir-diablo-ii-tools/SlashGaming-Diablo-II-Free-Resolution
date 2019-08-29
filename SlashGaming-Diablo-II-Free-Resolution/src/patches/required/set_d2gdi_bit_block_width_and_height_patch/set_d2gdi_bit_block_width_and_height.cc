@@ -43,52 +43,22 @@
  *  work.
  */
 
-#include "set_screen_shift_patch_1_09d.hpp"
+#include "set_d2gdi_bit_block_width_and_height.hpp"
 
-#include "../../asm_x86_macro.h"
-#include "set_screen_shift.hpp"
+#include <sgd2mapi.hpp>
+
+#include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
-namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl SGD2FR_SetD2GDIBitBlockWidthAndHeight(std::size_t resolution_mode) {
+  const auto& resolution = GetResolutionFromId(resolution_mode);
 
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
+  int bit_block_width = std::get<0>(resolution);
+  int bit_block_height = std::get<1>(resolution);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_SetScreenShift));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
-
-std::vector<mapi::GamePatch> MakeSetScreenShiftPatch_1_09D() {
-  std::vector<mapi::GamePatch> patches;
-
-  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
-      0x865BF
-  );
-
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          game_address,
-          mapi::BranchType::kCall,
-          &InterceptionFunc,
-          0x865E6 - 0x865BF
-      )
-  );
-
-  return patches;
+  d2::d2gdi::SetBitBlockWidth(bit_block_width);
+  d2::d2gdi::SetBitBlockHeight(bit_block_height);
 }
 
 } // namespace sgd2fr::patches

@@ -43,17 +43,52 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
+#include "set_screen_shift_patch_1_09d.hpp"
 
-#include <vector>
-
-#include <sgd2mapi.hpp>
+#include "../../../asm_x86_macro.h"
+#include "set_screen_shift.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeSetScreenShiftPatch_1_09D();
+__declspec(naked) void __cdecl InterceptionFunc() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_SetScreenShift));
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> MakeSetScreenShiftPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x865BF
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          game_address,
+          mapi::BranchType::kCall,
+          &InterceptionFunc,
+          0x865E6 - 0x865BF
+      )
+  );
+
+  return patches;
+}
 
 } // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_SET_SCREEN_SHIFT_PATCH_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_

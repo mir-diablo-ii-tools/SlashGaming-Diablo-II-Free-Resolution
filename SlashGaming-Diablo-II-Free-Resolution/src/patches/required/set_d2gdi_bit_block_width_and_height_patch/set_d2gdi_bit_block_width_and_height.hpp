@@ -43,22 +43,15 @@
  *  work.
  */
 
-#include "set_d2gdi_bit_block_width_and_height.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
 
-#include <sgd2mapi.hpp>
-
-#include "../../helper/get_resolution_from_id.hpp"
+#include <cstddef>
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_SetD2GDIBitBlockWidthAndHeight(std::size_t resolution_mode) {
-  const auto& resolution = GetResolutionFromId(resolution_mode);
-
-  int bit_block_width = std::get<0>(resolution);
-  int bit_block_height = std::get<1>(resolution);
-
-  d2::d2gdi::SetBitBlockWidth(bit_block_width);
-  d2::d2gdi::SetBitBlockHeight(bit_block_height);
-}
+extern "C" void __cdecl SGD2FR_SetD2GDIBitBlockWidthAndHeight(std::size_t resolution_mode);
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
