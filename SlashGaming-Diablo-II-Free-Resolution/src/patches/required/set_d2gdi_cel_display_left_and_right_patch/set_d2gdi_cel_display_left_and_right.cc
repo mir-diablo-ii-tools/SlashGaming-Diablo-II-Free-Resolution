@@ -43,21 +43,21 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "set_d2gdi_cel_display_left_and_right.hpp"
 
-#include <algorithm>
+#include <sgd2mapi.hpp>
 
-#include "required/required_patches.hpp"
+#include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+void __cdecl SGD2FR_SetD2GDICelDisplayLeftAndRight(std::size_t resolution_mode) {
+  const auto& resolution = GetResolutionFromId(resolution_mode);
 
-  // TODO (Mir Drualga): Call make for other patches.
-  game_patches = MakeRequiredPatches();
+  int width = std::get<0>(resolution);
 
-  return game_patches;
+  d2::d2gdi::SetCelDisplayLeft(0);
+  d2::d2gdi::SetCelDisplayRight(width);
 }
 
 } // namespace sgd2fr::patches

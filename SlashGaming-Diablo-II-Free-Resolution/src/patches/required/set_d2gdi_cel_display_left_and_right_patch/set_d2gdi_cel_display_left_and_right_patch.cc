@@ -43,21 +43,20 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "set_d2gdi_cel_display_left_and_right_patch.hpp"
 
-#include <algorithm>
-
-#include "required/required_patches.hpp"
+#include "set_d2gdi_cel_display_left_and_right_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRightPatch() {
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
-  // TODO (Mir Drualga): Call make for other patches.
-  game_patches = MakeRequiredPatches();
-
-  return game_patches;
+  switch (running_game_version_id) {
+    case d2::GameVersion::k1_09D: {
+      return MakeSetD2GDICelDisplayLeftAndRight_1_09D();
+    }
+  }
 }
 
 } // namespace sgd2fr::patches

@@ -43,21 +43,54 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "set_d2gdi_cel_display_left_and_right_patch_1_09d.hpp"
 
-#include <algorithm>
-
-#include "required/required_patches.hpp"
+#include "../../../asm_x86_macro.h"
+#include "set_d2gdi_cel_display_left_and_right.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  // TODO (Mir Drualga): Call make for other patches.
-  game_patches = MakeRequiredPatches();
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
 
-  return game_patches;
+  ASM_X86(push ecx);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_SetD2GDICelDisplayLeftAndRight));
+  ASM_X86(add esp, 4);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRight_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2GDI,
+      0x25A0
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          game_address,
+          mapi::BranchType::kCall,
+          &InterceptionFunc,
+          0x25D5 - 0x25A0
+      )
+  );
+
+  return patches;
 }
 
 } // namespace sgd2fr::patches

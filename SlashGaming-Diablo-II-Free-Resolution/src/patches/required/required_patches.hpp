@@ -43,21 +43,15 @@
  *  work.
  */
 
-#include "patches.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
+#define SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
 
-#include <algorithm>
-
-#include "required/required_patches.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  // TODO (Mir Drualga): Call make for other patches.
-  game_patches = MakeRequiredPatches();
-
-  return game_patches;
-}
+std::vector<mapi::GamePatch> MakeRequiredPatches();
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
