@@ -54,6 +54,6 @@ namespace sgd2fr::patches {
 
 std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeightPatch();
 
-} // sgd2fr::patches
+} // namespace sgd2fr::patches
 
 #endif // SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_

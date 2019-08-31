@@ -54,6 +54,6 @@ namespace sgd2fr::patches {
 
 std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRightPatch();
 
-} // sgd2fr::patches
+} // namespace sgd2fr::patches
 
 #endif // SGD2FR_PATCHES_REQUIRED_SET_D2GDI_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_SET_D2GDI_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_

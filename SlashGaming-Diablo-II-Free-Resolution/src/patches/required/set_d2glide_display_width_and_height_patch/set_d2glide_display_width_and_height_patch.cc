@@ -43,23 +43,20 @@
  *  work.
  */
 
-#include "set_d2gdi_cel_display_left_and_right.hpp"
+#include "set_d2glide_display_width_and_height_patch.hpp"
 
-#include <sgd2mapi.hpp>
-
-#include "../../../helper/get_resolution_from_id.hpp"
+#include "set_d2glide_display_width_and_height_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_SetD2GDICelDisplayLeftAndRight(
-    std::size_t resolution_mode
-) {
-  std::tuple<int, int> resolution = GetResolutionFromId(resolution_mode);
+std::vector<mapi::GamePatch> MakeSetD2GlideDisplayWidthAndHeightPatch() {
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
-  int width = std::get<0>(resolution);
-
-  d2::d2gdi::SetCelDisplayLeft(0);
-  d2::d2gdi::SetCelDisplayRight(width);
+  switch (running_game_version_id) {
+    case d2::GameVersion::k1_09D: {
+      return MakeSetD2GlideDisplayWidthAndHeightPatch_1_09D();
+    }
+  }
 }
 
 } // namespace sgd2fr::patches

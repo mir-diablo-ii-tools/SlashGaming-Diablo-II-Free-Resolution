@@ -43,23 +43,93 @@
  *  work.
  */
 
-#include "set_d2gdi_cel_display_left_and_right.hpp"
+#include "set_d2glide_display_width_and_height_patch_1_09d.hpp"
 
-#include <sgd2mapi.hpp>
+#include <array>
 
-#include "../../../helper/get_resolution_from_id.hpp"
+#include "../../../asm_x86_macro.h"
+#include "set_d2glide_display_width_and_height.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-void __cdecl SGD2FR_SetD2GDICelDisplayLeftAndRight(
-    std::size_t resolution_mode
-) {
-  std::tuple<int, int> resolution = GetResolutionFromId(resolution_mode);
+__declspec(naked) void __cdecl InterceptionFunc_01() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  int width = std::get<0>(resolution);
+  ASM_X86(push edx);
 
-  d2::d2gdi::SetCelDisplayLeft(0);
-  d2::d2gdi::SetCelDisplayRight(width);
+  // Create space for 3 variables, (width, height, glide_res_id)
+  ASM_X86(sub esp, 12);
+
+  ASM_X86(lea ebx, [esp]);
+  ASM_X86(lea eax, [esp + 4]);
+  ASM_X86(lea ecx, [esp + 8]);
+
+  ASM_X86(push ecx);
+  ASM_X86(push eax);
+  ASM_X86(push ebx);
+  ASM_X86(push esi);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_SetD2GlideDisplayWidthAndHeight));
+  ASM_X86(add esp, 16);
+
+  // Load the values to set up the proper state.
+  ASM_X86(mov eax, [ebx]);
+  ASM_X86(mov ecx, [ebx + 4]);
+  ASM_X86(mov ebx, [ebx + 8]);
+
+  ASM_X86(pop edx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+/**
+ * nop 
+ * nop 
+ * nop 
+ * nop 
+ * nop 
+ * cmp eax, 1
+ * jne D2Glide.dll+1BD1
+ */
+constexpr std::array<std::uint8_t, 10> kPatchBuffer_02 = {
+    0x90, 0x90, 0x90, 0x90, 0x90, 0x83, 0xF8, 0x01, 0x75, 0x11
+};
+
+} // namespace
+
+std::vector<mapi::GamePatch> MakeSetD2GlideDisplayWidthAndHeightPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Glide,
+      0x1B8B
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_01),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x1B9F - 0x1B8B
+      )
+  );
+
+  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Glide,
+      0x1BB6
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBufferPatch(
+          std::move(game_address_02),
+          kPatchBuffer_02.cbegin(),
+          kPatchBuffer_02.end()
+      )
+  );
+
+  return patches;
 }
 
 } // namespace sgd2fr::patches

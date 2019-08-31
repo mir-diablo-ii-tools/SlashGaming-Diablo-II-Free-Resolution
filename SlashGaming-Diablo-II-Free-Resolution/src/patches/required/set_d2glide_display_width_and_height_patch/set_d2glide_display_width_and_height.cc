@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "set_d2gdi_cel_display_left_and_right.hpp"
+#include "set_d2glide_display_width_and_height.hpp"
 
 #include <sgd2mapi.hpp>
 
@@ -51,15 +51,36 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_SetD2GDICelDisplayLeftAndRight(
-    std::size_t resolution_mode
+void __cdecl SGD2FR_SetD2GlideDisplayWidthAndHeight(
+    std::uint32_t resolution_mode,
+    std::int32_t* width,
+    std::int32_t* height,
+    std::uint32_t* glide_res_id
 ) {
   std::tuple<int, int> resolution = GetResolutionFromId(resolution_mode);
 
-  int width = std::get<0>(resolution);
+  *width = std::get<0>(resolution);
+  *height = std::get<1>(resolution);
 
-  d2::d2gdi::SetCelDisplayLeft(0);
-  d2::d2gdi::SetCelDisplayRight(width);
+  d2::d2glide::SetDisplayWidth(*width);
+  d2::d2glide::SetDisplayHeight(*height);
+
+  switch (resolution_mode) {
+    case 0: {
+      *glide_res_id = 7;
+      break;
+    }
+
+    case 1:
+    case 2: {
+      *glide_res_id = 8;
+      break;
+    }
+
+    default: {
+      *glide_res_id = 0x10 + (resolution_mode - 2);
+    }
+  }
 }
 
 } // namespace sgd2fr::patches

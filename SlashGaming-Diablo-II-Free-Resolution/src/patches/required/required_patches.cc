@@ -48,9 +48,10 @@
 #include <algorithm>
 
 #include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
+#include "set_d2client_screen_shift_patch/set_d2client_screen_shift_patch.hpp"
 #include "set_d2gdi_bit_block_width_and_height_patch/set_d2gdi_bit_block_width_and_height_patch.hpp"
 #include "set_d2gdi_cel_display_left_and_right_patch/set_d2gdi_cel_display_left_and_right_patch.hpp"
-#include "set_d2client_screen_shift_patch/set_d2client_screen_shift_patch.hpp"
+#include "set_d2glide_display_width_and_height_patch/set_d2glide_display_width_and_height_patch.hpp"
 
 namespace sgd2fr::patches {
 
@@ -59,34 +60,41 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
 
   std::vector set_d2client_general_display_width_and_height_patch =
       MakeSetD2ClientGeneralDisplayWidthAndHeightPatch();
-  std::vector set_d2client_screen_shift_patch = MakeSetD2ClientScreenShiftPatch();
-  std::vector set_d2gdi_bit_block_width_and_height_patch =
-      MakeSetD2GDIBitBlockWidthAndHeightPatch();
-  std::vector set_d2gdi_cel_display_left_and_right_patch =
-      MakeSetD2GDICelDisplayLeftAndRightPatch();
-
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2client_general_display_width_and_height_patch.begin()),
       std::make_move_iterator(set_d2client_general_display_width_and_height_patch.end())
   );
 
+  std::vector set_d2client_screen_shift_patch = MakeSetD2ClientScreenShiftPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2client_screen_shift_patch.begin()),
       std::make_move_iterator(set_d2client_screen_shift_patch.end())
   );
 
+  std::vector set_d2gdi_bit_block_width_and_height_patch =
+      MakeSetD2GDIBitBlockWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.begin()),
       std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.end())
   );
 
+  std::vector set_d2gdi_cel_display_left_and_right_patch =
+      MakeSetD2GDICelDisplayLeftAndRightPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.begin()),
       std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.end())
+  );
+
+  std::vector set_d2glide_display_width_and_height_patch =
+      MakeSetD2GlideDisplayWidthAndHeightPatch();
+  game_patches.insert(
+      game_patches.end(),
+      std::make_move_iterator(set_d2glide_display_width_and_height_patch.begin()),
+      std::make_move_iterator(set_d2glide_display_width_and_height_patch.end())
   );
 
   return game_patches;
