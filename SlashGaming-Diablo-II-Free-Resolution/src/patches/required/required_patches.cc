@@ -57,9 +57,11 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
   std::vector<mapi::GamePatch> game_patches;
 
   game_patches = MakeSetScreenShiftPatch();
+  std::vector set_d2gdi_bit_block_width_and_height_patch =
+      MakeSetD2GDIBitBlockWidthAndHeightPatch();
+  std::vector set_d2gdi_cel_display_left_and_right_patch =
+      MakeSetD2GDICelDisplayLeftAndRightPatch();
 
-  std::vector set_d2gdi_bit_block_width_and_height_patch = MakeSetD2GDIBitBlockWidthAndHeightPatch();
-  std::vector set_d2gdi_cel_display_left_and_right_patch = MakeSetD2GDICelDisplayLeftAndRightPatch();
 
   game_patches.insert(
       game_patches.end(),

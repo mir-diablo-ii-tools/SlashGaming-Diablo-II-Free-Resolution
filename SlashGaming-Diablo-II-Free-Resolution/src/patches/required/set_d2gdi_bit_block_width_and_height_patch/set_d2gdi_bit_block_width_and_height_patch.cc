@@ -54,7 +54,7 @@ std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeightPatch() {
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeSetD2GDIBitBlockWidthAndHeight_1_09D();
+      return MakeSetD2GDIBitBlockWidthAndHeightPatch_1_09D();
     }
   }
 }

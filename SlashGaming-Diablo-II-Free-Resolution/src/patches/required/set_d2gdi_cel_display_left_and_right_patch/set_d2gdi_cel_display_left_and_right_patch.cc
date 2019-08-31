@@ -54,7 +54,7 @@ std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRightPatch() {
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeSetD2GDICelDisplayLeftAndRight_1_09D();
+      return MakeSetD2GDICelDisplayLeftAndRightPatch_1_09D();
     }
   }
 }

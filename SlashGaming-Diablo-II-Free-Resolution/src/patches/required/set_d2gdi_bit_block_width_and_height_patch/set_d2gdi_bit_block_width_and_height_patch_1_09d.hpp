@@ -52,7 +52,7 @@
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeight_1_09D();
+std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeightPatch_1_09D();
 
 } // namespace sgd2fr::patches
 

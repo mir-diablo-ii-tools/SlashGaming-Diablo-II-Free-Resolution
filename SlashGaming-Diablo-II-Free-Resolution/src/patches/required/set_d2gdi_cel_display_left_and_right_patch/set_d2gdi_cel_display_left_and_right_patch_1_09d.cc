@@ -73,7 +73,7 @@ __declspec(naked) void __cdecl InterceptionFunc() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRight_1_09D() {
+std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRightPatch_1_09D() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
