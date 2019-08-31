@@ -43,53 +43,17 @@
  *  work.
  */
 
-#include "required_patches.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <algorithm>
+#include <vector>
 
-#include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
-#include "set_d2gdi_bit_block_width_and_height_patch/set_d2gdi_bit_block_width_and_height_patch.hpp"
-#include "set_d2gdi_cel_display_left_and_right_patch/set_d2gdi_cel_display_left_and_right_patch.hpp"
-#include "set_screen_shift_patch/set_screen_shift_patch.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeRequiredPatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector set_d2client_general_display_width_and_height_patch =
-      MakeSetD2ClientGeneralDisplayWidthAndHeightPatch();
-  std::vector set_d2client_screen_shift_patch = MakeSetScreenShiftPatch();
-  std::vector set_d2gdi_bit_block_width_and_height_patch =
-      MakeSetD2GDIBitBlockWidthAndHeightPatch();
-  std::vector set_d2gdi_cel_display_left_and_right_patch =
-      MakeSetD2GDICelDisplayLeftAndRightPatch();
-
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2client_general_display_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2client_general_display_width_and_height_patch.end())
-  );
-
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2client_screen_shift_patch.begin()),
-      std::make_move_iterator(set_d2client_screen_shift_patch.end())
-  );
-
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.end())
-  );
-
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.begin()),
-      std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.end())
-  );
-
-  return game_patches;
-}
+std::vector<mapi::GamePatch> MakeSetD2ClientGeneralDisplayWidthAndHeightPatch();
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_REQUIRED_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

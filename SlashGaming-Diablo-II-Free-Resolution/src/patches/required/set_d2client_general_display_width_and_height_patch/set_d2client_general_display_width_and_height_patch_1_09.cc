@@ -43,53 +43,54 @@
  *  work.
  */
 
-#include "required_patches.hpp"
+#include "set_d2client_general_display_width_and_height_patch_1_09.hpp"
 
-#include <algorithm>
-
-#include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
-#include "set_d2gdi_bit_block_width_and_height_patch/set_d2gdi_bit_block_width_and_height_patch.hpp"
-#include "set_d2gdi_cel_display_left_and_right_patch/set_d2gdi_cel_display_left_and_right_patch.hpp"
-#include "set_screen_shift_patch/set_screen_shift_patch.hpp"
+#include "../../../asm_x86_macro.h"
+#include "set_d2client_general_display_width_and_height.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeRequiredPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  std::vector set_d2client_general_display_width_and_height_patch =
-      MakeSetD2ClientGeneralDisplayWidthAndHeightPatch();
-  std::vector set_d2client_screen_shift_patch = MakeSetScreenShiftPatch();
-  std::vector set_d2gdi_bit_block_width_and_height_patch =
-      MakeSetD2GDIBitBlockWidthAndHeightPatch();
-  std::vector set_d2gdi_cel_display_left_and_right_patch =
-      MakeSetD2GDICelDisplayLeftAndRightPatch();
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
 
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2client_general_display_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2client_general_display_width_and_height_patch.end())
+  ASM_X86(push esi);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_SetD2ClientGeneralDisplayWidthAndHeight));
+  ASM_X86(add esp, 4);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> MakeSetD2ClientGeneralDisplayWidthAndHeightPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x2380
   );
 
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2client_screen_shift_patch.begin()),
-      std::make_move_iterator(set_d2client_screen_shift_patch.end())
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          game_address,
+          mapi::BranchType::kCall,
+          &InterceptionFunc,
+          0x23CC - 0x2380
+      )
   );
 
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.end())
-  );
-
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.begin()),
-      std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.end())
-  );
-
-  return game_patches;
+  return patches;
 }
 
 } // namespace sgd2fr::patches
