@@ -305,7 +305,7 @@ DetermineRunningGlide3xVersion() {
 } // namespace
 
 std::string_view
-GetGameVersionName(
+GetGlide3xVersionName(
     Glide3xVersion glide3x_version
 ) {
   try {
@@ -345,7 +345,7 @@ Glide3xVersion GetRunningGlide3xVersionId() {
 
 std::string_view
 GetRunningGlide3xVersionName() {
-  static std::string_view running_glide3x_version_name = GetGameVersionName(
+  static std::string_view running_glide3x_version_name = GetGlide3xVersionName(
       GetRunningGlide3xVersionId()
   );
   return running_glide3x_version_name;

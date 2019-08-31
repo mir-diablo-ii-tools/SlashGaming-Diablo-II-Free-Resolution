@@ -56,7 +56,7 @@ enum class Glide3xVersion {
   kNGlide3_10_0_658
 };
 
-std::string_view GetGameVersionName(
+std::string_view GetGlide3xVersionName(
     Glide3xVersion glide3x_version
 );
 
