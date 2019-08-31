@@ -43,13 +43,13 @@
  *  work.
  */
 
-#include "set_screen_shift.hpp"
+#include "set_d2client_screen_shift.hpp"
 
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_SetScreenShift() {
+void __cdecl SGD2FR_SetD2ClientScreenShift() {
   int general_display_width = d2::d2client::GetGeneralDisplayWidth();
   int general_display_height = d2::d2client::GetGeneralDisplayHeight();
 

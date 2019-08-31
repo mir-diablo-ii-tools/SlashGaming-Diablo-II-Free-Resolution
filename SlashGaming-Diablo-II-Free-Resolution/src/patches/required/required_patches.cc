@@ -50,7 +50,7 @@
 #include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
 #include "set_d2gdi_bit_block_width_and_height_patch/set_d2gdi_bit_block_width_and_height_patch.hpp"
 #include "set_d2gdi_cel_display_left_and_right_patch/set_d2gdi_cel_display_left_and_right_patch.hpp"
-#include "set_screen_shift_patch/set_screen_shift_patch.hpp"
+#include "set_d2client_screen_shift_patch/set_d2client_screen_shift_patch.hpp"
 
 namespace sgd2fr::patches {
 
@@ -59,7 +59,7 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
 
   std::vector set_d2client_general_display_width_and_height_patch =
       MakeSetD2ClientGeneralDisplayWidthAndHeightPatch();
-  std::vector set_d2client_screen_shift_patch = MakeSetScreenShiftPatch();
+  std::vector set_d2client_screen_shift_patch = MakeSetD2ClientScreenShiftPatch();
   std::vector set_d2gdi_bit_block_width_and_height_patch =
       MakeSetD2GDIBitBlockWidthAndHeightPatch();
   std::vector set_d2gdi_cel_display_left_and_right_patch =
