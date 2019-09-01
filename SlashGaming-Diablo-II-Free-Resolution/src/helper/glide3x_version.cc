@@ -77,8 +77,8 @@ GetGlide3xVersionsByFileVersions() {
       std::string_view,
       Glide3xVersion
   > glide3x_versions_by_file_versions = {
-        { "1.0.0.1", Glide3xVersion::kSven1_4_4_21 },
-        { "1.0.2.0", Glide3xVersion::kSven1_4_8_3 },
+        { "1.4.4.21", Glide3xVersion::kSven1_4_4_21 },
+        { "1.4.8.3", Glide3xVersion::kSven1_4_8_3 },
         { "3.10.0.658", Glide3xVersion::kNGlide3_10_0_658 },
   };
 
