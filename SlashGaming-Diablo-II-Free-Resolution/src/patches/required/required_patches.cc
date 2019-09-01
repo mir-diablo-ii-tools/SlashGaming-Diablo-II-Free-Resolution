@@ -47,6 +47,7 @@
 
 #include <algorithm>
 
+#include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
 #include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
 #include "set_d2client_screen_shift_patch/set_d2client_screen_shift_patch.hpp"
 #include "set_d2gdi_bit_block_width_and_height_patch/set_d2gdi_bit_block_width_and_height_patch.hpp"
@@ -95,6 +96,14 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
       game_patches.end(),
       std::make_move_iterator(set_d2glide_display_width_and_height_patch.begin()),
       std::make_move_iterator(set_d2glide_display_width_and_height_patch.end())
+  );
+
+  std::vector glide3x_gr_sset_win_open_patch =
+      MakeGlide3xGrSstWinOpenPatch();
+  game_patches.insert(
+      game_patches.end(),
+      std::make_move_iterator(glide3x_gr_sset_win_open_patch.begin()),
+      std::make_move_iterator(glide3x_gr_sset_win_open_patch.end())
   );
 
   return game_patches;
