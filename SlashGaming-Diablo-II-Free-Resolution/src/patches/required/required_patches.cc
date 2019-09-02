@@ -51,6 +51,7 @@
 #include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
 #include "set_d2client_screen_shift_patch/set_d2client_screen_shift_patch.hpp"
 #include "set_d2ddraw_cel_display_left_and_right_patch/set_d2ddraw_cel_display_left_and_right_patch.hpp"
+#include "set_d2ddraw_display_width_and_height_patch/set_d2ddraw_display_width_and_height_patch.hpp"
 #include "set_d2direct3d_display_width_and_height_patch/set_d2direct3d_display_width_and_height_patch.hpp"
 #include "set_d2gdi_bit_block_width_and_height_patch/set_d2gdi_bit_block_width_and_height_patch.hpp"
 #include "set_d2gdi_cel_display_left_and_right_patch/set_d2gdi_cel_display_left_and_right_patch.hpp"
@@ -76,11 +77,20 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
       std::make_move_iterator(set_d2client_screen_shift_patch.end())
   );
 
-  std::vector set_d2ddraw_cel_display_left_and_right_patch = MakeSetD2DDrawCelDisplayLeftAndRightPatch();
+  std::vector set_d2ddraw_cel_display_left_and_right_patch =
+      MakeSetD2DDrawCelDisplayLeftAndRightPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2ddraw_cel_display_left_and_right_patch.begin()),
       std::make_move_iterator(set_d2ddraw_cel_display_left_and_right_patch.end())
+  );
+
+  std::vector set_d2ddraw_display_width_and_height_patch =
+      MakeSetD2DDrawDisplayWidthAndHeightPatch();
+  game_patches.insert(
+      game_patches.end(),
+      std::make_move_iterator(set_d2ddraw_display_width_and_height_patch.begin()),
+      std::make_move_iterator(set_d2ddraw_display_width_and_height_patch.end())
   );
 
   std::vector set_d2direct3d_display_width_and_height_patch =
