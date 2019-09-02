@@ -297,6 +297,14 @@ bool AddMissingConfigEntries(
     );
   }
 
+  if (!config_reader.HasString(kMainEntryKey, kMainMenuResolutionKey)) {
+    config_reader.SetDeepString(
+        kDefaultMainMenuResolution.data(),
+        kMainEntryKey,
+        kMainMenuResolutionKey
+    );
+  }
+
   // Write to the config file any new default values.
   int indent_width = config_reader.GetInt(
       kGlobalEntryKey,
