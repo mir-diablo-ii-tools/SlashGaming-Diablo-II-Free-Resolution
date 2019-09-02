@@ -83,7 +83,7 @@ std::vector<mapi::GamePatch> MakeSetD2DDrawCelDisplayLeftAndRightPatch_1_09D() {
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          game_address,
+          std::move(game_address),
           mapi::BranchType::kJump,
           &InterceptionFunc,
           0x4450 - 0x4430

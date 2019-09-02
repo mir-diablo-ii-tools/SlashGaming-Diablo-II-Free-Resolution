@@ -51,7 +51,7 @@
 namespace sgd2fr::patches {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc() {
+__declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -77,17 +77,29 @@ __declspec(naked) void __cdecl InterceptionFunc() {
 std::vector<mapi::GamePatch> MakeSetD2DDrawDisplayWidthAndHeightPatch_1_09D() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2DDraw,
       0x181F
   );
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          game_address,
+          std::move(game_address_01),
           mapi::BranchType::kCall,
-          &InterceptionFunc,
-          0x182D - 0x181F
+          &InterceptionFunc_01,
+          0x1832 - 0x181F
+      )
+  );
+
+  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2DDraw,
+      0x1837
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameNopPatch(
+          std::move(game_address_02),
+          0x183D - 0x1837
       )
   );
 
