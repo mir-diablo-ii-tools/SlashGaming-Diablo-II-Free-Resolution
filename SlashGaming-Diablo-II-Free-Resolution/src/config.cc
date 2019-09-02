@@ -86,6 +86,12 @@ constexpr std::array<std::string_view, 2> kDefaultIngameResolutions = {
   "800x600"
 };
 
+constexpr std::string_view kMainMenuResolutionKey = "Main Menu Resolution";
+constexpr std::string_view kDefaultMainMenuResolution = "800x600";
+
+constexpr std::string_view kIngameResolutionModeKey = "Ingame Resolution Mode";
+constexpr unsigned int kDefaultIngameResolutionMode = 0;
+
 std::map<std::string, std::once_flag> once_flags_by_json_keys;
 
 const std::filesystem::path& GetConfigPath() {
@@ -108,11 +114,33 @@ std::once_flag& GetOnceFlag(const Args&... json_keys) {
   for (const auto& json_key : { json_keys...}) {
     concat_key += json_key;
     concat_key += static_cast<char>(i + 1);
-    
+
     i = (i + 1) % 0x32;
   }
 
   return once_flags_by_json_keys[std::move(concat_key)];
+}
+
+template <typename ...Args>
+void ResetOnceFlag(const Args&... json_keys) {
+  // Calculate concat key size.
+  std::size_t concat_key_size = 0;
+  for (const auto& json_key : { json_keys...}) {
+    concat_key_size += json_key.length() + 1;
+  }
+
+  // Concat all keys together.
+  std::string concat_key(concat_key_size, '\0');
+
+  std::size_t i = 0;
+  for (const auto& json_key : { json_keys...}) {
+    concat_key += json_key;
+    concat_key += static_cast<char>(i + 1);
+
+    i = (i + 1) % 0x32;
+  }
+
+  once_flags_by_json_keys.erase(std::move(concat_key));
 }
 
 bool AddMissingConfigEntries(
@@ -261,6 +289,14 @@ bool AddMissingConfigEntries(
     );
   }
 
+  if (!config_reader.HasUnsignedInt(kMainEntryKey, kIngameResolutionModeKey)) {
+    config_reader.SetDeepUnsignedInt(
+        kDefaultIngameResolutionMode,
+        kMainEntryKey,
+        kIngameResolutionModeKey
+    );
+  }
+
   // Write to the config file any new default values.
   int indent_width = config_reader.GetInt(
       kGlobalEntryKey,
@@ -319,16 +355,37 @@ mjsoni::RapidJsonConfigReader& GetConfigReader() {
   return config_reader;
 }
 
+std::tuple<int, int> GetResolutionFromString(
+    std::string_view resolution_str
+) {
+  std::string::size_type split_index = resolution_str.find('x');
+
+  int resolution_width = std::atoi(
+      resolution_str.substr(0, split_index).data()
+  );
+
+  int resolution_height = std::atoi(
+      resolution_str.substr(split_index + 1).data()
+  );
+
+  return std::make_tuple(resolution_width, resolution_height);
+}
+
 } // namespace
 
 const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
   static std::vector<std::tuple<int, int>> ingame_resolutions;
+  static const std::vector<std::string> default_ingame_resolutions_str(
+      kDefaultIngameResolutions.cbegin(),
+      kDefaultIngameResolutions.cend()
+  );
 
   std::call_once(
       GetOnceFlag(kMainEntryKey, kIngameResolutionsKey),
       [=] () {
         std::vector<std::string> ingame_resolutions_str = GetConfigReader()
-            .GetVector<std::string>(
+            .GetVectorOrDefault<std::string>(
+                default_ingame_resolutions_str,
                 kMainEntryKey,
                 kIngameResolutionsKey
             );
@@ -336,18 +393,8 @@ const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
         std::set<std::tuple<int, int>> sorted_distinct_ingame_resolutions;
 
         for (const std::string& resolution_str : ingame_resolutions_str) {
-          std::string::size_type split_index = resolution_str.find('x');
-
-          int resolution_width = std::stoi(
-              resolution_str.substr(0, split_index)
-          );
-
-          int resolution_height = std::stoi(
-              resolution_str.substr(split_index + 1)
-          );
-
           sorted_distinct_ingame_resolutions.insert(
-              std::make_tuple(resolution_width, resolution_height)
+              GetResolutionFromString(resolution_str)
           );
         }
 
@@ -361,11 +408,76 @@ const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
   return ingame_resolutions;
 }
 
+std::tuple<int, int> GetMainMenuResolution() {
+  static std::tuple<int, int> main_menu_resolution;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kMainMenuResolutionKey),
+      [=] () {
+        std::string main_menu_resolution_str = GetConfigReader()
+            .GetStringOrDefault(
+                kDefaultMainMenuResolution.data(),
+                kMainEntryKey,
+                kMainMenuResolutionKey
+            );
+
+        main_menu_resolution = GetResolutionFromString(
+            main_menu_resolution_str
+        );
+      }
+  );
+
+  return main_menu_resolution;
+}
+
+unsigned int GetIngameResolutionMode() {
+  static unsigned int ingame_resolution_mode;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kIngameResolutionModeKey),
+      [=] () {
+        ingame_resolution_mode = GetConfigReader()
+            .GetUnsignedInt(
+                kMainEntryKey,
+                kIngameResolutionModeKey
+            );
+
+        if (ingame_resolution_mode >= GetIngameResolutions().size()) {
+          ingame_resolution_mode = kDefaultIngameResolutionMode;
+        }
+      }
+  );
+
+  return ingame_resolution_mode;
+}
+
+void SetIngameResolutionMode(unsigned int resolution_mode) {
+  ResetOnceFlag(kMainEntryKey, kIngameResolutionModeKey);
+
+  GetConfigReader().SetDeepUnsignedInt(
+          resolution_mode,
+          kMainEntryKey,
+          kIngameResolutionModeKey
+      );
+
+  WriteConfig();
+}
+
 bool LoadConfig() {
   GetConfigReader() = ReadConfig(GetConfigPath());
   once_flags_by_json_keys.clear();
 
   return true;
+}
+
+bool WriteConfig() {
+  int indent_width = GetConfigReader().GetIntOrDefault(
+      kDefaultConfigTabWidth,
+      kGlobalEntryKey,
+      kConfigTabWidthKey
+  );
+
+  return GetConfigReader().Write(indent_width);
 }
 
 } // namespace sgd2fr::config

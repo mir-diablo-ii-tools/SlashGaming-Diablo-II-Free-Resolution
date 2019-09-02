@@ -55,7 +55,13 @@
 namespace sgd2fr::config {
 
 const std::vector<std::tuple<int, int>>& GetIngameResolutions();
+std::tuple<int, int> GetMainMenuResolution();
+
+unsigned int GetIngameResolutionMode();
+void SetIngameResolutionMode(unsigned int resolution_mode);
+
 bool LoadConfig();
+bool WriteConfig();
 
 } // namespace sgd2fr::config
 
