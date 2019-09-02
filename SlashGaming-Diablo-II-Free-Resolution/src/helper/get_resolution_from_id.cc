@@ -53,8 +53,7 @@ std::tuple<int, int> GetResolutionFromId(std::size_t id) {
   const auto& ingame_resolutions = config::GetIngameResolutions();
 
   if (id == 1) {
-    // TODO: Pull menu resolution from configuration.
-    return std::make_tuple(800, 600);
+    return config::GetMainMenuResolution();
   }
 
   std::size_t ingame_resolution_index = (id == 0)
