@@ -450,7 +450,7 @@ unsigned int GetIngameResolutionMode() {
                 kIngameResolutionModeKey
             );
 
-        if (ingame_resolution_mode >= GetIngameResolutions().size()) {
+        if (ingame_resolution_mode > GetIngameResolutions().size()) {
           ingame_resolution_mode = kDefaultIngameResolutionMode;
         }
       }
