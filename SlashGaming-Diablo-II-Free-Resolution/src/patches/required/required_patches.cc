@@ -47,6 +47,7 @@
 
 #include <algorithm>
 
+#include "d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch.hpp"
 #include "get_d2client_resolution_registry_patch/get_d2client_resolution_registry_patch.hpp"
 #include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
 #include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
@@ -66,6 +67,14 @@ namespace sgd2fr::patches {
 
 std::vector<mapi::GamePatch> MakeRequiredPatches() {
   std::vector<mapi::GamePatch> game_patches;
+
+  std::vector d2client_draw_resolution_text_patch =
+      MakeD2ClientDrawResolutionTextPatch();
+  game_patches.insert(
+      game_patches.end(),
+      std::make_move_iterator(d2client_draw_resolution_text_patch.begin()),
+      std::make_move_iterator(d2client_draw_resolution_text_patch.end())
+  );
 
   std::vector get_d2client_resolution_registry_patch =
       MakeGetD2ClientResolutionRegistryPatch();
