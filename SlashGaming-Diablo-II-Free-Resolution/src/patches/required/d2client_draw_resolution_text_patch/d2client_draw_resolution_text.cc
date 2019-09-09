@@ -107,7 +107,7 @@ mapi::bool32 __cdecl SGD2FR_D2ClientDrawResolutionText(
 
   d2::d2win::DrawUnicodeText(
       text_unicode,
-      right,
+      (d2::d2client::GetGeneralDisplayWidth() / 2) + 100,
       top,
       d2::TextColor::kWhite,
       0
