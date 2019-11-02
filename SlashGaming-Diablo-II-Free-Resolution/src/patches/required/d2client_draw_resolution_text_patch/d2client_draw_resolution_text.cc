@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019  Mir Drualga
  *
@@ -45,6 +45,7 @@
 
 #include "d2client_draw_resolution_text.hpp"
 
+#include <limits>
 #include <string>
 
 #include <fmt/format.h>
@@ -95,23 +96,21 @@ mapi::bool32 __cdecl SGD2FR_D2ClientDrawResolutionText(
   unsigned int resolution_mode = d2::d2gfx::GetResolutionMode();
   std::tuple resolution = GetResolutionFromId(resolution_mode);
 
-  // TODO (Mir Drualga): Use Unicode convert functions.
-  std::wstring text_fmt = fmt::format(
-      L"{}x{}",
+  std::u8string text_fmt = fmt::format(
+      u8"{}x{}",
       std::get<0>(resolution),
       std::get<1>(resolution)
   );
-  d2::UnicodeChar* text_unicode = (d2::UnicodeChar*) text_fmt.data();
+
+  d2::UnicodeString_API text_unicode = d2::UnicodeString_API::FromU8String(text_fmt);
 
   d2::TextFont old_text_font = d2::d2win::SetTextFont(d2::TextFont::kDiabloMenu_30);
 
-  d2::d2win::DrawUnicodeText(
-      text_unicode,
-      (d2::d2client::GetGeneralDisplayWidth() / 2) + 100,
-      top,
-      d2::TextColor::kWhite,
-      0
-  );
+  d2::DrawTextOptions options;
+  options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  options.text_color = d2::TextColor::kWhite;
+
+  text_unicode.Draw(right, top, options);
 
   d2::d2win::SetTextFont(old_text_font);
 
