@@ -43,30 +43,23 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "draw_patches.hpp"
 
 #include <algorithm>
 
-#include "required/required_patches.hpp"
-#include "draw/draw_patches.hpp"
+#include "d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
+std::vector<mapi::GamePatch> MakeDrawPatches() {
   std::vector<mapi::GamePatch> game_patches;
 
-  std::vector required_patches = MakeRequiredPatches();
+  std::vector d2client_draw_screen_background_patch =
+      MakeD2ClientDrawScreenBackgroundPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
-  );
-
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
+      std::make_move_iterator(d2client_draw_screen_background_patch.begin()),
+      std::make_move_iterator(d2client_draw_screen_background_patch.end())
   );
 
   return game_patches;

@@ -43,33 +43,17 @@
  *  work.
  */
 
-#include "patches.hpp"
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_1_09D_HPP_
 
-#include <algorithm>
+#include <vector>
 
-#include "required/required_patches.hpp"
-#include "draw/draw_patches.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
-  );
-
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
-  );
-
-  return game_patches;
-}
+std::vector<mapi::GamePatch> MakeD2ClientDrawScreenBackgroundPatch_1_09D();
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_1_09D_HPP_

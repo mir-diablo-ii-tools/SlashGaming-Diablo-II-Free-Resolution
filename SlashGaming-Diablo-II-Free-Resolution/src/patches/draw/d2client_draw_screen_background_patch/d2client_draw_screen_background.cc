@@ -43,33 +43,74 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "d2client_draw_screen_background.hpp"
 
-#include <algorithm>
+#include <windows.h>
 
-#include "required/required_patches.hpp"
-#include "draw/draw_patches.hpp"
+#include <fmt/format.h>
+#include <sgd2mapi.hpp>
+#include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+void DrawLeftScreenBackground() {
+}
 
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
-  );
+void DrawLeftScreenBackgroundRibbon() {
+}
 
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
-  );
+void DrawRightScreenBackground() {
+}
 
-  return game_patches;
+void DrawRightScreenBackgroundRibbon() {
+}
+
+} // namespace
+
+void SGD2FR_D2ClientDrawScreenBackground() {
+  switch (d2::d2client::GetScreenOpenMode()) {
+    case 0: {
+      break;
+    }
+
+    case 1: {
+      DrawRightScreenBackground();
+      DrawRightScreenBackgroundRibbon();
+
+      break;
+    }
+
+    case 2: {
+      DrawLeftScreenBackground();
+      DrawLeftScreenBackgroundRibbon();
+
+      break;
+    }
+
+    case 3: {
+      DrawLeftScreenBackground();
+      DrawLeftScreenBackgroundRibbon();
+
+      DrawRightScreenBackground();
+      DrawRightScreenBackgroundRibbon();
+
+      break;
+    }
+
+    default: {
+      std::wstring_view message = L"Unknown value {} for screen open mode.";
+
+      MessageBoxW(
+          nullptr,
+          fmt::format(message, d2::d2client::GetScreenOpenMode()).data(),
+          L"Unexpected Value",
+          MB_OK | MB_ICONERROR
+      );
+
+      std::exit(0);
+    }
+  }
 }
 
 } // namespace sgd2fr::patches

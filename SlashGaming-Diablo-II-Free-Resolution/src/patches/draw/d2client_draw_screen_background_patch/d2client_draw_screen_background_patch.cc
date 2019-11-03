@@ -43,33 +43,20 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "d2client_draw_screen_background_patch.hpp"
 
-#include <algorithm>
-
-#include "required/required_patches.hpp"
-#include "draw/draw_patches.hpp"
+#include "d2client_draw_screen_background_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+std::vector<mapi::GamePatch> MakeD2ClientDrawScreenBackgroundPatch() {
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
-  );
-
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
-  );
-
-  return game_patches;
+  switch (running_game_version_id) {
+    case d2::GameVersion::k1_09D: {
+      return MakeD2ClientDrawScreenBackgroundPatch_1_09D();
+    }
+  }
 }
 
 } // namespace sgd2fr::patches
