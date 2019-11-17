@@ -51,25 +51,30 @@
 namespace sgd2fr::patches {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  // Original code
-  ASM_X86(add esp, 316);
+extern "C" std::intptr_t __cdecl GetJumpAddress() {
+  mapi::GameAddress address = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x35750
+  );
 
+  return address.raw_address();
+}
+
+__declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
-  ASM_X86(push eax);
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
   ASM_X86(call ASM_X86_FUNC(SGD2FR_D2ClientDrawScreenBackground));
+  ASM_X86(call ASM_X86_FUNC(GetJumpAddress))
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
-  ASM_X86(pop eax);
 
   ASM_X86(leave);
-  ASM_X86(ret);
+  ASM_X86(jmp eax);
 }
 
 } // namespace
@@ -80,21 +85,43 @@ std::vector<mapi::GamePatch> MakeD2ClientDrawScreenBackgroundPatch_1_09D() {
   // Draw the new screen background.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
-      0x86CEB
+      0x8696B
   );
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_01),
-          mapi::BranchType::kJump,
+          mapi::BranchType::kCall,
           &InterceptionFunc_01,
-          0x86CF1 - 0x86CEB
+          0x86970 - 0x8696B
       )
   );
 
   // Disable the left screen background.
+  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x58F1B
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameNopPatch(
+          std::move(game_address_02),
+          0x58FB1 - 0x58F1B
+      )
+  );
 
   // Disable the right screen background.
+  mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x58FF0
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameNopPatch(
+          std::move(game_address_03),
+          0x5909C - 0x58FF0
+      )
+  );
 
   return patches;
 }
