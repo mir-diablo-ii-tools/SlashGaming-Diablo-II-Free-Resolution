@@ -43,35 +43,20 @@
  *  work.
  */
 
-#include "draw_patches.hpp"
+#include "d2client_draw_interface_bar_background_patch.hpp"
 
-#include <algorithm>
-
-#include "d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
-#include "d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
+#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeDrawPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+std::vector<mapi::GamePatch> MakeD2ClientDrawInterfaceBarBackgroundPatch() {
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
-  std::vector d2client_draw_screen_background_patch =
-      MakeD2ClientDrawScreenBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_screen_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_screen_background_patch.end())
-  );
-
-  std::vector d2client_draw_interface_bar_background_patch =
-      MakeD2ClientDrawInterfaceBarBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.end())
-  );
-
-  return game_patches;
+  switch (running_game_version_id) {
+    case d2::GameVersion::k1_09D: {
+      return MakeD2ClientDrawInterfaceBarBackgroundPatch_1_09D();
+    }
+  }
 }
 
 } // namespace sgd2fr::patches

@@ -43,35 +43,62 @@
  *  work.
  */
 
-#include "draw_patches.hpp"
+#include "d2client_draw_interface_bar_background.hpp"
 
-#include <algorithm>
+#include <windows.h>
 
-#include "d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
-#include "d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
+#include <fmt/format.h>
+#include <sgd2mapi.hpp>
+#include "../../../config.hpp"
+#include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeDrawPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+d2::CelFile_API& GetInterfaceBarBackground() {
+  static d2::CelFile_API interface_bar_background;
 
-  std::vector d2client_draw_screen_background_patch =
-      MakeD2ClientDrawScreenBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_screen_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_screen_background_patch.end())
+  return interface_bar_background;
+}
+
+void DrawLeftInterfaceBarBackground() {
+  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+
+  d2::d2gfx::DrawRectangle(
+      0,
+      std::get<1>(width_and_height) - 47,
+      std::get<0>(width_and_height) / 2,
+      std::get<1>(width_and_height),
+      0,
+      d2::DrawEffect::kNone
   );
 
-  std::vector d2client_draw_interface_bar_background_patch =
-      MakeD2ClientDrawInterfaceBarBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.end())
-  );
+  return;
+  d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = mapi::RGBA32BitColor();
+  frame_options.draw_effect = d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
+  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
+}
 
-  return game_patches;
+void DrawRightInterfaceBarBackground() {
+  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+
+  d2::d2gfx::DrawRectangle(
+      std::get<0>(width_and_height) / 2,
+      std::get<1>(width_and_height) - 47,
+      std::get<0>(width_and_height),
+      std::get<1>(width_and_height),
+      0,
+      d2::DrawEffect::kNone
+  );
+}
+
+} // namespace
+
+void __cdecl SGD2FR_D2ClientDrawInterfaceBarBackground() {
+  DrawLeftInterfaceBarBackground();
+  DrawRightInterfaceBarBackground();
 }
 
 } // namespace sgd2fr::patches

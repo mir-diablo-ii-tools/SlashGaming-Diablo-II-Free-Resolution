@@ -43,35 +43,56 @@
  *  work.
  */
 
-#include "draw_patches.hpp"
+#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
-#include <algorithm>
-
-#include "d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
-#include "d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
+#include "../../../asm_x86_macro.h"
+#include "d2client_draw_interface_bar_background.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeDrawPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc_01() {
+  // Original code.
+  ASM_X86(mov ecx, 18);
 
-  std::vector d2client_draw_screen_background_patch =
-      MakeD2ClientDrawScreenBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_screen_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_screen_background_patch.end())
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2ClientDrawInterfaceBarBackground));
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> MakeD2ClientDrawInterfaceBarBackgroundPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  // Draw the new interface bar background.
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x5909C
   );
 
-  std::vector d2client_draw_interface_bar_background_patch =
-      MakeD2ClientDrawInterfaceBarBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.end())
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_01),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x590A1 - 0x5909C
+      )
   );
 
-  return game_patches;
+  return patches;
 }
 
 } // namespace sgd2fr::patches
