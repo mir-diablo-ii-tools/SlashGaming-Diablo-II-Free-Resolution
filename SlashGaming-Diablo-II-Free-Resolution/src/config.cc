@@ -338,6 +338,14 @@ bool AddMissingConfigEntries(
     );
   }
 
+  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultInterfaceBarBackgroundImagePath.data(),
+        kMainEntryKey,
+        kInterfaceBarBackgroundImagePathKey
+    );
+  }
+
   if (!config_reader.HasBool(kMainEntryKey, kIsScreenBorderFrameEnabledKey)) {
     config_reader.SetDeepBool(
         kDefaultIsScreenBorderFrameEnabled,
@@ -535,6 +543,23 @@ std::string_view GetScreenBackgroundImagePath() {
   );
 
   return screen_background_image_path;
+}
+
+std::string_view GetInterfaceBarBackgroundImagePath() {
+  static std::string interface_bar_background_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kScreenBackgroundImagePathKey),
+      [=] () {
+        interface_bar_background_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kInterfaceBarBackgroundImagePathKey
+            );
+      }
+  );
+
+  return interface_bar_background_image_path;
 }
 
 bool IsScreenBorderFrameEnabled() {
