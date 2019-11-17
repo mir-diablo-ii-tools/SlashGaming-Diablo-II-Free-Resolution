@@ -55,10 +55,79 @@
 namespace sgd2fr::patches {
 namespace {
 
+constexpr std::string_view kOriginalScreenBorderFrameImagePath =
+    "data\\global\\UI\\Panel\\800BorderFrame";
+
 d2::CelFile_API& GetScreenBackground() {
   static d2::CelFile_API screen_background;
 
   return screen_background;
+}
+
+d2::CelFile_API& GetOriginalScreenBorderFrame() {
+  static d2::CelFile_API screen_border_frame;
+
+  return screen_border_frame;
+}
+
+d2::CelFile_API& GetCustomLeftScreenBorderLeft() {
+  static d2::CelFile_API screen_border_left;
+
+  return screen_border_left;
+}
+
+d2::CelFile_API& GetCustomLeftScreenBorderTop() {
+  static d2::CelFile_API screen_border_top;
+
+  return screen_border_top;
+}
+
+d2::CelFile_API& GetCustomLeftScreenBorderTopRight() {
+  static d2::CelFile_API screen_border_top_right;
+
+  return screen_border_top_right;
+}
+
+d2::CelFile_API& GetCustomLeftScreenBorderBottom() {
+  static d2::CelFile_API screen_border_bottom;
+
+  return screen_border_bottom;
+}
+
+d2::CelFile_API& GetCustomLeftScreenBorderBottomRight() {
+  static d2::CelFile_API screen_border_bottom_right;
+
+  return screen_border_bottom_right;
+}
+
+d2::CelFile_API& GetCustomRightScreenBorderRight() {
+  static d2::CelFile_API screen_border_left;
+
+  return screen_border_left;
+}
+
+d2::CelFile_API& GetCustomRightScreenBorderTop() {
+  static d2::CelFile_API screen_border_top;
+
+  return screen_border_top;
+}
+
+d2::CelFile_API& GetCustomRightScreenBorderTopLeft() {
+  static d2::CelFile_API screen_border_top_left;
+
+  return screen_border_top_left;
+}
+
+d2::CelFile_API& GetCustomRightScreenBorderBottom() {
+  static d2::CelFile_API screen_border_bottom;
+
+  return screen_border_bottom;
+}
+
+d2::CelFile_API& GetCustomRightScreenBorderBottomLeft() {
+  static d2::CelFile_API screen_border_bottom_left;
+
+  return screen_border_bottom_left;
 }
 
 void DrawLeftScreenBackground() {
@@ -122,9 +191,6 @@ void DrawLeftScreenBackground() {
   }
 }
 
-void DrawLeftScreenBackgroundRibbon() {
-}
-
 void DrawRightScreenBackground() {
   d2::CelFile_API& screen_background = GetScreenBackground();
   if (!screen_background.IsOpen() && !config::GetScreenBackgroundImagePath().empty()) {
@@ -186,6 +252,153 @@ void DrawRightScreenBackground() {
   }
 }
 
+/**
+ * Drawing the original screen border frame requires significantly
+ * different code due to its abnormal structure.
+ */
+void DrawOriginalLeftScreenBorderFrame() {
+  d2::CelFile_API& screen_border_frame = GetOriginalScreenBorderFrame();
+  screen_border_frame.Open(kOriginalScreenBorderFrameImagePath.data(), false);
+
+  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+
+  const int left = (std::get<0>(width_and_height) - 640 - (800 - 640)) / 2;
+  const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
+
+  std::vector<d2::Cel_View> cels;
+  for (unsigned int i = 0; i < screen_border_frame.GetNumFrames(); i += 1) {
+    cels.push_back(screen_border_frame.GetCel(0, i));
+  }
+
+  d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = mapi::RGBA32BitColor(255, 255, 255, 255);
+  frame_options.draw_effect = d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
+  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
+
+  screen_border_frame.DrawFrame(left, top, 0, 0, frame_options);
+
+  screen_border_frame.DrawFrame(
+      left + cels.at(0).GetWidth(),
+      top,
+      0,
+      1,
+      frame_options
+  );
+
+  screen_border_frame.DrawFrame(
+      left,
+      top + cels.at(0).GetHeight(),
+      0,
+      2,
+      frame_options
+  );
+
+  screen_border_frame.DrawFrame(
+      left,
+      top + cels.at(0).GetHeight() + cels.at(2).GetHeight(),
+      0,
+      3,
+      frame_options
+  );
+
+  screen_border_frame.DrawFrame(
+      left + cels.at(3).GetWidth(),
+      top + cels.at(0).GetHeight() + cels.at(2).GetHeight(),
+      0,
+      4,
+      frame_options
+  );
+}
+
+void DrawOriginalRightScreenBorderFrame() {
+  d2::CelFile_API& screen_border_frame = GetOriginalScreenBorderFrame();
+  screen_border_frame.Open(kOriginalScreenBorderFrameImagePath.data(), false);
+
+  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+
+  const int right = (std::get<0>(width_and_height) + 640 + (800 - 640)) / 2;
+  const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
+
+  std::vector<d2::Cel_View> cels;
+  for (unsigned int i = 0; i < screen_border_frame.GetNumFrames(); i += 1) {
+    cels.push_back(screen_border_frame.GetCel(0, i));
+  }
+
+  d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = mapi::RGBA32BitColor(255, 255, 255, 255);
+  frame_options.draw_effect = d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
+
+  screen_border_frame.DrawFrame(right, top, 0, 6, frame_options);
+
+  screen_border_frame.DrawFrame(
+      right - cels.at(6).GetWidth(),
+      top,
+      0,
+      5,
+      frame_options
+  );
+
+  screen_border_frame.DrawFrame(
+      right,
+      top + cels.at(6).GetHeight(),
+      0,
+      7,
+      frame_options
+  );
+
+  screen_border_frame.DrawFrame(
+      right,
+      top + cels.at(6).GetHeight() + cels.at(7).GetHeight(),
+      0,
+      8,
+      frame_options
+  );
+
+  screen_border_frame.DrawFrame(
+      right - cels.at(8).GetWidth(),
+      top + cels.at(6).GetHeight() + cels.at(7).GetHeight(),
+      0,
+      9,
+      frame_options
+  );
+}
+
+void DrawCustomLeftScreenBorderFrame() {
+}
+
+void DrawCustomRightScreenBorderFrame() {
+}
+
+void DrawLeftScreenBorderFrame() {
+  if (!config::IsScreenBorderFrameEnabled()) {
+    return;
+  }
+
+  if (config::IsUseOriginalScreenBorderFrame()) {
+    DrawOriginalLeftScreenBorderFrame();
+  } else {
+    DrawCustomLeftScreenBorderFrame();
+  }
+}
+
+void DrawRightScreenBorderFrame() {
+  if (!config::IsScreenBorderFrameEnabled()) {
+    return;
+  }
+
+  if (config::IsUseOriginalScreenBorderFrame()) {
+    DrawOriginalRightScreenBorderFrame();
+  } else {
+    DrawRightScreenBorderFrame();
+  }
+}
+
+void DrawLeftScreenBackgroundRibbon() {
+}
+
 void DrawRightScreenBackgroundRibbon() {
 }
 
@@ -199,6 +412,7 @@ void SGD2FR_D2ClientDrawScreenBackground() {
 
     case 1: {
       DrawRightScreenBackground();
+      DrawRightScreenBorderFrame();
       DrawRightScreenBackgroundRibbon();
 
       break;
@@ -206,6 +420,7 @@ void SGD2FR_D2ClientDrawScreenBackground() {
 
     case 2: {
       DrawLeftScreenBackground();
+      DrawLeftScreenBorderFrame();
       DrawLeftScreenBackgroundRibbon();
 
       break;
@@ -213,9 +428,11 @@ void SGD2FR_D2ClientDrawScreenBackground() {
 
     case 3: {
       DrawLeftScreenBackground();
+      DrawLeftScreenBorderFrame();
       DrawLeftScreenBackgroundRibbon();
 
       DrawRightScreenBackground();
+      DrawRightScreenBorderFrame();
       DrawRightScreenBackgroundRibbon();
 
       break;

@@ -109,6 +109,14 @@ constexpr std::string_view kInterfaceBarBackgroundImagePathKey =
     "Interface Bar Image Path";
 constexpr std::string_view kDefaultInterfaceBarBackgroundImagePath = "";
 
+constexpr std::string_view kIsScreenBorderFrameEnabledKey =
+    "Enable Screen Border Frame?";
+constexpr bool kDefaultIsScreenBorderFrameEnabled = true;
+
+constexpr std::string_view kIsUseOriginalScreenBorderFrameKey =
+    "Use Original Screen Border Frame?";
+constexpr bool kDefaultIsUseOriginalScreenBorderFrame = false;
+
 std::map<std::string, std::once_flag> once_flags_by_json_keys;
 
 const std::filesystem::path& GetConfigPath() {
@@ -330,6 +338,22 @@ bool AddMissingConfigEntries(
     );
   }
 
+  if (!config_reader.HasBool(kMainEntryKey, kIsScreenBorderFrameEnabledKey)) {
+    config_reader.SetDeepBool(
+        kDefaultIsScreenBorderFrameEnabled,
+        kMainEntryKey,
+        kIsScreenBorderFrameEnabledKey
+    );
+  }
+
+  if (!config_reader.HasBool(kMainEntryKey, kIsUseOriginalScreenBorderFrameKey)) {
+    config_reader.SetDeepBool(
+        kDefaultIsUseOriginalScreenBorderFrame,
+        kMainEntryKey,
+        kIsUseOriginalScreenBorderFrameKey
+    );
+  }
+
   // Write to the config file any new default values.
   int indent_width = config_reader.GetInt(
       kGlobalEntryKey,
@@ -511,6 +535,40 @@ std::string_view GetScreenBackgroundImagePath() {
   );
 
   return screen_background_image_path;
+}
+
+bool IsScreenBorderFrameEnabled() {
+  static bool is_screen_border_frame_enabled;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kIsScreenBorderFrameEnabledKey),
+      [=] () {
+        is_screen_border_frame_enabled = GetConfigReader()
+            .GetBool(
+                kMainEntryKey,
+                kIsScreenBorderFrameEnabledKey
+            );
+      }
+  );
+
+  return is_screen_border_frame_enabled;
+}
+
+bool IsUseOriginalScreenBorderFrame() {
+  static bool is_use_screen_border_frame;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kIsUseOriginalScreenBorderFrameKey),
+      [=] () {
+        is_use_screen_border_frame = GetConfigReader()
+            .GetBool(
+                kMainEntryKey,
+                kIsUseOriginalScreenBorderFrameKey
+            );
+      }
+  );
+
+  return is_use_screen_border_frame;
 }
 
 bool LoadConfig() {
