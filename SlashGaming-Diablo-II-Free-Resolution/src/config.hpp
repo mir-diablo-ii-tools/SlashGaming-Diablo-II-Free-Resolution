@@ -47,6 +47,7 @@
 #define SGD2FR_CONFIG_HPP_
 
 #include <windows.h>
+#include <string_view>
 #include <tuple>
 #include <vector>
 
@@ -59,6 +60,8 @@ std::tuple<int, int> GetMainMenuResolution();
 
 unsigned int GetIngameResolutionMode();
 void SetIngameResolutionMode(unsigned int resolution_mode);
+
+std::string_view GetScreenBackgroundImagePath();
 
 bool LoadConfig();
 bool WriteConfig();

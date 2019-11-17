@@ -49,12 +49,77 @@
 
 #include <fmt/format.h>
 #include <sgd2mapi.hpp>
+#include "../../../config.hpp"
 #include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
 namespace {
 
+d2::CelFile_API& GetScreenBackground() {
+  static d2::CelFile_API screen_background;
+
+  return screen_background;
+}
+
 void DrawLeftScreenBackground() {
+  d2::CelFile_API& screen_background = GetScreenBackground();
+  if (!screen_background.IsOpen() && !config::GetScreenBackgroundImagePath().empty()) {
+    screen_background.Open(config::GetScreenBackgroundImagePath(), false);
+  }
+
+  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+
+  // If loading fails, draw a black rectangle.
+  if (!screen_background.IsOpen()) {
+    d2::d2gfx::DrawRectangle(
+        0,
+        0,
+        std::get<0>(width_and_height) / 2,
+        std::get<1>(width_and_height),
+        0,
+        d2::DrawEffect::kNone
+    );
+
+    return;
+  }
+
+  // Set up the frame options.
+  d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = mapi::RGBA32BitColor(255, 255, 255, 255);
+  frame_options.draw_effect = d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
+
+  // Store an array of Cel_Views to determine Cel Width and Heights.
+  std::vector<d2::Cel_View> cels;
+  for (unsigned int i = 0; i < screen_background.GetNumFrames(); i += 1) {
+    cels.push_back(d2::Cel_View(screen_background.GetCel(0, i)));
+  }
+
+  // Draw the background.
+  const unsigned int half_num_frames = screen_background.GetNumFrames() / 2;
+
+  int height_covered = 0;
+  for (unsigned int row = 0; height_covered < std::get<0>(width_and_height); row += 1) {
+    int width_covered = 1;
+    unsigned int row_start_frame = (row % 2) * half_num_frames;
+
+    for (unsigned int col = 0; width_covered < ((std::get<0>(width_and_height) / 2) - 1); col += 1) {
+      unsigned int current_frame = row_start_frame + (col % half_num_frames);
+
+      screen_background.DrawFrame(
+          (std::get<0>(width_and_height) / 2) - width_covered + cels.at(current_frame).GetOffsetX(),
+          height_covered + cels.at(current_frame).GetOffsetY(),
+          0,
+          current_frame,
+          frame_options
+      );
+
+      width_covered += cels.at(current_frame).GetWidth();
+    }
+
+    height_covered += cels.at(row_start_frame).GetHeight();
+  }
 }
 
 void DrawLeftScreenBackgroundRibbon() {

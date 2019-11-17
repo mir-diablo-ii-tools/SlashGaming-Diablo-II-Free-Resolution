@@ -92,6 +92,23 @@ constexpr std::string_view kDefaultMainMenuResolution = "800x600";
 constexpr std::string_view kIngameResolutionModeKey = "Ingame Resolution Mode";
 constexpr unsigned int kDefaultIngameResolutionMode = 0;
 
+// Draw variables.
+constexpr std::string_view kScreenBackgroundImagePathKey =
+    "Screen Background Image Path";
+constexpr std::string_view kDefaultScreenBackgroundImagePath = "";
+
+constexpr std::string_view kScreenBackgroundRibbonImagePathKey =
+    "Screen Background Ribbon Image Path";
+constexpr std::string_view kDefaultScreenBackgroundRibbonImagePath = "";
+
+constexpr std::string_view kScreenBorderImagePathKey =
+    "Screen Border Image Path";
+constexpr std::string_view kDefaultScreenBorderImagePath = "";
+
+constexpr std::string_view kInterfaceBarBackgroundImagePathKey =
+    "Interface Bar Image Path";
+constexpr std::string_view kDefaultInterfaceBarBackgroundImagePath = "";
+
 std::map<std::string, std::once_flag> once_flags_by_json_keys;
 
 const std::filesystem::path& GetConfigPath() {
@@ -305,6 +322,14 @@ bool AddMissingConfigEntries(
     );
   }
 
+  if (!config_reader.HasString(kMainEntryKey, kScreenBackgroundImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultScreenBackgroundImagePath.data(),
+        kMainEntryKey,
+        kScreenBackgroundImagePathKey
+    );
+  }
+
   // Write to the config file any new default values.
   int indent_width = config_reader.GetInt(
       kGlobalEntryKey,
@@ -469,6 +494,23 @@ void SetIngameResolutionMode(unsigned int resolution_mode) {
       );
 
   WriteConfig();
+}
+
+std::string_view GetScreenBackgroundImagePath() {
+  static std::string screen_background_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kScreenBackgroundImagePathKey),
+      [=] () {
+        screen_background_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kScreenBackgroundImagePathKey
+            );
+      }
+  );
+
+  return screen_background_image_path;
 }
 
 bool LoadConfig() {
