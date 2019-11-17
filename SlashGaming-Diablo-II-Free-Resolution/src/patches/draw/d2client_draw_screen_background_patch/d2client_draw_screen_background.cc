@@ -136,9 +136,9 @@ void DrawRightScreenBackground() {
   // If loading fails, draw a black rectangle.
   if (!screen_background.IsOpen()) {
     d2::d2gfx::DrawRectangle(
-        0,
-        0,
         std::get<0>(width_and_height) / 2,
+        0,
+        std::get<0>(width_and_height),
         std::get<1>(width_and_height),
         0,
         d2::DrawEffect::kNone
