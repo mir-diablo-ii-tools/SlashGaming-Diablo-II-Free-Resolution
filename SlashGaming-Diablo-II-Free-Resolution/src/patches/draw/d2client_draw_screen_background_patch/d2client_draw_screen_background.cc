@@ -50,6 +50,7 @@
 #include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
+#include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
@@ -58,83 +59,8 @@ namespace {
 constexpr std::string_view kOriginalScreenBorderFrameImagePath =
     "data\\global\\UI\\Panel\\800BorderFrame";
 
-d2::CelFile_API& GetScreenBackground() {
-  static d2::CelFile_API screen_background;
-
-  return screen_background;
-}
-
-d2::CelFile_API& GetOriginalScreenBorderFrame() {
-  static d2::CelFile_API screen_border_frame;
-
-  return screen_border_frame;
-}
-
-d2::CelFile_API& GetCustomLeftScreenBorderLeft() {
-  static d2::CelFile_API screen_border_left;
-
-  return screen_border_left;
-}
-
-d2::CelFile_API& GetCustomLeftScreenBorderTop() {
-  static d2::CelFile_API screen_border_top;
-
-  return screen_border_top;
-}
-
-d2::CelFile_API& GetCustomLeftScreenBorderTopRight() {
-  static d2::CelFile_API screen_border_top_right;
-
-  return screen_border_top_right;
-}
-
-d2::CelFile_API& GetCustomLeftScreenBorderBottom() {
-  static d2::CelFile_API screen_border_bottom;
-
-  return screen_border_bottom;
-}
-
-d2::CelFile_API& GetCustomLeftScreenBorderBottomRight() {
-  static d2::CelFile_API screen_border_bottom_right;
-
-  return screen_border_bottom_right;
-}
-
-d2::CelFile_API& GetCustomRightScreenBorderRight() {
-  static d2::CelFile_API screen_border_left;
-
-  return screen_border_left;
-}
-
-d2::CelFile_API& GetCustomRightScreenBorderTop() {
-  static d2::CelFile_API screen_border_top;
-
-  return screen_border_top;
-}
-
-d2::CelFile_API& GetCustomRightScreenBorderTopLeft() {
-  static d2::CelFile_API screen_border_top_left;
-
-  return screen_border_top_left;
-}
-
-d2::CelFile_API& GetCustomRightScreenBorderBottom() {
-  static d2::CelFile_API screen_border_bottom;
-
-  return screen_border_bottom;
-}
-
-d2::CelFile_API& GetCustomRightScreenBorderBottomLeft() {
-  static d2::CelFile_API screen_border_bottom_left;
-
-  return screen_border_bottom_left;
-}
-
 void DrawLeftScreenBackground() {
-  d2::CelFile_API& screen_background = GetScreenBackground();
-  if (!screen_background.IsOpen() && !config::GetScreenBackgroundImagePath().empty()) {
-    screen_background.Open(config::GetScreenBackgroundImagePath(), false);
-  }
+  d2::CelFile_API& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
 
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -192,10 +118,7 @@ void DrawLeftScreenBackground() {
 }
 
 void DrawRightScreenBackground() {
-  d2::CelFile_API& screen_background = GetScreenBackground();
-  if (!screen_background.IsOpen() && !config::GetScreenBackgroundImagePath().empty()) {
-    screen_background.Open(config::GetScreenBackgroundImagePath(), false);
-  }
+  d2::CelFile_API& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
 
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -257,8 +180,7 @@ void DrawRightScreenBackground() {
  * different code due to its abnormal structure.
  */
 void DrawOriginalLeftScreenBorderFrame() {
-  d2::CelFile_API& screen_border_frame = GetOriginalScreenBorderFrame();
-  screen_border_frame.Open(kOriginalScreenBorderFrameImagePath.data(), false);
+  d2::CelFile_API& screen_border_frame = GetCelFile(kOriginalScreenBorderFrameImagePath);
 
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -312,8 +234,7 @@ void DrawOriginalLeftScreenBorderFrame() {
 }
 
 void DrawOriginalRightScreenBorderFrame() {
-  d2::CelFile_API& screen_border_frame = GetOriginalScreenBorderFrame();
-  screen_border_frame.Open(kOriginalScreenBorderFrameImagePath.data(), false);
+  d2::CelFile_API& screen_border_frame = GetCelFile(kOriginalScreenBorderFrameImagePath);
 
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 

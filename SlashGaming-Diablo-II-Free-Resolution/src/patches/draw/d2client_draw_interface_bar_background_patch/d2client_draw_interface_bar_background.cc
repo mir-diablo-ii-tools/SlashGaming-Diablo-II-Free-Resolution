@@ -50,37 +50,17 @@
 #include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
+#include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
 namespace {
 
-d2::CelFile_API& GetInterfaceBarBackgroundCenter() {
-  static d2::CelFile_API interface_bar_background;
-
-  return interface_bar_background;
-}
-
-d2::CelFile_API& GetInterfaceBarBackgroundLeft() {
-  static d2::CelFile_API interface_bar_background;
-
-  return interface_bar_background;
-}
-
-d2::CelFile_API& GetInterfaceBarBackgroundRight() {
-  static d2::CelFile_API interface_bar_background;
-
-  return interface_bar_background;
-}
-
 void DrawLeftInterfaceBarBackground() {
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  d2::CelFile_API& interface_bar_background_center = GetInterfaceBarBackgroundCenter();
-  d2::CelFile_API& interface_bar_background_left = GetInterfaceBarBackgroundLeft();
-
-  interface_bar_background_center.Open(config::GetInterfaceBarBackgroundCenterImagePath(), false);
-  interface_bar_background_left.Open(config::GetInterfaceBarBackgroundLeftImagePath(), false);
+  d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
+  d2::CelFile_API& interface_bar_background_left = GetCelFile(config::GetInterfaceBarBackgroundLeftImagePath());
 
   if (!interface_bar_background_center.IsOpen() || !interface_bar_background_left.IsOpen()) {
     d2::d2gfx::DrawRectangle(
@@ -146,11 +126,8 @@ void DrawLeftInterfaceBarBackground() {
 void DrawRightInterfaceBarBackground() {
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  d2::CelFile_API& interface_bar_background_center = GetInterfaceBarBackgroundCenter();
-  d2::CelFile_API& interface_bar_background_right = GetInterfaceBarBackgroundRight();
-
-  interface_bar_background_center.Open(config::GetInterfaceBarBackgroundCenterImagePath(), false);
-  interface_bar_background_right.Open(config::GetInterfaceBarBackgroundRightImagePath(), false);
+  d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
+  d2::CelFile_API& interface_bar_background_right = GetCelFile(config::GetInterfaceBarBackgroundRightImagePath());
 
   if (!interface_bar_background_center.IsOpen() || !interface_bar_background_right.IsOpen()) {
     d2::d2gfx::DrawRectangle(
