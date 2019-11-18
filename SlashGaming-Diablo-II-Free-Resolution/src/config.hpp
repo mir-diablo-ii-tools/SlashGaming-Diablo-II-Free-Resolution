@@ -62,7 +62,10 @@ unsigned int GetIngameResolutionMode();
 void SetIngameResolutionMode(unsigned int resolution_mode);
 
 std::string_view GetScreenBackgroundImagePath();
-std::string_view GetInterfaceBarBackgroundImagePath();
+
+std::string_view GetInterfaceBarBackgroundCenterImagePath();
+std::string_view GetInterfaceBarBackgroundLeftImagePath();
+std::string_view GetInterfaceBarBackgroundRightImagePath();
 
 bool IsScreenBorderFrameEnabled();
 bool IsUseOriginalScreenBorderFrame();

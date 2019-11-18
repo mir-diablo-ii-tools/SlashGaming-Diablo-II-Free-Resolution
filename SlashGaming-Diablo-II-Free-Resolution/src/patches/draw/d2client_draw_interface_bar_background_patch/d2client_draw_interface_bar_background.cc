@@ -55,7 +55,19 @@
 namespace sgd2fr::patches {
 namespace {
 
-d2::CelFile_API& GetInterfaceBarBackground() {
+d2::CelFile_API& GetInterfaceBarBackgroundCenter() {
+  static d2::CelFile_API interface_bar_background;
+
+  return interface_bar_background;
+}
+
+d2::CelFile_API& GetInterfaceBarBackgroundLeft() {
+  static d2::CelFile_API interface_bar_background;
+
+  return interface_bar_background;
+}
+
+d2::CelFile_API& GetInterfaceBarBackgroundRight() {
   static d2::CelFile_API interface_bar_background;
 
   return interface_bar_background;
@@ -64,34 +76,141 @@ d2::CelFile_API& GetInterfaceBarBackground() {
 void DrawLeftInterfaceBarBackground() {
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  d2::d2gfx::DrawRectangle(
-      0,
-      std::get<1>(width_and_height) - 47,
-      std::get<0>(width_and_height) / 2,
-      std::get<1>(width_and_height),
-      0,
-      d2::DrawEffect::kNone
-  );
+  d2::CelFile_API& interface_bar_background_center = GetInterfaceBarBackgroundCenter();
+  d2::CelFile_API& interface_bar_background_left = GetInterfaceBarBackgroundLeft();
 
-  return;
+  interface_bar_background_center.Open(config::GetInterfaceBarBackgroundCenterImagePath(), false);
+  interface_bar_background_left.Open(config::GetInterfaceBarBackgroundLeftImagePath(), false);
+
+  if (!interface_bar_background_center.IsOpen() || !interface_bar_background_left.IsOpen()) {
+    d2::d2gfx::DrawRectangle(
+        0,
+        std::get<1>(width_and_height) - 47,
+        std::get<0>(width_and_height) / 2,
+        std::get<1>(width_and_height),
+        0,
+        d2::DrawEffect::kNone
+    );
+
+    return;
+  }
+
   d2::DrawCelFileFrameOptions frame_options;
   frame_options.color = mapi::RGBA32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
+  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
+
+  int width_covered = 117 + 48;
+
+  // Draw the left part of the interface bar background.
+  std::vector<d2::Cel_View> left_cels;
+  for (unsigned int i = 0; i < interface_bar_background_left.GetNumFrames(); i += 1) {
+    left_cels.push_back(interface_bar_background_left.GetCel(0, i));
+  }
+
+  for (unsigned int frame = 0;
+      frame < interface_bar_background_left.GetNumFrames()
+          && width_covered < (std::get<0>(width_and_height) / 2);
+      frame += 1) {
+    interface_bar_background_left.DrawFrame(
+        width_covered,
+        std::get<1>(width_and_height),
+        0,
+        frame,
+        frame_options
+    );
+
+    width_covered += left_cels.at(frame).GetWidth();
+  }
+
+  // Draw the center part of the interface bar background.
+  std::vector<d2::Cel_View> center_cels;
+  for (unsigned int i = 0; i < interface_bar_background_center.GetNumFrames(); i += 1) {
+    center_cels.push_back(interface_bar_background_center.GetCel(0, i));
+  }
+
+  for (unsigned int frame = 0; width_covered < (std::get<0>(width_and_height) / 2); frame += 1) {
+    interface_bar_background_center.DrawFrame(
+        width_covered,
+        std::get<1>(width_and_height),
+        0,
+        frame % interface_bar_background_center.GetNumFrames(),
+        frame_options
+    );
+
+    width_covered += center_cels.at(frame).GetWidth();
+  }
 }
 
 void DrawRightInterfaceBarBackground() {
   std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  d2::d2gfx::DrawRectangle(
-      std::get<0>(width_and_height) / 2,
-      std::get<1>(width_and_height) - 47,
-      std::get<0>(width_and_height),
-      std::get<1>(width_and_height),
-      0,
-      d2::DrawEffect::kNone
-  );
+  d2::CelFile_API& interface_bar_background_center = GetInterfaceBarBackgroundCenter();
+  d2::CelFile_API& interface_bar_background_right = GetInterfaceBarBackgroundRight();
+
+  interface_bar_background_center.Open(config::GetInterfaceBarBackgroundCenterImagePath(), false);
+  interface_bar_background_right.Open(config::GetInterfaceBarBackgroundRightImagePath(), false);
+
+  if (!interface_bar_background_center.IsOpen() || !interface_bar_background_right.IsOpen()) {
+    d2::d2gfx::DrawRectangle(
+        std::get<0>(width_and_height) / 2,
+        std::get<1>(width_and_height) - 47,
+        std::get<0>(width_and_height),
+        std::get<1>(width_and_height),
+        0,
+        d2::DrawEffect::kNone
+    );
+
+    return;
+  }
+
+  d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = mapi::RGBA32BitColor();
+  frame_options.draw_effect = d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
+
+  int width_covered = 117 + 48;
+
+  // Draw the left part of the interface bar background.
+  std::vector<d2::Cel_View> right_cels;
+  for (unsigned int i = 0; i < interface_bar_background_right.GetNumFrames(); i += 1) {
+    right_cels.push_back(interface_bar_background_right.GetCel(0, i));
+  }
+
+  for (unsigned int frame = 0;
+      frame < interface_bar_background_right.GetNumFrames()
+          && width_covered < (std::get<0>(width_and_height) / 2);
+      frame += 1) {
+    interface_bar_background_right.DrawFrame(
+        std::get<0>(width_and_height) - width_covered,
+        std::get<1>(width_and_height),
+        0,
+        frame,
+        frame_options
+    );
+
+    width_covered += right_cels.at(frame).GetWidth();
+  }
+
+  // Draw the center part of the interface bar background.
+  std::vector<d2::Cel_View> center_cels;
+  for (unsigned int i = 0; i < interface_bar_background_center.GetNumFrames(); i += 1) {
+    center_cels.push_back(interface_bar_background_center.GetCel(0, i));
+  }
+
+  for (unsigned int frame = 0; width_covered < (std::get<0>(width_and_height) / 2); frame += 1) {
+    interface_bar_background_center.DrawFrame(
+        std::get<0>(width_and_height) - width_covered,
+        std::get<1>(width_and_height),
+        0,
+        frame % interface_bar_background_center.GetNumFrames(),
+        frame_options
+    );
+
+    width_covered += center_cels.at(frame).GetWidth();
+  }
 }
 
 } // namespace

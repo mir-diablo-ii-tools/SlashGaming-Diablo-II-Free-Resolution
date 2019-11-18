@@ -105,9 +105,18 @@ constexpr std::string_view kScreenBorderImagePathKey =
     "Screen Border Image Path";
 constexpr std::string_view kDefaultScreenBorderImagePath = "";
 
-constexpr std::string_view kInterfaceBarBackgroundImagePathKey =
-    "Interface Bar Image Path";
-constexpr std::string_view kDefaultInterfaceBarBackgroundImagePath = "";
+// Interface Bar Background
+constexpr std::string_view kInterfaceBarBackgroundCenterImagePathKey =
+    "Interface Bar Background Center Image Path";
+constexpr std::string_view kDefaultInterfaceBarBackgroundCenterImagePath = "";
+
+constexpr std::string_view kInterfaceBarBackgroundLeftImagePathKey =
+    "Interface Bar Background Left Image Path";
+constexpr std::string_view kDefaultInterfaceBarBackgroundLeftImagePath = "";
+
+constexpr std::string_view kInterfaceBarBackgroundRightImagePathKey =
+    "Interface Bar Background Right Image Path";
+constexpr std::string_view kDefaultInterfaceBarBackgroundRightImagePath = "";
 
 constexpr std::string_view kIsScreenBorderFrameEnabledKey =
     "Enable Screen Border Frame?";
@@ -338,11 +347,27 @@ bool AddMissingConfigEntries(
     );
   }
 
-  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundImagePathKey)) {
+  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundCenterImagePathKey)) {
     config_reader.SetDeepString(
-        kDefaultInterfaceBarBackgroundImagePath.data(),
+        kDefaultInterfaceBarBackgroundCenterImagePath.data(),
         kMainEntryKey,
-        kInterfaceBarBackgroundImagePathKey
+        kInterfaceBarBackgroundCenterImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundLeftImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultInterfaceBarBackgroundLeftImagePath.data(),
+        kMainEntryKey,
+        kInterfaceBarBackgroundLeftImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundRightImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultInterfaceBarBackgroundRightImagePath.data(),
+        kMainEntryKey,
+        kInterfaceBarBackgroundRightImagePathKey
     );
   }
 
@@ -545,16 +570,50 @@ std::string_view GetScreenBackgroundImagePath() {
   return screen_background_image_path;
 }
 
-std::string_view GetInterfaceBarBackgroundImagePath() {
+std::string_view GetInterfaceBarBackgroundCenterImagePath() {
   static std::string interface_bar_background_image_path;
 
   std::call_once(
-      GetOnceFlag(kMainEntryKey, kScreenBackgroundImagePathKey),
+      GetOnceFlag(kMainEntryKey, kInterfaceBarBackgroundCenterImagePathKey),
       [=] () {
         interface_bar_background_image_path = GetConfigReader()
             .GetString(
                 kMainEntryKey,
-                kInterfaceBarBackgroundImagePathKey
+                kInterfaceBarBackgroundCenterImagePathKey
+            );
+      }
+  );
+
+  return interface_bar_background_image_path;
+}
+
+std::string_view GetInterfaceBarBackgroundLeftImagePath() {
+  static std::string interface_bar_background_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kInterfaceBarBackgroundLeftImagePathKey),
+      [=] () {
+        interface_bar_background_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kInterfaceBarBackgroundLeftImagePathKey
+            );
+      }
+  );
+
+  return interface_bar_background_image_path;
+}
+
+std::string_view GetInterfaceBarBackgroundRightImagePath() {
+  static std::string interface_bar_background_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kInterfaceBarBackgroundRightImagePathKey),
+      [=] () {
+        interface_bar_background_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kInterfaceBarBackgroundRightImagePathKey
             );
       }
   );
