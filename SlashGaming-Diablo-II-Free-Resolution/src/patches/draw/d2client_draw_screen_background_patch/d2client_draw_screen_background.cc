@@ -154,7 +154,7 @@ void DrawLeftScreenBackground() {
 
   // Set up the frame options.
   d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::RGBA32BitColor(255, 255, 255, 255);
+  frame_options.color = mapi::RGBA32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
   frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
@@ -215,7 +215,7 @@ void DrawRightScreenBackground() {
 
   // Set up the frame options.
   d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::RGBA32BitColor(255, 255, 255, 255);
+  frame_options.color = mapi::RGBA32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
   frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
@@ -271,7 +271,7 @@ void DrawOriginalLeftScreenBorderFrame() {
   }
 
   d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::RGBA32BitColor(255, 255, 255, 255);
+  frame_options.color = mapi::RGBA32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
   frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
@@ -326,7 +326,7 @@ void DrawOriginalRightScreenBorderFrame() {
   }
 
   d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::RGBA32BitColor(255, 255, 255, 255);
+  frame_options.color = mapi::RGBA32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
   frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
