@@ -288,6 +288,42 @@ void DrawOriginalRightScreenBorderFrame() {
 }
 
 void DrawCustomLeftScreenBorderFrame() {
+  d2::CelFile_API& screen_left_border = GetCelFile(config::GetCustomLeftScreenBorderLeftImagePath());
+  d2::CelFile_API& screen_top_border = GetCelFile(config::GetCustomLeftScreenBorderTopImagePath());
+  d2::CelFile_API& screen_top_right_border = GetCelFile(config::GetCustomLeftScreenBorderTopRightImagePath());
+  d2::CelFile_API& screen_bottom_border = GetCelFile(config::GetCustomLeftScreenBorderBottomImagePath());
+  d2::CelFile_API& screen_bottom_right_border = GetCelFile(config::GetCustomLeftScreenBorderBottomRightImagePath());
+
+  const std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+
+  // Draw the left screen's left border.
+  int screen_left_border_height = 0;
+
+  for (unsigned int frame = 0; frame < screen_left_border.GetNumFrames(); frame += 1) {
+    d2::Cel_View cel_view = screen_left_border.GetCel(0, frame);
+    screen_left_border_height += cel_view.GetHeight();
+  }
+
+  d2::DrawCelFileFrameOptions screen_left_frame_options;
+  screen_left_frame_options.color = mapi::RGBA32BitColor();
+  screen_left_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_left_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  screen_left_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
+
+  d2::DrawAllCelFileFramesOptions screen_left_all_frame_options;
+  screen_left_all_frame_options.cel_file_direction = 0;
+  screen_left_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kVerticalThenHorizontal;
+  screen_left_all_frame_options.frame_options = screen_left_frame_options;
+  screen_left_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
+  screen_left_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+
+  screen_left_border.DrawAllFrames(
+      (std::get<0>(width_and_height) - 640) / 2,
+      ((std::get<1>(width_and_height) - 480 + (256 + 176) - screen_left_border_height) / 2),
+      1,
+      screen_left_border.GetNumFrames(),
+      screen_left_all_frame_options
+  );
 }
 
 void DrawCustomRightScreenBorderFrame() {

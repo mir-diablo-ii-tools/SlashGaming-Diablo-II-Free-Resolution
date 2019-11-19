@@ -101,9 +101,48 @@ constexpr std::string_view kScreenBackgroundRibbonImagePathKey =
     "Screen Background Ribbon Image Path";
 constexpr std::string_view kDefaultScreenBackgroundRibbonImagePath = "";
 
-constexpr std::string_view kScreenBorderImagePathKey =
-    "Screen Border Image Path";
-constexpr std::string_view kDefaultScreenBorderImagePath = "";
+// Left screen border images
+constexpr std::string_view kCustomLeftScreenBorderLeftImagePathKey =
+    "Left Screen Border Left Image Path";
+constexpr std::string_view kDefaultCustomLeftScreenBorderLeftImagePath = "";
+
+constexpr std::string_view kCustomLeftScreenBorderTopImagePathKey =
+    "Left Screen Border Top Image Path";
+constexpr std::string_view kDefaultCustomLeftScreenBorderTopImagePath = "";
+
+constexpr std::string_view kCustomLeftScreenBorderTopRightImagePathKey =
+    "Left Screen Border Top Right Image Path";
+constexpr std::string_view kDefaultCustomLeftScreenBorderTopRightImagePath = "";
+
+constexpr std::string_view kCustomLeftScreenBorderBottomImagePathKey =
+    "Left Screen Border Bottom Image Path";
+constexpr std::string_view kDefaultCustomLeftScreenBorderBottomImagePath = "";
+
+constexpr std::string_view kCustomLeftScreenBorderBottomRightImagePathKey =
+    "Left Screen Border Bottom Right Image Path";
+constexpr std::string_view kDefaultCustomLeftScreenBorderBottomRightImagePath = "";
+
+// Right screen border images
+constexpr std::string_view kCustomRightScreenBorderRightImagePathKey =
+    "Right Screen Border Right Image Path";
+constexpr std::string_view kDefaultCustomRightScreenBorderRightImagePath = "";
+
+constexpr std::string_view kCustomRightScreenBorderTopImagePathKey =
+    "Right Screen Border Top Image Path";
+constexpr std::string_view kDefaultCustomRightScreenBorderTopImagePath = "";
+
+constexpr std::string_view kCustomRightScreenBorderTopLeftImagePathKey =
+    "Right Screen Border Top Left Image Path";
+constexpr std::string_view kDefaultCustomRightScreenBorderTopLeftImagePath = "";
+
+constexpr std::string_view kCustomRightScreenBorderBottomImagePathKey =
+    "Right Screen Border Bottom Image Path";
+constexpr std::string_view kDefaultCustomRightScreenBorderBottomImagePath = "";
+
+constexpr std::string_view kCustomRightScreenBorderBottomLeftImagePathKey =
+    "Right Screen Border Bottom Left Image Path";
+constexpr std::string_view kDefaultCustomRightScreenBorderBottomLeftImagePath = "";
+
 
 // Interface Bar Background
 constexpr std::string_view kInterfaceBarBackgroundCenterImagePathKey =
@@ -347,6 +386,86 @@ bool AddMissingConfigEntries(
     );
   }
 
+  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderLeftImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomLeftScreenBorderLeftImagePath.data(),
+        kMainEntryKey,
+        kCustomLeftScreenBorderLeftImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomLeftScreenBorderTopImagePath.data(),
+        kMainEntryKey,
+        kCustomLeftScreenBorderTopImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopRightImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomLeftScreenBorderTopRightImagePath.data(),
+        kMainEntryKey,
+        kCustomLeftScreenBorderTopRightImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomLeftScreenBorderBottomImagePath.data(),
+        kMainEntryKey,
+        kCustomLeftScreenBorderBottomImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomRightImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomLeftScreenBorderBottomRightImagePath.data(),
+        kMainEntryKey,
+        kCustomLeftScreenBorderBottomRightImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderRightImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomRightScreenBorderRightImagePath.data(),
+        kMainEntryKey,
+        kCustomRightScreenBorderRightImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomRightScreenBorderTopImagePath.data(),
+        kMainEntryKey,
+        kCustomRightScreenBorderTopImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopLeftImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomRightScreenBorderTopLeftImagePath.data(),
+        kMainEntryKey,
+        kCustomRightScreenBorderTopLeftImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomRightScreenBorderBottomImagePath.data(),
+        kMainEntryKey,
+        kCustomRightScreenBorderBottomImagePathKey
+    );
+  }
+
+  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomLeftImagePathKey)) {
+    config_reader.SetDeepString(
+        kDefaultCustomRightScreenBorderBottomLeftImagePath.data(),
+        kMainEntryKey,
+        kCustomRightScreenBorderBottomLeftImagePathKey
+    );
+  }
+
   if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundCenterImagePathKey)) {
     config_reader.SetDeepString(
         kDefaultInterfaceBarBackgroundCenterImagePath.data(),
@@ -568,6 +687,176 @@ std::string_view GetScreenBackgroundImagePath() {
   );
 
   return screen_background_image_path;
+}
+
+std::string_view GetCustomLeftScreenBorderLeftImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomLeftScreenBorderLeftImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomLeftScreenBorderLeftImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomLeftScreenBorderTopImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomLeftScreenBorderTopImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomLeftScreenBorderTopImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomLeftScreenBorderTopRightImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomLeftScreenBorderTopRightImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomLeftScreenBorderBottomImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomLeftScreenBorderBottomImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomLeftScreenBorderBottomImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomLeftScreenBorderBottomRightImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomLeftScreenBorderBottomRightImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomRightScreenBorderRightImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomRightScreenBorderRightImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomRightScreenBorderRightImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomRightScreenBorderTopImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomRightScreenBorderTopImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomRightScreenBorderTopImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomRightScreenBorderTopLeftImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomRightScreenBorderTopLeftImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomRightScreenBorderBottomImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomRightScreenBorderBottomImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomRightScreenBorderBottomImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
+}
+
+std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
+  static std::string screen_border_image_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomRightScreenBorderBottomLeftImagePathKey),
+      [=] () {
+        screen_border_image_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomRightScreenBorderBottomLeftImagePathKey
+            );
+      }
+  );
+
+  return screen_border_image_path;
 }
 
 std::string_view GetInterfaceBarBackgroundCenterImagePath() {

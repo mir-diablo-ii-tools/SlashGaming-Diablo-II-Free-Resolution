@@ -63,6 +63,18 @@ void SetIngameResolutionMode(unsigned int resolution_mode);
 
 std::string_view GetScreenBackgroundImagePath();
 
+std::string_view GetCustomLeftScreenBorderLeftImagePath();
+std::string_view GetCustomLeftScreenBorderTopImagePath();
+std::string_view GetCustomLeftScreenBorderTopRightImagePath();
+std::string_view GetCustomLeftScreenBorderBottomImagePath();
+std::string_view GetCustomLeftScreenBorderBottomRightImagePath();
+
+std::string_view GetCustomRightScreenBorderRightImagePath();
+std::string_view GetCustomRightScreenBorderTopImagePath();
+std::string_view GetCustomRightScreenBorderTopLeftImagePath();
+std::string_view GetCustomRightScreenBorderBottomImagePath();
+std::string_view GetCustomRightScreenBorderBottomLeftImagePath();
+
 std::string_view GetInterfaceBarBackgroundCenterImagePath();
 std::string_view GetInterfaceBarBackgroundLeftImagePath();
 std::string_view GetInterfaceBarBackgroundRightImagePath();
