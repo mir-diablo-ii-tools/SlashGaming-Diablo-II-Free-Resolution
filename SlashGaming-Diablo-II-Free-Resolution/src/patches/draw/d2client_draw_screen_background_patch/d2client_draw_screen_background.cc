@@ -318,21 +318,15 @@ void DrawCustomLeftScreenBorderFrame() {
     screen_top_right_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_top_right_frame_options;
-  screen_top_right_frame_options.color = mapi::RGBA32BitColor();
-  screen_top_right_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_top_right_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_top_right_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
-
   d2::DrawAllCelFileFramesOptions screen_top_right_all_frame_options;
   screen_top_right_all_frame_options.cel_file_direction = 0;
-  screen_top_right_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_top_right_all_frame_options.frame_options = screen_top_right_frame_options;
-  screen_top_right_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_top_right_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_top_right_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_top_right_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_top_right_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  screen_top_right_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
 
   screen_top_right_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) - screen_top_right_border_width,
+      std::get<0>(width_and_height) / 2,
       border_top,
       screen_top_right_border.GetNumFrames(),
       1,
@@ -347,21 +341,15 @@ void DrawCustomLeftScreenBorderFrame() {
     screen_top_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_top_frame_options;
-  screen_top_frame_options.color = mapi::RGBA32BitColor();
-  screen_top_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_top_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_top_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
-
   d2::DrawAllCelFileFramesOptions screen_top_all_frame_options;
   screen_top_all_frame_options.cel_file_direction = 0;
-  screen_top_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_top_all_frame_options.frame_options = screen_top_frame_options;
-  screen_top_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_top_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_top_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_top_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_top_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  screen_top_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
 
   screen_top_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) - screen_top_right_border_width - screen_top_border_width,
+      (std::get<0>(width_and_height) / 2) - screen_top_right_border_width,
       border_top,
       screen_top_border.GetNumFrames(),
       1,
@@ -376,21 +364,15 @@ void DrawCustomLeftScreenBorderFrame() {
     screen_bottom_right_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_bottom_right_frame_options;
-  screen_bottom_right_frame_options.color = mapi::RGBA32BitColor();
-  screen_bottom_right_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_bottom_right_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_right_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
-
   d2::DrawAllCelFileFramesOptions screen_bottom_right_all_frame_options;
   screen_bottom_right_all_frame_options.cel_file_direction = 0;
-  screen_bottom_right_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_bottom_right_all_frame_options.frame_options = screen_bottom_right_frame_options;
-  screen_bottom_right_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_bottom_right_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_bottom_right_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_bottom_right_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_bottom_right_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  screen_bottom_right_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
 
   screen_bottom_right_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) - screen_bottom_right_border_width,
+      std::get<0>(width_and_height) / 2,
       border_bottom,
       screen_bottom_right_border.GetNumFrames(),
       1,
@@ -405,21 +387,15 @@ void DrawCustomLeftScreenBorderFrame() {
     screen_bottom_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_bottom_frame_options;
-  screen_bottom_frame_options.color = mapi::RGBA32BitColor();
-  screen_bottom_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_bottom_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
-
   d2::DrawAllCelFileFramesOptions screen_bottom_all_frame_options;
   screen_bottom_all_frame_options.cel_file_direction = 0;
-  screen_bottom_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_bottom_all_frame_options.frame_options = screen_bottom_frame_options;
-  screen_bottom_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_bottom_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_bottom_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_bottom_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_bottom_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  screen_bottom_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
 
   screen_bottom_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) - screen_bottom_right_border_width - screen_bottom_border_width,
+      (std::get<0>(width_and_height) / 2) - screen_bottom_right_border_width,
       border_bottom,
       screen_bottom_border.GetNumFrames(),
       1,
@@ -427,18 +403,12 @@ void DrawCustomLeftScreenBorderFrame() {
   );
 
   // Draw the left screen's left border.
-  d2::DrawCelFileFrameOptions screen_left_frame_options;
-  screen_left_frame_options.color = mapi::RGBA32BitColor();
-  screen_left_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_left_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
-  screen_left_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
-
   d2::DrawAllCelFileFramesOptions screen_left_all_frame_options;
   screen_left_all_frame_options.cel_file_direction = 0;
-  screen_left_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kVerticalThenHorizontal;
-  screen_left_all_frame_options.frame_options = screen_left_frame_options;
-  screen_left_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_left_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_left_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_left_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_left_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  screen_left_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
 
   screen_left_border.DrawAllFrames(
       (std::get<0>(width_and_height) - 640) / 2,
@@ -480,18 +450,12 @@ void DrawCustomRightScreenBorderFrame() {
     screen_top_left_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_top_left_frame_options;
-  screen_top_left_frame_options.color = mapi::RGBA32BitColor();
-  screen_top_left_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_top_left_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_top_left_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
-
   d2::DrawAllCelFileFramesOptions screen_top_left_all_frame_options;
   screen_top_left_all_frame_options.cel_file_direction = 0;
-  screen_top_left_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_top_left_all_frame_options.frame_options = screen_top_left_frame_options;
-  screen_top_left_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_top_left_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_top_left_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_top_left_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_top_left_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
+  screen_top_left_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
 
   screen_top_left_border.DrawAllFrames(
       std::get<0>(width_and_height) / 2,
@@ -509,18 +473,12 @@ void DrawCustomRightScreenBorderFrame() {
     screen_top_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_top_frame_options;
-  screen_top_frame_options.color = mapi::RGBA32BitColor();
-  screen_top_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_top_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_top_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
-
   d2::DrawAllCelFileFramesOptions screen_top_all_frame_options;
   screen_top_all_frame_options.cel_file_direction = 0;
-  screen_top_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_top_all_frame_options.frame_options = screen_top_frame_options;
-  screen_top_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_top_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_top_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_top_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_top_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
+  screen_top_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
 
   screen_top_border.DrawAllFrames(
       (std::get<0>(width_and_height) / 2) + screen_top_left_border_width,
@@ -538,18 +496,12 @@ void DrawCustomRightScreenBorderFrame() {
     screen_bottom_left_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_bottom_left_frame_options;
-  screen_bottom_left_frame_options.color = mapi::RGBA32BitColor();
-  screen_bottom_left_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_bottom_left_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_left_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
-
   d2::DrawAllCelFileFramesOptions screen_bottom_left_all_frame_options;
   screen_bottom_left_all_frame_options.cel_file_direction = 0;
-  screen_bottom_left_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_bottom_left_all_frame_options.frame_options = screen_bottom_left_frame_options;
-  screen_bottom_left_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_bottom_left_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_bottom_left_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_bottom_left_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_bottom_left_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
+  screen_bottom_left_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
 
   screen_bottom_left_border.DrawAllFrames(
       std::get<0>(width_and_height) / 2,
@@ -567,18 +519,12 @@ void DrawCustomRightScreenBorderFrame() {
     screen_bottom_border_width += cel_view.GetWidth();
   }
 
-  d2::DrawCelFileFrameOptions screen_bottom_frame_options;
-  screen_bottom_frame_options.color = mapi::RGBA32BitColor();
-  screen_bottom_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_bottom_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
-
   d2::DrawAllCelFileFramesOptions screen_bottom_all_frame_options;
   screen_bottom_all_frame_options.cel_file_direction = 0;
-  screen_bottom_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kHorizontalThenVertical;
-  screen_bottom_all_frame_options.frame_options = screen_bottom_frame_options;
-  screen_bottom_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_bottom_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_bottom_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_bottom_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_bottom_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
+  screen_bottom_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
 
   screen_bottom_border.DrawAllFrames(
       (std::get<0>(width_and_height) / 2) + screen_bottom_left_border_width,
@@ -589,18 +535,12 @@ void DrawCustomRightScreenBorderFrame() {
   );
 
   // Draw the right screen's right border.
-  d2::DrawCelFileFrameOptions screen_right_frame_options;
-  screen_right_frame_options.color = mapi::RGBA32BitColor();
-  screen_right_frame_options.draw_effect = d2::DrawEffect::kNone;
-  screen_right_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  screen_right_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
-
   d2::DrawAllCelFileFramesOptions screen_right_all_frame_options;
   screen_right_all_frame_options.cel_file_direction = 0;
-  screen_right_all_frame_options.direction_order = d2::DrawAllFramesDirectionOrder::kVerticalThenHorizontal;
-  screen_right_all_frame_options.frame_options = screen_right_frame_options;
-  screen_right_all_frame_options.horizontal_direction = d2::DrawHorizontalDirection::kLeftToRight;
-  screen_right_all_frame_options.vertical_direction = d2::DrawVerticalDirection::kTopToBottom;
+  screen_right_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_right_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_right_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
+  screen_right_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
 
   screen_right_border.DrawAllFrames(
       screen_right,
@@ -636,6 +576,70 @@ void DrawRightScreenBorderFrame() {
 }
 
 void DrawLeftScreenBackgroundRibbon() {
+  d2::CelFile_API& screen_border_horizontal_ribbon = GetCelFile(config::GetScreenBorderHorizontalRibbonImagePath());
+  d2::CelFile_API& screen_border_vertical_ribbon = GetCelFile(config::GetScreenBorderVerticalRibbonImagePath());
+
+  d2::CelFile_API& screen_left_border = GetCelFile(config::GetCustomLeftScreenBorderLeftImagePath());
+  d2::CelFile_API& screen_top_right_border = GetCelFile(config::GetCustomLeftScreenBorderTopRightImagePath());
+  d2::CelFile_API& screen_bottom_right_border = GetCelFile(config::GetCustomLeftScreenBorderBottomRightImagePath());
+
+  // Determine border starting positions.
+  const std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+
+  const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
+  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+
+  int screen_left_border_height = 0;
+
+  for (unsigned int frame = 0; frame < screen_left_border.GetNumFrames(); frame += 1) {
+    d2::Cel_View cel_view = screen_left_border.GetCel(0, frame);
+    screen_left_border_height += cel_view.GetHeight();
+  }
+
+  const int border_top = screen_top + (((256 + 176) - screen_left_border_height) / 2);
+  const int border_left = screen_left - d2::Cel_View(screen_left_border.GetCel(0, 0)).GetWidth();
+  const int border_bottom = screen_top + (((256 + 176) + screen_left_border_height) / 2);
+
+  // Draw horizontal bars.
+  d2::DrawAllCelFileFramesOptions screen_horizontal_ribbon_all_frame_options;
+  screen_horizontal_ribbon_all_frame_options.cel_file_direction = 0;
+  screen_horizontal_ribbon_all_frame_options.color = mapi::RGBA32BitColor();
+  screen_horizontal_ribbon_all_frame_options.draw_effect = d2::DrawEffect::kNone;
+  screen_horizontal_ribbon_all_frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
+  screen_horizontal_ribbon_all_frame_options.position_y_behavior = d2::DrawPositionYBehavior::kTop;
+
+  int screen_border_horizontal_ribbon_width = 0;
+  for (unsigned int frame = 0; frame < screen_border_horizontal_ribbon.GetNumFrames(); frame += 1) {
+    d2::Cel_View cel_view = screen_border_horizontal_ribbon.GetCel(0, frame);
+
+    screen_border_horizontal_ribbon_width += cel_view.GetWidth();
+  }
+
+  const int screen_border_horizontal_ribbon_height = d2::Cel_View(screen_border_horizontal_ribbon.GetCel(0, 0)).GetHeight();
+
+  int width_covered = 0;
+
+  while (width_covered < border_left) {
+    screen_border_horizontal_ribbon.DrawAllFrames(
+        border_left,
+        border_top,
+        screen_border_horizontal_ribbon.GetNumFrames(),
+        1,
+        screen_horizontal_ribbon_all_frame_options
+    );
+
+    screen_border_horizontal_ribbon.DrawAllFrames(
+        border_left,
+        border_bottom - screen_border_horizontal_ribbon_height,
+        screen_border_horizontal_ribbon.GetNumFrames(),
+        1,
+        screen_horizontal_ribbon_all_frame_options
+    );
+
+    width_covered += screen_border_horizontal_ribbon_width;
+  }
+
+  // Draw vertical bars
 }
 
 void DrawRightScreenBackgroundRibbon() {

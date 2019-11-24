@@ -75,6 +75,9 @@ std::string_view GetCustomRightScreenBorderTopLeftImagePath();
 std::string_view GetCustomRightScreenBorderBottomImagePath();
 std::string_view GetCustomRightScreenBorderBottomLeftImagePath();
 
+std::string_view GetScreenBorderHorizontalRibbonImagePath();
+std::string_view GetScreenBorderVerticalRibbonImagePath();
+
 std::string_view GetInterfaceBarBackgroundCenterImagePath();
 std::string_view GetInterfaceBarBackgroundLeftImagePath();
 std::string_view GetInterfaceBarBackgroundRightImagePath();

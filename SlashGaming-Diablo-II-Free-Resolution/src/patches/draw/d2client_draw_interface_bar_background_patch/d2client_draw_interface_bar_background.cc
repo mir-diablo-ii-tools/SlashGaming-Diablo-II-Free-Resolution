@@ -152,8 +152,8 @@ void DrawRightInterfaceBarBackground() {
 
   // Draw the left part of the interface bar background.
   std::vector<d2::Cel_View> right_cels;
-  for (unsigned int i = 0; i < interface_bar_background_right.GetNumFrames(); i += 1) {
-    right_cels.push_back(interface_bar_background_right.GetCel(0, i));
+  for (unsigned int frame = 0; frame < interface_bar_background_right.GetNumFrames(); frame += 1) {
+    right_cels.push_back(interface_bar_background_right.GetCel(0, frame));
   }
 
   for (unsigned int frame = 0;
@@ -173,8 +173,8 @@ void DrawRightInterfaceBarBackground() {
 
   // Draw the center part of the interface bar background.
   std::vector<d2::Cel_View> center_cels;
-  for (unsigned int i = 0; i < interface_bar_background_center.GetNumFrames(); i += 1) {
-    center_cels.push_back(interface_bar_background_center.GetCel(0, i));
+  for (unsigned int frame = 0; frame < interface_bar_background_center.GetNumFrames(); frame += 1) {
+    center_cels.push_back(interface_bar_background_center.GetCel(0, frame));
   }
 
   for (unsigned int frame = 0; width_covered < (std::get<0>(width_and_height) / 2); frame += 1) {
