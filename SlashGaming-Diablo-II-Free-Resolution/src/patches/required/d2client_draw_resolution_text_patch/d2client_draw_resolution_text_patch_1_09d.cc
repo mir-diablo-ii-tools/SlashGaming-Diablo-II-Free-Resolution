@@ -51,7 +51,6 @@
 namespace sgd2fr::patches {
 namespace {
 
-
 __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
