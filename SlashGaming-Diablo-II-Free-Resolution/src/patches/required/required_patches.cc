@@ -49,6 +49,7 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.hpp"
 #include "d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch.hpp"
+#include "d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.hpp"
 #include "get_d2client_resolution_registry_patch/get_d2client_resolution_registry_patch.hpp"
 #include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
 #include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
@@ -83,6 +84,14 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
       game_patches.end(),
       std::make_move_iterator(d2client_draw_resolution_text_patch.begin()),
       std::make_move_iterator(d2client_draw_resolution_text_patch.end())
+  );
+
+  std::vector d2client_unload_cel_file_collection_patch =
+      MakeD2ClientUnloadCelFileCollectionPatch();
+  game_patches.insert(
+      game_patches.end(),
+      std::make_move_iterator(d2client_unload_cel_file_collection_patch.begin()),
+      std::make_move_iterator(d2client_unload_cel_file_collection_patch.end())
   );
 
   std::vector get_d2client_resolution_registry_patch =
