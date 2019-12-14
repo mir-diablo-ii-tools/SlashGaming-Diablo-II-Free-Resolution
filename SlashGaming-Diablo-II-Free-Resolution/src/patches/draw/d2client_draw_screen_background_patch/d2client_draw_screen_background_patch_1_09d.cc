@@ -51,7 +51,8 @@
 namespace sgd2fr::patches {
 namespace {
 
-extern "C" std::intptr_t __cdecl GetJumpAddress() {
+extern "C" std::intptr_t __cdecl
+SGD2FR_D2Client_DrawScreenBackground_1_09D_GetJumpAddress() {
   mapi::GameAddress address = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x35750
@@ -68,7 +69,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push edx);
 
   ASM_X86(call ASM_X86_FUNC(SGD2FR_D2ClientDrawScreenBackground));
-  ASM_X86(call ASM_X86_FUNC(GetJumpAddress))
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_DrawScreenBackground_1_09D_GetJumpAddress));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
