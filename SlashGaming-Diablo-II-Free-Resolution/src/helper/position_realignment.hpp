@@ -43,44 +43,18 @@
  *  work.
  */
 
-#include "inventory_patches.hpp"
+#ifndef SGD2FR_HELPER_POSITION_REALIGNMENT_HPP_
+#define SGD2FR_HELPER_POSITION_REALIGNMENT_HPP_
 
-#include <algorithm>
+#include <sgd2mapi.hpp>
 
-#include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
-#include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
+namespace sgd2fr {
 
-namespace sgd2fr::patches {
+void RealignPositionFromCenter(
+    int inventory_arrange_mode,
+    d2::PositionalRectangle_Wrapper out_position_wrapper
+);
 
-std::vector<mapi::GamePatch> MakeInventoryPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+} // namespace sgd2fr
 
-  std::vector d2common_get_global_belt_record_patch =
-      Make_D2Common_GetGlobalBeltRecordPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.end())
-  );
-
-  std::vector d2common_get_global_belt_slot_position_patch =
-      Make_D2Common_GetGlobalBeltSlotPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
-  );
-
-  std::vector d2common_get_global_inventory_grid_layout_patch =
-      Make_D2Common_GetGlobalInventoryGridLayoutPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.begin()),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.end())
-  );
-
-  return game_patches;
-}
-
-} // namespace sgd2fr::patches
+#endif // SGD2FR_HELPER_POSITION_REALIGNMENT_HPP_

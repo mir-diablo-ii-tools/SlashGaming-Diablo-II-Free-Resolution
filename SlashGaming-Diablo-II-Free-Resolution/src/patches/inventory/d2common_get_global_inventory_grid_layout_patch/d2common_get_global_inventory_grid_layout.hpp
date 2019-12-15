@@ -43,44 +43,19 @@
  *  work.
  */
 
-#include "inventory_patches.hpp"
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_HPP_
 
-#include <algorithm>
-
-#include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
-#include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInventoryPatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector d2common_get_global_belt_record_patch =
-      Make_D2Common_GetGlobalBeltRecordPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.end())
-  );
-
-  std::vector d2common_get_global_belt_slot_position_patch =
-      Make_D2Common_GetGlobalBeltSlotPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
-  );
-
-  std::vector d2common_get_global_inventory_grid_layout_patch =
-      Make_D2Common_GetGlobalInventoryGridLayoutPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.begin()),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.end())
-  );
-
-  return game_patches;
-}
+extern "C" void __cdecl SGD2FR_D2Common_GetGlobalInventoryGridLayout(
+    std::uint32_t inventory_record_index,
+    std::uint32_t inventory_arrange_mode,
+    d2::GridLayout* out_grid_layout
+);
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_HPP_

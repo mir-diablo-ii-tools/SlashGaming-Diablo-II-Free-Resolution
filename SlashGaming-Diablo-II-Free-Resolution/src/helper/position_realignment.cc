@@ -43,44 +43,70 @@
  *  work.
  */
 
-#include "inventory_patches.hpp"
+#include "position_realignment.hpp"
 
-#include <algorithm>
+#include "get_resolution_from_id.hpp"
 
-#include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
-#include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
+namespace sgd2fr {
+namespace {
 
-namespace sgd2fr::patches {
+} // namespace
 
-std::vector<mapi::GamePatch> MakeInventoryPatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector d2common_get_global_belt_record_patch =
-      Make_D2Common_GetGlobalBeltRecordPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.end())
+void RealignPositionFromCenter(
+    int inventory_arrange_mode,
+    d2::PositionalRectangle_Wrapper out_position_wrapper
+) {
+  std::tuple width_and_height = GetResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
   );
 
-  std::vector d2common_get_global_belt_slot_position_patch =
-      Make_D2Common_GetGlobalBeltSlotPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
+  int source_width;
+  int source_height;
+  if (inventory_arrange_mode == 0) {
+    std::tuple source_width_and_height = GetResolutionFromId(0);
+
+    source_width = std::get<0>(source_width_and_height);
+    source_height = std::get<1>(source_width_and_height);
+  } else {
+    std::tuple source_width_and_height = GetResolutionFromId(2);
+
+    source_width = std::get<0>(source_width_and_height);
+    source_height = std::get<1>(source_width_and_height);
+  }
+
+  // Set left and right values.
+  int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()
+      - (source_width / 2);
+
+  int rectangle_width = out_position_wrapper.GetRight()
+      - out_position_wrapper.GetLeft();
+
+  out_position_wrapper.SetLeft(
+      (std::get<0>(width_and_height) / 2)
+          + dist_from_rect_left_to_display_center
   );
 
-  std::vector d2common_get_global_inventory_grid_layout_patch =
-      Make_D2Common_GetGlobalInventoryGridLayoutPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.begin()),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.end())
+  out_position_wrapper.SetRight(
+      out_position_wrapper.GetLeft() + rectangle_width
   );
 
-  return game_patches;
+  // Set top and bottom values.
+  int dist_from_rect_top_to_display_center = out_position_wrapper.GetTop()
+      - (source_height / 2);
+
+  int rectangle_height = out_position_wrapper.GetBottom()
+      - out_position_wrapper.GetTop();
+
+  out_position_wrapper.SetTop(
+      (std::get<1>(width_and_height) / 2)
+          + dist_from_rect_top_to_display_center
+  );
+
+  out_position_wrapper.SetBottom(
+      out_position_wrapper.GetTop() + rectangle_height
+  );
 }
 
-} // namespace sgd2fr::patches
+
+} // namespace sgd2fr
+
