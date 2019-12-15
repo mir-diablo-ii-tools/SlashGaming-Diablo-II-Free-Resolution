@@ -43,35 +43,56 @@
  *  work.
  */
 
-#include "inventory_patches.hpp"
+#include "d2common_get_global_belt_record_patch_1_09d.hpp"
 
-#include <algorithm>
-
-#include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
+#include "../../../asm_x86_macro.h"
+#include "d2common_get_global_belt_record.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeInventoryPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc_01() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  std::vector d2common_get_global_belt_record_patch =
-      Make_D2Common_GetGlobalBeltRecordPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.end())
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(push dword ptr [ebp + 16]);
+  ASM_X86(push dword ptr [ebp + 12]);
+  ASM_X86(push dword ptr [ebp + 8]);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Common_GetGlobalBeltRecord));
+  ASM_X86(add esp, 12);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret 12);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> Make_D2Common_GetGlobalBeltRecordPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOrdinal(
+      mapi::DefaultLibrary::kD2Common,
+      10638
   );
 
-  std::vector d2common_get_global_belt_slot_position_patch =
-      Make_D2Common_GetGlobalBeltSlotPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_01),
+          mapi::BranchType::kJump,
+          &InterceptionFunc_01,
+          5
+      )
   );
 
-  return game_patches;
+  return patches;
 }
 
 } // namespace sgd2fr::patches

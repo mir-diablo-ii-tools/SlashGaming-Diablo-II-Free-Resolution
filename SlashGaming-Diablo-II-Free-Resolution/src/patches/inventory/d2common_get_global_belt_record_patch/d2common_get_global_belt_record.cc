@@ -43,35 +43,44 @@
  *  work.
  */
 
-#include "inventory_patches.hpp"
+#include "d2common_get_global_belt_record.hpp"
 
-#include <algorithm>
+#include <windows.h>
 
-#include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
+#include <fmt/format.h>
+#include <sgd2mapi.hpp>
+#include "../../../config.hpp"
+#include "../../../helper/cel_file_collection.hpp"
+#include "../../../helper/get_resolution_from_id.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInventoryPatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector d2common_get_global_belt_record_patch =
-      Make_D2Common_GetGlobalBeltRecordPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.end())
+void __cdecl SGD2FR_D2Common_GetGlobalBeltRecord(
+    std::uint32_t belt_record_index,
+    std::uint32_t inventory_arrange_mode,
+    d2::BeltRecord* out_belt_record
+) {
+  // Original code, copies the values of the specified Global Belt Slot
+  // into the output Belt Slot.
+  d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
+  d2::BeltRecord_View global_belt_record_view(
+      global_belt_txt_view[belt_record_index + (inventory_arrange_mode * 7)]
   );
 
-  std::vector d2common_get_global_belt_slot_position_patch =
-      Make_D2Common_GetGlobalBeltSlotPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
-  );
+  d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
+  out_belt_record_wrapper.Copy(global_belt_txt_view);
 
-  return game_patches;
+  // Adjustment code to ensure that the objects appear in the correct location.
+  for (std::size_t belt_slot_index = 0;
+       belt_slot_index < out_belt_record_wrapper.GetNumSlots();
+       belt_slot_index += 1) {
+    d2::d2common::GetGlobalBeltSlotPosition(
+        belt_record_index,
+        inventory_arrange_mode,
+        out_belt_record_wrapper.GetSlotPosition(belt_slot_index),
+        belt_slot_index
+    );
+  }
 }
 
 } // namespace sgd2fr::patches
