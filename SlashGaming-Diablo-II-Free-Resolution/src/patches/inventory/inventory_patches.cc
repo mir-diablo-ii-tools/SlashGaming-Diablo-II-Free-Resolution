@@ -49,6 +49,7 @@
 
 #include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
 #include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
+#include "d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.hpp"
 #include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
 #include "d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.hpp"
 
@@ -71,6 +72,14 @@ std::vector<mapi::GamePatch> MakeInventoryPatches() {
       game_patches.end(),
       std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
       std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
+  );
+
+  std::vector d2common_get_global_equipment_slot_layout_patch =
+      Make_D2Common_GetGlobalEquipmentSlotLayoutPatch();
+  game_patches.insert(
+      game_patches.end(),
+      std::make_move_iterator(d2common_get_global_equipment_slot_layout_patch.begin()),
+      std::make_move_iterator(d2common_get_global_equipment_slot_layout_patch.end())
   );
 
   std::vector d2common_get_global_inventory_grid_layout_patch =
