@@ -43,41 +43,57 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "d2common_get_global_belt_slot_position_patch_1_09d.hpp"
 
-#include <algorithm>
-
-#include "draw/draw_patches.hpp"
-#include "inventory/inventory_patches.hpp"
-#include "required/required_patches.hpp"
+#include "../../../asm_x86_macro.h"
+#include "d2common_get_global_belt_slot_position.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc_01() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(push dword ptr [ebp + 20]);
+  ASM_X86(push dword ptr [ebp + 16]);
+  ASM_X86(push dword ptr [ebp + 12]);
+  ASM_X86(push dword ptr [ebp + 8]);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Common_GetGlobalBeltSlotPosition));
+  ASM_X86(add esp, 16);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret 16);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> Make_D2Common_GetGlobalBeltSlotPositionPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOrdinal(
+      mapi::DefaultLibrary::kD2Common,
+      10639
   );
 
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_01),
+          mapi::BranchType::kJump,
+          &InterceptionFunc_01,
+          5
+      )
   );
 
-  std::vector inventory_patches = MakeInventoryPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(inventory_patches.begin()),
-      std::make_move_iterator(inventory_patches.end())
-  );
-
-  return game_patches;
+  return patches;
 }
 
 } // namespace sgd2fr::patches

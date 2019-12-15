@@ -43,41 +43,20 @@
  *  work.
  */
 
-#include "patches.hpp"
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_HPP_
 
-#include <algorithm>
-
-#include "draw/draw_patches.hpp"
-#include "inventory/inventory_patches.hpp"
-#include "required/required_patches.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
-  );
-
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
-  );
-
-  std::vector inventory_patches = MakeInventoryPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(inventory_patches.begin()),
-      std::make_move_iterator(inventory_patches.end())
-  );
-
-  return game_patches;
-}
+extern "C" void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
+    std::uint32_t belt_record_index,
+    std::uint32_t inventory_arrange_mode,
+    d2::PositionalRectangle* out_belt_slot,
+    std::uint32_t belt_slot_index
+);
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_HPP_
