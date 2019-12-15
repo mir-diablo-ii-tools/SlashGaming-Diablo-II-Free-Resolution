@@ -43,53 +43,48 @@
  *  work.
  */
 
-#include "inventory_patches.hpp"
+#include "d2common_get_global_inventory_position.hpp"
 
-#include <algorithm>
-
-#include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
-#include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
-#include "d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInventoryPatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector d2common_get_global_belt_record_patch =
-      Make_D2Common_GetGlobalBeltRecordPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.end())
+void __cdecl SGD2FR_D2Common_GetGlobalInventoryPosition(
+    std::uint32_t inventory_record_index,
+    std::uint32_t inventory_arrange_mode,
+    d2::PositionalRectangle* out_position
+) {
+  // Original code, copies the values of the specified Global Inventory
+  // Position into the output Inventory Position.
+  d2::InventoryRecord_View global_inventory_txt_view(
+      d2::d2common::GetGlobalInventoryTxt()
+  );
+  d2::PositionalRectangle_View global_inventory_position(
+      global_inventory_txt_view[
+          inventory_record_index + (inventory_arrange_mode * 7)
+      ].GetPosition()
   );
 
-  std::vector d2common_get_global_belt_slot_position_patch =
-      Make_D2Common_GetGlobalBeltSlotPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
-  );
+  d2::PositionalRectangle_Wrapper out_position_wrapper(out_position);
+  out_position_wrapper.Copy(global_inventory_position);
 
-  std::vector d2common_get_global_inventory_grid_layout_patch =
-      Make_D2Common_GetGlobalInventoryGridLayoutPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.begin()),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.end())
-  );
+  // Do not adjust positions if the entries are empty, which use value -1.
+  constexpr int entry_empty_value = -1;
+  if (out_position_wrapper.GetLeft() == entry_empty_value
+      || out_position_wrapper.GetRight() == entry_empty_value
+      || out_position_wrapper.GetTop() == entry_empty_value
+      || out_position_wrapper.GetBottom() == entry_empty_value
+  ) {
+    return;
+  }
 
-  std::vector d2common_get_global_inventory_position_patch =
-      Make_D2Common_GetGlobalInventoryPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_inventory_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_inventory_position_patch.end())
+  // Adjustment code to ensure that the objects appear in the correct
+  // location.
+  RealignPositionFromCenter(
+      inventory_arrange_mode,
+      out_position_wrapper
   );
-
-  return game_patches;
 }
 
 } // namespace sgd2fr::patches
