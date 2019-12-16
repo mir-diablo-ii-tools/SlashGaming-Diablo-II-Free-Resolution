@@ -62,7 +62,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalInventoryGridLayout(
   );
   d2::GridLayout_View global_inventory_grid_layout(
       global_inventory_txt_view[
-          inventory_record_index + (inventory_arrange_mode * 7)
+          inventory_record_index + (inventory_arrange_mode * 16)
       ].GetGridLayout()
   );
 
