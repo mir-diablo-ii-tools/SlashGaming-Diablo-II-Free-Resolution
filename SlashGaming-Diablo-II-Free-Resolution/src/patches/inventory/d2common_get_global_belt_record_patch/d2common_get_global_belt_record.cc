@@ -68,7 +68,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltRecord(
   );
 
   d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
-  out_belt_record_wrapper.Copy(global_belt_txt_view);
+  out_belt_record_wrapper.Copy(global_belt_record_view);
 
   // Adjustment code to ensure that the objects appear in the correct location.
   for (std::size_t belt_slot_index = 0;
