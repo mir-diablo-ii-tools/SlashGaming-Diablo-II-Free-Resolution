@@ -73,10 +73,12 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
   out_belt_slot_wrapper.Copy(global_belt_slot_position);
 
   // Do not adjust positions if the entries are empty, which use value 0.
-  if (out_belt_slot_wrapper.GetLeft() == 0
-      && out_belt_slot_wrapper.GetLeft() == out_belt_slot_wrapper.GetRight()
-      && out_belt_slot_wrapper.GetRight() == out_belt_slot_wrapper.GetTop()
-      && out_belt_slot_wrapper.GetTop() == out_belt_slot_wrapper.GetBottom()
+  constexpr int entry_empty_value = 0;
+
+  if (out_belt_slot_wrapper.GetLeft() == entry_empty_value
+      && out_belt_slot_wrapper.GetRight() == entry_empty_value
+      && out_belt_slot_wrapper.GetTop() == entry_empty_value
+      && out_belt_slot_wrapper.GetBottom() == entry_empty_value
   ) {
     return;
   }
