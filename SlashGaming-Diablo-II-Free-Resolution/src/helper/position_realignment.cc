@@ -53,7 +53,7 @@ namespace {
 } // namespace
 
 void RealignPositionFromCenter(
-    int inventory_arrange_mode,
+    unsigned int inventory_arrange_mode,
     d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
   std::tuple width_and_height = GetResolutionFromId(
@@ -61,10 +61,10 @@ void RealignPositionFromCenter(
   );
 
   std::tuple<int, int> source_width_and_height;
-  if (inventory_arrange_mode == 0) {
-    source_width_and_height = GetResolutionFromId(0);
-  } else {
+  if (inventory_arrange_mode == 1) {
     source_width_and_height = GetResolutionFromId(2);
+  } else {
+    source_width_and_height = GetResolutionFromId(0);
   }
 
   int source_width = std::get<0>(source_width_and_height);

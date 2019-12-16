@@ -63,9 +63,13 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
 ) {
   // Original code, copies the values of the specified Global Belt Slot
   // into the output Belt Slot.
+  unsigned int source_inventory_arrange_mode = (inventory_arrange_mode < 2)
+      ? inventory_arrange_mode
+      : 0;
+
   d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
   d2::PositionalRectangle_View global_belt_slot_position(
-      global_belt_txt_view[belt_record_index + (inventory_arrange_mode * 7)]
+      global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
           .GetSlotPosition(belt_slot_index)
   );
 
@@ -90,7 +94,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
 
   int source_width;
   int source_height;
-  if (inventory_arrange_mode == 0) {
+  if (source_inventory_arrange_mode == 0) {
     source_width = 640;
     source_height = 480;
   } else {

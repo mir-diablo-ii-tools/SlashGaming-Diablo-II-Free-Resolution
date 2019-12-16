@@ -57,12 +57,16 @@ void __cdecl SGD2FR_D2Common_GetGlobalInventoryPosition(
 ) {
   // Original code, copies the values of the specified Global Inventory
   // Position into the output Inventory Position.
+  unsigned int source_inventory_arrange_mode = (inventory_arrange_mode < 2)
+      ? inventory_arrange_mode
+      : 0;
+
   d2::InventoryRecord_View global_inventory_txt_view(
       d2::d2common::GetGlobalInventoryTxt()
   );
   d2::PositionalRectangle_View global_inventory_position(
       global_inventory_txt_view[
-          inventory_record_index + (inventory_arrange_mode * 16)
+          inventory_record_index + (source_inventory_arrange_mode * 16)
       ].GetPosition()
   );
 

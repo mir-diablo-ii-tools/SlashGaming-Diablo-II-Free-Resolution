@@ -51,7 +51,9 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_SetD2ClientGeneralDisplayWidthAndHeight(std::size_t resolution_mode) {
+void __cdecl SGD2FR_SetD2ClientGeneralDisplayWidthAndHeight(
+    std::size_t resolution_mode
+) {
   std::tuple<int, int> resolution = GetResolutionFromId(resolution_mode);
 
   int width = std::get<0>(resolution);
@@ -60,9 +62,9 @@ void __cdecl SGD2FR_SetD2ClientGeneralDisplayWidthAndHeight(std::size_t resoluti
   d2::d2client::SetGeneralDisplayWidth(width);
   d2::d2client::SetGeneralDisplayHeight(height);
 
-  unsigned int inventory_arrange_mode = (resolution_mode == 2)
-      ? 1
-      : 0;
+  unsigned int inventory_arrange_mode = (resolution_mode == 0)
+      ? 0
+      : resolution_mode - 1;
 
   d2::d2client::SetInventoryArrangeMode(inventory_arrange_mode);
 }
