@@ -50,11 +50,11 @@
 namespace sgd2fr {
 
 std::tuple<int, int> GetResolutionFromId(std::size_t id) {
-  const auto& ingame_resolutions = config::GetIngameResolutions();
-
   if (id == 1) {
     return config::GetMainMenuResolution();
   }
+
+  const auto& ingame_resolutions = config::GetIngameResolutions();
 
   std::size_t ingame_resolution_index = (id == 0)
       ? id

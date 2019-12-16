@@ -60,19 +60,15 @@ void RealignPositionFromCenter(
       d2::d2gfx::GetResolutionMode()
   );
 
-  int source_width;
-  int source_height;
+  std::tuple<int, int> source_width_and_height;
   if (inventory_arrange_mode == 0) {
-    std::tuple source_width_and_height = GetResolutionFromId(0);
-
-    source_width = std::get<0>(source_width_and_height);
-    source_height = std::get<1>(source_width_and_height);
+    source_width_and_height = GetResolutionFromId(0);
   } else {
-    std::tuple source_width_and_height = GetResolutionFromId(2);
-
-    source_width = std::get<0>(source_width_and_height);
-    source_height = std::get<1>(source_width_and_height);
+    source_width_and_height = GetResolutionFromId(2);
   }
+
+  int source_width = std::get<0>(source_width_and_height);
+  int source_height = std::get<1>(source_width_and_height);
 
   // Set left and right values.
   int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()
