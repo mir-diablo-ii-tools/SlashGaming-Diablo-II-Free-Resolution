@@ -43,49 +43,50 @@
  *  work.
  */
 
-#include "patches.hpp"
+#include "d2client_enable_800_interface_bar_patch_1_09d.hpp"
 
-#include <algorithm>
-
-#include "draw/draw_patches.hpp"
-#include "interface_bar/interface_bar_patches.hpp"
-#include "inventory/inventory_patches.hpp"
-#include "required/required_patches.hpp"
+#include "../../../asm_x86_macro.h"
+#include "d2client_enable_800_interface_bar.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc_01() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Enable800InterfaceBar));
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x590A9
   );
 
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_01),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x590AE - 0x590A9
+      )
   );
 
-  std::vector inventory_patches = MakeInventoryPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(inventory_patches.begin()),
-      std::make_move_iterator(inventory_patches.end())
-  );
-
-  std::vector interface_bar_patches = MakeInterfaceBarPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(interface_bar_patches.begin()),
-      std::make_move_iterator(interface_bar_patches.end())
-  );
-
-  return game_patches;
+  return patches;
 }
 
 } // namespace sgd2fr::patches

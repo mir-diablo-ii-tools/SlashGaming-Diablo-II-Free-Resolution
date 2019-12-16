@@ -172,6 +172,11 @@ constexpr std::string_view kIsUseOriginalScreenBorderFrameKey =
     "Use Original Screen Border Frame?";
 constexpr bool kDefaultIsUseOriginalScreenBorderFrame = false;
 
+// Is 800 Interface Bar Enabled
+constexpr std::string_view kIs800InterfaceBarEnabledKey =
+    "Use 800 Interface Bar?";
+constexpr bool kDefaultIs800InterfaceBarEnabled = true;
+
 std::map<std::string, std::once_flag> once_flags_by_json_keys;
 
 const std::filesystem::path& GetConfigPath() {
@@ -526,6 +531,14 @@ bool AddMissingConfigEntries(
         kDefaultIsUseOriginalScreenBorderFrame,
         kMainEntryKey,
         kIsUseOriginalScreenBorderFrameKey
+    );
+  }
+
+  if (!config_reader.HasBool(kMainEntryKey, kIs800InterfaceBarEnabledKey)) {
+    config_reader.SetDeepBool(
+        kDefaultIs800InterfaceBarEnabled,
+        kMainEntryKey,
+        kIs800InterfaceBarEnabledKey
     );
   }
 
@@ -999,6 +1012,23 @@ bool IsUseOriginalScreenBorderFrame() {
   );
 
   return is_use_screen_border_frame;
+}
+
+bool Is800InterfaceBarEnabled() {
+  static bool is_800_inteface_bar_enabled;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kIs800InterfaceBarEnabledKey),
+      [=] () {
+        is_800_inteface_bar_enabled = GetConfigReader()
+            .GetBool(
+                kMainEntryKey,
+                kIs800InterfaceBarEnabledKey
+            );
+      }
+  );
+
+  return is_800_inteface_bar_enabled;
 }
 
 bool LoadConfig() {
