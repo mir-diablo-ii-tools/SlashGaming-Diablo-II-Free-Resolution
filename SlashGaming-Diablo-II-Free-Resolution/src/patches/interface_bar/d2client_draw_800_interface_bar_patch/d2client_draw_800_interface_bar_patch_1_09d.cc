@@ -43,35 +43,52 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#include "d2client_draw_800_interface_bar_patch_1_09d.hpp"
 
-#include <algorithm>
-
-#include "d2client_draw_800_interface_bar_patch/d2client_draw_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+#include "../../../asm_x86_macro.h"
+#include "d2client_draw_800_interface_bar.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc_01() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  std::vector d2client_draw_800_interface_bar_patch =
-      Make_D2Client_Draw800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.end())
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(push ecx);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800InterfaceBar));
+  ASM_X86(add esp, 4);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> Make_D2Client_Draw800InterfaceBarPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x59228
   );
 
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_01),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x592A5 - 0x59228
+      )
   );
 
-  return game_patches;
+  return patches;
 }
 
 } // namespace sgd2fr::patches

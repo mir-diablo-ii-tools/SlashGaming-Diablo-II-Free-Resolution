@@ -43,35 +43,17 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_DRAW_800_INTERFACE_BAR_PATCH_D2CLIENT_DRAW_800_INTERFACE_BAR_PATCH_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_DRAW_800_INTERFACE_BAR_PATCH_D2CLIENT_DRAW_800_INTERFACE_BAR_PATCH_HPP_
 
-#include <algorithm>
+#include <vector>
 
-#include "d2client_draw_800_interface_bar_patch/d2client_draw_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector d2client_draw_800_interface_bar_patch =
-      Make_D2Client_Draw800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.end())
-  );
-
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
-  );
-
-  return game_patches;
-}
+std::vector<mapi::GamePatch> Make_D2Client_Draw800InterfaceBarPatch();
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_DRAW_800_INTERFACE_BAR_PATCH_D2CLIENT_DRAW_800_INTERFACE_BAR_PATCH_HPP_
