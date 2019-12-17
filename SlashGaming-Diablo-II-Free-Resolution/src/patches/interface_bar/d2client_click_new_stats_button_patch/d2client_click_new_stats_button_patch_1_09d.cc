@@ -92,7 +92,7 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
 std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
   std::vector<mapi::GamePatch> patches;
 
-  // Enable the click on 800x600 New Stats button logic.
+  // Enable the click on 800x600 New Stats button sound.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x48264
@@ -121,7 +121,7 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
       )
   );
 
-  // Adjust the click detection of the New Stats button.
+  // Adjust the click detection of the New Stats button sound.
   mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x4831C
@@ -133,6 +133,52 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
           mapi::BranchType::kCall,
           &InterceptionFunc_02,
           0x4834C - 0x4831C
+      )
+  );
+
+  // Enable displaying of the (Lying) Character Screen when the 800x600 New
+  // Stats button is clicked.
+  mapi::GameAddress game_address_04 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48524
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_04),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x48529 - 0x48524
+      )
+  );
+
+  mapi::GameAddress game_address_05 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48542
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_05),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x48547 - 0x48542
+      )
+  );
+
+  // Adjust the click detection of the New Stats button for opening the
+  // (Lying) Character Screen.
+  mapi::GameAddress game_address_06 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48608
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_06),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_02,
+          0x48640 - 0x48608
       )
   );
 
