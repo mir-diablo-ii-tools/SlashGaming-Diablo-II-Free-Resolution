@@ -43,15 +43,23 @@
  *  work.
  */
 
-#include "d2client_enable_800_interface_bar.hpp"
+#include "800_interface_bar.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/800_interface_bar.hpp"
+#include "../config.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
-std::uint32_t __cdecl SGD2FR_D2Client_Enable800InterfaceBar() {
-  return Get800InterfaceBarEnabledValue();
+unsigned int Get800InterfaceBarEnabledValue() {
+  unsigned int resolution_mode = d2::d2gfx::GetResolutionMode();
+
+  if (resolution_mode <= 2) {
+    return resolution_mode;
+  }
+
+  return config::Is800InterfaceBarEnabled()
+      ? 2
+      : 0;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

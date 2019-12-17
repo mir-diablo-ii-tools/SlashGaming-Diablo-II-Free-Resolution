@@ -43,15 +43,15 @@
  *  work.
  */
 
-#include "d2client_enable_800_interface_bar.hpp"
+#ifndef SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
+#define SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/800_interface_bar.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
-std::uint32_t __cdecl SGD2FR_D2Client_Enable800InterfaceBar() {
-  return Get800InterfaceBarEnabledValue();
-}
+unsigned int Get800InterfaceBarEnabledValue();
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
+
+#endif // SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
