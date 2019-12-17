@@ -182,6 +182,36 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
       )
   );
 
+  // Enable setting the 800x600 New Stats button image frame on mouse over.
+  mapi::GameAddress game_address_07 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48A19
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_07),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x48A1E - 0x48A19
+      )
+  );
+
+  // Set the 800x600 New Stats button image frame on mouse over.
+  mapi::GameAddress game_address_08 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48B08
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_08),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_02,
+          0x48B40 - 0x48B08
+      )
+  );
+
   return patches;
 }
 
