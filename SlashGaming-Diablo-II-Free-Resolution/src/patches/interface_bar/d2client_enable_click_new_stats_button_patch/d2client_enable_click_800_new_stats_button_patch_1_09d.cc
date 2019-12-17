@@ -43,20 +43,22 @@
  *  work.
  */
 
-#include "d2client_click_new_stats_button.hpp"
+#include "d2client_enable_click_800_new_stats_button_patch_1_09d.hpp"
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/800_interface_bar.hpp"
-#include "../../../helper/level_up_buttons.hpp"
+#include "../../../asm_x86_macro.h"
+#include "d2client_enable_click_800_new_stats_button.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::uint32_t __cdecl SGD2FR_D2Client_EnableClick800NewStatsButton() {
-  return Get800InterfaceBarEnabledValue();
-}
 
-mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOverNewStatsButton() {
-  return IsMouseOverNewStatsButton();
+
+std::vector<mapi::GamePatch> Make_D2Client_EnableClick800NewStatsButtonPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  
+
+  return patches;
 }
 
 } // namespace sgd2fr::patches

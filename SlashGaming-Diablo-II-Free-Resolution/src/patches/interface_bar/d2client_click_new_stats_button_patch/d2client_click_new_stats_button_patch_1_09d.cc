@@ -55,6 +55,22 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_EnableClick800NewStatsButton));
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+__declspec(naked) void __cdecl InterceptionFunc_02() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
   ASM_X86(push eax);
 
   ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_IsMouseOverNewStatsButton));
@@ -76,9 +92,10 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
   std::vector<mapi::GamePatch> patches;
 
+  // Enable the click on 800x600 New Stats button logic.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
-      0x4831C
+      0x48264
   );
 
   patches.push_back(
@@ -86,6 +103,35 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
           std::move(game_address_01),
           mapi::BranchType::kCall,
           &InterceptionFunc_01,
+          0x48269 - 0x48264
+      )
+  );
+
+  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48283
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_02),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x48288 - 0x48283
+      )
+  );
+
+  // Adjust the click detection of the New Stats button.
+  mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x4831C
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_03),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_02,
           0x4834C - 0x4831C
       )
   );
