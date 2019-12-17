@@ -43,44 +43,61 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#include "level_up_buttons.hpp"
 
-#include <algorithm>
+#include <sgd2mapi.hpp>
+#include "get_resolution_from_id.hpp"
 
-#include "d2client_click_new_stats_button_patch/d2client_click_new_stats_button_patch.hpp"
-#include "d2client_draw_800_interface_bar_patch/d2client_draw_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+namespace sgd2fr {
+namespace {
 
-namespace sgd2fr::patches {
+constexpr int source_display_width = 800;
+constexpr int source_display_height = 600;
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+} // namespace
 
-  std::vector d2client_click_new_stats_button_patch =
-      Make_D2Client_ClickNewStatsButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.begin()),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.end())
+d2::PositionalRectangle_API GetNewStatsButtonPosition() {
+  constexpr int dist_from_left_to_display_center =
+      (source_display_width / 2) - 206;
+  constexpr int dist_from_right_to_display_center =
+      (source_display_width / 2) - 240;
+  constexpr int dist_from_top_to_display_bottom = 42;
+  constexpr int dist_from_bottom_to_display_bottom = 8;
+
+  const std::tuple display_width_and_height = GetResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
   );
 
-  std::vector d2client_draw_800_interface_bar_patch =
-      Make_D2Client_Draw800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.end())
+  const int display_half_width = (std::get<0>(display_width_and_height) / 2);
+  const int display_height = std::get<1>(display_width_and_height);
+
+  d2::PositionalRectangle_API button_position(
+      display_half_width - dist_from_left_to_display_center,
+      display_half_width - dist_from_right_to_display_center,
+      display_height - dist_from_top_to_display_bottom,
+      display_height - dist_from_bottom_to_display_bottom
   );
 
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
-  );
-
-  return game_patches;
+  return button_position;
 }
 
-} // namespace sgd2fr::patches
+bool IsMouseOverNewStatsButton() {
+  d2::PositionalRectangle_API button_position = GetNewStatsButtonPosition();
+
+  const int ingame_mouse_position_x =
+      d2::d2client::GetIngameMousePositionX();
+  const int ingame_mouse_position_y =
+      d2::d2client::GetIngameMousePositionY();
+
+  return ingame_mouse_position_x > button_position.GetLeft()
+      && ingame_mouse_position_x < button_position.GetRight()
+      && ingame_mouse_position_y > button_position.GetTop()
+      && ingame_mouse_position_y < button_position.GetBottom();
+}
+
+bool IsMouseOverNewSkillButton() {
+  return false;
+}
+
+} // namespace sgd2fr
+

@@ -43,44 +43,15 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#include "d2client_click_new_stats_button.hpp"
 
-#include <algorithm>
-
-#include "d2client_click_new_stats_button_patch/d2client_click_new_stats_button_patch.hpp"
-#include "d2client_draw_800_interface_bar_patch/d2client_draw_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../helper/level_up_buttons.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector d2client_click_new_stats_button_patch =
-      Make_D2Client_ClickNewStatsButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.begin()),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.end())
-  );
-
-  std::vector d2client_draw_800_interface_bar_patch =
-      Make_D2Client_Draw800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.end())
-  );
-
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
-  );
-
-  return game_patches;
+mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOverNewStatsButton() {
+  return IsMouseOverNewStatsButton();
 }
 
 } // namespace sgd2fr::patches

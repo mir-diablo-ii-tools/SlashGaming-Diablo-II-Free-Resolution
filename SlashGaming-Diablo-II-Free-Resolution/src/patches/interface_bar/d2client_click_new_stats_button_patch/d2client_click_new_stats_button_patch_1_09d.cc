@@ -43,44 +43,54 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#include "d2client_click_new_stats_button_patch_1_09d.hpp"
 
-#include <algorithm>
-
-#include "d2client_click_new_stats_button_patch/d2client_click_new_stats_button_patch.hpp"
-#include "d2client_draw_800_interface_bar_patch/d2client_draw_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+#include "../../../asm_x86_macro.h"
+#include "d2client_click_new_stats_button.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+__declspec(naked) void __cdecl InterceptionFunc_01() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  std::vector d2client_click_new_stats_button_patch =
-      Make_D2Client_ClickNewStatsButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.begin()),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.end())
+  ASM_X86(push eax);
+
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_IsMouseOverNewStatsButton));
+
+  ASM_X86(pop edx);
+
+  // Affects the instructions:
+  // cmp eax, ecx
+  // jge
+  ASM_X86(mov ecx, eax);
+  ASM_X86(mov eax, 0);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
+  std::vector<mapi::GamePatch> patches;
+
+  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x4831C
   );
 
-  std::vector d2client_draw_800_interface_bar_patch =
-      Make_D2Client_Draw800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.end())
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_01),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x4834C - 0x4831C
+      )
   );
 
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
-  );
-
-  return game_patches;
+  return patches;
 }
 
 } // namespace sgd2fr::patches
