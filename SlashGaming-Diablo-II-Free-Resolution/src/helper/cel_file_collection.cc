@@ -54,29 +54,25 @@
 namespace sgd2fr {
 namespace {
 
-std::unordered_map<std::string, d2::CelFile_API>& GetCelFileCollection() {
-  static std::unordered_map<std::string, d2::CelFile_API> cel_file_collection;
-
-  return cel_file_collection;
-}
+std::unordered_map<std::string, d2::CelFile_API> cel_file_collection;
 
 } // namespace
 
 d2::CelFile_API& GetCelFile(std::string_view cel_file_path) {
   std::string cel_file_path_key = cel_file_path.data();
 
-  if (!GetCelFileCollection().contains(cel_file_path_key)) {
-    GetCelFileCollection().insert_or_assign(
+  if (!cel_file_collection.contains(cel_file_path_key)) {
+    cel_file_collection.insert_or_assign(
         cel_file_path_key,
         d2::CelFile_API(cel_file_path_key, false)
     );
   }
 
-  return GetCelFileCollection().at(cel_file_path_key);
+  return cel_file_collection.at(cel_file_path_key);
 }
 
 void ClearCelFiles() {
-  GetCelFileCollection().clear();
+  cel_file_collection.clear();
 }
 
 } // namespace sgd2fr
