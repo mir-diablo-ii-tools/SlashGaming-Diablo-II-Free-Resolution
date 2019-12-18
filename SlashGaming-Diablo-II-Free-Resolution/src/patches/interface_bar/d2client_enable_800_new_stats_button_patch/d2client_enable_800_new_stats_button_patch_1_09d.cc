@@ -43,10 +43,10 @@
  *  work.
  */
 
-#include "d2client_click_new_stats_button_patch_1_09d.hpp"
+#include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
 
 #include "../../../asm_x86_macro.h"
-#include "d2client_click_new_stats_button.hpp"
+#include "d2client_enable_800_new_stats_button.hpp"
 
 namespace sgd2fr::patches {
 namespace {
@@ -73,7 +73,7 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
 
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_IsMouseOverNewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_IsMouseOver800NewStatsButton));
 
   ASM_X86(pop edx);
 
@@ -95,7 +95,7 @@ __declspec(naked) void __cdecl InterceptionFunc_03() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_SetNewStatsPopupText));
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Set800NewStatsPopupText));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -115,7 +115,7 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
   // Pushes the CelContext for the Level button.
   ASM_X86(lea eax, dword ptr [ebp + 20]);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_DrawNewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewStatsButton));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);
@@ -127,7 +127,7 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
+std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   std::vector<mapi::GamePatch> patches;
 
   // Enable the click on 800x600 New Stats button sound.

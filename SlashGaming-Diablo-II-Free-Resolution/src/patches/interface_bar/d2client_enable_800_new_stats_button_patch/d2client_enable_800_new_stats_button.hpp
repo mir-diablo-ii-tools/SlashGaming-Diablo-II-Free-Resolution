@@ -43,44 +43,23 @@
  *  work.
  */
 
-#include "d2client_click_new_stats_button.hpp"
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_
+
+#include <cstdint>
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/800_interface_bar.hpp"
 
 namespace sgd2fr::patches {
 
-std::uint32_t __cdecl SGD2FR_D2Client_Enable800NewStatsButton() {
-  return Get800InterfaceBarEnabledValue();
-}
+extern "C" std::uint32_t __cdecl SGD2FR_D2Client_Enable800NewStatsButton();
+extern "C" mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOver800NewStatsButton();
+extern "C" void __cdecl SGD2FR_D2Client_Set800NewStatsPopupText();
 
-mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOverNewStatsButton() {
-  return IsMouseOverNewStatsButton();
-}
-
-void __cdecl SGD2FR_D2Client_SetNewStatsPopupText() {
-  const d2::UnicodeChar* new_stats_text = d2::d2lang::GetStringByIndex(3986);
-  const std::tuple popup_text_position = GetNewStatsPopupTextPosition();
-
-  d2::d2win::SetPopUpUnicodeText(
-      new_stats_text,
-      std::get<0>(popup_text_position),
-      std::get<1>(popup_text_position),
-      d2::TextColor::kWhite,
-      true
-  );
-}
-
-mapi::bool32 __cdecl SGD2FR_D2Client_DrawNewStatsButton(
+extern "C" mapi::bool32 __cdecl SGD2FR_D2Client_Draw800NewStatsButton(
     d2::CelContext* cel_context
-) {
-  d2::PositionalRectangle_API button_position = GetNewStatsButtonPosition();
-
-  d2::CelContext_Wrapper cel_context_wrapper(cel_context);
-  cel_context_wrapper.DrawFrame(
-      button_position.GetLeft(),
-      button_position.GetBottom()
-  );
-}
+);
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_

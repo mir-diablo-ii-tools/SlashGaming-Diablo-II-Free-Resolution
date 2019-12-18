@@ -43,18 +43,18 @@
  *  work.
  */
 
-#include "d2client_click_new_stats_button_patch.hpp"
+#include "d2client_enable_800_new_stats_button_patch.hpp"
 
-#include "d2client_click_new_stats_button_patch_1_09d.hpp"
+#include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch() {
+std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return Make_D2Client_ClickNewStatsButtonPatch_1_09D();
+      return Make_D2Client_Click800NewStatsButtonPatch_1_09D();
     }
   }
 }
