@@ -47,7 +47,6 @@
 
 #include <sgd2mapi.hpp>
 #include "../../../helper/800_interface_bar.hpp"
-#include "../../../helper/level_up_buttons.hpp"
 
 namespace sgd2fr::patches {
 

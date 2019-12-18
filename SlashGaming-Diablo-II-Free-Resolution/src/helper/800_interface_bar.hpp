@@ -46,11 +46,22 @@
 #ifndef SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
 #define SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
 
+#include <tuple>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 
 unsigned int Get800InterfaceBarEnabledValue();
+
+d2::PositionalRectangle_API GetNewStatsButtonPosition();
+d2::PositionalRectangle_API GetNewSkillButtonPosition();
+
+std::tuple<int, int> GetNewStatsPopupTextPosition();
+std::tuple<int, int> GetNewSkillPopupTextPosition();
+
+bool IsMouseOverNewStatsButton();
+bool IsMouseOverNewSkillButton();
 
 } // namespace sgd2fr
 
