@@ -47,7 +47,6 @@
 
 #include <algorithm>
 
-#include "d2client_draw_800_interface_bar_patch/d2client_draw_800_interface_bar_patch.hpp"
 #include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
 #include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
 
@@ -55,14 +54,6 @@ namespace sgd2fr::patches {
 
 std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
   std::vector<mapi::GamePatch> game_patches;
-
-  std::vector d2client_draw_800_interface_bar_patch =
-      Make_D2Client_Draw800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_draw_800_interface_bar_patch.end())
-  );
 
   std::vector d2client_enable_800_interface_bar_patch =
       Make_D2Client_Enable800InterfaceBarPatch();

@@ -67,11 +67,30 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(ret);
 }
 
+__declspec(naked) void __cdecl InterceptionFunc_02() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(push ecx);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800InterfaceBar));
+  ASM_X86(add esp, 4);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
 } // namespace
 
 std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch_1_09D() {
   std::vector<mapi::GamePatch> patches;
 
+  // Enable drawing the 800x600 interface bar.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x590A9
@@ -83,6 +102,21 @@ std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch_1_09D() {
           mapi::BranchType::kCall,
           &InterceptionFunc_01,
           0x590AE - 0x590A9
+      )
+  );
+
+  // Draw the 800x600 interface bar.
+  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x59228
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_02),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_02,
+          0x592A5 - 0x59228
       )
   );
 
