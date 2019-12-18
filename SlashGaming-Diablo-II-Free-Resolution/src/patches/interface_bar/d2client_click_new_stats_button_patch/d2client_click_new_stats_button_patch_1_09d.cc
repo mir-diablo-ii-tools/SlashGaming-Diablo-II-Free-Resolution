@@ -95,7 +95,7 @@ __declspec(naked) void __cdecl InterceptionFunc_03() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_SetNewStatsPopUpText));
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_SetNewStatsPopupText));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -250,10 +250,10 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
       )
   );
 
-  // Enable repositioning 800x600 "New Stats" text and New Stats button.
+  // Enable all repositioning of 800x600  text and level up buttons.
   mapi::GameAddress game_address_09 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
-      0x48AA3
+      0x488CD
   );
 
   patches.push_back(
@@ -261,19 +261,48 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
           std::move(game_address_09),
           mapi::BranchType::kCall,
           &InterceptionFunc_01,
+          0x488D2 - 0x488CD
+      )
+  );
+
+  mapi::GameAddress game_address_10 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x489A1
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_10),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x489A6 - 0x489A1
+      )
+  );
+
+  // Enable repositioning 800x600 "New Stats" text and New Stats button.
+  mapi::GameAddress game_address_11 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48AA3
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_11),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
           0x48AA8 - 0x48AA3
       )
   );
 
   // Realign the mouse over detection for 800x600 New Stats text.
-  mapi::GameAddress game_address_10 = mapi::GameAddress::FromOffset(
+  mapi::GameAddress game_address_12 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x48B5C
   );
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_10),
+          std::move(game_address_12),
           mapi::BranchType::kCall,
           &InterceptionFunc_02,
           0x48B81 - 0x48B5C
@@ -281,14 +310,14 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
   );
 
   // Draw the "New Stats" text.
-  mapi::GameAddress game_address_11 = mapi::GameAddress::FromOffset(
+  mapi::GameAddress game_address_13 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x48B93
   );
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_11),
+          std::move(game_address_13),
           mapi::BranchType::kCall,
           &InterceptionFunc_03,
           0x48BB1 - 0x48B93
@@ -296,14 +325,14 @@ std::vector<mapi::GamePatch> Make_D2Client_ClickNewStatsButtonPatch_1_09D() {
   );
 
   // Draw the New Stats button.
-  mapi::GameAddress game_address_12 = mapi::GameAddress::FromOffset(
+  mapi::GameAddress game_address_14 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x48BB1
   );
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_12),
+          std::move(game_address_14),
           mapi::BranchType::kCall,
           &InterceptionFunc_04,
           0x48BCF - 0x48BB1

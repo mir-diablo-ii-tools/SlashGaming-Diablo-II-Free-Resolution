@@ -81,6 +81,25 @@ d2::PositionalRectangle_API GetNewStatsButtonPosition() {
   return button_position;
 }
 
+std::tuple<int, int> GetNewStatsPopupTextPosition() {
+  constexpr int dist_from_left_to_display_center =
+      (source_display_width / 2) - 221;
+  constexpr int dist_from_top_to_display_bottom =
+      (source_display_height) - 550;
+
+  const std::tuple display_width_and_height = GetResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
+
+  const int display_half_width = (std::get<0>(display_width_and_height) / 2);
+  const int display_height = std::get<1>(display_width_and_height);
+
+  return std::make_tuple(
+      display_half_width - dist_from_left_to_display_center,
+      display_height - dist_from_top_to_display_bottom
+  );
+}
+
 bool IsMouseOverNewStatsButton() {
   d2::PositionalRectangle_API button_position = GetNewStatsButtonPosition();
 

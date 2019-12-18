@@ -46,12 +46,17 @@
 #ifndef SGD2FR_HELPER_IS_LEVEL_UP_BUTTONS_HPP_
 #define SGD2FR_HELPER_IS_LEVEL_UP_BUTTONS_HPP_
 
+#include <tuple>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 
 d2::PositionalRectangle_API GetNewStatsButtonPosition();
 d2::PositionalRectangle_API GetNewSkillButtonPosition();
+
+std::tuple<int, int> GetNewStatsPopupTextPosition();
+std::tuple<int, int> GetNewSkillPopupTextPosition();
 
 bool IsMouseOverNewStatsButton();
 bool IsMouseOverNewSkillButton();

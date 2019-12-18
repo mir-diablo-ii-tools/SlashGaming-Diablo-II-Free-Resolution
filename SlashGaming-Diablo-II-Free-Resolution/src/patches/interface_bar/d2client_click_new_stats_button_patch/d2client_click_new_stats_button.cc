@@ -59,7 +59,17 @@ mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOverNewStatsButton() {
   return IsMouseOverNewStatsButton();
 }
 
-void __cdecl SGD2FR_D2Client_SetNewStatsPopUpText() {
+void __cdecl SGD2FR_D2Client_SetNewStatsPopupText() {
+  const d2::UnicodeChar* new_stats_text = d2::d2lang::GetStringByIndex(3986);
+  const std::tuple popup_text_position = GetNewStatsPopupTextPosition();
+
+  d2::d2win::SetPopUpUnicodeText(
+      new_stats_text,
+      std::get<0>(popup_text_position),
+      std::get<1>(popup_text_position),
+      d2::TextColor::kWhite,
+      true
+  );
 }
 
 mapi::bool32 __cdecl SGD2FR_D2Client_DrawNewStatsButton(
