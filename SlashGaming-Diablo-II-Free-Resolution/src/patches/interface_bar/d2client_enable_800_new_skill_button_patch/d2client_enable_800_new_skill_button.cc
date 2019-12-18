@@ -43,44 +43,44 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#include "d2client_enable_800_new_skill_button.hpp"
 
-#include <algorithm>
-
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
-#include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../helper/800_interface_bar.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+std::uint32_t __cdecl SGD2FR_D2Client_Enable800NewSkillButton() {
+  return Get800InterfaceBarEnabledValue();
+}
 
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
+mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOver800NewSkillButton() {
+  return IsMouseOverNewSkillButton();
+}
+
+void __cdecl SGD2FR_D2Client_Set800NewSkillPopupText() {
+  const d2::UnicodeChar* new_stats_text = d2::d2lang::GetStringByIndex(3987);
+  const std::tuple popup_text_position = GetNewSkillPopupTextPosition();
+
+  d2::d2win::SetPopUpUnicodeText(
+      new_stats_text,
+      std::get<0>(popup_text_position),
+      std::get<1>(popup_text_position),
+      d2::TextColor::kWhite,
+      true
   );
+}
 
-  std::vector d2client_enable_800_new_skill_button_patch =
-      Make_D2Client_Click800NewSkillButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.end())
+mapi::bool32 __cdecl SGD2FR_D2Client_Draw800NewSkillButton(
+    d2::CelContext* cel_context
+) {
+  d2::PositionalRectangle_API button_position = GetNewSkillButtonPosition();
+
+  d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+  cel_context_wrapper.DrawFrame(
+      button_position.GetLeft(),
+      button_position.GetBottom()
   );
-
-  std::vector d2client_click_new_stats_button_patch =
-      Make_D2Client_Click800NewStatsButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.begin()),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.end())
-  );
-
-  return game_patches;
 }
 
 } // namespace sgd2fr::patches

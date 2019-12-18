@@ -43,44 +43,23 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_HPP_
 
-#include <algorithm>
+#include <cstdint>
 
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
-#include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+extern "C" std::uint32_t __cdecl SGD2FR_D2Client_Enable800NewSkillButton();
+extern "C" mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOver800NewSkillButton();
+extern "C" void __cdecl SGD2FR_D2Client_Set800NewSkillPopupText();
 
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
-  );
-
-  std::vector d2client_enable_800_new_skill_button_patch =
-      Make_D2Client_Click800NewSkillButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.end())
-  );
-
-  std::vector d2client_click_new_stats_button_patch =
-      Make_D2Client_Click800NewStatsButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.begin()),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.end())
-  );
-
-  return game_patches;
-}
+extern "C" mapi::bool32 __cdecl SGD2FR_D2Client_Draw800NewSkillButton(
+    d2::CelContext* cel_context
+);
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_HPP_

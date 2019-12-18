@@ -43,44 +43,20 @@
  *  work.
  */
 
-#include "interface_bar_patches.hpp"
+#include "d2client_enable_800_new_skill_button_patch.hpp"
 
-#include <algorithm>
-
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
-#include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
+#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch() {
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
-  );
-
-  std::vector d2client_enable_800_new_skill_button_patch =
-      Make_D2Client_Click800NewSkillButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.end())
-  );
-
-  std::vector d2client_click_new_stats_button_patch =
-      Make_D2Client_Click800NewStatsButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.begin()),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.end())
-  );
-
-  return game_patches;
+  switch (running_game_version_id) {
+    case d2::GameVersion::k1_09D: {
+      return Make_D2Client_Click800NewSkillButtonPatch_1_09D();
+    }
+  }
 }
 
 } // namespace sgd2fr::patches
