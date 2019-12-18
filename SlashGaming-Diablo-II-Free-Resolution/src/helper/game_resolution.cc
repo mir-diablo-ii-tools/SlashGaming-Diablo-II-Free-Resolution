@@ -43,16 +43,24 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_GET_RESOLUTION_FROM_ID_HPP_
-#define SGD2FR_HELPER_GET_RESOLUTION_FROM_ID_HPP_
+#include "game_resolution.hpp"
 
-#include <cstddef>
-#include <tuple>
+#include "../config.hpp"
 
 namespace sgd2fr {
 
-std::tuple<int, int> GetResolutionFromId(std::size_t id);
+std::tuple<int, int> GetResolutionFromId(std::size_t id) {
+  if (id == 1) {
+    return config::GetMainMenuResolution();
+  }
+
+  const auto& ingame_resolutions = config::GetIngameResolutions();
+
+  std::size_t ingame_resolution_index = (id == 0)
+      ? id
+      : id - 1;
+
+  return ingame_resolutions.at(ingame_resolution_index);
+}
 
 } // namespace sgd2fr
-
-#endif // SGD2FR_HELPER_GET_RESOLUTION_FROM_ID_HPP_

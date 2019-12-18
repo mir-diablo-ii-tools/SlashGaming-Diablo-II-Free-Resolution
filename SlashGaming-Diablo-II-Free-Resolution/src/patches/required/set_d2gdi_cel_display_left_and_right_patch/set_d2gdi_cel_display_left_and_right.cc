@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/get_resolution_from_id.hpp"
+#include "../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
