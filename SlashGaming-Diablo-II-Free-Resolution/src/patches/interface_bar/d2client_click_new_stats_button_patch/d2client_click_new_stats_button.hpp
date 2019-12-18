@@ -52,8 +52,13 @@
 
 namespace sgd2fr::patches {
 
-extern "C" std::uint32_t __cdecl SGD2FR_D2Client_EnableClick800NewStatsButton();
+extern "C" std::uint32_t __cdecl SGD2FR_D2Client_Enable800NewStatsButton();
 extern "C" mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOverNewStatsButton();
+extern "C" void __cdecl SGD2FR_D2Client_SetNewStatsPopUpText();
+
+extern "C" mapi::bool32 __cdecl SGD2FR_D2Client_DrawNewStatsButton(
+    d2::CelContext* cel_context
+);
 
 } // namespace sgd2fr::patches
 

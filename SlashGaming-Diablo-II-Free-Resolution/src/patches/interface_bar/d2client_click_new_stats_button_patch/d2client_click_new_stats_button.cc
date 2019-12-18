@@ -51,12 +51,27 @@
 
 namespace sgd2fr::patches {
 
-std::uint32_t __cdecl SGD2FR_D2Client_EnableClick800NewStatsButton() {
+std::uint32_t __cdecl SGD2FR_D2Client_Enable800NewStatsButton() {
   return Get800InterfaceBarEnabledValue();
 }
 
 mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOverNewStatsButton() {
   return IsMouseOverNewStatsButton();
+}
+
+void __cdecl SGD2FR_D2Client_SetNewStatsPopUpText() {
+}
+
+mapi::bool32 __cdecl SGD2FR_D2Client_DrawNewStatsButton(
+    d2::CelContext* cel_context
+) {
+  d2::PositionalRectangle_API button_position = GetNewStatsButtonPosition();
+
+  d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+  cel_context_wrapper.DrawFrame(
+      button_position.GetLeft(),
+      button_position.GetBottom()
+  );
 }
 
 } // namespace sgd2fr::patches
