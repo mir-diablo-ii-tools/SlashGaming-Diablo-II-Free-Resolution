@@ -125,6 +125,26 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
   ASM_X86(ret);
 }
 
+__declspec(naked) void __cdecl InterceptionFunc_05() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  // Pushes the CelContext for the Level button.
+  ASM_X86(lea eax, dword ptr [ebp + 16]);
+  ASM_X86(push eax);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewStatsButton));
+  ASM_X86(add esp, 4);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
 } // namespace
 
 std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
@@ -250,7 +270,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
       )
   );
 
-  // Enable all repositioning of 800x600  text and level up buttons.
+  // Enable all repositioning of 800x600 text and level up buttons.
   mapi::GameAddress game_address_09 = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
       0x488CD
@@ -336,6 +356,66 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
           mapi::BranchType::kCall,
           &InterceptionFunc_04,
           0x48BCF - 0x48BB1
+      )
+  );
+
+  // Enable repositioning of 800x600 inactive text and level up buttons.
+  mapi::GameAddress game_address_15 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48803
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_15),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x48808 - 0x48803
+      )
+  );
+
+  // Realign the mouse over detection for 800x600 inactive New Stats text.
+  mapi::GameAddress game_address_16 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48835
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_16),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_02,
+          0x48861 - 0x48835
+      )
+  );
+
+  // Draw the inactive "New Stats" text.
+  mapi::GameAddress game_address_17 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48873
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_17),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_03,
+          0x48891 - 0x48873
+      )
+  );
+
+  // Draw the inactive New Stats button.
+  mapi::GameAddress game_address_18 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48891
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_18),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_05,
+          0x488AF - 0x48891
       )
   );
 
