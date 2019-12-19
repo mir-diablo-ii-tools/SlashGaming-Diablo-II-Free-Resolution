@@ -125,6 +125,26 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
   ASM_X86(ret);
 }
 
+__declspec(naked) void __cdecl InterceptionFunc_05() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  // Pushes the CelContext for the Level button.
+  ASM_X86(lea eax, dword ptr [ebp + 16]);
+  ASM_X86(push eax);
+  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewSkillButton));
+  ASM_X86(add esp, 4);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
 } // namespace
 
 std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch_1_09D() {
@@ -336,6 +356,66 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch_1_09D() {
           mapi::BranchType::kCall,
           &InterceptionFunc_04,
           0x48FB8 - 0x48F9A
+      )
+  );
+
+  // Enable repositioning 800x600 inactive "New Stats" text and New Stats button.
+  mapi::GameAddress game_address_15 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48BE3
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_15),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_01,
+          0x48BE8 - 0x48BE3
+      )
+  );
+
+  // Realign the mouse over detection for 800x600 inactive New Skill text.
+  mapi::GameAddress game_address_16 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48C15
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_16),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_02,
+          0x48C41 - 0x48C15
+      )
+  );
+
+  // Draw the inactive "New Skill" text.
+  mapi::GameAddress game_address_17 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48C53
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_17),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_03,
+          0x48C71 - 0x48C53
+      )
+  );
+
+  // Draw the inactive New Skill button.
+  mapi::GameAddress game_address_18 = mapi::GameAddress::FromOffset(
+      mapi::DefaultLibrary::kD2Client,
+      0x48C71
+  );
+
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          std::move(game_address_18),
+          mapi::BranchType::kCall,
+          &InterceptionFunc_05,
+          0x48C8F - 0x48C71
       )
   );
 
