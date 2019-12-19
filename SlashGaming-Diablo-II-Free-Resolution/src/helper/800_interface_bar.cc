@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
-#include "get_resolution_from_id.hpp"
+#include "game_resolution.hpp"
 
 namespace sgd2fr {
 namespace {
