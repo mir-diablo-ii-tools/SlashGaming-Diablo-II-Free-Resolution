@@ -52,6 +52,7 @@
 namespace sgd2fr {
 
 std::tuple<int, int> GetResolutionFromId(std::size_t id);
+bool IsStandardResolution(const std::tuple<int, int>& width_and_height);
 
 } // namespace sgd2fr
 

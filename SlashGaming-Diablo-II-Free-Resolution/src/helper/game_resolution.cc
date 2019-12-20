@@ -45,22 +45,95 @@
 
 #include "game_resolution.hpp"
 
+#include <algorithm>
+#include <mutex>
+#include <set>
+#include <unordered_map>
+
+#include <sgd2mapi.hpp>
 #include "../config.hpp"
 
 namespace sgd2fr {
+namespace {
+
+std::vector<std::tuple<int, int>> GetResolutionsFromIpV4(std::string_view ipv4_address) {
+  std::unordered_map<
+      std::string_view,
+      std::vector<std::tuple<int, int>>
+  > acceptable_resolutions_from_ipv4 = {
+      { "", { std::make_tuple(1068, 600) } },
+  };
+
+  return acceptable_resolutions_from_ipv4.contains(ipv4_address)
+      ? acceptable_resolutions_from_ipv4.at(ipv4_address)
+      : std::vector{ std::make_tuple(640, 480), std::make_tuple(800, 600) };
+}
+
+const std::set<std::tuple<int, int>>& GetStandardResolutions() {
+  static std::once_flag init_once_flag;
+  static std::set<std::tuple<int, int>> standard_resolutions;
+
+  std::call_once(
+      init_once_flag,
+      [=] () {
+        DEVMODEW dev_mode;
+        dev_mode.dmSize = sizeof(dev_mode);
+
+        for (DWORD i = 0; EnumDisplaySettingsW(nullptr, i, &dev_mode); i += 1) {
+            standard_resolutions.insert(
+                std::make_tuple(
+                    static_cast<int>(dev_mode.dmPelsWidth),
+                    static_cast<int>(dev_mode.dmPelsHeight)
+                )
+            );
+        }
+      }
+  );
+
+  return standard_resolutions;
+}
+
+std::vector<std::tuple<int, int>> GetNonCrashingIngameResolutions() {
+  static std::once_flag init_once_flag;
+  static std::vector non_crashing_ingame_resolutions = config::GetIngameResolutions();
+
+  std::call_once(
+      init_once_flag,
+      [=] () {
+        d2::VideoMode current_video_mode = d2::d2gfx::GetVideoMode();
+
+        if (current_video_mode == d2::VideoMode::kDirect3D
+            || current_video_mode == d2::VideoMode::kDirectDraw) {
+          std::remove_if(
+              non_crashing_ingame_resolutions.begin(),
+              non_crashing_ingame_resolutions.end(),
+              &IsStandardResolution
+          );
+        }
+      }
+  );
+
+  return non_crashing_ingame_resolutions;
+}
+
+} // namespace
 
 std::tuple<int, int> GetResolutionFromId(std::size_t id) {
   if (id == 1) {
     return config::GetMainMenuResolution();
   }
 
-  const auto& ingame_resolutions = config::GetIngameResolutions();
+  const auto& ingame_resolutions = GetNonCrashingIngameResolutions();
 
   std::size_t ingame_resolution_index = (id == 0)
       ? id
       : id - 1;
 
   return ingame_resolutions.at(ingame_resolution_index);
+}
+
+bool IsStandardResolution(const std::tuple<int, int>& width_and_height) {
+  return GetStandardResolutions().contains(width_and_height);
 }
 
 } // namespace sgd2fr
