@@ -921,7 +921,7 @@ void SGD2FR_D2ClientDrawScreenBackground() {
           MB_OK | MB_ICONERROR
       );
 
-      throw std::invalid_argument(__func__);
+      std::exit(0);
     }
   }
 }
