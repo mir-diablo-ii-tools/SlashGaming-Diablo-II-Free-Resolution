@@ -45,7 +45,7 @@
 
 #include "position_realignment.hpp"
 
-#include "get_resolution_from_id.hpp"
+#include "game_resolution.hpp"
 
 namespace sgd2fr {
 namespace {
