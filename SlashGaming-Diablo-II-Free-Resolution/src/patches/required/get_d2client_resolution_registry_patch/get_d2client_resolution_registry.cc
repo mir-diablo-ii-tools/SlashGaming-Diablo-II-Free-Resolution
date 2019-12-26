@@ -60,7 +60,7 @@ void __cdecl SGD2FR_GetD2ClientResolutionRegistry(
   *reg_resolution_mode = config::GetIngameResolutionMode();
 
   if (*reg_resolution_mode < GetMinConfigResolutionId()
-      || *reg_resolution_mode > GetNumIngameResolutions()) {
+      || *reg_resolution_mode >= GetNumIngameResolutions()) {
     *reg_resolution_mode = GetMinConfigResolutionId();
   }
 
