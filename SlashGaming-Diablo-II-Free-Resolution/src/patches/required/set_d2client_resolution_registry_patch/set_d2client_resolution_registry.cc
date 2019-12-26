@@ -53,14 +53,18 @@ namespace sgd2fr::patches {
 
 void __cdecl SGD2FR_SetD2ClientResolutionRegistry(
     std::uint32_t reg_resolution_mode,
-    std::uint32_t* actual_resolution_mode
+    std::uint32_t* ingame_resolution_mode
 ) {
-  config::SetIngameResolutionMode(reg_resolution_mode);
+  // reg_resolution_mode value cycle:
+  // 0 -> 1 -> 3 -> ... -> 0
+  config::SetIngameResolutionMode(
+      reg_resolution_mode
+  );
 
-  if (reg_resolution_mode == 1) {
-    *actual_resolution_mode = 2;
+  if (reg_resolution_mode == 0) {
+    *ingame_resolution_mode = 0;
   } else {
-    *actual_resolution_mode = reg_resolution_mode;
+    *ingame_resolution_mode = reg_resolution_mode + 1;
   }
 }
 

@@ -48,6 +48,7 @@
 #include <sgd2mapi.hpp>
 
 #include "../../../config.hpp"
+#include "../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
@@ -55,13 +56,11 @@ void __cdecl SGD2FR_SetD2ClientResolutionFromOptionsMenu(
     std::uint32_t reg_resolution_mode,
     std::uint32_t* reg_resolution_mode_out
 ) {
-  std::size_t num_ingame_resolutions =
-      config::GetIngameResolutions().size() + 1;
+  std::size_t max_registry_resolution_id = GetNumIngameResolutions()
+      + GetMinConfigResolutionId();
 
-  if (reg_resolution_mode >= num_ingame_resolutions) {
-    *reg_resolution_mode_out = 0;
-  } else if (reg_resolution_mode == 2) {
-    *reg_resolution_mode_out = 3;
+  if (reg_resolution_mode >= max_registry_resolution_id) {
+    *reg_resolution_mode_out = GetMinConfigResolutionId();
   } else {
     *reg_resolution_mode_out = reg_resolution_mode;
   }
