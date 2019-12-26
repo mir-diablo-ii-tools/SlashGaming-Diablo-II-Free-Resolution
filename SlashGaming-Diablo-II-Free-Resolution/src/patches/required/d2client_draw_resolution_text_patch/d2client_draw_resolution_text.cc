@@ -94,7 +94,7 @@ mapi::bool32 __cdecl SGD2FR_D2ClientDrawResolutionText(
 
   // Draw text based on the resolution mode.
   unsigned int resolution_mode = d2::d2gfx::GetResolutionMode();
-  std::tuple resolution = GetResolutionFromId(resolution_mode);
+  std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
 
   std::u8string text_fmt = fmt::format(
       u8"{}x{}",

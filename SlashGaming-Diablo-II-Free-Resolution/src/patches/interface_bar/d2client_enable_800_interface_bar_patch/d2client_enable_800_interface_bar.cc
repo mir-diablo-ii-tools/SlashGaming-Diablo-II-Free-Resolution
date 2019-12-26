@@ -77,7 +77,7 @@ mapi::bool32 __cdecl SGD2FR_D2Client_Draw800InterfaceBar(
   ).GetHeight();
 
   // Determine the start draw positions of the interface bar.
-  const std::tuple display_width_and_height = GetResolutionFromId(
+  const std::tuple display_width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 

@@ -57,7 +57,7 @@ void __cdecl SGD2FR_SetGlide3xWindowWidthAndHeight(
     std::int32_t* width,
     std::int32_t* height
 ) {
-  std::tuple<int, int> resolution = GetResolutionFromId(
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(
       glide_resolution_mode - (0x1000 - 3)
   );
 

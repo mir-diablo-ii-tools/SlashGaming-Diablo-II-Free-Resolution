@@ -88,7 +88,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
   }
 
   // Adjustment code to ensure that the objects appear in the correct location.
-  std::tuple width_and_height = GetResolutionFromId(
+  std::tuple width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 

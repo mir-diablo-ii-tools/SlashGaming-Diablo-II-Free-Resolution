@@ -62,7 +62,7 @@ constexpr std::string_view kOriginalScreenBorderFrameImagePath =
 void DrawLeftScreenBackground() {
   d2::CelFile_API& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
 
-  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // If loading fails, draw a black rectangle.
   if (!screen_background.IsOpen()) {
@@ -120,7 +120,7 @@ void DrawLeftScreenBackground() {
 void DrawRightScreenBackground() {
   d2::CelFile_API& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
 
-  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // If loading fails, draw a black rectangle.
   if (!screen_background.IsOpen()) {
@@ -182,7 +182,7 @@ void DrawRightScreenBackground() {
 void DrawOriginalLeftScreenBorderFrame() {
   d2::CelFile_API& screen_border_frame = GetCelFile(kOriginalScreenBorderFrameImagePath);
 
-  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   const int left = (std::get<0>(width_and_height) - 640 - (800 - 640)) / 2;
   const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
@@ -236,7 +236,7 @@ void DrawOriginalLeftScreenBorderFrame() {
 void DrawOriginalRightScreenBorderFrame() {
   d2::CelFile_API& screen_border_frame = GetCelFile(kOriginalScreenBorderFrameImagePath);
 
-  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   const int right = (std::get<0>(width_and_height) + 640 + (800 - 640)) / 2;
   const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
@@ -294,7 +294,7 @@ void DrawCustomLeftScreenBorderFrame() {
   d2::CelFile_API& screen_bottom_border = GetCelFile(config::GetCustomLeftScreenBorderBottomImagePath());
   d2::CelFile_API& screen_bottom_right_border = GetCelFile(config::GetCustomLeftScreenBorderBottomRightImagePath());
 
-  const std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // Determine border starting positions.
   const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
@@ -426,7 +426,7 @@ void DrawCustomRightScreenBorderFrame() {
   d2::CelFile_API& screen_bottom_border = GetCelFile(config::GetCustomRightScreenBorderBottomImagePath());
   d2::CelFile_API& screen_bottom_left_border = GetCelFile(config::GetCustomRightScreenBorderBottomLeftImagePath());
 
-  const std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // Determine border starting positions.
   const int screen_right = (std::get<0>(width_and_height) + 640) / 2;
@@ -582,7 +582,7 @@ void DrawLeftScreenBackgroundRibbon() {
   d2::CelFile_API& screen_left_border = GetCelFile(config::GetCustomLeftScreenBorderLeftImagePath());
 
   // Determine border starting positions.
-  const std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
   const int screen_right = std::get<0>(width_and_height) / 2;
@@ -732,7 +732,7 @@ void DrawRightScreenBackgroundRibbon() {
   d2::CelFile_API& screen_right_border = GetCelFile(config::GetCustomRightScreenBorderRightImagePath());
 
   // Determine border starting positions.
-  const std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   const int screen_left = std::get<0>(width_and_height) / 2;
   const int screen_right = (std::get<0>(width_and_height) + 640) / 2;

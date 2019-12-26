@@ -194,7 +194,7 @@ std::size_t GetNumIngameResolutions() {
   return GetNonCrashingIngameResolutions().size();
 }
 
-std::tuple<int, int> GetResolutionFromId(std::size_t id) {
+std::tuple<int, int> GetIngameResolutionFromId(std::size_t id) {
   if (id == 0) {
     return resolution_640x480;
   } else if (id == 1) {

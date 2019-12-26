@@ -57,7 +57,7 @@ void __cdecl SGD2FR_SetD2GlideDisplayWidthAndHeight(
     std::int32_t* height,
     std::uint32_t* glide_res_id
 ) {
-  std::tuple<int, int> resolution = GetResolutionFromId(resolution_mode);
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
 
   *width = std::get<0>(resolution);
   *height = std::get<1>(resolution);

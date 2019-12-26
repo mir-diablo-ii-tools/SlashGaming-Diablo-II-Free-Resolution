@@ -77,7 +77,7 @@ d2::PositionalRectangle_API GetNewStatsButtonPosition() {
   constexpr int dist_from_top_to_display_bottom = 42;
   constexpr int dist_from_bottom_to_display_bottom = 8;
 
-  const std::tuple display_width_and_height = GetResolutionFromId(
+  const std::tuple display_width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
@@ -102,7 +102,7 @@ d2::PositionalRectangle_API GetNewSkillButtonPosition() {
   constexpr int dist_from_top_to_display_bottom = 42;
   constexpr int dist_from_bottom_to_display_bottom = 8;
 
-  const std::tuple display_width_and_height = GetResolutionFromId(
+  const std::tuple display_width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
@@ -125,7 +125,7 @@ std::tuple<int, int> GetNewStatsPopupTextPosition() {
   constexpr int dist_from_top_to_display_bottom =
       (source_display_height) - 550;
 
-  const std::tuple display_width_and_height = GetResolutionFromId(
+  const std::tuple display_width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
@@ -144,7 +144,7 @@ std::tuple<int, int> GetNewSkillPopupTextPosition() {
   constexpr int dist_from_top_to_display_bottom =
       (source_display_height) - 550;
 
-  const std::tuple display_width_and_height = GetResolutionFromId(
+  const std::tuple display_width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 

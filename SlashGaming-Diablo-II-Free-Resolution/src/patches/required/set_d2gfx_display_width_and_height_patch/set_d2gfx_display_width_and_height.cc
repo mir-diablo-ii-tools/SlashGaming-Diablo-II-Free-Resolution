@@ -56,7 +56,7 @@ void __cdecl SGD2FR_SetD2GFXDisplayWidthAndHeight(
     std::int32_t* width,
     std::int32_t* height
 ) {
-  std::tuple<int, int> resolution = GetResolutionFromId(resolution_mode);
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
 
   *width = std::get<0>(resolution);
   *height = std::get<1>(resolution);

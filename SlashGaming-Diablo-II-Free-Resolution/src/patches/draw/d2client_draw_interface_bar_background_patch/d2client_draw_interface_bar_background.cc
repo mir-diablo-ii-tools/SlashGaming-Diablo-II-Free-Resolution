@@ -57,7 +57,7 @@ namespace sgd2fr::patches {
 namespace {
 
 void DrawLeftInterfaceBarBackground() {
-  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
   d2::CelFile_API& interface_bar_background_left = GetCelFile(config::GetInterfaceBarBackgroundLeftImagePath());
@@ -124,7 +124,7 @@ void DrawLeftInterfaceBarBackground() {
 }
 
 void DrawRightInterfaceBarBackground() {
-  std::tuple width_and_height = GetResolutionFromId(d2::d2gfx::GetResolutionMode());
+  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
   d2::CelFile_API& interface_bar_background_right = GetCelFile(config::GetInterfaceBarBackgroundRightImagePath());
