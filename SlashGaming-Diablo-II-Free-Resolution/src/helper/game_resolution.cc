@@ -56,17 +56,56 @@
 namespace sgd2fr {
 namespace {
 
-std::vector<std::tuple<int, int>> GetResolutionsFromIpV4(std::string_view ipv4_address) {
-  std::unordered_map<
+constexpr std::tuple resolution_640x480 = std::make_tuple(640, 480);
+constexpr std::tuple resolution_800x600 = std::make_tuple(800, 600);
+
+const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(std::string_view ipv4_address) {
+  static const std::unordered_map<
       std::string_view,
       std::vector<std::tuple<int, int>>
   > acceptable_resolutions_from_ipv4 = {
-      { "", { std::make_tuple(1068, 600) } },
+      // play.slashdiablo.net
+      {
+          "209.222.25.91", {
+              resolution_640x480,
+              resolution_800x600,
+              std::make_tuple(1068, 600)
+          }
+      },
+      // evnt.slashdiablo.net
+      {
+          "207.252.75.177", {
+              resolution_640x480,
+              resolution_800x600,
+              std::make_tuple(1068, 600)
+          }
+      },
+      // Diablo 09
+      {
+          "69.30.195.42", {
+              resolution_640x480,
+              resolution_800x600,
+              std::make_tuple(1024, 768)
+          }
+      },
+  };
+
+  static const std::vector default_resolutions = {
+      resolution_640x480,
+      resolution_800x600
   };
 
   return acceptable_resolutions_from_ipv4.contains(ipv4_address)
       ? acceptable_resolutions_from_ipv4.at(ipv4_address)
-      : std::vector{ std::make_tuple(640, 480), std::make_tuple(800, 600) };
+      : default_resolutions;
+}
+
+const std::vector<std::tuple<int, int>>& SelectLocalOrOnlineResolutions() {
+  if (d2::d2client::GetGameType_ApiValue() == d2::ClientGameType::kBattleNetJoin) {
+    return GetResolutionsFromIpV4(d2::bnclient::GetGatewayIPv4Address());
+  } else {
+    return config::GetIngameResolutions();
+  }
 }
 
 const std::set<std::tuple<int, int>>& GetStandardResolutions() {
@@ -93,21 +132,42 @@ const std::set<std::tuple<int, int>>& GetStandardResolutions() {
   return standard_resolutions;
 }
 
-std::vector<std::tuple<int, int>> GetNonCrashingIngameResolutions() {
-  static std::once_flag init_once_flag;
-  static std::vector non_crashing_ingame_resolutions = config::GetIngameResolutions();
+const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
+  static std::mutex check_mutex;
+  static std::unique_ptr init_once_flag = std::make_unique<std::once_flag>();
+  static d2::ClientGameType selected_game_type =
+      d2::d2client::GetGameType_ApiValue();
+  static std::vector<std::tuple<int, int>> non_crashing_ingame_resolutions;
+
+  std::lock_guard lock(check_mutex);
+
+  if (selected_game_type != d2::d2client::GetGameType_ApiValue()) {
+    init_once_flag = std::make_unique<std::once_flag>();
+  }
 
   std::call_once(
-      init_once_flag,
+      *init_once_flag,
       [=] () {
         d2::VideoMode current_video_mode = d2::d2gfx::GetVideoMode();
+        const std::vector<std::tuple<int, int>>& selected_ingame_resolutions =
+            SelectLocalOrOnlineResolutions();
+
+        selected_game_type = d2::d2client::GetGameType_ApiValue();
+        non_crashing_ingame_resolutions.clear();
 
         if (current_video_mode == d2::VideoMode::kDirect3D
             || current_video_mode == d2::VideoMode::kDirectDraw) {
-          std::remove_if(
+          std::copy_if(
+              selected_ingame_resolutions.cbegin(),
+              selected_ingame_resolutions.cend(),
               non_crashing_ingame_resolutions.begin(),
-              non_crashing_ingame_resolutions.end(),
               &IsStandardResolution
+          );
+        } else {
+          std::copy(
+              selected_ingame_resolutions.cbegin(),
+              selected_ingame_resolutions.cend(),
+              non_crashing_ingame_resolutions.begin()
           );
         }
       }
@@ -118,16 +178,34 @@ std::vector<std::tuple<int, int>> GetNonCrashingIngameResolutions() {
 
 } // namespace
 
+std::size_t GetMinConfigResolutionId() {
+  return GetNonCrashingIngameResolutions().at(0) == resolution_640x480
+      ? 0
+      : 1;
+}
+
+std::size_t GetMinIngameResolutionId() {
+  return GetNonCrashingIngameResolutions().at(0) == resolution_640x480
+      ? 0
+      : 2;
+}
+
+std::size_t GetNumIngameResolutions() {
+  return GetNonCrashingIngameResolutions().size();
+}
+
 std::tuple<int, int> GetResolutionFromId(std::size_t id) {
-  if (id == 1) {
+  if (id == 0) {
+    return resolution_640x480;
+  } else if (id == 1) {
     return config::GetMainMenuResolution();
   }
 
   const auto& ingame_resolutions = GetNonCrashingIngameResolutions();
 
-  std::size_t ingame_resolution_index = (id == 0)
-      ? id
-      : id - 1;
+  std::size_t ingame_resolution_index = (GetMinIngameResolutionId() == 0)
+      ? id - 1
+      : id - 2;
 
   return ingame_resolutions.at(ingame_resolution_index);
 }

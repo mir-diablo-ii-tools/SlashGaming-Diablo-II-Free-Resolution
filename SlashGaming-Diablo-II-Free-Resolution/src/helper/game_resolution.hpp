@@ -51,6 +51,9 @@
 
 namespace sgd2fr {
 
+std::size_t GetMinConfigResolutionId();
+std::size_t GetMinIngameResolutionId();
+std::size_t GetNumIngameResolutions();
 std::tuple<int, int> GetResolutionFromId(std::size_t id);
 bool IsStandardResolution(const std::tuple<int, int>& width_and_height);
 

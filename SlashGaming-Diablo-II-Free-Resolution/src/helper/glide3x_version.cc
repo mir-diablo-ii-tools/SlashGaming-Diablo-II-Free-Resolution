@@ -111,7 +111,7 @@ ExtractFileVersionString(
   std::wstring file_path_text_wide = file_path.wstring();
 
   // Check version size.
-  DWORD ignored;
+  DWORD ignored = 0;
   DWORD file_version_info_size = GetFileVersionInfoSizeW(
       file_path_text_wide.data(),
       &ignored
