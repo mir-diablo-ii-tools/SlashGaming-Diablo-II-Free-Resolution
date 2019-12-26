@@ -160,15 +160,11 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
           std::copy_if(
               selected_ingame_resolutions.cbegin(),
               selected_ingame_resolutions.cend(),
-              non_crashing_ingame_resolutions.begin(),
+              std::back_inserter(non_crashing_ingame_resolutions),
               &IsStandardResolution
           );
         } else {
-          std::copy(
-              selected_ingame_resolutions.cbegin(),
-              selected_ingame_resolutions.cend(),
-              non_crashing_ingame_resolutions.begin()
-          );
+          non_crashing_ingame_resolutions = selected_ingame_resolutions;
         }
       }
   );
