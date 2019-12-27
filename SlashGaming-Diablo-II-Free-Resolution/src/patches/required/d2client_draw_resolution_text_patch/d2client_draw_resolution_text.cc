@@ -68,10 +68,10 @@ mapi::bool32 __cdecl SGD2FR_D2ClientDrawResolutionText(
     case d2::GameVersion::k1_09D: {
       std::intptr_t raw_address = mapi::GameAddress::FromOffset(
           mapi::DefaultLibrary::kD2Client,
-          0x1212A8
+          0xE5F18
       ).raw_address();
 
-      comparing_cel_file_base_address = *reinterpret_cast<d2::CelFile**>(
+      comparing_cel_file_base_address = reinterpret_cast<d2::CelFile*>(
           raw_address
       );
       break;
