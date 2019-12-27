@@ -51,6 +51,7 @@
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl SGD2FR_SetD2ClientResolutionFromOptionsMenu(
+    void* settings,
     std::uint32_t reg_resolution_mode,
     std::uint32_t* reg_resolution_mode_out
 );

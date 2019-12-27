@@ -62,8 +62,9 @@ __declspec(naked) void __cdecl InterceptionFunc() {
 
   ASM_X86(push ecx);
   ASM_X86(push [ecx]);
+  ASM_X86(push eax);
   ASM_X86(call ASM_X86_FUNC(SGD2FR_SetD2ClientResolutionFromOptionsMenu));
-  ASM_X86(add esp, 8);
+  ASM_X86(add esp, 12);
 
   ASM_X86(pop edx);
   ASM_X86(pop eax);
@@ -79,7 +80,7 @@ std::vector<mapi::GamePatch> MakeSetD2ClientResolutionFromOptionsMenuPatch_1_09D
 
   mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
       mapi::DefaultLibrary::kD2Client,
-      0x61927
+      0x61929
   );
 
   patches.push_back(
@@ -87,7 +88,7 @@ std::vector<mapi::GamePatch> MakeSetD2ClientResolutionFromOptionsMenuPatch_1_09D
           game_address,
           mapi::BranchType::kCall,
           &InterceptionFunc,
-          0x61933 - 0x61927
+          0x61933 - 0x61929
       )
   );
 

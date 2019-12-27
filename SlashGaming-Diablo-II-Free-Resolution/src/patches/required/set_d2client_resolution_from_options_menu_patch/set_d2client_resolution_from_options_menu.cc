@@ -53,9 +53,33 @@
 namespace sgd2fr::patches {
 
 void __cdecl SGD2FR_SetD2ClientResolutionFromOptionsMenu(
+    void* settings,
     std::uint32_t reg_resolution_mode,
     std::uint32_t* reg_resolution_mode_out
 ) {
+  void* resolution_settings_address;
+
+  switch (d2::GetRunningGameVersionId()) {
+    case d2::GameVersion::k1_09D: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          mapi::GameAddress::FromOffset(
+              mapi::DefaultLibrary::kD2Client,
+              0xE6468
+          ).raw_address()
+      );
+      break;
+    }
+
+    default: {
+      std::exit(0);
+    }
+  }
+
+  if (settings != resolution_settings_address) {
+    *reg_resolution_mode_out = 0;
+    return;
+  }
+
   std::size_t max_registry_resolution_id = GetNumIngameResolutions()
       + GetMinConfigResolutionId();
 
