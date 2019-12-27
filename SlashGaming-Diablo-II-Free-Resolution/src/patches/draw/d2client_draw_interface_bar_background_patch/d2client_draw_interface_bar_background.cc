@@ -62,18 +62,15 @@ void DrawLeftInterfaceBarBackground() {
   d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
   d2::CelFile_API& interface_bar_background_left = GetCelFile(config::GetInterfaceBarBackgroundLeftImagePath());
 
-  if (!interface_bar_background_center.IsOpen() || !interface_bar_background_left.IsOpen()) {
-    d2::d2gfx::DrawRectangle(
-        0,
-        std::get<1>(width_and_height) - 47,
-        std::get<0>(width_and_height) / 2,
-        std::get<1>(width_and_height),
-        0,
-        d2::DrawEffect::kNone
-    );
-
-    return;
-  }
+  // Draw a black rectangle to stop transparent DC6 cheaters.
+  d2::d2gfx::DrawRectangle(
+      0,
+      std::get<1>(width_and_height) - 47,
+      std::get<0>(width_and_height) / 2,
+      std::get<1>(width_and_height),
+      0,
+      d2::DrawEffect::kNone
+  );
 
   d2::DrawCelFileFrameOptions frame_options;
   frame_options.color = mapi::RGBA32BitColor();
@@ -129,18 +126,15 @@ void DrawRightInterfaceBarBackground() {
   d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
   d2::CelFile_API& interface_bar_background_right = GetCelFile(config::GetInterfaceBarBackgroundRightImagePath());
 
-  if (!interface_bar_background_center.IsOpen() || !interface_bar_background_right.IsOpen()) {
-    d2::d2gfx::DrawRectangle(
-        std::get<0>(width_and_height) / 2,
-        std::get<1>(width_and_height) - 47,
-        std::get<0>(width_and_height),
-        std::get<1>(width_and_height),
-        0,
-        d2::DrawEffect::kNone
-    );
-
-    return;
-  }
+  // Draw a black rectangle to stop transparent DC6 cheaters.
+  d2::d2gfx::DrawRectangle(
+      std::get<0>(width_and_height) / 2,
+      std::get<1>(width_and_height) - 47,
+      std::get<0>(width_and_height),
+      std::get<1>(width_and_height),
+      0,
+      d2::DrawEffect::kNone
+  );
 
   d2::DrawCelFileFrameOptions frame_options;
   frame_options.color = mapi::RGBA32BitColor();

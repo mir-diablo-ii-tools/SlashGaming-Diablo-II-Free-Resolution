@@ -64,19 +64,15 @@ void DrawLeftScreenBackground() {
 
   std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  // If loading fails, draw a black rectangle.
-  if (!screen_background.IsOpen()) {
-    d2::d2gfx::DrawRectangle(
-        0,
-        0,
-        std::get<0>(width_and_height) / 2,
-        std::get<1>(width_and_height),
-        0,
-        d2::DrawEffect::kNone
-    );
-
-    return;
-  }
+  // Draw a black rectangle to stop transparent DC6 cheaters.
+  d2::d2gfx::DrawRectangle(
+      0,
+      0,
+      std::get<0>(width_and_height) / 2,
+      std::get<1>(width_and_height),
+      0,
+      d2::DrawEffect::kNone
+  );
 
   // Set up the frame options.
   d2::DrawCelFileFrameOptions frame_options;
@@ -122,19 +118,15 @@ void DrawRightScreenBackground() {
 
   std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  // If loading fails, draw a black rectangle.
-  if (!screen_background.IsOpen()) {
-    d2::d2gfx::DrawRectangle(
-        std::get<0>(width_and_height) / 2,
-        0,
-        std::get<0>(width_and_height),
-        std::get<1>(width_and_height),
-        0,
-        d2::DrawEffect::kNone
-    );
-
-    return;
-  }
+  // Draw a black rectangle to stop transparent DC6 cheaters.
+  d2::d2gfx::DrawRectangle(
+      std::get<0>(width_and_height) / 2,
+      0,
+      std::get<0>(width_and_height),
+      std::get<1>(width_and_height),
+      0,
+      d2::DrawEffect::kNone
+  );
 
   // Set up the frame options.
   d2::DrawCelFileFrameOptions frame_options;
