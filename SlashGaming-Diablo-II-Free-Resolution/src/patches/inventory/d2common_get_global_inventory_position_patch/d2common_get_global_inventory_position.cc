@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -71,7 +71,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalInventoryPosition(
   );
 
   d2::PositionalRectangle_Wrapper out_position_wrapper(out_position);
-  out_position_wrapper.Copy(global_inventory_position);
+  out_position_wrapper.Assign(global_inventory_position);
 
   // Do not adjust positions if the entries are empty, which use value -1.
   constexpr int entry_empty_value = -1;

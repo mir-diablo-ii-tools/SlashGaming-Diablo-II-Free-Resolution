@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -53,7 +53,7 @@
 namespace sgd2fr {
 namespace {
 
-std::unordered_map<std::string, d2::CelFile_API> cel_file_collection;
+std::unordered_map<std::string, d2::CelFile_Api> cel_file_collection;
 
 int checksum = 0;
 
@@ -90,13 +90,13 @@ RunChecksum(int* flags) {
 
 } // namespace
 
-d2::CelFile_API& GetCelFile(std::string_view cel_file_path) {
+d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
   std::string cel_file_path_key = cel_file_path.data();
 
   if (!cel_file_collection.contains(cel_file_path_key)) {
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        d2::CelFile_API(cel_file_path_key, false)
+        d2::CelFile_Api(cel_file_path_key, false)
     );
   }
 #if defined(FLAG_CHECKSUM)
@@ -104,13 +104,13 @@ d2::CelFile_API& GetCelFile(std::string_view cel_file_path) {
 
   if ((checksum | 07400) != checksum) {
 #endif
-    new d2::CelFile_API(
+    new d2::CelFile_Api(
         std::move(cel_file_collection.at(cel_file_path_key))
     );
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        d2::CelFile_API(cel_file_path_key, false)
+        d2::CelFile_Api(cel_file_path_key, false)
     );
 #if defined(FLAG_CHECKSUM)
   }
@@ -129,7 +129,7 @@ void ClearCelFiles() {
   }
 
   new std::unordered_map(std::move(cel_file_collection));
-  cel_file_collection = std::unordered_map<std::string, d2::CelFile_API>();
+  cel_file_collection = std::unordered_map<std::string, d2::CelFile_Api>();
 #endif
 }
 

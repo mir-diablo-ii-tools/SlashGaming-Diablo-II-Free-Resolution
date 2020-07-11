@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -101,8 +101,8 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(std::string_view
 }
 
 const std::vector<std::tuple<int, int>>& SelectLocalOrOnlineResolutions() {
-  if (d2::d2client::GetGameType_ApiValue() == d2::ClientGameType::kBattleNetJoin) {
-    return GetResolutionsFromIpV4(d2::bnclient::GetGatewayIPv4Address());
+  if (d2::d2client::GetGameType() == d2::ClientGameType::kBattleNetJoin) {
+    return GetResolutionsFromIpV4(d2::bnclient::GetGatewayIpV4Address());
   } else {
     return config::GetIngameResolutions();
   }
@@ -136,12 +136,12 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
   static std::mutex check_mutex;
   static std::unique_ptr init_once_flag = std::make_unique<std::once_flag>();
   static d2::ClientGameType selected_game_type =
-      d2::d2client::GetGameType_ApiValue();
+      d2::d2client::GetGameType();
   static std::vector<std::tuple<int, int>> non_crashing_ingame_resolutions;
 
   std::lock_guard lock(check_mutex);
 
-  if (selected_game_type != d2::d2client::GetGameType_ApiValue()) {
+  if (selected_game_type != d2::d2client::GetGameType()) {
     init_once_flag = std::make_unique<std::once_flag>();
   }
 
@@ -152,7 +152,7 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
         const std::vector<std::tuple<int, int>>& selected_ingame_resolutions =
             SelectLocalOrOnlineResolutions();
 
-        selected_game_type = d2::d2client::GetGameType_ApiValue();
+        selected_game_type = d2::d2client::GetGameType();
         non_crashing_ingame_resolutions.clear();
 
         if (current_video_mode == d2::VideoMode::kDirect3D

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -69,7 +69,7 @@ unsigned int Get800InterfaceBarEnabledValue() {
       : 0;
 }
 
-d2::PositionalRectangle_API GetNewStatsButtonPosition() {
+d2::PositionalRectangle_Api GetNewStatsButtonPosition() {
   constexpr int dist_from_left_to_display_center =
       (source_display_width / 2) - 206;
   constexpr int dist_from_right_to_display_center =
@@ -84,7 +84,7 @@ d2::PositionalRectangle_API GetNewStatsButtonPosition() {
   const int display_half_width = (std::get<0>(display_width_and_height) / 2);
   const int display_height = std::get<1>(display_width_and_height);
 
-  d2::PositionalRectangle_API button_position(
+  d2::PositionalRectangle_Api button_position(
       display_half_width - dist_from_left_to_display_center,
       display_half_width - dist_from_right_to_display_center,
       display_height - dist_from_top_to_display_bottom,
@@ -94,7 +94,7 @@ d2::PositionalRectangle_API GetNewStatsButtonPosition() {
   return button_position;
 }
 
-d2::PositionalRectangle_API GetNewSkillButtonPosition() {
+d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
   constexpr int dist_from_left_to_display_center =
       (source_display_width / 2) - 563;
   constexpr int dist_from_right_to_display_center =
@@ -109,7 +109,7 @@ d2::PositionalRectangle_API GetNewSkillButtonPosition() {
   const int display_half_width = (std::get<0>(display_width_and_height) / 2);
   const int display_height = std::get<1>(display_width_and_height);
 
-  d2::PositionalRectangle_API button_position(
+  d2::PositionalRectangle_Api button_position(
       display_half_width - dist_from_left_to_display_center,
       display_half_width - dist_from_right_to_display_center,
       display_height - dist_from_top_to_display_bottom,
@@ -158,7 +158,7 @@ std::tuple<int, int> GetNewSkillPopupTextPosition() {
 }
 
 bool IsMouseOverNewStatsButton() {
-  d2::PositionalRectangle_API button_position = GetNewStatsButtonPosition();
+  d2::PositionalRectangle_Api button_position = GetNewStatsButtonPosition();
 
   const int ingame_mouse_position_x =
       d2::d2client::GetIngameMousePositionX();
@@ -172,7 +172,7 @@ bool IsMouseOverNewStatsButton() {
 }
 
 bool IsMouseOverNewSkillButton() {
-  d2::PositionalRectangle_API button_position = GetNewSkillButtonPosition();
+  d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
 
   const int ingame_mouse_position_x =
       d2::d2client::GetIngameMousePositionX();

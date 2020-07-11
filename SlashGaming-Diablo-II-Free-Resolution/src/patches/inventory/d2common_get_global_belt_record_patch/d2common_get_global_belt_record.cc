@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -72,16 +72,20 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltRecord(
   );
 
   d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
-  out_belt_record_wrapper.Copy(global_belt_record_view);
+  out_belt_record_wrapper.Assign(global_belt_record_view);
 
   // Adjustment code to ensure that the objects appear in the correct location.
   for (std::size_t belt_slot_index = 0;
        belt_slot_index < out_belt_record_wrapper.GetNumSlots();
        belt_slot_index += 1) {
+    d2::PositionalRectangle_Wrapper slot_positions(
+        out_belt_record_wrapper.GetSlotPositions()
+    );
+
     d2::d2common::GetGlobalBeltSlotPosition(
         belt_record_index,
         inventory_arrange_mode,
-        out_belt_record_wrapper.GetSlotPosition(belt_slot_index),
+        slot_positions[belt_slot_index].Get(),
         belt_slot_index
     );
   }

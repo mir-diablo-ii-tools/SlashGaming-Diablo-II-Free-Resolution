@@ -1,6 +1,6 @@
 ﻿/**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -102,7 +102,7 @@ mapi::bool32 __cdecl SGD2FR_D2ClientDrawResolutionText(
       std::get<1>(resolution)
   );
 
-  d2::UnicodeString_API text_unicode = d2::UnicodeString_API::FromU8String(text_fmt);
+  d2::UnicodeString_Api text_unicode = d2::UnicodeString_Api::FromUtf8String(text_fmt);
 
   d2::TextFont old_text_font = d2::d2win::SetTextFont(d2::TextFont::kDiabloMenu_30);
 

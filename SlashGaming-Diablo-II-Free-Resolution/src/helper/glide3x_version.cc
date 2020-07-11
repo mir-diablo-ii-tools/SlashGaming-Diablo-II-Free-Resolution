@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -54,10 +54,10 @@
 #include <string_view>
 #include <unordered_map>
 
-#include <nowide/convert.hpp>
 #include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../wide_macro.h"
+#include "encoding.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -228,7 +228,7 @@ DetermineGlide3xVersionByFileVersion(
         kErrorFormatMessage,
         __FILEW__,
         __LINE__,
-        nowide::widen(version_string.data())
+        ConvertMultiByteUtf8ToWide(version_string, __FILEW__, __LINE__)
     );
 
     MessageBoxW(

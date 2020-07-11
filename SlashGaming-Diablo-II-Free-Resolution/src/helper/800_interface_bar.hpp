@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -54,8 +54,8 @@ namespace sgd2fr {
 
 unsigned int Get800InterfaceBarEnabledValue();
 
-d2::PositionalRectangle_API GetNewStatsButtonPosition();
-d2::PositionalRectangle_API GetNewSkillButtonPosition();
+d2::PositionalRectangle_Api GetNewStatsButtonPosition();
+d2::PositionalRectangle_Api GetNewSkillButtonPosition();
 
 std::tuple<int, int> GetNewStatsPopupTextPosition();
 std::tuple<int, int> GetNewSkillPopupTextPosition();

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -68,13 +68,14 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
       : 0;
 
   d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
+
   d2::PositionalRectangle_View global_belt_slot_position(
       global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
-          .GetSlotPosition(belt_slot_index)
+          .GetSlotPositions()[belt_slot_index]
   );
 
   d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
-  out_belt_slot_wrapper.Copy(global_belt_slot_position);
+  out_belt_slot_wrapper.Assign(global_belt_slot_position);
 
   // Do not adjust positions if the entries are empty, which use value 0.
   constexpr int entry_empty_value = 0;

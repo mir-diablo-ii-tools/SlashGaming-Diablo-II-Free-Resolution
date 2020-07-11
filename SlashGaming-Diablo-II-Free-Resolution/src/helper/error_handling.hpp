@@ -43,17 +43,40 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+#ifndef SGMAPI_CXX_BACKEND_ERROR_HANDLING_HPP_
+#define SGMAPI_CXX_BACKEND_ERROR_HANDLING_HPP_
 
-#include <vector>
+#include <windows.h>
+#include <string_view>
 
-#include <sgd2mapi.hpp>
+namespace sgd2fr {
 
-namespace sgd2fr::patches {
+[[noreturn]]
+void ExitOnGeneralFailure(
+    std::wstring_view message,
+    std::wstring_view caption,
+    std::wstring_view file_name,
+    int line
+);
 
-std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeightPatch();
+[[noreturn]]
+void ExitOnWindowsFunctionGeneralFailureWithLastError(
+    std::wstring_view message,
+    std::wstring_view caption,
+    std::wstring_view function_name,
+    DWORD last_error,
+    std::wstring_view file_name,
+    int line
+);
 
-} // namespace sgd2fr::patches
+[[noreturn]]
+void ExitOnWindowsFunctionFailureWithLastError(
+    std::wstring_view function_name,
+    DWORD last_error,
+    std::wstring_view file_name,
+    int line
+);
 
-#endif // SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+} // namespace sgd2fr
+
+#endif // SGMAPI_CXX_BACKEND_ERROR_HANDLING_HPP_

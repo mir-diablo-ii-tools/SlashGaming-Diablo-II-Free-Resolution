@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -68,13 +68,13 @@ void __cdecl SGD2FR_D2Common_GetGlobalEquipmentSlotLayout(
   d2::EquipmentLayout_View global_equipment_slot_layout_view(
       global_inventory_txt_view[
           inventory_record_index + (source_inventory_arrange_mode * 16)
-      ].GetEquipmentSlot(equipment_slot_index)
+      ].GetEquipmentSlots()[equipment_slot_index]
   );
 
   d2::EquipmentLayout_Wrapper out_equipment_slot_layout_wrapper(
       out_equipment_slot_layout
   );
-  out_equipment_slot_layout_wrapper.Copy(global_equipment_slot_layout_view);
+  out_equipment_slot_layout_wrapper.Assign(global_equipment_slot_layout_view);
 
   // Do not adjust positions if the entries are empty, which use value -1.
   constexpr int entry_empty_value = -1;

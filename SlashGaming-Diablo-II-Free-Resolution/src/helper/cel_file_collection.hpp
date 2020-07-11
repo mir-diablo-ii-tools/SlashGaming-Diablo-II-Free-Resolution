@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -52,7 +52,7 @@
 
 namespace sgd2fr {
 
-d2::CelFile_API& GetCelFile(std::string_view cel_file_path);
+d2::CelFile_Api& GetCelFile(std::string_view cel_file_path);
 void ClearCelFiles();
 
 } // namespace sgd2fr

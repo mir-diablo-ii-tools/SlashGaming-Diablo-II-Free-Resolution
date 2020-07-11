@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -86,7 +86,7 @@ mapi::bool32 __cdecl SGD2FR_D2Client_Draw800InterfaceBar(
 
   // Draw the interface bar. Note that only frames 1 - 4 should be drawn.
   d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::RGBA32BitColor();
+  frame_options.color = mapi::Rgba32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
   frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;

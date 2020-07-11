@@ -43,17 +43,38 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+#ifndef SGMAPI_CXX_BACKEND_ENCODING_H_
+#define SGMAPI_CXX_BACKEND_ENCODING_H_
 
-#include <vector>
+#include <string>
+#include <string_view>
 
-#include <sgd2mapi.hpp>
+namespace sgd2fr {
 
-namespace sgd2fr::patches {
+std::wstring ConvertUtf8ToWide(
+    std::u8string_view utf8_string,
+    std::wstring_view source_code_file_path,
+    int source_code_line
+);
 
-std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeightPatch();
+std::wstring ConvertMultiByteUtf8ToWide(
+    std::string_view utf8_string,
+    std::wstring_view source_code_file_path,
+    int source_code_line
+);
 
-} // namespace sgd2fr::patches
+std::u8string ConvertWideToUtf8(
+    std::wstring_view wide_string,
+    std::wstring_view source_code_file_path,
+    int source_code_line
+);
 
-#endif // SGD2FR_PATCHES_REQUIRED_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_SET_D2GDI_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+std::string ConvertWideToMultiByteUtf8(
+    std::wstring_view wide_string,
+    std::wstring_view source_code_file_path,
+    int source_code_line
+);
+
+} // namespace sgd2fr
+
+#endif // SGMAPI_C_BACKEND_ENCODING_H_

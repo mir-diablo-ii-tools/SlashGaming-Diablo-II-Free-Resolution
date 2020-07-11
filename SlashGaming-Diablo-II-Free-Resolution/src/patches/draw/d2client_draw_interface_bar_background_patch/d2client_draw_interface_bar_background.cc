@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -59,8 +59,8 @@ namespace {
 void DrawLeftInterfaceBarBackground() {
   std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
-  d2::CelFile_API& interface_bar_background_left = GetCelFile(config::GetInterfaceBarBackgroundLeftImagePath());
+  d2::CelFile_Api& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
+  d2::CelFile_Api& interface_bar_background_left = GetCelFile(config::GetInterfaceBarBackgroundLeftImagePath());
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   d2::d2gfx::DrawRectangle(
@@ -73,7 +73,7 @@ void DrawLeftInterfaceBarBackground() {
   );
 
   d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::RGBA32BitColor();
+  frame_options.color = mapi::Rgba32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
   frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
@@ -123,8 +123,8 @@ void DrawLeftInterfaceBarBackground() {
 void DrawRightInterfaceBarBackground() {
   std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  d2::CelFile_API& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
-  d2::CelFile_API& interface_bar_background_right = GetCelFile(config::GetInterfaceBarBackgroundRightImagePath());
+  d2::CelFile_Api& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
+  d2::CelFile_Api& interface_bar_background_right = GetCelFile(config::GetInterfaceBarBackgroundRightImagePath());
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   d2::d2gfx::DrawRectangle(
@@ -137,7 +137,7 @@ void DrawRightInterfaceBarBackground() {
   );
 
   d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::RGBA32BitColor();
+  frame_options.color = mapi::Rgba32BitColor();
   frame_options.draw_effect = d2::DrawEffect::kNone;
   frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
   frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;

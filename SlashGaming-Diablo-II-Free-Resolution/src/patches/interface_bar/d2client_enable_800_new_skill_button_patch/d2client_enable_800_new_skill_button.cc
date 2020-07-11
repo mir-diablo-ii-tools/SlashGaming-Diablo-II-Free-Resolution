@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -74,10 +74,11 @@ void __cdecl SGD2FR_D2Client_Set800NewSkillPopupText() {
 mapi::bool32 __cdecl SGD2FR_D2Client_Draw800NewSkillButton(
     d2::CelContext* cel_context
 ) {
-  d2::PositionalRectangle_API button_position = GetNewSkillButtonPosition();
+  d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
 
   d2::CelContext_Wrapper cel_context_wrapper(cel_context);
-  cel_context_wrapper.DrawFrame(
+
+  return cel_context_wrapper.DrawFrame(
       button_position.GetLeft(),
       button_position.GetBottom()
   );

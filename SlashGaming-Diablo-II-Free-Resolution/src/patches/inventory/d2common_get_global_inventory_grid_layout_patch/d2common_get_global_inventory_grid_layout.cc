@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019  Mir Drualga
+ * Copyright (C) 2019-2020  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -71,7 +71,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalInventoryGridLayout(
   );
 
   d2::GridLayout_Wrapper out_grid_layout_wrapper(out_grid_layout);
-  out_grid_layout_wrapper.Copy(global_inventory_grid_layout);
+  out_grid_layout_wrapper.Assign(global_inventory_grid_layout);
 
   // Do not adjust positions if the entries are empty, which use value 0.
   constexpr int entry_empty_value = 0;
