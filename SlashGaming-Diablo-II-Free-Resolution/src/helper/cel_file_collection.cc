@@ -91,7 +91,7 @@ RunChecksum(int* flags) {
 } // namespace
 
 d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
-  std::string cel_file_path_key = cel_file_path.data();
+  const std::string cel_file_path_key = cel_file_path.data();
 
   if (!cel_file_collection.contains(cel_file_path_key)) {
     cel_file_collection.insert_or_assign(
