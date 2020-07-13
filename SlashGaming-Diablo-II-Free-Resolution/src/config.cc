@@ -95,74 +95,86 @@ constexpr unsigned int kDefaultIngameResolutionMode = 0;
 // Draw variables.
 constexpr std::string_view kScreenBackgroundImagePathKey =
     "Screen Background Image Path";
-constexpr std::string_view kDefaultScreenBackgroundImagePath = "";
-
-constexpr std::string_view kScreenBackgroundRibbonImagePathKey =
-    "Screen Background Ribbon Image Path";
-constexpr std::string_view kDefaultScreenBackgroundRibbonImagePath = "";
+constexpr std::string_view kDefaultScreenBackgroundImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRStoneBack";
 
 // Left screen border images
 constexpr std::string_view kCustomLeftScreenBorderLeftImagePathKey =
     "Left Screen Border Left Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderLeftImagePath = "";
+constexpr std::string_view kDefaultCustomLeftScreenBorderLeftImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderTopImagePathKey =
     "Left Screen Border Top Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderTopImagePath = "";
+constexpr std::string_view kDefaultCustomLeftScreenBorderTopImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderTopRightImagePathKey =
     "Left Screen Border Top Right Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderTopRightImagePath = "";
+constexpr std::string_view kDefaultCustomLeftScreenBorderTopRightImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderBottomImagePathKey =
     "Left Screen Border Bottom Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderBottomImagePath = "";
+constexpr std::string_view kDefaultCustomLeftScreenBorderBottomImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderBottomRightImagePathKey =
     "Left Screen Border Bottom Right Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderBottomRightImagePath = "";
+constexpr std::string_view kDefaultCustomLeftScreenBorderBottomRightImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomLeft";
 
 // Right screen border images
 constexpr std::string_view kCustomRightScreenBorderRightImagePathKey =
     "Right Screen Border Right Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderRightImagePath = "";
+constexpr std::string_view kDefaultCustomRightScreenBorderRightImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyBorderInterfaceRight";
 
 constexpr std::string_view kCustomRightScreenBorderTopImagePathKey =
     "Right Screen Border Top Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderTopImagePath = "";
+constexpr std::string_view kDefaultCustomRightScreenBorderTopImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopRight";
 
 constexpr std::string_view kCustomRightScreenBorderTopLeftImagePathKey =
     "Right Screen Border Top Left Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderTopLeftImagePath = "";
+constexpr std::string_view kDefaultCustomRightScreenBorderTopLeftImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopRight";
 
 constexpr std::string_view kCustomRightScreenBorderBottomImagePathKey =
     "Right Screen Border Bottom Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderBottomImagePath = "";
+constexpr std::string_view kDefaultCustomRightScreenBorderBottomImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomRight";
 
 constexpr std::string_view kCustomRightScreenBorderBottomLeftImagePathKey =
     "Right Screen Border Bottom Left Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderBottomLeftImagePath = "";
+constexpr std::string_view kDefaultCustomRightScreenBorderBottomLeftImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomRight";
 
 constexpr std::string_view kScreenBorderHorizontalRibbonImagePathKey =
     "Screen Border Horizontal Ribbon";
-constexpr std::string_view kDefaultScreenBorderHorizontalRibbonImagePath = "";
+constexpr std::string_view kDefaultScreenBorderHorizontalRibbonImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyHorizontalBar";
 
 constexpr std::string_view kScreenBorderVerticalRibbonImagePathKey =
     "Screen Border Vertical Ribbon";
-constexpr std::string_view kDefaultScreenBorderVerticalRibbonImagePath = "";
+constexpr std::string_view kDefaultScreenBorderVerticalRibbonImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar";
 
 // Interface Bar Background
 constexpr std::string_view kInterfaceBarBackgroundCenterImagePathKey =
     "Interface Bar Background Center Image Path";
-constexpr std::string_view kDefaultInterfaceBarBackgroundCenterImagePath = "";
+constexpr std::string_view kDefaultInterfaceBarBackgroundCenterImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertHorizontalBar";
 
 constexpr std::string_view kInterfaceBarBackgroundLeftImagePathKey =
     "Interface Bar Background Left Image Path";
-constexpr std::string_view kDefaultInterfaceBarBackgroundLeftImagePath = "";
+constexpr std::string_view kDefaultInterfaceBarBackgroundLeftImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertLeft";
 
 constexpr std::string_view kInterfaceBarBackgroundRightImagePathKey =
     "Interface Bar Background Right Image Path";
-constexpr std::string_view kDefaultInterfaceBarBackgroundRightImagePath = "";
+constexpr std::string_view kDefaultInterfaceBarBackgroundRightImagePath =
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertRight";
 
 constexpr std::string_view kIsScreenBorderFrameEnabledKey =
     "Enable Screen Border Frame?";
