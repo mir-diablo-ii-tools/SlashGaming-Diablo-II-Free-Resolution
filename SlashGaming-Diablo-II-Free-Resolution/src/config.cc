@@ -403,7 +403,7 @@ bool AddMissingConfigEntries(
     );
   }
 
-  if constexpr (!kIsAssetsPathCustomizable) {
+  if constexpr (kIsAssetsPathCustomizable) {
     if (!config_reader.HasString(kMainEntryKey, kScreenBackgroundImagePathKey)) {
       config_reader.SetDeepString(
           kDefaultScreenBackgroundImagePath.data(),
@@ -724,7 +724,7 @@ void SetIngameResolutionMode(unsigned int resolution_mode) {
 }
 
 std::string_view GetScreenBackgroundImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultScreenBackgroundImagePath;
   }
 
@@ -745,7 +745,7 @@ std::string_view GetScreenBackgroundImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderLeftImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomLeftScreenBorderLeftImagePath;
   }
 
@@ -766,7 +766,7 @@ std::string_view GetCustomLeftScreenBorderLeftImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderTopImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomLeftScreenBorderTopImagePath;
   }
 
@@ -787,7 +787,7 @@ std::string_view GetCustomLeftScreenBorderTopImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomLeftScreenBorderTopRightImagePath;
   }
 
@@ -808,7 +808,7 @@ std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderBottomImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomLeftScreenBorderBottomImagePath;
   }
 
@@ -829,7 +829,7 @@ std::string_view GetCustomLeftScreenBorderBottomImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomLeftScreenBorderBottomRightImagePath;
   }
 
@@ -850,7 +850,7 @@ std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderRightImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomRightScreenBorderRightImagePath;
   }
 
@@ -871,7 +871,7 @@ std::string_view GetCustomRightScreenBorderRightImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderTopImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomRightScreenBorderTopImagePath;
   }
 
@@ -892,7 +892,7 @@ std::string_view GetCustomRightScreenBorderTopImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomRightScreenBorderTopLeftImagePath;
   }
 
@@ -913,7 +913,7 @@ std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderBottomImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomRightScreenBorderBottomImagePath;
   }
 
@@ -934,7 +934,7 @@ std::string_view GetCustomRightScreenBorderBottomImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultCustomRightScreenBorderBottomLeftImagePath;
   }
 
@@ -955,7 +955,7 @@ std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
 }
 
 std::string_view GetScreenBorderHorizontalRibbonImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultScreenBorderHorizontalRibbonImagePath;
   }
 
@@ -976,7 +976,7 @@ std::string_view GetScreenBorderHorizontalRibbonImagePath() {
 }
 
 std::string_view GetScreenBorderVerticalRibbonImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultScreenBorderVerticalRibbonImagePath;
   }
 
@@ -997,7 +997,7 @@ std::string_view GetScreenBorderVerticalRibbonImagePath() {
 }
 
 std::string_view GetInterfaceBarBackgroundCenterImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultInterfaceBarBackgroundCenterImagePath;
   }
 
@@ -1018,7 +1018,7 @@ std::string_view GetInterfaceBarBackgroundCenterImagePath() {
 }
 
 std::string_view GetInterfaceBarBackgroundLeftImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultInterfaceBarBackgroundLeftImagePath;
   }
 
@@ -1039,7 +1039,7 @@ std::string_view GetInterfaceBarBackgroundLeftImagePath() {
 }
 
 std::string_view GetInterfaceBarBackgroundRightImagePath() {
-  if constexpr (kIsAssetsPathCustomizable) {
+  if constexpr (!kIsAssetsPathCustomizable) {
     return kDefaultInterfaceBarBackgroundRightImagePath;
   }
 
