@@ -80,9 +80,9 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(std::string_view
               std::make_tuple(1068, 600)
           }
       },
-      // Diablo 09
+      // realm.diablo09.com
       {
-          "69.30.195.42", {
+          "95.179.228.126", {
               resolution_640x480,
               resolution_800x600,
               std::make_tuple(1024, 768)
