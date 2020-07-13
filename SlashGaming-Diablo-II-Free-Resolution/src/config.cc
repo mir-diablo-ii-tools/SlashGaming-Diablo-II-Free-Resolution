@@ -193,7 +193,7 @@ constexpr bool kDefaultIs800InterfaceBarEnabled = true;
 std::map<std::string, std::once_flag> once_flags_by_json_keys;
 
 const std::filesystem::path& GetConfigPath() {
-  static std::filesystem::path kConfigPath = "SGD2FreeRes.json";
+  static std::filesystem::path kConfigPath = "SGD2FreeResolution.json";
   return kConfigPath;
 }
 
