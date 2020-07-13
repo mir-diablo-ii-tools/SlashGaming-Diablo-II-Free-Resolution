@@ -53,6 +53,7 @@
 
 #include <fmt/format.h>
 #include <mjsoni/rapid_json_config_reader.hpp>
+#include "compile_time_switch.hpp"
 
 namespace sgd2fr::config {
 namespace {
@@ -402,132 +403,134 @@ bool AddMissingConfigEntries(
     );
   }
 
-  if (!config_reader.HasString(kMainEntryKey, kScreenBackgroundImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultScreenBackgroundImagePath.data(),
-        kMainEntryKey,
-        kScreenBackgroundImagePathKey
-    );
-  }
+  if constexpr (!kIsAssetsPathCustomizable) {
+    if (!config_reader.HasString(kMainEntryKey, kScreenBackgroundImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultScreenBackgroundImagePath.data(),
+          kMainEntryKey,
+          kScreenBackgroundImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderLeftImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomLeftScreenBorderLeftImagePath.data(),
-        kMainEntryKey,
-        kCustomLeftScreenBorderLeftImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderLeftImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomLeftScreenBorderLeftImagePath.data(),
+          kMainEntryKey,
+          kCustomLeftScreenBorderLeftImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomLeftScreenBorderTopImagePath.data(),
-        kMainEntryKey,
-        kCustomLeftScreenBorderTopImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomLeftScreenBorderTopImagePath.data(),
+          kMainEntryKey,
+          kCustomLeftScreenBorderTopImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopRightImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomLeftScreenBorderTopRightImagePath.data(),
-        kMainEntryKey,
-        kCustomLeftScreenBorderTopRightImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopRightImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomLeftScreenBorderTopRightImagePath.data(),
+          kMainEntryKey,
+          kCustomLeftScreenBorderTopRightImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomLeftScreenBorderBottomImagePath.data(),
-        kMainEntryKey,
-        kCustomLeftScreenBorderBottomImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomLeftScreenBorderBottomImagePath.data(),
+          kMainEntryKey,
+          kCustomLeftScreenBorderBottomImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomRightImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomLeftScreenBorderBottomRightImagePath.data(),
-        kMainEntryKey,
-        kCustomLeftScreenBorderBottomRightImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomRightImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomLeftScreenBorderBottomRightImagePath.data(),
+          kMainEntryKey,
+          kCustomLeftScreenBorderBottomRightImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderRightImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomRightScreenBorderRightImagePath.data(),
-        kMainEntryKey,
-        kCustomRightScreenBorderRightImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderRightImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomRightScreenBorderRightImagePath.data(),
+          kMainEntryKey,
+          kCustomRightScreenBorderRightImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomRightScreenBorderTopImagePath.data(),
-        kMainEntryKey,
-        kCustomRightScreenBorderTopImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomRightScreenBorderTopImagePath.data(),
+          kMainEntryKey,
+          kCustomRightScreenBorderTopImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopLeftImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomRightScreenBorderTopLeftImagePath.data(),
-        kMainEntryKey,
-        kCustomRightScreenBorderTopLeftImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopLeftImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomRightScreenBorderTopLeftImagePath.data(),
+          kMainEntryKey,
+          kCustomRightScreenBorderTopLeftImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomRightScreenBorderBottomImagePath.data(),
-        kMainEntryKey,
-        kCustomRightScreenBorderBottomImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomRightScreenBorderBottomImagePath.data(),
+          kMainEntryKey,
+          kCustomRightScreenBorderBottomImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomLeftImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultCustomRightScreenBorderBottomLeftImagePath.data(),
-        kMainEntryKey,
-        kCustomRightScreenBorderBottomLeftImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomLeftImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomRightScreenBorderBottomLeftImagePath.data(),
+          kMainEntryKey,
+          kCustomRightScreenBorderBottomLeftImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kScreenBorderHorizontalRibbonImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultScreenBorderHorizontalRibbonImagePath.data(),
-        kMainEntryKey,
-        kScreenBorderHorizontalRibbonImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kScreenBorderHorizontalRibbonImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultScreenBorderHorizontalRibbonImagePath.data(),
+          kMainEntryKey,
+          kScreenBorderHorizontalRibbonImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kScreenBorderVerticalRibbonImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultScreenBorderVerticalRibbonImagePath.data(),
-        kMainEntryKey,
-        kScreenBorderVerticalRibbonImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kScreenBorderVerticalRibbonImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultScreenBorderVerticalRibbonImagePath.data(),
+          kMainEntryKey,
+          kScreenBorderVerticalRibbonImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundCenterImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultInterfaceBarBackgroundCenterImagePath.data(),
-        kMainEntryKey,
-        kInterfaceBarBackgroundCenterImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundCenterImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultInterfaceBarBackgroundCenterImagePath.data(),
+          kMainEntryKey,
+          kInterfaceBarBackgroundCenterImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundLeftImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultInterfaceBarBackgroundLeftImagePath.data(),
-        kMainEntryKey,
-        kInterfaceBarBackgroundLeftImagePathKey
-    );
-  }
+    if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundLeftImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultInterfaceBarBackgroundLeftImagePath.data(),
+          kMainEntryKey,
+          kInterfaceBarBackgroundLeftImagePathKey
+      );
+    }
 
-  if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundRightImagePathKey)) {
-    config_reader.SetDeepString(
-        kDefaultInterfaceBarBackgroundRightImagePath.data(),
-        kMainEntryKey,
-        kInterfaceBarBackgroundRightImagePathKey
-    );
+    if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundRightImagePathKey)) {
+      config_reader.SetDeepString(
+          kDefaultInterfaceBarBackgroundRightImagePath.data(),
+          kMainEntryKey,
+          kInterfaceBarBackgroundRightImagePathKey
+      );
+    }
   }
 
   if (!config_reader.HasBool(kMainEntryKey, kIsScreenBorderFrameEnabledKey)) {
@@ -721,6 +724,10 @@ void SetIngameResolutionMode(unsigned int resolution_mode) {
 }
 
 std::string_view GetScreenBackgroundImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultScreenBackgroundImagePath;
+  }
+
   static std::string screen_background_image_path;
 
   std::call_once(
@@ -738,6 +745,10 @@ std::string_view GetScreenBackgroundImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderLeftImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomLeftScreenBorderLeftImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -755,6 +766,10 @@ std::string_view GetCustomLeftScreenBorderLeftImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderTopImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomLeftScreenBorderTopImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -772,6 +787,10 @@ std::string_view GetCustomLeftScreenBorderTopImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomLeftScreenBorderTopRightImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -789,6 +808,10 @@ std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderBottomImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomLeftScreenBorderBottomImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -806,6 +829,10 @@ std::string_view GetCustomLeftScreenBorderBottomImagePath() {
 }
 
 std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomLeftScreenBorderBottomRightImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -823,6 +850,10 @@ std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderRightImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomRightScreenBorderRightImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -840,6 +871,10 @@ std::string_view GetCustomRightScreenBorderRightImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderTopImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomRightScreenBorderTopImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -857,6 +892,10 @@ std::string_view GetCustomRightScreenBorderTopImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomRightScreenBorderTopLeftImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -874,6 +913,10 @@ std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderBottomImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomRightScreenBorderBottomImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -891,6 +934,10 @@ std::string_view GetCustomRightScreenBorderBottomImagePath() {
 }
 
 std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultCustomRightScreenBorderBottomLeftImagePath;
+  }
+
   static std::string screen_border_image_path;
 
   std::call_once(
@@ -908,6 +955,10 @@ std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
 }
 
 std::string_view GetScreenBorderHorizontalRibbonImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultScreenBorderHorizontalRibbonImagePath;
+  }
+
   static std::string screen_border_ribbon_image_path;
 
   std::call_once(
@@ -925,6 +976,10 @@ std::string_view GetScreenBorderHorizontalRibbonImagePath() {
 }
 
 std::string_view GetScreenBorderVerticalRibbonImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultScreenBorderVerticalRibbonImagePath;
+  }
+
   static std::string screen_border_ribbon_image_path;
 
   std::call_once(
@@ -942,6 +997,10 @@ std::string_view GetScreenBorderVerticalRibbonImagePath() {
 }
 
 std::string_view GetInterfaceBarBackgroundCenterImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultInterfaceBarBackgroundCenterImagePath;
+  }
+
   static std::string interface_bar_background_image_path;
 
   std::call_once(
@@ -959,6 +1018,10 @@ std::string_view GetInterfaceBarBackgroundCenterImagePath() {
 }
 
 std::string_view GetInterfaceBarBackgroundLeftImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultInterfaceBarBackgroundLeftImagePath;
+  }
+
   static std::string interface_bar_background_image_path;
 
   std::call_once(
@@ -976,6 +1039,10 @@ std::string_view GetInterfaceBarBackgroundLeftImagePath() {
 }
 
 std::string_view GetInterfaceBarBackgroundRightImagePath() {
+  if constexpr (kIsAssetsPathCustomizable) {
+    return kDefaultInterfaceBarBackgroundRightImagePath;
+  }
+
   static std::string interface_bar_background_image_path;
 
   std::call_once(
