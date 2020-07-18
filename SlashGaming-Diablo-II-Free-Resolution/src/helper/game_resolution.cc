@@ -85,7 +85,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(std::string_view
           "95.179.228.126", {
               resolution_640x480,
               resolution_800x600,
-              std::make_tuple(1024, 768)
+              std::make_tuple(1068, 600)
           }
       },
   };
