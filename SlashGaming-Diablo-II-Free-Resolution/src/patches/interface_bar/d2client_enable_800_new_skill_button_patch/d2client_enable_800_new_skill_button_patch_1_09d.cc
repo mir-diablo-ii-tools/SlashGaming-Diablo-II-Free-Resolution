@@ -48,7 +48,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2client_enable_800_new_skill_button.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -58,7 +58,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Enable800NewSkillButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800NewSkillButton));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -73,7 +73,7 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
 
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_IsMouseOver800NewSkillButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_IsMouseOver800NewSkillButton));
 
   ASM_X86(pop edx);
 
@@ -95,7 +95,7 @@ __declspec(naked) void __cdecl InterceptionFunc_03() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Set800NewSkillPopupText));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Set800NewSkillPopupText));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -115,7 +115,7 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
   // Pushes the CelContext for the Level button.
   ASM_X86(lea eax, dword ptr [ebp + 20]);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewSkillButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewSkillButton));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);
@@ -135,7 +135,7 @@ __declspec(naked) void __cdecl InterceptionFunc_05() {
   // Pushes the CelContext for the Level button.
   ASM_X86(lea eax, dword ptr [ebp + 16]);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewSkillButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewSkillButton));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);
@@ -147,7 +147,24 @@ __declspec(naked) void __cdecl InterceptionFunc_05() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch_1_09D() {
+Enable800NewSkillButtonPatch_1_09D::Enable800NewSkillButtonPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void Enable800NewSkillButtonPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void Enable800NewSkillButtonPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+std::vector<mapi::GamePatch>
+Enable800NewSkillButtonPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Enable the click on 800x600 New Skill button sound.
@@ -422,4 +439,4 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

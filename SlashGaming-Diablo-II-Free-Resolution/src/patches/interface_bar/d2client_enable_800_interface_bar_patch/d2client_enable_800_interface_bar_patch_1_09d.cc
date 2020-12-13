@@ -45,10 +45,12 @@
 
 #include "d2client_enable_800_interface_bar_patch_1_09d.hpp"
 
+#include <unordered_map>
+
 #include "../../../asm_x86_macro.h"
 #include "d2client_enable_800_interface_bar.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -58,7 +60,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Enable800InterfaceBar));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800InterfaceBar));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -75,7 +77,7 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
   ASM_X86(push edx);
 
   ASM_X86(push ecx);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800InterfaceBar));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800InterfaceBar));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);
@@ -87,18 +89,66 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch_1_09D() {
+Enable800InterfaceBarPatch_1_09D::Enable800InterfaceBarPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void Enable800InterfaceBarPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void Enable800InterfaceBarPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+const mapi::GameAddress&
+Enable800InterfaceBarPatch_1_09D::GetPatchAddress01() {
+  static const std::unordered_map<
+      d2::GameVersion,
+      mapi::GameAddress
+  > kPatchAddresses = {
+      {
+          d2::GameVersion::k1_09D,
+          mapi::GameAddress::FromOffset(
+              mapi::DefaultLibrary::kD2Client,
+              0x590A9
+          )
+      }
+  };
+
+  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+}
+
+const mapi::GameAddress&
+Enable800InterfaceBarPatch_1_09D::GetPatchAddress02() {
+  static const std::unordered_map<
+      d2::GameVersion,
+      mapi::GameAddress
+  > kPatchAddresses = {
+      {
+          d2::GameVersion::k1_09D,
+          mapi::GameAddress::FromOffset(
+              mapi::DefaultLibrary::kD2Client,
+              0x59228
+          )
+      }
+  };
+
+  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+}
+
+std::vector<mapi::GamePatch>
+Enable800InterfaceBarPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Enable drawing the 800x600 interface bar.
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
-      0x590A9
-  );
-
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          GetPatchAddress01(),
           mapi::BranchType::kCall,
           &InterceptionFunc_01,
           0x590AE - 0x590A9
@@ -106,14 +156,9 @@ std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch_1_09D() {
   );
 
   // Draw the 800x600 interface bar.
-  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
-      0x59228
-  );
-
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_02),
+          GetPatchAddress02(),
           mapi::BranchType::kCall,
           &InterceptionFunc_02,
           0x592A5 - 0x59228
@@ -123,4 +168,4 @@ std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

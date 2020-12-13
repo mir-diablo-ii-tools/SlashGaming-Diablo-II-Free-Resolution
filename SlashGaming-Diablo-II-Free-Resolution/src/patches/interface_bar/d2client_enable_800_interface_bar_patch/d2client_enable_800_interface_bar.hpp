@@ -52,9 +52,9 @@
 
 namespace sgd2fr::patches {
 
-extern "C" std::uint32_t __cdecl SGD2FR_D2Client_Enable800InterfaceBar();
+extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar();
 
-extern "C" mapi::bool32 __cdecl SGD2FR_D2Client_Draw800InterfaceBar(
+extern "C" mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
     d2::CelContext* cel_context
 );
 

@@ -48,23 +48,17 @@
 #include <algorithm>
 
 namespace sgd2fr::patches {
-namespace {
-
-static DrawPatches& GetDrawPatches() {
-  static DrawPatches draw_patches;
-  return draw_patches;
-}
-
-} // namespace
 
 Patches::Patches() = default;
 
 void Patches::Apply() {
   this->draw_patches_.Apply();
+  this->interface_bar_patches_.Apply();
 }
 
 void Patches::Remove() {
   this->draw_patches_.Remove();
+  this->interface_bar_patches_.Remove();
 }
 
 std::vector<mapi::GamePatch> MakeGamePatches() {
@@ -82,13 +76,6 @@ std::vector<mapi::GamePatch> MakeGamePatches() {
       game_patches.end(),
       std::make_move_iterator(inventory_patches.begin()),
       std::make_move_iterator(inventory_patches.end())
-  );
-
-  std::vector interface_bar_patches = MakeInterfaceBarPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(interface_bar_patches.begin()),
-      std::make_move_iterator(interface_bar_patches.end())
   );
 
   return game_patches;

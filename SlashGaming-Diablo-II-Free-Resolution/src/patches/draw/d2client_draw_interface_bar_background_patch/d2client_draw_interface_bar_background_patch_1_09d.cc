@@ -98,8 +98,6 @@ std::vector<mapi::GamePatch>
 DrawInterfaceBarBackgroundPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
-
   // Draw the new interface bar background.
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(

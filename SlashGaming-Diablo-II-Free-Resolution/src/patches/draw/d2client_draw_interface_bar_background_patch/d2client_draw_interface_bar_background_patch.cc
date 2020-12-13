@@ -79,4 +79,4 @@ DrawInterfaceBarBackgroundPatch::MakePatch() {
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

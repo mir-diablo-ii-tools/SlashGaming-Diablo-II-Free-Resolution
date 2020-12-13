@@ -48,7 +48,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2client_enable_800_new_stats_button.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -147,7 +147,24 @@ __declspec(naked) void __cdecl InterceptionFunc_05() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
+Enable800NewStatsButtonPatch_1_09D::Enable800NewStatsButtonPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void Enable800NewStatsButtonPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void Enable800NewStatsButtonPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Enable the click on 800x600 New Stats button sound.
@@ -422,4 +439,4 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

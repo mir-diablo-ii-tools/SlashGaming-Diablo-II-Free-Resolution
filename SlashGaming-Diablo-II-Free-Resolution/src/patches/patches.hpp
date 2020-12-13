@@ -64,6 +64,7 @@ class Patches {
 
  private:
   DrawPatches draw_patches_;
+  InterfaceBarPatches interface_bar_patches_;
 };
 
 std::vector<mapi::GamePatch> MakeGamePatches();

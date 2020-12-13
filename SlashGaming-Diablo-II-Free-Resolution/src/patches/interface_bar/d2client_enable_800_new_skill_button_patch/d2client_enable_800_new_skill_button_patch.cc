@@ -45,18 +45,31 @@
 
 #include "d2client_enable_800_new_skill_button_patch.hpp"
 
-#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch() = default;
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch() {
+void Enable800NewSkillButtonPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void Enable800NewSkillButtonPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+Enable800NewSkillButtonPatch::PatchVariant
+Enable800NewSkillButtonPatch::MakePatches() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return Make_D2Client_Click800NewSkillButtonPatch_1_09D();
+      return Enable800NewSkillButtonPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

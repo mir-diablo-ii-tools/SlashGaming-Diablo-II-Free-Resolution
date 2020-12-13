@@ -47,10 +47,29 @@
 #define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
 
 #include <sgd2mapi.hpp>
+#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+#include "d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
+#include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches();
+class InterfaceBarPatches {
+ public:
+  InterfaceBarPatches();
+
+  void Apply();
+  void Remove();
+
+ private:
+  d2client::Enable800InterfaceBarPatch
+      enable_800_interface_bar_patch_;
+
+  d2client::Enable800NewSkillButtonPatch
+      enable_800_new_skill_button_patch_;
+
+  d2client::Enable800NewStatsButtonPatch
+      enable_800_new_stats_button_patch_;
+};
 
 } // namespace sgd2fr::patches
 

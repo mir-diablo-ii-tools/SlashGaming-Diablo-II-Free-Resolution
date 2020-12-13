@@ -46,14 +46,31 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_
 
+#include <variant>
 #include <vector>
 
 #include <sgd2mapi.hpp>
+#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch();
+class Enable800NewSkillButtonPatch {
+ public:
+  using PatchVariant = std::variant<
+      Enable800NewSkillButtonPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  Enable800NewSkillButtonPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_

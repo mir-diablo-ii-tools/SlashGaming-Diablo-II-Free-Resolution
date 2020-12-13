@@ -47,16 +47,33 @@
 
 #include "d2client_enable_800_interface_bar_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch() {
+Enable800InterfaceBarPatch::Enable800InterfaceBarPatch()
+  : patch_(MakePatch()) {
+}
+
+void Enable800InterfaceBarPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void Enable800InterfaceBarPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+Enable800InterfaceBarPatch::PatchVariant
+Enable800InterfaceBarPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return Make_D2Client_Enable800InterfaceBarPatch_1_09D();
+      return Enable800InterfaceBarPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client
