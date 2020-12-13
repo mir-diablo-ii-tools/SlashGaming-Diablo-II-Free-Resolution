@@ -45,33 +45,18 @@
 
 #include "draw_patches.hpp"
 
-#include <algorithm>
-
-#include "d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
-#include "d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
-
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeDrawPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+DrawPatches::DrawPatches() = default;
 
-  std::vector d2client_draw_screen_background_patch =
-      MakeD2ClientDrawScreenBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_screen_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_screen_background_patch.end())
-  );
+void DrawPatches::Apply() {
+  this->draw_interface_bar_background_patch_.Apply();
+  this->draw_screen_background_patch_.Apply();
+}
 
-  std::vector d2client_draw_interface_bar_background_patch =
-      MakeD2ClientDrawInterfaceBarBackgroundPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.begin()),
-      std::make_move_iterator(d2client_draw_interface_bar_background_patch.end())
-  );
-
-  return game_patches;
+void DrawPatches::Remove() {
+  this->draw_interface_bar_background_patch_.Remove();
+  this->draw_screen_background_patch_.Remove();
 }
 
 } // namespace sgd2fr::patches

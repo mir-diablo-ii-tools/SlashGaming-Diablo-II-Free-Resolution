@@ -53,7 +53,7 @@
 #include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/game_resolution.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 namespace {
 
 constexpr std::string_view kOriginalScreenBorderFrameImagePath =
@@ -869,7 +869,7 @@ void DrawRightScreenBackgroundRibbon() {
 
 } // namespace
 
-void SGD2FR_D2ClientDrawScreenBackground() {
+void Sgd2fr_D2Client_DrawScreenBackground() {
   switch (d2::d2client::GetScreenOpenMode()) {
     case d2::ScreenOpenMode::kNone: {
       break;
@@ -918,4 +918,4 @@ void SGD2FR_D2ClientDrawScreenBackground() {
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

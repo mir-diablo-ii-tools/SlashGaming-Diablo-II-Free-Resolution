@@ -45,18 +45,33 @@
 
 #include "d2client_draw_screen_background_patch.hpp"
 
-#include "d2client_draw_screen_background_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+DrawScreenBackgroundPatch::DrawScreenBackgroundPatch()
+    : patches_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeD2ClientDrawScreenBackgroundPatch() {
+void DrawScreenBackgroundPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patches_);
+}
+
+void DrawScreenBackgroundPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patches_);
+}
+
+DrawScreenBackgroundPatch::PatchVariant
+DrawScreenBackgroundPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientDrawScreenBackgroundPatch_1_09D();
+      return DrawScreenBackgroundPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

@@ -45,13 +45,16 @@
 
 #include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
+#include <unordered_map>
+
+#include <sgd2mapi.hpp>
 #include "../../../asm_x86_macro.h"
 #include "d2client_draw_interface_bar_background.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc_01() {
+__declspec(naked) void __cdecl InterceptionFunc01() {
   // Original code.
   ASM_X86(mov ecx, 18);
 
@@ -62,7 +65,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2ClientDrawInterfaceBarBackground));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_DrawInterfaceBarBackground));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -74,20 +77,35 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeD2ClientDrawInterfaceBarBackgroundPatch_1_09D() {
+DrawInterfaceBarBackgroundPatch_1_09D
+::DrawInterfaceBarBackgroundPatch_1_09D()
+    : patches_(MakePatches()) {
+}
+
+void DrawInterfaceBarBackgroundPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void DrawInterfaceBarBackgroundPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+std::vector<mapi::GamePatch>
+DrawInterfaceBarBackgroundPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  // Draw the new interface bar background.
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
-      0x5909C
-  );
+  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
+  // Draw the new interface bar background.
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          GetPatchAddress(),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &InterceptionFunc01,
           0x590A1 - 0x5909C
       )
   );
@@ -95,4 +113,22 @@ std::vector<mapi::GamePatch> MakeD2ClientDrawInterfaceBarBackgroundPatch_1_09D()
   return patches;
 }
 
-} // namespace sgd2fr::patches
+const mapi::GameAddress&
+DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddress() {
+  static const std::unordered_map<
+      d2::GameVersion,
+      mapi::GameAddress
+  > kPatchAddresses = {
+      {
+          d2::GameVersion::k1_09D,
+          mapi::GameAddress::FromOffset(
+              mapi::DefaultLibrary::kD2Client,
+              0x5909C
+          )
+      }
+  };
+
+  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+}
+
+} // namespace sgd2fr::patches::d2client

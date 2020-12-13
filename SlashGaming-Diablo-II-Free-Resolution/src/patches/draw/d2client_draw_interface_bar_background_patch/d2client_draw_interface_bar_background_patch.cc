@@ -45,16 +45,36 @@
 
 #include "d2client_draw_interface_bar_background_patch.hpp"
 
-#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
+#include <unordered_map>
 
-namespace sgd2fr::patches {
+#include <sgd2mapi.hpp>
+#include "../../../asm_x86_macro.h"
 
-std::vector<mapi::GamePatch> MakeD2ClientDrawInterfaceBarBackgroundPatch() {
+namespace sgd2fr::patches::d2client {
+
+DrawInterfaceBarBackgroundPatch::DrawInterfaceBarBackgroundPatch()
+    : patch_(MakePatch()) {
+}
+
+void DrawInterfaceBarBackgroundPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void DrawInterfaceBarBackgroundPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+DrawInterfaceBarBackgroundPatch::PatchVariant
+DrawInterfaceBarBackgroundPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientDrawInterfaceBarBackgroundPatch_1_09D();
+      return DrawInterfaceBarBackgroundPatch_1_09D();
     }
   }
 }

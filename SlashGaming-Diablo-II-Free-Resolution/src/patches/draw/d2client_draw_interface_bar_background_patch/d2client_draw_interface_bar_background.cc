@@ -53,7 +53,7 @@
 #include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/game_resolution.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 namespace {
 
 void DrawLeftInterfaceBarBackground() {
@@ -186,9 +186,9 @@ void DrawRightInterfaceBarBackground() {
 
 } // namespace
 
-void __cdecl SGD2FR_D2ClientDrawInterfaceBarBackground() {
+void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground() {
   DrawLeftInterfaceBarBackground();
   DrawRightInterfaceBarBackground();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

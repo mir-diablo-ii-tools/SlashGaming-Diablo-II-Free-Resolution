@@ -48,7 +48,23 @@
 
 #include <sgd2mapi.hpp>
 
+#include "draw/draw_patches.hpp"
+#include "interface_bar/interface_bar_patches.hpp"
+#include "inventory/inventory_patches.hpp"
+#include "required/required_patches.hpp"
+
 namespace sgd2fr::patches {
+
+class Patches {
+ public:
+  Patches();
+
+  void Apply();
+  void Remove();
+
+ private:
+  DrawPatches draw_patches_;
+};
 
 std::vector<mapi::GamePatch> MakeGamePatches();
 

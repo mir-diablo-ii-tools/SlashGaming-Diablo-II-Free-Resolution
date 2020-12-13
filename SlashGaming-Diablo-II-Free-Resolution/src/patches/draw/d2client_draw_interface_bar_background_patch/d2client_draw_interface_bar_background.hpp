@@ -48,10 +48,10 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
-extern "C" void __cdecl SGD2FR_D2ClientDrawInterfaceBarBackground();
+extern "C" void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground();
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_HPP_

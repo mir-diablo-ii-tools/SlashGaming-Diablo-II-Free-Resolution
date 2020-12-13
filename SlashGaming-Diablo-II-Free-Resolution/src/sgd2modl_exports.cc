@@ -57,6 +57,12 @@ bool is_loaded = false;
 std::mutex load_unload_mutex;
 std::vector<mapi::GamePatch> game_patches;
 
+static sgd2fr::patches::Patches& GetPatches() {
+  static sgd2fr::patches::Patches patches;
+
+  return patches;
+}
+
 } // namespace
 
 bool SGD2ModL_OnLoad() {
@@ -66,11 +72,15 @@ bool SGD2ModL_OnLoad() {
     return true;
   }
 
+  GetPatches().Apply();
+
+  // TODO: DEPRECATED START
   game_patches = sgd2fr::patches::MakeGamePatches();
 
   for (auto& game_patch : game_patches) {
     game_patch.Apply();
   }
+  // TODO: DEPRECATED END
 
   is_loaded = true;
   return true;
@@ -83,11 +93,15 @@ bool SGD2ModL_OnUnload() {
     return true;
   }
 
+  // TODO: DEPRECATED START
   for (auto& game_patch : game_patches) {
     game_patch.Remove();
   }
 
   game_patches.clear();
+  // TODO: DEPRECATED END
+
+  GetPatches().Remove();
 
   is_loaded = false;
   return true;
