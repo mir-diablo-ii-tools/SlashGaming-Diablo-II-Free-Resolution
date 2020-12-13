@@ -45,60 +45,24 @@
 
 #include "inventory_patches.hpp"
 
-#include <algorithm>
-
-#include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
-#include "d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.hpp"
-#include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
-#include "d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.hpp"
-
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInventoryPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+InventoryPatches::InventoryPatches() = default;
 
-  std::vector d2common_get_global_belt_record_patch =
-      Make_D2Common_GetGlobalBeltRecordPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_record_patch.end())
-  );
+void InventoryPatches::Apply() {
+  this->get_global_belt_record_patch_.Apply();
+  this->get_global_belt_slot_position_patch_.Apply();
+  this->get_global_equipment_slot_layout_patch_.Apply();
+  this->get_global_inventory_grid_layout_patch_.Apply();
+  this->get_global_inventory_position_patch_.Apply();
+}
 
-  std::vector d2common_get_global_belt_slot_position_patch =
-      Make_D2Common_GetGlobalBeltSlotPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_belt_slot_position_patch.end())
-  );
-
-  std::vector d2common_get_global_equipment_slot_layout_patch =
-      Make_D2Common_GetGlobalEquipmentSlotLayoutPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_equipment_slot_layout_patch.begin()),
-      std::make_move_iterator(d2common_get_global_equipment_slot_layout_patch.end())
-  );
-
-  std::vector d2common_get_global_inventory_grid_layout_patch =
-      Make_D2Common_GetGlobalInventoryGridLayoutPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.begin()),
-      std::make_move_iterator(d2common_get_global_inventory_grid_layout_patch.end())
-  );
-
-  std::vector d2common_get_global_inventory_position_patch =
-      Make_D2Common_GetGlobalInventoryPositionPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2common_get_global_inventory_position_patch.begin()),
-      std::make_move_iterator(d2common_get_global_inventory_position_patch.end())
-  );
-
-  return game_patches;
+void InventoryPatches::Remove() {
+  this->get_global_belt_record_patch_.Remove();
+  this->get_global_belt_slot_position_patch_.Remove();
+  this->get_global_equipment_slot_layout_patch_.Remove();
+  this->get_global_inventory_grid_layout_patch_.Remove();
+  this->get_global_inventory_position_patch_.Remove();
 }
 
 } // namespace sgd2fr::patches

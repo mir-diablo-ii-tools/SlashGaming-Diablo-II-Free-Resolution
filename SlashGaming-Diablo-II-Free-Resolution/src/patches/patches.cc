@@ -54,11 +54,13 @@ Patches::Patches() = default;
 void Patches::Apply() {
   this->draw_patches_.Apply();
   this->interface_bar_patches_.Apply();
+  this->inventory_patches_.Apply();
 }
 
 void Patches::Remove() {
   this->draw_patches_.Remove();
   this->interface_bar_patches_.Remove();
+  this->inventory_patches_.Remove();
 }
 
 std::vector<mapi::GamePatch> MakeGamePatches() {
@@ -69,13 +71,6 @@ std::vector<mapi::GamePatch> MakeGamePatches() {
       game_patches.end(),
       std::make_move_iterator(required_patches.begin()),
       std::make_move_iterator(required_patches.end())
-  );
-
-  std::vector inventory_patches = MakeInventoryPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(inventory_patches.begin()),
-      std::make_move_iterator(inventory_patches.end())
   );
 
   return game_patches;

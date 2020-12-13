@@ -50,7 +50,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2Common_GetGlobalInventoryPosition(
+void __cdecl Sgd2fr_D2Common_GetGlobalInventoryPosition(
     std::uint32_t inventory_record_index,
     std::uint32_t inventory_arrange_mode,
     d2::PositionalRectangle* out_position

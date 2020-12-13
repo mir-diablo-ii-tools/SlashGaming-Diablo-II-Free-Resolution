@@ -50,10 +50,22 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2common {
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalBeltSlotPositionPatch_1_09D();
+class GetGlobalBeltSlotPositionPatch_1_09D {
+ public:
+  GetGlobalBeltSlotPositionPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static const mapi::GameAddress& GetPatchAddress();
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2common
 
 #endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_1_09D_HPP_

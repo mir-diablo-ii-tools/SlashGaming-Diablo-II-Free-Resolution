@@ -58,7 +58,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Enable800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800NewStatsButton));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -73,7 +73,7 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
 
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_IsMouseOver800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_IsMouseOver800NewStatsButton));
 
   ASM_X86(pop edx);
 
@@ -95,7 +95,7 @@ __declspec(naked) void __cdecl InterceptionFunc_03() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Set800NewStatsPopupText));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Set800NewStatsPopupText));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -115,7 +115,7 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
   // Pushes the CelContext for the Level button.
   ASM_X86(lea eax, dword ptr [ebp + 20]);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewStatsButton));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);
@@ -135,7 +135,7 @@ __declspec(naked) void __cdecl InterceptionFunc_05() {
   // Pushes the CelContext for the Level button.
   ASM_X86(lea eax, dword ptr [ebp + 16]);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewStatsButton));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);

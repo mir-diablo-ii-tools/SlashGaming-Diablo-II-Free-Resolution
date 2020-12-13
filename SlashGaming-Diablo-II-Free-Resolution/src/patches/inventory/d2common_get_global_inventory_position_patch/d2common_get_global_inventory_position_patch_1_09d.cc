@@ -45,10 +45,12 @@
 
 #include "d2common_get_global_inventory_position_patch_1_09d.hpp"
 
+#include <unordered_map>
+
 #include "../../../asm_x86_macro.h"
 #include "d2common_get_global_inventory_position.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2common {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -62,7 +64,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push dword ptr [ebp + 16]);
   ASM_X86(push dword ptr [ebp + 12]);
   ASM_X86(push dword ptr [ebp + 8]);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Common_GetGlobalInventoryPosition));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Common_GetGlobalInventoryPosition));
   ASM_X86(add esp, 12);
 
   ASM_X86(pop edx);
@@ -75,17 +77,48 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalInventoryPositionPatch_1_09D() {
-  std::vector<mapi::GamePatch> patches;
+GetGlobalInventoryPositionPatch_1_09D
+::GetGlobalInventoryPositionPatch_1_09D()
+  : patches_(MakePatches()) {
+}
 
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOrdinal(
-      mapi::DefaultLibrary::kD2Common,
-      10635
-  );
+void GetGlobalInventoryPositionPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void GetGlobalInventoryPositionPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+const mapi::GameAddress&
+GetGlobalInventoryPositionPatch_1_09D::GetPatchAddress() {
+  static const std::unordered_map<
+      d2::GameVersion,
+      mapi::GameAddress
+  > kPatchAddresses = {
+      {
+          d2::GameVersion::k1_09D,
+          mapi::GameAddress::FromOrdinal(
+              mapi::DefaultLibrary::kD2Common,
+              10635
+          )
+      }
+  };
+
+  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+}
+
+std::vector<mapi::GamePatch>
+GetGlobalInventoryPositionPatch_1_09D::MakePatches() {
+  std::vector<mapi::GamePatch> patches;
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          GetPatchAddress(),
           mapi::BranchType::kJump,
           &InterceptionFunc_01,
           5
@@ -95,4 +128,4 @@ std::vector<mapi::GamePatch> Make_D2Common_GetGlobalInventoryPositionPatch_1_09D
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2common

@@ -45,18 +45,33 @@
 
 #include "d2common_get_global_inventory_position_patch.hpp"
 
-#include "d2common_get_global_inventory_position_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2common {
 
-namespace sgd2fr::patches {
+GetGlobalInventoryPositionPatch::GetGlobalInventoryPositionPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalInventoryPositionPatch() {
+void GetGlobalInventoryPositionPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void GetGlobalInventoryPositionPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+GetGlobalInventoryPositionPatch::PatchVariant
+GetGlobalInventoryPositionPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return Make_D2Common_GetGlobalInventoryPositionPatch_1_09D();
+      return GetGlobalInventoryPositionPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2common

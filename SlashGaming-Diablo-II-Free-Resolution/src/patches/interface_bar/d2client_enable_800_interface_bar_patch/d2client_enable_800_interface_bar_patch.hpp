@@ -47,7 +47,6 @@
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_HPP_
 
 #include <variant>
-#include <vector>
 
 #include <sgd2mapi.hpp>
 #include "d2client_enable_800_interface_bar_patch_1_09d.hpp"

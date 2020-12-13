@@ -45,18 +45,33 @@
 
 #include "d2common_get_global_belt_slot_position_patch.hpp"
 
-#include "d2common_get_global_belt_slot_position_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2common {
 
-namespace sgd2fr::patches {
+GetGlobalBeltSlotPositionPatch::GetGlobalBeltSlotPositionPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalBeltSlotPositionPatch() {
+void GetGlobalBeltSlotPositionPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void GetGlobalBeltSlotPositionPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+GetGlobalBeltSlotPositionPatch::PatchVariant
+GetGlobalBeltSlotPositionPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return Make_D2Common_GetGlobalBeltSlotPositionPatch_1_09D();
+      return GetGlobalBeltSlotPositionPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2common

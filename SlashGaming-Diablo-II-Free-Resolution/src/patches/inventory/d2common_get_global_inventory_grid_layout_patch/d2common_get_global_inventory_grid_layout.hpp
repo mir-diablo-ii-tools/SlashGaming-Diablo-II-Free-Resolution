@@ -50,7 +50,7 @@
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_D2Common_GetGlobalInventoryGridLayout(
+extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalInventoryGridLayout(
     std::uint32_t inventory_record_index,
     std::uint32_t inventory_arrange_mode,
     d2::GridLayout* out_grid_layout

@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2common_get_global_belt_slot_position_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2common {
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalBeltSlotPositionPatch();
+class GetGlobalBeltSlotPositionPatch {
+ public:
+  using PatchVariant = std::variant<
+      GetGlobalBeltSlotPositionPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  GetGlobalBeltSlotPositionPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2common
 
 #endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_

@@ -55,7 +55,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
+void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
     std::uint32_t belt_record_index,
     std::uint32_t inventory_arrange_mode,
     d2::PositionalRectangle* out_belt_slot,

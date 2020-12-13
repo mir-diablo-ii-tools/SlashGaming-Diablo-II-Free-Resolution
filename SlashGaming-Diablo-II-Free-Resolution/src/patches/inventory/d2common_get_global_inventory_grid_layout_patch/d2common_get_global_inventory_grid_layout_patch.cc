@@ -45,18 +45,33 @@
 
 #include "d2common_get_global_inventory_grid_layout_patch.hpp"
 
-#include "d2common_get_global_inventory_grid_layout_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2common {
 
-namespace sgd2fr::patches {
+GetGlobalInventoryGridLayoutPatch::GetGlobalInventoryGridLayoutPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalInventoryGridLayoutPatch() {
+void GetGlobalInventoryGridLayoutPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void GetGlobalInventoryGridLayoutPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+GetGlobalInventoryGridLayoutPatch::PatchVariant
+GetGlobalInventoryGridLayoutPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return Make_D2Common_GetGlobalInventoryGridLayoutPatch_1_09D();
+      return GetGlobalInventoryGridLayoutPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2common
