@@ -49,21 +49,21 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.hpp"
 #include "d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch.hpp"
+#include "d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch.hpp"
+#include "d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height_patch.hpp"
+#include "d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch.hpp"
+#include "d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch.hpp"
+#include "d2client_set_screen_shift_patch/d2client_set_screen_shift_patch.hpp"
 #include "d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.hpp"
-#include "get_d2client_resolution_registry_patch/get_d2client_resolution_registry_patch.hpp"
+#include "d2ddraw_set_bit_block_width_and_height_patch/d2ddraw_set_bit_block_width_and_height_patch.hpp"
+#include "d2ddraw_set_cel_display_left_and_right_patch/d2ddraw_set_cel_display_left_and_right_patch.hpp"
+#include "d2ddraw_set_display_width_and_height_patch/d2ddraw_set_display_width_and_height_patch.hpp"
+#include "d2direct3d_set_display_width_and_height_patch/d2direct3d_set_display_width_and_height_patch.hpp"
+#include "d2gdi_set_bit_block_width_and_height_patch/d2gdi_set_bit_block_width_and_height_patch.hpp"
+#include "d2gdi_set_cel_display_left_and_right_patch/d2gdi_set_cel_display_left_and_right_patch.hpp"
+#include "d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.hpp"
+#include "d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch.hpp"
 #include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
-#include "set_d2client_general_display_width_and_height_patch/set_d2client_general_display_width_and_height_patch.hpp"
-#include "set_d2client_resolution_from_options_menu_patch/set_d2client_resolution_from_options_menu_patch.hpp"
-#include "set_d2client_resolution_registry_patch/set_d2client_resolution_registry_patch.hpp"
-#include "set_d2client_screen_shift_patch/set_d2client_screen_shift_patch.hpp"
-#include "set_d2ddraw_bit_block_width_and_height_patch/set_d2ddraw_bit_block_width_and_height_patch.hpp"
-#include "set_d2ddraw_cel_display_left_and_right_patch/set_d2ddraw_cel_display_left_and_right_patch.hpp"
-#include "set_d2ddraw_display_width_and_height_patch/set_d2ddraw_display_width_and_height_patch.hpp"
-#include "set_d2direct3d_display_width_and_height_patch/set_d2direct3d_display_width_and_height_patch.hpp"
-#include "set_d2gdi_bit_block_width_and_height_patch/set_d2gdi_bit_block_width_and_height_patch.hpp"
-#include "set_d2gdi_cel_display_left_and_right_patch/set_d2gdi_cel_display_left_and_right_patch.hpp"
-#include "set_d2gfx_display_width_and_height_patch/set_d2gfx_display_width_and_height_patch.hpp"
-#include "set_d2glide_display_width_and_height_patch/set_d2glide_display_width_and_height_patch.hpp"
 
 namespace sgd2fr::patches {
 
@@ -94,16 +94,16 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
       std::make_move_iterator(d2client_unload_cel_file_collection_patch.end())
   );
 
-  std::vector get_d2client_resolution_registry_patch =
-      MakeGetD2ClientResolutionRegistryPatch();
+  std::vector d2client_get_resolution_registry_patch =
+      MakeD2ClientGetResolutionRegistryPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(get_d2client_resolution_registry_patch.begin()),
-      std::make_move_iterator(get_d2client_resolution_registry_patch.end())
+      std::make_move_iterator(d2client_get_resolution_registry_patch.begin()),
+      std::make_move_iterator(d2client_get_resolution_registry_patch.end())
   );
 
   std::vector set_d2client_general_display_width_and_height_patch =
-      MakeSetD2ClientGeneralDisplayWidthAndHeightPatch();
+      MakeD2ClientSetGeneralDisplayWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2client_general_display_width_and_height_patch.begin()),
@@ -111,7 +111,7 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
   );
 
   std::vector set_d2client_resolution_from_options_menu_patch =
-      MakeSetD2ClientResolutionFromOptionsMenuPatch();
+      MakeD2ClientSetResolutionFromOptionsMenuPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2client_resolution_from_options_menu_patch.begin()),
@@ -119,14 +119,14 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
   );
 
   std::vector set_d2client_resolution_registry_patch =
-      MakeSetD2ClientResolutionRegistryPatch();
+      MakeD2ClientSetResolutionRegistryPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2client_resolution_registry_patch.begin()),
       std::make_move_iterator(set_d2client_resolution_registry_patch.end())
   );
 
-  std::vector set_d2client_screen_shift_patch = MakeSetD2ClientScreenShiftPatch();
+  std::vector set_d2client_screen_shift_patch = MakeD2ClientSetScreenShiftPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2client_screen_shift_patch.begin()),
@@ -134,67 +134,67 @@ std::vector<mapi::GamePatch> MakeRequiredPatches() {
   );
 
   std::vector set_d2ddraw_bit_block_width_and_height_patch =
-      MakeSetD2DDrawBitBlockWidthAndHeightPatch();
+      MakeD2DDrawSetBitBlockWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
       std::make_move_iterator(set_d2ddraw_bit_block_width_and_height_patch.begin()),
       std::make_move_iterator(set_d2ddraw_bit_block_width_and_height_patch.end())
   );
 
-  std::vector set_d2ddraw_cel_display_left_and_right_patch =
-      MakeSetD2DDrawCelDisplayLeftAndRightPatch();
+  std::vector d2ddraw_set_cel_display_left_and_right_patch =
+      MakeD2DDrawSetCelDisplayLeftAndRightPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(set_d2ddraw_cel_display_left_and_right_patch.begin()),
-      std::make_move_iterator(set_d2ddraw_cel_display_left_and_right_patch.end())
+      std::make_move_iterator(d2ddraw_set_cel_display_left_and_right_patch.begin()),
+      std::make_move_iterator(d2ddraw_set_cel_display_left_and_right_patch.end())
   );
 
-  std::vector set_d2ddraw_display_width_and_height_patch =
+  std::vector d2ddraw_set_display_width_and_height_patch =
       MakeSetD2DDrawDisplayWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(set_d2ddraw_display_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2ddraw_display_width_and_height_patch.end())
+      std::make_move_iterator(d2ddraw_set_display_width_and_height_patch.begin()),
+      std::make_move_iterator(d2ddraw_set_display_width_and_height_patch.end())
   );
 
-  std::vector set_d2direct3d_display_width_and_height_patch =
+  std::vector d2direct3d_set_display_width_and_height_patch =
       MakeSetD2Direct3DDisplayWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(set_d2direct3d_display_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2direct3d_display_width_and_height_patch.end())
+      std::make_move_iterator(d2direct3d_set_display_width_and_height_patch.begin()),
+      std::make_move_iterator(d2direct3d_set_display_width_and_height_patch.end())
   );
 
-  std::vector set_d2gdi_bit_block_width_and_height_patch =
+  std::vector d2gdi_set_bit_block_width_and_height_patch =
       MakeSetD2GDIBitBlockWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2gdi_bit_block_width_and_height_patch.end())
+      std::make_move_iterator(d2gdi_set_bit_block_width_and_height_patch.begin()),
+      std::make_move_iterator(d2gdi_set_bit_block_width_and_height_patch.end())
   );
 
-  std::vector set_d2gdi_cel_display_left_and_right_patch =
+  std::vector d2gdi_set_cel_display_left_and_right_patch =
       MakeSetD2GDICelDisplayLeftAndRightPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.begin()),
-      std::make_move_iterator(set_d2gdi_cel_display_left_and_right_patch.end())
+      std::make_move_iterator(d2gdi_set_cel_display_left_and_right_patch.begin()),
+      std::make_move_iterator(d2gdi_set_cel_display_left_and_right_patch.end())
   );
 
-  std::vector set_d2gfx_display_width_and_height_patch =
+  std::vector d2gfx_set_display_width_and_height_patch =
       MakeSetD2GFXDisplayWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(set_d2gfx_display_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2gfx_display_width_and_height_patch.end())
+      std::make_move_iterator(d2gfx_set_display_width_and_height_patch.begin()),
+      std::make_move_iterator(d2gfx_set_display_width_and_height_patch.end())
   );
 
-  std::vector set_d2glide_display_width_and_height_patch =
+  std::vector d2glide_set_display_width_and_height_patch =
       MakeSetD2GlideDisplayWidthAndHeightPatch();
   game_patches.insert(
       game_patches.end(),
-      std::make_move_iterator(set_d2glide_display_width_and_height_patch.begin()),
-      std::make_move_iterator(set_d2glide_display_width_and_height_patch.end())
+      std::make_move_iterator(d2glide_set_display_width_and_height_patch.begin()),
+      std::make_move_iterator(d2glide_set_display_width_and_height_patch.end())
   );
 
   std::vector glide3x_gr_sset_win_open_patch =
