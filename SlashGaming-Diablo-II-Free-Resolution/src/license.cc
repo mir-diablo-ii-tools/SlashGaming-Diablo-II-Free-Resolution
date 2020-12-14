@@ -50,7 +50,7 @@
 
 namespace {
 
-constexpr std::string_view kLicenseLines[] = {
+static constexpr std::string_view kLicenseLines[] = {
     "SlashGaming Diablo II Free Resolution",
     "Copyright (C) 2019-2020  Mir Drualga",
     "",

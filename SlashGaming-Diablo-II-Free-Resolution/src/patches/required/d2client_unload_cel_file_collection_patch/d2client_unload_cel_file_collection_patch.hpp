@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2client_unload_cel_file_collection_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientUnloadCelFileCollectionPatch();
+class UnloadCelFileCollectionPatch {
+ public:
+  using PatchVariant = std::variant<
+      UnloadCelFileCollectionPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  UnloadCelFileCollectionPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_

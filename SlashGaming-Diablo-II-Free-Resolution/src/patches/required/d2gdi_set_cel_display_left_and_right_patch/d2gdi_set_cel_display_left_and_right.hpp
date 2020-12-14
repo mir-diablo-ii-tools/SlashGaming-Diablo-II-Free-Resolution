@@ -50,7 +50,7 @@
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_D2GDI_SetCelDisplayLeftAndRight(
+extern "C" void __cdecl Sgd2fr_D2GDI_SetCelDisplayLeftAndRight(
     std::size_t resolution_mode
 );
 

@@ -50,7 +50,7 @@
 #include "../../../asm_x86_macro.h"
 #include "glide3x_gr_sst_win_open.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::glide3x {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc() {
@@ -61,7 +61,7 @@ __declspec(naked) void __cdecl InterceptionFunc() {
 
   ASM_X86(sub esp, 8);
   ASM_X86(push edx);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_SetGlide3xWindowWidthAndHeight));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_Glide3x_SetWindowWidthAndHeight));
   ASM_X86(add esp, 12);
 
   ASM_X86(leave);
@@ -70,7 +70,24 @@ __declspec(naked) void __cdecl InterceptionFunc() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeGlide3xGrSstWinOpenPatch_Sven_1_4_8_3() {
+GrSstWinOpenPatch_Sven_1_4_8_3::GrSstWinOpenPatch_Sven_1_4_8_3()
+  : patches_(MakePatches()) {
+}
+
+void GrSstWinOpenPatch_Sven_1_4_8_3::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void GrSstWinOpenPatch_Sven_1_4_8_3::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+GrSstWinOpenPatch_Sven_1_4_8_3::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
@@ -90,4 +107,4 @@ std::vector<mapi::GamePatch> MakeGlide3xGrSstWinOpenPatch_Sven_1_4_8_3() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::glide3x

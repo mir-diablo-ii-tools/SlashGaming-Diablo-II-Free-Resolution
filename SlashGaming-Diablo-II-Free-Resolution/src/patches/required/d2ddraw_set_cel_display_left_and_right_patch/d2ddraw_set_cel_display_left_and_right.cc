@@ -51,7 +51,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2DDraw_SetCelDisplayLeftAndRight(
+void __cdecl Sgd2fr_D2DDraw_SetCelDisplayLeftAndRight(
     std::uint32_t resolution_mode
 ) {
   std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);

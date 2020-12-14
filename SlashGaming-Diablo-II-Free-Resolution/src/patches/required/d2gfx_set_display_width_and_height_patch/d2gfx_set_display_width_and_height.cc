@@ -51,7 +51,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2GFX_SetDisplayWidthAndHeight(
+void __cdecl Sgd2fr_D2GFX_SetDisplayWidthAndHeight(
     std::uint32_t resolution_mode,
     std::int32_t* width,
     std::int32_t* height

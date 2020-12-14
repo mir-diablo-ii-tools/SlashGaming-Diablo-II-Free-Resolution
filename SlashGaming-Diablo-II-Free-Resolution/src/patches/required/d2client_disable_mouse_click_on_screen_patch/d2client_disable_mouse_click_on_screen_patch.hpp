@@ -43,17 +43,33 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_GET_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_GET_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2client_disable_mouse_click_on_screen_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch();
+class DisableMouseClickOnScreenPatch {
+ public:
+  using PatchVariant = std::variant<
+      DisableMouseClickOnScreenPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  DisableMouseClickOnScreenPatch();
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_GET_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2client
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_

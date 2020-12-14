@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2client_set_resolution_registry_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientSetResolutionRegistryPatch();
+class SetResolutionRegistryPatch {
+ public:
+  using PatchVariant = std::variant<
+      SetResolutionRegistryPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  SetResolutionRegistryPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_HPP_

@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientSetResolutionFromOptionsMenuPatch();
+class SetResolutionFromOptionsMenuPatch {
+ public:
+  using PatchVariant = std::variant<
+      SetResolutionFromOptionsMenuPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  SetResolutionFromOptionsMenuPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_

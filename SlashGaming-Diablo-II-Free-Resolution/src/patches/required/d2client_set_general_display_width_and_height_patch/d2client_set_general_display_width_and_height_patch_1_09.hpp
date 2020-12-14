@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientSetGeneralDisplayWidthAndHeightPatch_1_09D();
+class SetGeneralDisplayWidthAndHeightPatch_1_09D {
+ public:
+  SetGeneralDisplayWidthAndHeightPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_

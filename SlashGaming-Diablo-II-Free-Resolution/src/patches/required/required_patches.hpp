@@ -47,10 +47,85 @@
 #define SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
 
 #include <sgd2mapi.hpp>
+#include "d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.hpp"
+#include "d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch.hpp"
+#include "d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch.hpp"
+#include "d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height_patch.hpp"
+#include "d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch.hpp"
+#include "d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch.hpp"
+#include "d2client_set_screen_shift_patch/d2client_set_screen_shift_patch.hpp"
+#include "d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.hpp"
+#include "d2ddraw_set_bit_block_width_and_height_patch/d2ddraw_set_bit_block_width_and_height_patch.hpp"
+#include "d2ddraw_set_cel_display_left_and_right_patch/d2ddraw_set_cel_display_left_and_right_patch.hpp"
+#include "d2ddraw_set_display_width_and_height_patch/d2ddraw_set_display_width_and_height_patch.hpp"
+#include "d2direct3d_set_display_width_and_height_patch/d2direct3d_set_display_width_and_height_patch.hpp"
+#include "d2gdi_set_bit_block_width_and_height_patch/d2gdi_set_bit_block_width_and_height_patch.hpp"
+#include "d2gdi_set_cel_display_left_and_right_patch/d2gdi_set_cel_display_left_and_right_patch.hpp"
+#include "d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.hpp"
+#include "d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch.hpp"
+#include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
 
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeRequiredPatches();
+class RequiredPatches {
+ public:
+  RequiredPatches();
+
+  void Apply();
+  void Remove();
+
+ private:
+  d2client::DisableMouseClickOnScreenPatch
+      disable_mouse_click_on_screen_patch_;
+
+  d2client::DrawResolutionTextPatch
+      draw_resolution_text_patch_;
+
+  d2client::GetResolutionRegistryPatch
+      get_resolution_registry_patch_;
+
+  d2client::SetGeneralDisplayWidthAndHeightPatch
+      set_general_display_width_and_height_patch_;
+
+  d2client::SetResolutionFromOptionsMenuPatch
+      set_resolution_from_options_menu_patch_;
+
+  d2client::SetResolutionRegistryPatch
+      set_resolution_registry_patch_;
+
+  d2client::SetScreenShiftPatch
+      set_screen_shift_patch_;
+
+  d2client::UnloadCelFileCollectionPatch
+      unload_cel_file_collection_patch_;
+
+  d2ddraw::SetBitBlockWidthAndHeightPatch
+      d2ddraw_set_bit_block_width_and_height_patch_;
+
+  d2ddraw::SetCelDisplayLeftAndRightPatch
+      d2ddraw_set_cel_display_left_and_right_patch_;
+
+  d2ddraw::SetDisplayWidthAndHeightPatch
+      d2ddraw_set_display_width_and_height_patch_;
+
+  d2direct3d::SetDisplayWidthAndHeightPatch
+      d2direct3d_set_display_width_and_height_patch_;
+
+  d2gdi::SetBitBlockWidthAndHeightPatch
+      d2gdi_set_bit_block_width_and_height_patch_;
+
+  d2gdi::SetCelDisplayLeftAndRightPatch
+      d2gdi_set_cel_display_left_and_right_patch_;
+
+  d2gfx::SetDisplayWidthAndHeightPatch
+      d2gfx_set_display_width_and_height_patch_;
+
+  d2glide::SetDisplayWidthAndHeightPatch
+      d2glide_set_display_width_and_height_patch_;
+
+  glide3x::GrSstWinOpenPatch
+      gr_sst_win_open_patch_;
+};
 
 } // namespace sgd2fr::patches
 

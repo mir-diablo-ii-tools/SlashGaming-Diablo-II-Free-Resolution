@@ -45,18 +45,33 @@
 
 #include "d2direct3d_set_display_width_and_height_patch.hpp"
 
-#include "d2direct3d_set_display_width_and_height_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2direct3d {
 
-namespace sgd2fr::patches {
+SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeSetD2Direct3DDisplayWidthAndHeightPatch() {
+void SetDisplayWidthAndHeightPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void SetDisplayWidthAndHeightPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+SetDisplayWidthAndHeightPatch::PatchVariant
+SetDisplayWidthAndHeightPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeSetD2Direct3DDisplayWidthAndHeightPatch_1_09D();
+      return SetDisplayWidthAndHeightPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2direct3d

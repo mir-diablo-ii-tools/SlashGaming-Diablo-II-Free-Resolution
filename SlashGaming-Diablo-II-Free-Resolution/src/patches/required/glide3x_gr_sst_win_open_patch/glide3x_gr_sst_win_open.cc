@@ -52,7 +52,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_SetGlide3xWindowWidthAndHeight(
+void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     std::uint32_t glide_resolution_mode,
     std::int32_t* width,
     std::int32_t* height

@@ -45,18 +45,33 @@
 
 #include "d2gdi_set_cel_display_left_and_right_patch.hpp"
 
-#include "d2gdi_set_cel_display_left_and_right_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2gdi {
 
-namespace sgd2fr::patches {
+SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRightPatch() {
+void SetCelDisplayLeftAndRightPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void SetCelDisplayLeftAndRightPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+SetCelDisplayLeftAndRightPatch::PatchVariant
+SetCelDisplayLeftAndRightPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeSetD2GDICelDisplayLeftAndRightPatch_1_09D();
+      return SetCelDisplayLeftAndRightPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2gdi

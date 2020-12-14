@@ -48,7 +48,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2ddraw_set_display_width_and_height.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2ddraw {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -62,7 +62,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push edx);
   ASM_X86(push eax);
   ASM_X86(push ecx);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2DDraw_SetDisplayWidthAndHeight));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2DDraw_SetDisplayWidthAndHeight));
   ASM_X86(add esp, 12);
 
   ASM_X86(pop ecx);
@@ -74,7 +74,24 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeSetD2DDrawDisplayWidthAndHeightPatch_1_09D() {
+SetDisplayWidthAndHeightPatch_1_09D::SetDisplayWidthAndHeightPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void SetDisplayWidthAndHeightPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void SetDisplayWidthAndHeightPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
@@ -106,4 +123,4 @@ std::vector<mapi::GamePatch> MakeSetD2DDrawDisplayWidthAndHeightPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2ddraw

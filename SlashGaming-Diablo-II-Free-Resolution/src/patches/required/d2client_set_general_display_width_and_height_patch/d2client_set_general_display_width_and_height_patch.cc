@@ -45,18 +45,33 @@
 
 #include "d2client_set_general_display_width_and_height_patch.hpp"
 
-#include "d2client_set_general_display_width_and_height_patch_1_09.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+SetGeneralDisplayWidthAndHeightPatch::SetGeneralDisplayWidthAndHeightPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeD2ClientSetGeneralDisplayWidthAndHeightPatch() {
+void SetGeneralDisplayWidthAndHeightPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void SetGeneralDisplayWidthAndHeightPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+SetGeneralDisplayWidthAndHeightPatch::PatchVariant
+SetGeneralDisplayWidthAndHeightPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientSetGeneralDisplayWidthAndHeightPatch_1_09D();
+      return SetGeneralDisplayWidthAndHeightPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

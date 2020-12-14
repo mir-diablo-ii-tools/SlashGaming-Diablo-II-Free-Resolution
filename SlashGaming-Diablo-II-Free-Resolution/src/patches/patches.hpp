@@ -66,9 +66,8 @@ class Patches {
   DrawPatches draw_patches_;
   InterfaceBarPatches interface_bar_patches_;
   InventoryPatches inventory_patches_;
+  RequiredPatches required_patches_;
 };
-
-std::vector<mapi::GamePatch> MakeGamePatches();
 
 } // namespace sgd2fr::patches
 

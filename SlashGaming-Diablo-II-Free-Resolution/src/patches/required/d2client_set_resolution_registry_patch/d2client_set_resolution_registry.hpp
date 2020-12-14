@@ -50,7 +50,7 @@
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_D2Client_SetResolutionRegistry(
+extern "C" void __cdecl Sgd2fr_D2Client_SetResolutionRegistry(
     std::uint32_t reg_resolution_mode,
     std::uint32_t* actual_resolution_mode
 );

@@ -45,8 +45,6 @@
 
 #include "patches.hpp"
 
-#include <algorithm>
-
 namespace sgd2fr::patches {
 
 Patches::Patches() = default;
@@ -55,25 +53,14 @@ void Patches::Apply() {
   this->draw_patches_.Apply();
   this->interface_bar_patches_.Apply();
   this->inventory_patches_.Apply();
+  this->required_patches_.Apply();
 }
 
 void Patches::Remove() {
   this->draw_patches_.Remove();
   this->interface_bar_patches_.Remove();
   this->inventory_patches_.Remove();
-}
-
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
-
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
-  );
-
-  return game_patches;
+  this->required_patches_.Remove();
 }
 
 } // namespace sgd2fr::patches

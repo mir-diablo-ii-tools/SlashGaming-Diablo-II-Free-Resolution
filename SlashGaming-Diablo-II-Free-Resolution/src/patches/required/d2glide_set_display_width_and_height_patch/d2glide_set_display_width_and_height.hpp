@@ -51,7 +51,7 @@
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_D2Glide_SetDisplayWidthAndHeight(
+extern "C" void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
     std::uint32_t resolution_mode,
     std::int32_t* width,
     std::int32_t* height,

@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2ddraw_set_display_width_and_height_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2ddraw {
 
-std::vector<mapi::GamePatch> MakeSetD2DDrawDisplayWidthAndHeightPatch();
+class SetDisplayWidthAndHeightPatch {
+ public:
+  using PatchVariant = std::variant<
+      SetDisplayWidthAndHeightPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  SetDisplayWidthAndHeightPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2ddraw
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

@@ -45,18 +45,33 @@
 
 #include "d2client_set_screen_shift_patch.hpp"
 
-#include "d2client_set_screen_shift_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+SetScreenShiftPatch::SetScreenShiftPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeD2ClientSetScreenShiftPatch() {
+void SetScreenShiftPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void SetScreenShiftPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+SetScreenShiftPatch::PatchVariant
+SetScreenShiftPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientSetScreenShiftPatch_1_09D();
+      return SetScreenShiftPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

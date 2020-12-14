@@ -45,18 +45,33 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch.hpp"
 
-#include "d2client_disable_mouse_click_on_screen_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+DisableMouseClickOnScreenPatch::DisableMouseClickOnScreenPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch() {
+void DisableMouseClickOnScreenPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void DisableMouseClickOnScreenPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+DisableMouseClickOnScreenPatch::PatchVariant
+DisableMouseClickOnScreenPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientDisableMouseClickOnScreenPatch_1_09D();
+      return DisableMouseClickOnScreenPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

@@ -45,18 +45,33 @@
 
 #include "d2client_set_resolution_from_options_menu_patch.hpp"
 
-#include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+SetResolutionFromOptionsMenuPatch::SetResolutionFromOptionsMenuPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeD2ClientSetResolutionFromOptionsMenuPatch() {
+void SetResolutionFromOptionsMenuPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void SetResolutionFromOptionsMenuPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+SetResolutionFromOptionsMenuPatch::PatchVariant
+SetResolutionFromOptionsMenuPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientSetResolutionFromOptionsMenuPatch_1_09D();
+      return SetResolutionFromOptionsMenuPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

@@ -48,7 +48,7 @@
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_D2Client_SetScreenShift();
+extern "C" void __cdecl Sgd2fr_D2Client_SetScreenShift();
 
 } // namespace sgd2fr::patches
 

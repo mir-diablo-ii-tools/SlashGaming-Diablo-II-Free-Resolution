@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2gdi {
 
-std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRightPatch_1_09D();
+class SetCelDisplayLeftAndRightPatch_1_09D {
+ public:
+  SetCelDisplayLeftAndRightPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2gdi
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_

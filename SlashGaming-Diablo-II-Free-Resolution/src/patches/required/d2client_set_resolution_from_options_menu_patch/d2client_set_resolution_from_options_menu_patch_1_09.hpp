@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientSetResolutionFromOptionsMenuPatch_1_09D();
+class SetResolutionFromOptionsMenuPatch_1_09D {
+ public:
+  SetResolutionFromOptionsMenuPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_1_09D_HPP_

@@ -48,7 +48,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2client_set_screen_shift.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc() {
@@ -59,7 +59,7 @@ __declspec(naked) void __cdecl InterceptionFunc() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_SetScreenShift));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_SetScreenShift));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -71,7 +71,24 @@ __declspec(naked) void __cdecl InterceptionFunc() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeD2ClientSetScreenShiftPatch_1_09D() {
+SetScreenShiftPatch_1_09D::SetScreenShiftPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void SetScreenShiftPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void SetScreenShiftPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+SetScreenShiftPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
@@ -91,4 +108,4 @@ std::vector<mapi::GamePatch> MakeD2ClientSetScreenShiftPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

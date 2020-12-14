@@ -50,7 +50,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2glide_set_display_width_and_height.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2glide {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -70,7 +70,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push eax);
   ASM_X86(push ebx);
   ASM_X86(push esi);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Glide_SetDisplayWidthAndHeight));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Glide_SetDisplayWidthAndHeight));
   ASM_X86(add esp, 16);
 
   // Load the values to set up the proper state.
@@ -99,7 +99,24 @@ constexpr std::array<std::uint8_t, 10> kPatchBuffer_02 = {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeSetD2GlideDisplayWidthAndHeightPatch_1_09D() {
+SetDisplayWidthAndHeightPatch_1_09D::SetDisplayWidthAndHeightPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void SetDisplayWidthAndHeightPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void SetDisplayWidthAndHeightPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
@@ -132,4 +149,4 @@ std::vector<mapi::GamePatch> MakeSetD2GlideDisplayWidthAndHeightPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2glide

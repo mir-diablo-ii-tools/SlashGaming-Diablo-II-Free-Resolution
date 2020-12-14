@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2gdi_set_bit_block_width_and_height_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2gdi {
 
-std::vector<mapi::GamePatch> MakeSetD2GDIBitBlockWidthAndHeightPatch();
+class SetBitBlockWidthAndHeightPatch {
+ public:
+  using PatchVariant = std::variant<
+      SetBitBlockWidthAndHeightPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  SetBitBlockWidthAndHeightPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2gdi
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_

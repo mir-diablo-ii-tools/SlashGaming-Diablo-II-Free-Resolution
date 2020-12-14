@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2ddraw {
 
-std::vector<mapi::GamePatch> MakeD2DDrawSetBitBlockWidthAndHeightPatch_1_09D();
+class SetBitBlockWidthAndHeightPatch_1_09D {
+ public:
+  SetBitBlockWidthAndHeightPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2ddraw
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_

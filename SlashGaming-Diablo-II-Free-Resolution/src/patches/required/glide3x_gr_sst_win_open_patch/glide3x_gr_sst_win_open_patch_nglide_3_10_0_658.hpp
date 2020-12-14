@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::glide3x {
 
-std::vector<mapi::GamePatch> MakeGlide3xGrSstWinOpenPatch_NGlide_3_10_0_658();
+class GrSstWinOpenPatch_NGlide_3_10_0_658 {
+ public:
+  GrSstWinOpenPatch_NGlide_3_10_0_658();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::glide3x
 
 #endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_NGLIDE_3_10_0_658_HPP_

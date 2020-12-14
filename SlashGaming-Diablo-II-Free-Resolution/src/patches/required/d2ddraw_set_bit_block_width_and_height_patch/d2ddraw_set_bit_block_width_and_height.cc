@@ -51,7 +51,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2DDraw_SetBitBlockWidthAndHeight(
+void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
     std::uint32_t resolution_mode,
     std::int32_t* width,
     std::int32_t* height

@@ -51,10 +51,12 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2Client_SetGeneralDisplayWidthAndHeight(
+void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
     std::size_t resolution_mode
 ) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(
+      resolution_mode
+  );
 
   int width = std::get<0>(resolution);
   int height = std::get<1>(resolution);

@@ -48,7 +48,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2client_set_resolution_registry.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -62,7 +62,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 
   ASM_X86(push ecx);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_SetResolutionRegistry));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_SetResolutionRegistry));
   ASM_X86(add esp, 8);
 
   ASM_X86(pop ecx);
@@ -75,7 +75,24 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeD2ClientSetResolutionRegistryPatch_1_09D() {
+SetResolutionRegistryPatch_1_09D::SetResolutionRegistryPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void SetResolutionRegistryPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void SetResolutionRegistryPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+SetResolutionRegistryPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
@@ -107,4 +124,4 @@ std::vector<mapi::GamePatch> MakeD2ClientSetResolutionRegistryPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2direct3d {
 
-std::vector<mapi::GamePatch> MakeSetD2Direct3DDisplayWidthAndHeightPatch_1_09D();
+class SetDisplayWidthAndHeightPatch_1_09D {
+ public:
+  SetDisplayWidthAndHeightPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2direct3d
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_

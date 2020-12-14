@@ -50,7 +50,7 @@
 
 namespace sgd2fr::patches {
 
-extern "C" mapi::bool32 __cdecl SGD2FR_D2ClientDrawResolutionText(
+extern "C" mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
     const d2::CelFile* cel_file_base_address,
     std::int32_t offset_value,
     std::int32_t right,

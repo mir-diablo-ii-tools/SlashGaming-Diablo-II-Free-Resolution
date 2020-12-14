@@ -47,16 +47,33 @@
 
 #include "d2client_set_resolution_registry_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientSetResolutionRegistryPatch() {
+SetResolutionRegistryPatch::SetResolutionRegistryPatch()
+  : patch_(MakePatch()) {
+}
+
+void SetResolutionRegistryPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void SetResolutionRegistryPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+SetResolutionRegistryPatch::PatchVariant
+SetResolutionRegistryPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientSetResolutionRegistryPatch_1_09D();
+      return SetResolutionRegistryPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

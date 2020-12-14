@@ -47,9 +47,26 @@
 
 #include "../../../asm_x86_macro.h"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch_1_09D() {
+DisableMouseClickOnScreenPatch_1_09D::DisableMouseClickOnScreenPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void DisableMouseClickOnScreenPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void DisableMouseClickOnScreenPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+std::vector<mapi::GamePatch>
+DisableMouseClickOnScreenPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Disable left screen click-through.
@@ -94,4 +111,4 @@ std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch_1_09D() 
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

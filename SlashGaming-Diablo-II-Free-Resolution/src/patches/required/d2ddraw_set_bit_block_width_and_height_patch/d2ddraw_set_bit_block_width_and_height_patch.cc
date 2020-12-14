@@ -45,18 +45,33 @@
 
 #include "d2ddraw_set_bit_block_width_and_height_patch.hpp"
 
-#include "d2ddraw_set_bit_block_width_and_height_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2ddraw {
 
-namespace sgd2fr::patches {
+SetBitBlockWidthAndHeightPatch::SetBitBlockWidthAndHeightPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeD2DDrawSetBitBlockWidthAndHeightPatch() {
+void SetBitBlockWidthAndHeightPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
+
+void SetBitBlockWidthAndHeightPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+SetBitBlockWidthAndHeightPatch::PatchVariant
+SetBitBlockWidthAndHeightPatch::MakePatch() {
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2DDrawSetBitBlockWidthAndHeightPatch_1_09D();
+      return SetBitBlockWidthAndHeightPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2ddraw
