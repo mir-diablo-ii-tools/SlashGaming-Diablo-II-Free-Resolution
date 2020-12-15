@@ -46,6 +46,7 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
+#include <optional>
 #include <variant>
 
 #include <sgd2mapi.hpp>
@@ -59,15 +60,17 @@ class SetDisplayWidthAndHeightPatch {
       SetDisplayWidthAndHeightPatch_1_09D
   >;
 
+  using PatchType = std::optional<PatchVariant>;
+
   SetDisplayWidthAndHeightPatch();
 
   void Apply();
   void Remove();
 
  private:
-  PatchVariant patch_;
+  PatchType patch_;
 
-  static PatchVariant MakePatch();
+  static PatchType MakePatch();
 };
 
 } // namespace sgd2fr::patches::d2ddraw

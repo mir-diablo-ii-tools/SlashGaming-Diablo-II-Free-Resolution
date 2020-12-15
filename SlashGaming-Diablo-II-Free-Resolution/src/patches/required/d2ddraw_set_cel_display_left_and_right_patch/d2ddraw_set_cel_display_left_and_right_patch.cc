@@ -52,19 +52,28 @@ SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
 }
 
 void SetCelDisplayLeftAndRightPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+  if (this->patch_.has_value()) {
+    std::visit([](auto& patch) {
+      patch.Apply();
+    }, this->patch_.value());
+  }
 }
 
 void SetCelDisplayLeftAndRightPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
+  if (this->patch_.has_value()) {
+    std::visit([](auto& patch) {
+      patch.Remove();
+    }, this->patch_.value());
+  }
 }
 
-SetCelDisplayLeftAndRightPatch::PatchVariant
+SetCelDisplayLeftAndRightPatch::PatchType
 SetCelDisplayLeftAndRightPatch::MakePatch() {
+  d2::VideoMode video_mode = d2::DetermineVideoMode();
+  if (video_mode != d2::VideoMode::kDirectDraw) {
+    return std::nullopt;
+  }
+
   d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
 
   switch (running_game_version_id) {

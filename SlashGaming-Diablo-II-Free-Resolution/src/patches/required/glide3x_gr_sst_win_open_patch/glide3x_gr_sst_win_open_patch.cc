@@ -54,19 +54,28 @@ GrSstWinOpenPatch::GrSstWinOpenPatch()
 }
 
 void GrSstWinOpenPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+  if (this->patch_.has_value()) {
+    std::visit([](auto& patch) {
+      patch.Apply();
+    }, this->patch_.value());
+  }
 }
 
 void GrSstWinOpenPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
+  if (this->patch_.has_value()) {
+    std::visit([](auto& patch) {
+      patch.Remove();
+    }, this->patch_.value());
+  }
 }
 
-GrSstWinOpenPatch::PatchVariant
+GrSstWinOpenPatch::PatchType
 GrSstWinOpenPatch::MakePatch() {
+  d2::VideoMode video_mode = d2::DetermineVideoMode();
+  if (video_mode != d2::VideoMode::kGlide) {
+    return std::nullopt;
+  }
+
   Glide3xVersion running_glide3x_version_id = GetRunningGlide3xVersionId();
 
   switch (running_glide3x_version_id) {
