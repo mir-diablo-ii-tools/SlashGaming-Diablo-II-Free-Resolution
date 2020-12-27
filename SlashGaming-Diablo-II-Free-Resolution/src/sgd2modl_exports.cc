@@ -54,7 +54,12 @@
 namespace {
 
 bool is_loaded = false;
-std::mutex load_unload_mutex;
+
+static std::mutex& GetLoadUnloadMutex() {
+  static std::mutex load_unload_mutex;
+
+  return load_unload_mutex;
+}
 
 static sgd2fr::patches::Patches& GetPatches() {
   static sgd2fr::patches::Patches patches;
@@ -65,7 +70,7 @@ static sgd2fr::patches::Patches& GetPatches() {
 } // namespace
 
 bool SGD2ModL_OnLoad() {
-  std::lock_guard lock_guard(load_unload_mutex);
+  std::lock_guard lock_guard(GetLoadUnloadMutex());
 
   if (is_loaded) {
     return true;
@@ -78,7 +83,7 @@ bool SGD2ModL_OnLoad() {
 }
 
 bool SGD2ModL_OnUnload() {
-  std::lock_guard lock_guard(load_unload_mutex);
+  std::lock_guard lock_guard(GetLoadUnloadMutex());
 
   if (!is_loaded) {
     return true;
