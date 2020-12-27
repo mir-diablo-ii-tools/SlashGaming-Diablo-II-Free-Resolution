@@ -70,7 +70,7 @@ void SetCelDisplayLeftAndRightPatch::Remove() {
 SetCelDisplayLeftAndRightPatch::PatchType
 SetCelDisplayLeftAndRightPatch::MakePatch() {
   d2::VideoMode video_mode = d2::DetermineVideoMode();
-  if (video_mode != d2::VideoMode::kGDI) {
+  if (video_mode != d2::VideoMode::kGdi) {
     return std::nullopt;
   }
 
