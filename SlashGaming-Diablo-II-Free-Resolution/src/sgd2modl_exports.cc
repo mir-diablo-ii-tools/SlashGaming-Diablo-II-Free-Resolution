@@ -95,7 +95,7 @@ bool SGD2ModL_OnUnload() {
   return true;
 }
 
-void SGD2ModL_LoadConfig(const char* config_path) {
+void SGD2ModL_LoadConfig(const wchar_t* config_path) {
   static std::mutex refresh_config_mutex;
   std::lock_guard lock_guard(refresh_config_mutex);
 

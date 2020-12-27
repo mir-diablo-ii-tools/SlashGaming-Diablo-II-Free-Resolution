@@ -55,7 +55,7 @@ extern "C" {
 DLLEXPORT bool SGD2ModL_OnLoad(void);
 DLLEXPORT bool SGD2ModL_OnUnload(void);
 
-DLLEXPORT void SGD2ModL_LoadConfig(const char* config_path);
+DLLEXPORT void SGD2ModL_LoadConfig(const wchar_t* config_path);
 
 #ifdef __cplusplus
 } // extern "C"
