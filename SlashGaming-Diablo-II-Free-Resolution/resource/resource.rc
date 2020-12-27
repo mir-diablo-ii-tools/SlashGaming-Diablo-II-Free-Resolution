@@ -1,0 +1,95 @@
+/**
+ * SlashGaming Diablo II Free Resolution
+ * Copyright (C) 2019-2020  Mir Drualga
+ *
+ * This file is part of SlashGaming Diablo II Free Resolution.
+ *
+ *  This program is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Affero General Public License as published
+ *  by the Free Software Foundation, either version 3 of the License, or
+ *  (at your option) any later version.
+ *
+ *  This program is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Affero General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Affero General Public License
+ *  along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ *  Additional permissions under GNU Affero General Public License version 3
+ *  section 7
+ *
+ *  If you modify this Program, or any covered work, by linking or combining
+ *  it with Diablo II (or a modified version of that game and its
+ *  libraries), containing parts covered by the terms of Blizzard End User
+ *  License Agreement, the licensors of this Program grant you additional
+ *  permission to convey the resulting work. This additional permission is
+ *  also extended to any combination of expansions, mods, and remasters of
+ *  the game.
+ *
+ *  If you modify this Program, or any covered work, by linking or combining
+ *  it with any Graphics Device Interface (GDI), DirectDraw, Direct3D,
+ *  Glide, OpenGL, or Rave wrapper (or modified versions of those
+ *  libraries), containing parts not covered by a compatible license, the
+ *  licensors of this Program grant you additional permission to convey the
+ *  resulting work.
+ *
+ *  If you modify this Program, or any covered work, by linking or combining
+ *  it with any library (or a modified version of that library) that links
+ *  to Diablo II (or a modified version of that game and its libraries),
+ *  containing parts not covered by a compatible license, the licensors of
+ *  this Program grant you additional permission to convey the resulting
+ *  work.
+ */
+
+#ifndef SGD2FR_RESOURCE_RC_
+#define SGD2FR_RESOURCE_RC_
+
+#include <windows.h>
+
+//ICON
+SLASH_ICON ICON "slashgaming_game_loader.ico"
+
+// VERSION INFORMATION
+LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
+
+VS_VERSION_INFO    VERSIONINFO
+  FILEVERSION      3,0,0,0
+  PRODUCTVERSION   3,0,0,0
+  FILEFLAGSMASK    0x3fL // VS_FFI_FILEFLAGSMASK
+#ifdef _DEBUG
+  FILEFLAGS        0x1L  // VS_FF_DEBUG|VS_FF_PRIVATEBUILD|VS_FF_PRERELEASE
+#else
+  FILEFLAGS        0x0L  // final version
+#endif
+  FILEOS           VOS_NT_WINDOWS32
+  FILETYPE         VFT_APP
+  FILESUBTYPE      VFT2_UNKNOWN // not used
+{
+  BLOCK "StringFileInfo"
+  {
+    BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
+    {
+      VALUE "Build",            "2020-12-20\0"
+      VALUE "Comments",         "Licensed under Affero GPL v3+.\0"
+      VALUE "CompanyName",      "SlashGaming\0"
+      VALUE "Developer",        "Mir Drualga\0"
+      VALUE "FileDescription",  "Enables customized video resolutions in Diablo II.\0"
+      VALUE "InternalName",     "SlashGaming Diablo II Free Resolution\0"
+      VALUE "LegalCopyright",   "Copyright (C) 2019 - 2020  Mir Drualga\0"
+      VALUE "LegalTrademarks",  "All rights reserved.\0"
+      VALUE "PrivateBuild",     "\0"
+      VALUE "ProductName",      "Diablo II Free Resolution\0"
+      VALUE "ProductVersion",   "3.0.0.0\0"
+      VALUE "SpecialBuild",     "\0"
+      VALUE "Support",          "reddit.com/r/SlashGaming\0"
+    } // BLOCK "040904E4"
+  } // BLOCK "StringFileInfo"
+  BLOCK "VarFileInfo"
+  {
+    VALUE "Translation", 0x409, 1252 // 1252 = 0x04E4
+  } // BLOCK "VarFileInfo"
+}
+
+#endif // SGD2FR_RESOURCE_RC_
