@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2020  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,31 +44,96 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
-#define SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
+#ifndef SGD2FR_HELPER_FILE_VERSION_HPP_
+#define SGD2FR_HELPER_FILE_VERSION_HPP_
 
-#include <string_view>
+#include <windows.h>
+
+#include <compare>
+#include <filesystem>
+
+#include "glide3x_version.hpp"
 
 namespace sgd2fr {
 
-enum class Glide3xVersion {
-  kSven1_4_4_21,
-  kSven1_4_8_3,
-  kNGlide3_10_0_658
+class FileVersion {
+ public:
+  using VersionType = std::tuple<DWORD, DWORD, DWORD, DWORD>;
+
+  FileVersion() = delete;
+
+  explicit constexpr FileVersion(
+      const VersionType& version
+  ) noexcept
+      : version_(version) {
+  }
+
+  explicit constexpr FileVersion(
+      VersionType&& version
+  ) noexcept
+      : version_(std::move(version)) {
+  }
+
+  constexpr FileVersion(
+      DWORD major_version_left,
+      DWORD major_version_right,
+      DWORD minor_version_left,
+      DWORD minor_version_right
+  ) noexcept
+      : version_(
+            VersionType(
+                major_version_left,
+                major_version_right,
+                minor_version_left,
+                minor_version_right
+            )
+        ) {
+  }
+
+  constexpr FileVersion(const FileVersion& file_version) noexcept = default;
+
+  constexpr FileVersion(FileVersion&& file_version) noexcept = default;
+
+  ~FileVersion() noexcept = default;
+
+  constexpr FileVersion& operator=(
+      const FileVersion& file_version
+  ) noexcept = default;
+
+  constexpr FileVersion& operator=(
+      FileVersion&& file_version
+  ) noexcept = default;
+
+  constexpr friend bool operator==(
+      const FileVersion& lhs,
+      const FileVersion& rhs
+  ) = default;
+
+  constexpr friend std::strong_ordering operator<=>(
+      const FileVersion& lhs,
+      const FileVersion& rhs
+  ) = default;
+
+  static Glide3xVersion GuessGameVersion(
+      std::wstring_view raw_path
+  );
+
+  constexpr const VersionType& version() const noexcept {
+    return this->version_;
+  }
+
+ private:
+  VersionType version_;
+
+  static FileVersion ReadFileVersion(
+      std::wstring_view raw_path
+  );
+
+  static Glide3xVersion SearchTable(
+      const FileVersion& file_version
+  );
 };
-
-namespace glide3x_version {
-
-::std::string_view GetName(
-    Glide3xVersion glide3x_version
-);
-
-Glide3xVersion GetRunning();
-
-::std::string_view GetRunningName();
-
-} // namespace glide3x_version
 
 } // namespace sgd2fr
 
-#endif // SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
+#endif // SGD2FR_HELPER_FILE_VERSION_HPP_

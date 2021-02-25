@@ -51,8 +51,6 @@
 #include <cwchar>
 #include <memory>
 
-#include <fmt/format.h>
-
 namespace sgd2fr {
 namespace {
 

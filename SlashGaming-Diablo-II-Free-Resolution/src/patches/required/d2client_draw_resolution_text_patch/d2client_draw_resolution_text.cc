@@ -45,10 +45,11 @@
 
 #include "d2client_draw_resolution_text.hpp"
 
+#include <cstdio>
+#include <array>
 #include <limits>
 #include <string>
 
-#include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../../../helper/game_resolution.hpp"
 
@@ -93,16 +94,23 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
   }
 
   // Draw text based on the resolution mode.
+  ::std::array<char8_t, 256> resolution_text_u8;
+
   unsigned int resolution_mode = d2::d2gfx::GetResolutionMode();
   std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
 
-  std::u8string text_fmt = fmt::format(
-      u8"{}x{}",
+  ::std::snprintf(
+      // Acceptable cast. Numbers are in the ASCII range.
+      reinterpret_cast<char*>(resolution_text_u8.data()),
+      resolution_text_u8.size(),
+      "%dx%d",
       std::get<0>(resolution),
       std::get<1>(resolution)
   );
 
-  d2::UnicodeString_Api text_unicode = d2::UnicodeString_Api::FromUtf8String(text_fmt);
+  d2::UnicodeString_Api text_unicode = d2::UnicodeString_Api::FromUtf8String(
+      resolution_text_u8.data()
+  );
 
   d2::TextFont old_text_font = d2::d2win::SetTextFont(d2::TextFont::kDiabloMenu_30);
 

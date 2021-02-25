@@ -45,12 +45,12 @@
 
 #include "../include/license.hpp"
 
+#include <cstdio>
 #include <string_view>
-#include <fmt/format.h>
 
 namespace {
 
-static constexpr std::string_view kLicenseLines[] = {
+static constexpr ::std::string_view kLicenseLines[] = {
     "SlashGaming Diablo II Free Resolution",
     "Copyright (C) 2019-2020  Mir Drualga",
     "",
@@ -76,6 +76,6 @@ static constexpr std::string_view kLicenseLines[] = {
 
 void PrintLicenseNotice() {
   for (const std::string_view& line : kLicenseLines) {
-    fmt::print("{0} \n", line);
+    ::std::printf("%s \n", line.data());
   }
 }

@@ -76,9 +76,9 @@ GrSstWinOpenPatch::MakePatch() {
     return std::nullopt;
   }
 
-  Glide3xVersion running_glide3x_version_id = GetRunningGlide3xVersionId();
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
 
-  switch (running_glide3x_version_id) {
+  switch (running_glide3x_version) {
     case Glide3xVersion::kSven1_4_4_21: {
       return GrSstWinOpenPatch_Sven_1_4_4_21();
     }

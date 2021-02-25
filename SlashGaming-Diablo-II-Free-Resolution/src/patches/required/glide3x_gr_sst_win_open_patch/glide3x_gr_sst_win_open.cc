@@ -61,7 +61,7 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
       glide_resolution_mode - (0x1000 - 3)
   );
 
-  Glide3xVersion running_glide3x_version = GetRunningGlide3xVersionId();
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
   switch (running_glide3x_version) {
     case Glide3xVersion::kSven1_4_4_21: {
       width = *reinterpret_cast<std::int32_t**>(

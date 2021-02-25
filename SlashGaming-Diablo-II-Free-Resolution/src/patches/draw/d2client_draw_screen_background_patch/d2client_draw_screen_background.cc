@@ -47,7 +47,8 @@
 
 #include <windows.h>
 
-#include <fmt/format.h>
+#include <mdc/error/exit_on_error.hpp>
+#include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
@@ -870,7 +871,10 @@ void DrawRightScreenBackgroundRibbon() {
 } // namespace
 
 void Sgd2fr_D2Client_DrawScreenBackground() {
-  switch (d2::d2client::GetScreenOpenMode()) {
+  ::d2::ScreenOpenMode screen_open_mode =
+      ::d2::d2client::GetScreenOpenMode();
+
+  switch (screen_open_mode) {
     case d2::ScreenOpenMode::kNone: {
       break;
     }
@@ -904,16 +908,11 @@ void Sgd2fr_D2Client_DrawScreenBackground() {
     }
 
     default: {
-      std::wstring_view message = L"Unknown value {} for screen open mode.";
-
-      MessageBoxW(
-          nullptr,
-          fmt::format(message, d2::d2client::GetScreenOpenMode()).data(),
-          L"Unexpected Value",
-          MB_OK | MB_ICONERROR
+      ::mdc::error::ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          static_cast<int>(screen_open_mode)
       );
-
-      std::exit(0);
     }
   }
 }

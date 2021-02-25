@@ -47,7 +47,6 @@
 
 #include <windows.h>
 
-#include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
