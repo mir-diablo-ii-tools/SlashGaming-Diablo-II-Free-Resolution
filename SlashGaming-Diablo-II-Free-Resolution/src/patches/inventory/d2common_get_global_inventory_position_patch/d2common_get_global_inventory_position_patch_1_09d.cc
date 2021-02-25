@@ -103,13 +103,13 @@ GetGlobalInventoryPositionPatch_1_09D::GetPatchAddress() {
       {
           d2::GameVersion::k1_09D,
           mapi::GameAddress::FromOrdinal(
-              mapi::DefaultLibrary::kD2Common,
+              ::d2::DefaultLibrary::kD2Common,
               10635
           )
       }
   };
 
-  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+  return kPatchAddresses.at(::d2::game_version::GetRunning());
 }
 
 std::vector<mapi::GamePatch>

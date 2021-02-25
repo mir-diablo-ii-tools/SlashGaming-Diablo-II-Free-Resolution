@@ -74,7 +74,9 @@ void __cdecl Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout(
   d2::EquipmentLayout_Wrapper out_equipment_slot_layout_wrapper(
       out_equipment_slot_layout
   );
-  out_equipment_slot_layout_wrapper.Assign(global_equipment_slot_layout_view);
+  out_equipment_slot_layout_wrapper.AssignMembers(
+      global_equipment_slot_layout_view
+  );
 
   // Do not adjust positions if the entries are empty, which use value -1.
   constexpr int entry_empty_value = -1;

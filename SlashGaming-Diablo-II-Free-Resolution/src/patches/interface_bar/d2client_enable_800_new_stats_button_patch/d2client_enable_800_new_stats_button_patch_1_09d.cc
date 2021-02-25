@@ -169,7 +169,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Enable the click on 800x600 New Stats button sound.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48264
   );
 
@@ -183,7 +183,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48283
   );
 
@@ -198,7 +198,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Adjust the click detection of the New Stats button sound.
   mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x4831C
   );
 
@@ -214,7 +214,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   // Enable displaying of the (Lying) Character Screen when the 800x600 New
   // Stats button is clicked.
   mapi::GameAddress game_address_04 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48524
   );
 
@@ -228,7 +228,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_05 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48542
   );
 
@@ -244,7 +244,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   // Adjust the click detection of the New Stats button for opening the
   // (Lying) Character Screen.
   mapi::GameAddress game_address_06 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48608
   );
 
@@ -259,7 +259,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Enable setting the 800x600 New Stats button image frame on mouse over.
   mapi::GameAddress game_address_07 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48A19
   );
 
@@ -274,7 +274,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Set the 800x600 New Stats button image frame on mouse over.
   mapi::GameAddress game_address_08 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48B08
   );
 
@@ -289,7 +289,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Enable all repositioning of 800x600 text and level up buttons.
   mapi::GameAddress game_address_09 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x488CD
   );
 
@@ -303,7 +303,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_10 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x489A1
   );
 
@@ -318,7 +318,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Enable repositioning 800x600 "New Stats" text and New Stats button.
   mapi::GameAddress game_address_11 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48AA3
   );
 
@@ -333,7 +333,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Realign the mouse over detection for 800x600 New Stats text.
   mapi::GameAddress game_address_12 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48B5C
   );
 
@@ -348,7 +348,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Draw the "New Stats" text.
   mapi::GameAddress game_address_13 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48B93
   );
 
@@ -363,7 +363,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Draw the New Stats button.
   mapi::GameAddress game_address_14 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48BB1
   );
 
@@ -378,7 +378,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Enable repositioning of 800x600 inactive text and level up buttons.
   mapi::GameAddress game_address_15 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48803
   );
 
@@ -393,7 +393,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Realign the mouse over detection for 800x600 inactive New Stats text.
   mapi::GameAddress game_address_16 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48835
   );
 
@@ -408,7 +408,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Draw the inactive "New Stats" text.
   mapi::GameAddress game_address_17 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48873
   );
 
@@ -423,7 +423,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
 
   // Draw the inactive New Stats button.
   mapi::GameAddress game_address_18 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48891
   );
 

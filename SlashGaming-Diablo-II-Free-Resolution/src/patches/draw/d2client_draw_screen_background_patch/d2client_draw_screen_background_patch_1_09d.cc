@@ -56,7 +56,7 @@ namespace {
 extern "C" static std::intptr_t __cdecl
 Sgd2fr_D2Client_DrawScreenBackground_GetJumpAddress_1_09D() {
   mapi::GameAddress address = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x35750
   );
 
@@ -104,7 +104,7 @@ std::vector<mapi::GamePatch>
 DrawScreenBackgroundPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
 
   // Draw the new screen background.
   patches.push_back(
@@ -144,13 +144,13 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddress01() {
       {
           d2::GameVersion::k1_09D,
           mapi::GameAddress::FromOffset(
-              mapi::DefaultLibrary::kD2Client,
+              ::d2::DefaultLibrary::kD2Client,
               0x8696B
           )
       }
   };
 
-  return kPatchAddresses01.at(d2::GetRunningGameVersionId());
+  return kPatchAddresses01.at(::d2::game_version::GetRunning());
 }
 
 const mapi::GameAddress&
@@ -162,13 +162,13 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddress02() {
       {
           d2::GameVersion::k1_09D,
           mapi::GameAddress::FromOffset(
-              mapi::DefaultLibrary::kD2Client,
+              ::d2::DefaultLibrary::kD2Client,
               0x58F1B
           )
       }
   };
 
-  return kPatchAddresses02.at(d2::GetRunningGameVersionId());
+  return kPatchAddresses02.at(::d2::game_version::GetRunning());
 }
 
 const mapi::GameAddress&
@@ -180,13 +180,13 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddress03() {
       {
           d2::GameVersion::k1_09D,
           mapi::GameAddress::FromOffset(
-              mapi::DefaultLibrary::kD2Client,
+              ::d2::DefaultLibrary::kD2Client,
               0x58FF0
           )
       }
   };
 
-  return kPatchAddresses03.at(d2::GetRunningGameVersionId());
+  return kPatchAddresses03.at(::d2::game_version::GetRunning());
 }
 
 } // namespace sgd2fr::patches::d2client

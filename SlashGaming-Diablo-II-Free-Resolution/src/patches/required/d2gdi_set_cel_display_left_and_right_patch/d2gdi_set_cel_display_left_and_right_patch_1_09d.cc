@@ -94,7 +94,7 @@ SetCelDisplayLeftAndRightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2GDI,
+      ::d2::DefaultLibrary::kD2GDI,
       0x25A0
   );
 

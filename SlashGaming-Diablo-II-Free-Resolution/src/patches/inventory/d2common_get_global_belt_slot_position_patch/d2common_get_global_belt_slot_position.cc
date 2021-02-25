@@ -75,7 +75,7 @@ void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
   );
 
   d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
-  out_belt_slot_wrapper.Assign(global_belt_slot_position);
+  out_belt_slot_wrapper.AssignMembers(global_belt_slot_position);
 
   // Do not adjust positions if the entries are empty, which use value 0.
   constexpr int entry_empty_value = 0;

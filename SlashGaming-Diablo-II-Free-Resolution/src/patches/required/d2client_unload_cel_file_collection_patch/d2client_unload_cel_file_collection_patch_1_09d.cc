@@ -52,9 +52,6 @@ namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
-  // Original code
-  ASM_X86(mov ecx, 12);
-
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -95,16 +92,16 @@ UnloadCelFileCollectionPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
-      0x57FA9
+      ::d2::DefaultLibrary::kD2Client,
+      0x57FB9
   );
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_01),
-          mapi::BranchType::kCall,
+          mapi::BranchType::kJump,
           &InterceptionFunc_01,
-          0x57FAE - 0x57FA9
+          5
       )
   );
 

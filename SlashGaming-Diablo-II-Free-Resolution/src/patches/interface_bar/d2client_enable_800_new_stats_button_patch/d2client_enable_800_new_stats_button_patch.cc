@@ -65,9 +65,9 @@ void Enable800NewStatsButtonPatch::Remove() {
 
 Enable800NewStatsButtonPatch::PatchVariant
 Enable800NewStatsButtonPatch::MakePatch() {
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
 
-  switch (running_game_version_id) {
+  switch (running_game_version) {
     case d2::GameVersion::k1_09D: {
       return Enable800NewStatsButtonPatch_1_09D();
     }

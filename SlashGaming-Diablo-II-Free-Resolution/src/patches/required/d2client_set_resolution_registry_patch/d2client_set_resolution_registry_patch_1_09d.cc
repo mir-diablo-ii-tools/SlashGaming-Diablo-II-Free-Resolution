@@ -96,7 +96,7 @@ SetResolutionRegistryPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x61059
   );
 
@@ -110,7 +110,7 @@ SetResolutionRegistryPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x61075
   );
 

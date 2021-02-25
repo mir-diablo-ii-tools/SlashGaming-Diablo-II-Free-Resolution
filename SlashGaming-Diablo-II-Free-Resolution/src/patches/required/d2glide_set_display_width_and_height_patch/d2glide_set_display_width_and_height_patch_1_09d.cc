@@ -120,7 +120,7 @@ SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Glide,
+      ::d2::DefaultLibrary::kD2Glide,
       0x1B8B
   );
 
@@ -134,7 +134,7 @@ SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Glide,
+      ::d2::DefaultLibrary::kD2Glide,
       0x1BB6
   );
 

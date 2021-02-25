@@ -114,13 +114,13 @@ Enable800InterfaceBarPatch_1_09D::GetPatchAddress01() {
       {
           d2::GameVersion::k1_09D,
           mapi::GameAddress::FromOffset(
-              mapi::DefaultLibrary::kD2Client,
+              ::d2::DefaultLibrary::kD2Client,
               0x590A9
           )
       }
   };
 
-  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+  return kPatchAddresses.at(::d2::game_version::GetRunning());
 }
 
 const mapi::GameAddress&
@@ -132,13 +132,13 @@ Enable800InterfaceBarPatch_1_09D::GetPatchAddress02() {
       {
           d2::GameVersion::k1_09D,
           mapi::GameAddress::FromOffset(
-              mapi::DefaultLibrary::kD2Client,
+              ::d2::DefaultLibrary::kD2Client,
               0x59228
           )
       }
   };
 
-  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+  return kPatchAddresses.at(::d2::game_version::GetRunning());
 }
 
 std::vector<mapi::GamePatch>

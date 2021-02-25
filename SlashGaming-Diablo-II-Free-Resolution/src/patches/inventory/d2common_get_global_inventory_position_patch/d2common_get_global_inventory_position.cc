@@ -71,7 +71,7 @@ void __cdecl Sgd2fr_D2Common_GetGlobalInventoryPosition(
   );
 
   d2::PositionalRectangle_Wrapper out_position_wrapper(out_position);
-  out_position_wrapper.Assign(global_inventory_position);
+  out_position_wrapper.AssignMembers(global_inventory_position);
 
   // Do not adjust positions if the entries are empty, which use value -1.
   constexpr int entry_empty_value = -1;

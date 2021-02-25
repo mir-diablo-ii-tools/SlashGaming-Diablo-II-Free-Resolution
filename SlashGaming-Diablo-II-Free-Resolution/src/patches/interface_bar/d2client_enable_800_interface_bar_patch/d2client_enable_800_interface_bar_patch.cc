@@ -67,10 +67,10 @@ void Enable800InterfaceBarPatch::Remove() {
 
 Enable800InterfaceBarPatch::PatchVariant
 Enable800InterfaceBarPatch::MakePatch() {
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
-  switch (running_game_version_id) {
-    case d2::GameVersion::k1_09D: {
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
       return Enable800InterfaceBarPatch_1_09D();
     }
   }

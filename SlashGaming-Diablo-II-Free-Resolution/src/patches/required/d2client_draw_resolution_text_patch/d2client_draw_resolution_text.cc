@@ -63,11 +63,11 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
   const d2::CelFile* comparing_cel_file_base_address;
 
   // Get the address of the cel file base.
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
-  switch (running_game_version_id) {
+  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  switch (running_game_version) {
     case d2::GameVersion::k1_09D: {
       std::intptr_t raw_address = mapi::GameAddress::FromOffset(
-          mapi::DefaultLibrary::kD2Client,
+          ::d2::DefaultLibrary::kD2Client,
           0xE5F18
       ).raw_address();
 

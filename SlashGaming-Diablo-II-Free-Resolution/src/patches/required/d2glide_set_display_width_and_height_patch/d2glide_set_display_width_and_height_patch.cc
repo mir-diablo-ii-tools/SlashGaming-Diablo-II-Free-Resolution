@@ -74,9 +74,9 @@ SetDisplayWidthAndHeightPatch::MakePatch() {
     return std::nullopt;
   }
 
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
 
-  switch (running_game_version_id) {
+  switch (running_game_version) {
     case d2::GameVersion::k1_09D: {
       return SetDisplayWidthAndHeightPatch_1_09D();
     }

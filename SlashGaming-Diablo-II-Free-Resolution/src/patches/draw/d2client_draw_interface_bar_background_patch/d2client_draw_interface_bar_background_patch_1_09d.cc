@@ -120,13 +120,13 @@ DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddress() {
       {
           d2::GameVersion::k1_09D,
           mapi::GameAddress::FromOffset(
-              mapi::DefaultLibrary::kD2Client,
+              ::d2::DefaultLibrary::kD2Client,
               0x5909C
           )
       }
   };
 
-  return kPatchAddresses.at(d2::GetRunningGameVersionId());
+  return kPatchAddresses.at(::d2::game_version::GetRunning());
 }
 
 } // namespace sgd2fr::patches::d2client

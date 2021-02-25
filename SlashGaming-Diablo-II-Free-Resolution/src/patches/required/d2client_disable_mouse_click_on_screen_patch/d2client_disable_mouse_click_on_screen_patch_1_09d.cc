@@ -71,7 +71,7 @@ DisableMouseClickOnScreenPatch_1_09D::MakePatches() {
 
   // Disable left screen click-through.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x2AB1A
   );
 
@@ -84,7 +84,7 @@ DisableMouseClickOnScreenPatch_1_09D::MakePatches() {
 
   // Disable left screen click-through while character is moving.
   mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x2AD1A
   );
 
@@ -97,7 +97,7 @@ DisableMouseClickOnScreenPatch_1_09D::MakePatches() {
 
   // Disable right screen click-through.
   mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x40873
   );
 

@@ -71,7 +71,7 @@ void __cdecl Sgd2fr_D2Common_GetGlobalInventoryGridLayout(
   );
 
   d2::GridLayout_Wrapper out_grid_layout_wrapper(out_grid_layout);
-  out_grid_layout_wrapper.Assign(global_inventory_grid_layout);
+  out_grid_layout_wrapper.AssignMembers(global_inventory_grid_layout);
 
   // Do not adjust positions if the entries are empty, which use value 0.
   constexpr int entry_empty_value = 0;

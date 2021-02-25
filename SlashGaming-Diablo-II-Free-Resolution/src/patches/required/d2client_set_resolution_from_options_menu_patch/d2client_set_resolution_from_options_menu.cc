@@ -59,11 +59,11 @@ void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
 ) {
   void* resolution_settings_address;
 
-  switch (d2::GetRunningGameVersionId()) {
+  switch (::d2::game_version::GetRunning()) {
     case d2::GameVersion::k1_09D: {
       resolution_settings_address = reinterpret_cast<void*>(
           mapi::GameAddress::FromOffset(
-              mapi::DefaultLibrary::kD2Client,
+              ::d2::DefaultLibrary::kD2Client,
               0xE6468
           ).raw_address()
       );

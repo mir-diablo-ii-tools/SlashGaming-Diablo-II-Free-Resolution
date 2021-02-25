@@ -169,7 +169,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Enable the click on 800x600 New Skill button sound.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x483B4
   );
 
@@ -183,7 +183,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x483D3
   );
 
@@ -198,7 +198,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Adjust the click detection of the New Stats button sound.
   mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x4847D
   );
 
@@ -214,7 +214,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
   // Enable displaying of the Skill Tree Screen when the 800x600 New
   // Stats button is clicked.
   mapi::GameAddress game_address_04 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48694
   );
 
@@ -228,7 +228,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_05 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x486B2
   );
 
@@ -244,7 +244,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
   // Adjust the click detection of the New Skill button for opening the
   // Skill Tree Screen.
   mapi::GameAddress game_address_06 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x4878C
   );
 
@@ -259,7 +259,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Enable setting the 800x600 New Skill button image frame on mouse over.
   mapi::GameAddress game_address_07 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48DE5
   );
 
@@ -274,7 +274,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Set the 800x600 New Skill button image frame on mouse over.
   mapi::GameAddress game_address_08 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48EF1
   );
 
@@ -289,7 +289,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Enable all repositioning of 800x600 text and level up buttons.
   mapi::GameAddress game_address_09 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48CAD
   );
 
@@ -303,7 +303,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
   );
 
   mapi::GameAddress game_address_10 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48D6D
   );
 
@@ -318,7 +318,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Enable repositioning 800x600 "New Stats" text and New Stats button.
   mapi::GameAddress game_address_11 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48E69
   );
 
@@ -333,7 +333,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Realign the mouse over detection for 800x600 New Skill text.
   mapi::GameAddress game_address_12 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48F3E
   );
 
@@ -348,7 +348,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Draw the "New Skill" text.
   mapi::GameAddress game_address_13 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48F7C
   );
 
@@ -363,7 +363,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Draw the New Skill button.
   mapi::GameAddress game_address_14 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48F9A
   );
 
@@ -378,7 +378,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Enable repositioning 800x600 inactive "New Stats" text and New Stats button.
   mapi::GameAddress game_address_15 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48BE3
   );
 
@@ -393,7 +393,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Realign the mouse over detection for 800x600 inactive New Skill text.
   mapi::GameAddress game_address_16 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48C15
   );
 
@@ -408,7 +408,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Draw the inactive "New Skill" text.
   mapi::GameAddress game_address_17 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48C53
   );
 
@@ -423,7 +423,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
 
   // Draw the inactive New Skill button.
   mapi::GameAddress game_address_18 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48C71
   );
 
