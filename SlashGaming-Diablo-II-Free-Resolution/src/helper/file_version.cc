@@ -101,12 +101,12 @@ static_assert(
 
 } // namespace
 
-Glide3xVersion FileVersion::GuessGameVersion(
+Glide3xVersion FileVersion::GuessGlide3xVersion(
     std::wstring_view raw_path
 ) {
   FileVersion file_version = ReadFileVersion(raw_path);
 
-  return SearchTable(file_version);
+  return SearchGlide3xTable(file_version);
 }
 
 FileVersion FileVersion::ReadFileVersion(
@@ -188,7 +188,7 @@ FileVersion FileVersion::ReadFileVersion(
   );
 }
 
-Glide3xVersion FileVersion::SearchTable(
+Glide3xVersion FileVersion::SearchGlide3xTable(
     const FileVersion& file_version
 ) {
   std::pair search_range = std::equal_range(

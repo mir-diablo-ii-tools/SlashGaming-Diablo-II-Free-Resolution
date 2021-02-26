@@ -79,7 +79,7 @@ namespace sgd2fr::glide3x_version {
 
 Glide3xVersion GetRunning() {
   static Glide3xVersion running_glide3x_version =
-      FileVersion::GuessGameVersion(L"glide3x.dll");
+      FileVersion::GuessGlide3xVersion(L"glide3x.dll");
 
   return running_glide3x_version;
 }

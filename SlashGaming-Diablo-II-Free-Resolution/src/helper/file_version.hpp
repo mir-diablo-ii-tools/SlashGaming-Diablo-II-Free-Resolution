@@ -114,7 +114,7 @@ class FileVersion {
       const FileVersion& rhs
   ) = default;
 
-  static Glide3xVersion GuessGameVersion(
+  static Glide3xVersion GuessGlide3xVersion(
       std::wstring_view raw_path
   );
 
@@ -129,7 +129,7 @@ class FileVersion {
       std::wstring_view raw_path
   );
 
-  static Glide3xVersion SearchTable(
+  static Glide3xVersion SearchGlide3xTable(
       const FileVersion& file_version
   );
 };
