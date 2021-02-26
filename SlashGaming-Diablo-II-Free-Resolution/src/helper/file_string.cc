@@ -180,7 +180,7 @@ DDrawVersion FileString::GuessDDrawVersion(
 
   BOOL is_ver_query_value_success = VerQueryValueW(
       file_version_info.get(),
-      L"\\StringFileInfo\\040904B0\\",
+      full_file_string_name.data(),
       reinterpret_cast<LPVOID*>(&temp_file_string_value),
       &file_string_value_capacity
   );
