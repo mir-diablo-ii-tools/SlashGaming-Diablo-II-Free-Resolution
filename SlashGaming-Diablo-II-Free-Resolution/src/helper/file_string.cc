@@ -166,6 +166,8 @@ DDrawVersion FileString::GuessDDrawVersion(
   static constexpr ::std::size_t kFullFileStringNameCapacity = 256;
   ::std::array<wchar_t, kFullFileStringNameCapacity> full_file_string_name;
 
+  // Acceptable unchecked sprintf-family usage, as the inputs are
+  // determined internally.
   ::std::swprintf(
       full_file_string_name.data(),
       kFullFileStringNameCapacity,
