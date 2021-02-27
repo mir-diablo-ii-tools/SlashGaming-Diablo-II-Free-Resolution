@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -48,10 +48,10 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
-extern "C" void __cdecl SGD2FR_D2ClientDrawScreenBackground();
+extern "C" void __cdecl Sgd2fr_D2Client_DrawScreenBackground();
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_HPP_

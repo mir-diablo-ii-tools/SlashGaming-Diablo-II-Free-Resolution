@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -56,13 +56,17 @@ enum class Glide3xVersion {
   kNGlide3_10_0_658
 };
 
-std::string_view GetGlide3xVersionName(
+namespace glide3x_version {
+
+::std::string_view GetName(
     Glide3xVersion glide3x_version
 );
 
-Glide3xVersion GetRunningGlide3xVersionId();
+Glide3xVersion GetRunning();
 
-std::string_view GetRunningGlide3xVersionName();
+::std::string_view GetRunningName();
+
+} // namespace glide3x_version
 
 } // namespace sgd2fr
 

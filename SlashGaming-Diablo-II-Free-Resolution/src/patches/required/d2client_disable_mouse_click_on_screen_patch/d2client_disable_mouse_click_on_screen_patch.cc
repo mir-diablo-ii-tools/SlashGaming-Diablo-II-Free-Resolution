@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -45,18 +45,33 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch.hpp"
 
-#include "d2client_disable_mouse_click_on_screen_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+DisableMouseClickOnScreenPatch::DisableMouseClickOnScreenPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch() {
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+void DisableMouseClickOnScreenPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
 
-  switch (running_game_version_id) {
+void DisableMouseClickOnScreenPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+DisableMouseClickOnScreenPatch::PatchVariant
+DisableMouseClickOnScreenPatch::MakePatch() {
+  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+
+  switch (running_game_version) {
     case d2::GameVersion::k1_09D: {
-      return MakeD2ClientDisableMouseClickOnScreenPatch_1_09D();
+      return DisableMouseClickOnScreenPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

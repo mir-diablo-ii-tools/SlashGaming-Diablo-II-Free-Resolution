@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,7 +50,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2Common_GetGlobalInventoryGridLayout(
+void __cdecl Sgd2fr_D2Common_GetGlobalInventoryGridLayout(
     std::uint32_t inventory_record_index,
     std::uint32_t inventory_arrange_mode,
     d2::GridLayout* out_grid_layout
@@ -71,7 +71,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalInventoryGridLayout(
   );
 
   d2::GridLayout_Wrapper out_grid_layout_wrapper(out_grid_layout);
-  out_grid_layout_wrapper.Assign(global_inventory_grid_layout);
+  out_grid_layout_wrapper.AssignMembers(global_inventory_grid_layout);
 
   // Do not adjust positions if the entries are empty, which use value 0.
   constexpr int entry_empty_value = 0;

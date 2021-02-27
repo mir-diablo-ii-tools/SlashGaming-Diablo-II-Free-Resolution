@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -47,7 +47,6 @@
 
 #include <windows.h>
 
-#include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
@@ -55,7 +54,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
+void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
     std::uint32_t belt_record_index,
     std::uint32_t inventory_arrange_mode,
     d2::PositionalRectangle* out_belt_slot,
@@ -75,7 +74,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltSlotPosition(
   );
 
   d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
-  out_belt_slot_wrapper.Assign(global_belt_slot_position);
+  out_belt_slot_wrapper.AssignMembers(global_belt_slot_position);
 
   // Do not adjust positions if the entries are empty, which use value 0.
   constexpr int entry_empty_value = 0;

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -47,13 +47,14 @@
 
 #include <windows.h>
 
-#include <fmt/format.h>
+#include <mdc/error/exit_on_error.hpp>
+#include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/game_resolution.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 namespace {
 
 constexpr std::string_view kOriginalScreenBorderFrameImagePath =
@@ -869,8 +870,11 @@ void DrawRightScreenBackgroundRibbon() {
 
 } // namespace
 
-void SGD2FR_D2ClientDrawScreenBackground() {
-  switch (d2::d2client::GetScreenOpenMode()) {
+void Sgd2fr_D2Client_DrawScreenBackground() {
+  ::d2::ScreenOpenMode screen_open_mode =
+      ::d2::d2client::GetScreenOpenMode();
+
+  switch (screen_open_mode) {
     case d2::ScreenOpenMode::kNone: {
       break;
     }
@@ -904,18 +908,13 @@ void SGD2FR_D2ClientDrawScreenBackground() {
     }
 
     default: {
-      std::wstring_view message = L"Unknown value {} for screen open mode.";
-
-      MessageBoxW(
-          nullptr,
-          fmt::format(message, d2::d2client::GetScreenOpenMode()).data(),
-          L"Unexpected Value",
-          MB_OK | MB_ICONERROR
+      ::mdc::error::ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          static_cast<int>(screen_open_mode)
       );
-
-      std::exit(0);
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

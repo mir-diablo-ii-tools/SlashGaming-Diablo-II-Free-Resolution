@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,7 +50,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2Common_GetGlobalInventoryPosition(
+void __cdecl Sgd2fr_D2Common_GetGlobalInventoryPosition(
     std::uint32_t inventory_record_index,
     std::uint32_t inventory_arrange_mode,
     d2::PositionalRectangle* out_position
@@ -71,7 +71,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalInventoryPosition(
   );
 
   d2::PositionalRectangle_Wrapper out_position_wrapper(out_position);
-  out_position_wrapper.Assign(global_inventory_position);
+  out_position_wrapper.AssignMembers(global_inventory_position);
 
   // Do not adjust positions if the entries are empty, which use value -1.
   constexpr int entry_empty_value = -1;

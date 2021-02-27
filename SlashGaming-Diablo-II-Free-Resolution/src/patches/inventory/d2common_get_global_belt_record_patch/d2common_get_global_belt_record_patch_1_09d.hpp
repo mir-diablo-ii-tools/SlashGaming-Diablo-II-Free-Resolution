@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,9 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2common {
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalBeltRecordPatch_1_09D();
+class GetGlobalBeltRecordPatch_1_09D {
+ public:
+  GetGlobalBeltRecordPatch_1_09D();
+
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static const mapi::GameAddress& GetPatchAddress();
+  static std::vector<mapi::GamePatch> MakePatches();
+};
 
 } // namespace sgd2fr::patches
 

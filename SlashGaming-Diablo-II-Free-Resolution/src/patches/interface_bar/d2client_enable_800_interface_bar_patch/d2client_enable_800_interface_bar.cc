@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -51,11 +51,11 @@
 
 namespace sgd2fr::patches {
 
-std::uint32_t __cdecl SGD2FR_D2Client_Enable800InterfaceBar() {
+std::uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar() {
   return Get800InterfaceBarEnabledValue();
 }
 
-mapi::bool32 __cdecl SGD2FR_D2Client_Draw800InterfaceBar(
+mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
     d2::CelContext* cel_context
 ) {
   // Grab the CelFile from the CelContext.

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -48,13 +48,10 @@
 #include "../../../asm_x86_macro.h"
 #include "d2client_unload_cel_file_collection.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
-  // Original code
-  ASM_X86(mov ecx, 12);
-
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -62,7 +59,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2ClientUnloadCelFileCollection));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_UnloadCelFileCollection));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -74,24 +71,41 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeD2ClientUnloadCelFileCollectionPatch_1_09D() {
+UnloadCelFileCollectionPatch_1_09D::UnloadCelFileCollectionPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void UnloadCelFileCollectionPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void UnloadCelFileCollectionPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+UnloadCelFileCollectionPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
-      0x57FA9
+      ::d2::DefaultLibrary::kD2Client,
+      0x57FB9
   );
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_01),
-          mapi::BranchType::kCall,
+          mapi::BranchType::kJump,
           &InterceptionFunc_01,
-          0x57FAE - 0x57FA9
+          5
       )
   );
 
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

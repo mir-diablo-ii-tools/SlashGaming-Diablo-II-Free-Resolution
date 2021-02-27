@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2client_enable_800_interface_bar_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> Make_D2Client_Enable800InterfaceBarPatch();
+class Enable800InterfaceBarPatch {
+ public:
+  using PatchVariant = std::variant<
+      Enable800InterfaceBarPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  Enable800InterfaceBarPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_HPP_

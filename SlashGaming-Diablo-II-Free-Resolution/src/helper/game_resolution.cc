@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -52,6 +52,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
+#include "ddraw_version.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -156,7 +157,8 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
         non_crashing_ingame_resolutions.clear();
 
         if (current_video_mode == d2::VideoMode::kDirect3D
-            || current_video_mode == d2::VideoMode::kDirectDraw) {
+            || (current_video_mode == d2::VideoMode::kDirectDraw
+                && ddraw_version::GetRunning() != DDrawVersion::kCnC)) {
           std::copy_if(
               selected_ingame_resolutions.cbegin(),
               selected_ingame_resolutions.cend(),

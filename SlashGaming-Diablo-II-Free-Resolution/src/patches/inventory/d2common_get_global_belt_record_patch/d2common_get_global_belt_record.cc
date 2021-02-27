@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -47,7 +47,6 @@
 
 #include <windows.h>
 
-#include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
@@ -55,7 +54,7 @@
 
 namespace sgd2fr::patches {
 
-void __cdecl SGD2FR_D2Common_GetGlobalBeltRecord(
+void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
     std::uint32_t belt_record_index,
     std::uint32_t inventory_arrange_mode,
     d2::BeltRecord* out_belt_record
@@ -72,7 +71,7 @@ void __cdecl SGD2FR_D2Common_GetGlobalBeltRecord(
   );
 
   d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
-  out_belt_record_wrapper.Assign(global_belt_record_view);
+  out_belt_record_wrapper.AssignMembers(global_belt_record_view);
 
   // Adjustment code to ensure that the objects appear in the correct location.
   for (std::size_t belt_slot_index = 0;

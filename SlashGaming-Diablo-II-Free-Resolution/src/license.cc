@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -45,14 +45,14 @@
 
 #include "../include/license.hpp"
 
+#include <cstdio>
 #include <string_view>
-#include <fmt/format.h>
 
 namespace {
 
-constexpr std::string_view kLicenseLines[] = {
+static constexpr ::std::string_view kLicenseLines[] = {
     "SlashGaming Diablo II Free Resolution",
-    "Copyright (C) 2019-2020  Mir Drualga",
+    "Copyright (C) 2019-2021  Mir Drualga",
     "",
     "This program is free software: you can redistribute it and/or modify",
     "it under the terms of the GNU Affero General Public License as published",
@@ -76,6 +76,6 @@ constexpr std::string_view kLicenseLines[] = {
 
 void PrintLicenseNotice() {
   for (const std::string_view& line : kLicenseLines) {
-    fmt::print("{0} \n", line);
+    ::std::printf("%s \n", line.data());
   }
 }

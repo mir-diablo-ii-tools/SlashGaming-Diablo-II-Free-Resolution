@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -47,14 +47,31 @@
 
 #include "../../../asm_x86_macro.h"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch_1_09D() {
+DisableMouseClickOnScreenPatch_1_09D::DisableMouseClickOnScreenPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void DisableMouseClickOnScreenPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void DisableMouseClickOnScreenPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+std::vector<mapi::GamePatch>
+DisableMouseClickOnScreenPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Disable left screen click-through.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x2AB1A
   );
 
@@ -67,7 +84,7 @@ std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch_1_09D() 
 
   // Disable left screen click-through while character is moving.
   mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x2AD1A
   );
 
@@ -80,7 +97,7 @@ std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch_1_09D() 
 
   // Disable right screen click-through.
   mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x40873
   );
 
@@ -94,4 +111,4 @@ std::vector<mapi::GamePatch> MakeD2ClientDisableMouseClickOnScreenPatch_1_09D() 
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

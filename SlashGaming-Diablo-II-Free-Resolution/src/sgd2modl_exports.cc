@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -54,46 +54,48 @@
 namespace {
 
 bool is_loaded = false;
-std::mutex load_unload_mutex;
-std::vector<mapi::GamePatch> game_patches;
+
+static std::mutex& GetLoadUnloadMutex() {
+  static std::mutex load_unload_mutex;
+
+  return load_unload_mutex;
+}
+
+static sgd2fr::patches::Patches& GetPatches() {
+  static sgd2fr::patches::Patches patches;
+
+  return patches;
+}
 
 } // namespace
 
 bool SGD2ModL_OnLoad() {
-  std::lock_guard lock_guard(load_unload_mutex);
+  std::lock_guard lock_guard(GetLoadUnloadMutex());
 
   if (is_loaded) {
     return true;
   }
 
-  game_patches = sgd2fr::patches::MakeGamePatches();
-
-  for (auto& game_patch : game_patches) {
-    game_patch.Apply();
-  }
+  GetPatches().Apply();
 
   is_loaded = true;
   return true;
 }
 
 bool SGD2ModL_OnUnload() {
-  std::lock_guard lock_guard(load_unload_mutex);
+  std::lock_guard lock_guard(GetLoadUnloadMutex());
 
   if (!is_loaded) {
     return true;
   }
 
-  for (auto& game_patch : game_patches) {
-    game_patch.Remove();
-  }
-
-  game_patches.clear();
+  GetPatches().Remove();
 
   is_loaded = false;
   return true;
 }
 
-void SGD2ModL_LoadConfig(const char* config_path) {
+void SGD2ModL_LoadConfig(const wchar_t* config_path) {
   static std::mutex refresh_config_mutex;
   std::lock_guard lock_guard(refresh_config_mutex);
 

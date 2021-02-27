@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D();
+class Enable800NewStatsButtonPatch_1_09D {
+ public:
+  Enable800NewStatsButtonPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_

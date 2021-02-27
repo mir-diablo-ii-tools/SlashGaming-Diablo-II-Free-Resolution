@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -55,7 +55,7 @@ extern "C" {
 DLLEXPORT bool SGD2ModL_OnLoad(void);
 DLLEXPORT bool SGD2ModL_OnUnload(void);
 
-DLLEXPORT void SGD2ModL_LoadConfig(const char* config_path);
+DLLEXPORT void SGD2ModL_LoadConfig(const wchar_t* config_path);
 
 #ifdef __cplusplus
 } // extern "C"

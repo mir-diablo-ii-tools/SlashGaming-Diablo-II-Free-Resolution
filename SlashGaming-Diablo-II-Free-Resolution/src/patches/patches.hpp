@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -48,9 +48,26 @@
 
 #include <sgd2mapi.hpp>
 
+#include "draw/draw_patches.hpp"
+#include "interface_bar/interface_bar_patches.hpp"
+#include "inventory/inventory_patches.hpp"
+#include "required/required_patches.hpp"
+
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches();
+class Patches {
+ public:
+  Patches();
+
+  void Apply();
+  void Remove();
+
+ private:
+  DrawPatches draw_patches_;
+  InterfaceBarPatches interface_bar_patches_;
+  InventoryPatches inventory_patches_;
+  RequiredPatches required_patches_;
+};
 
 } // namespace sgd2fr::patches
 

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -48,7 +48,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2client_draw_resolution_text.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -66,7 +66,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push edx);
   ASM_X86(push esi);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2ClientDrawResolutionText));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_DrawResolutionText));
   ASM_X86(add esp, 16);
 
   // If the correct pieces executed, then remove the pushed arguments, then
@@ -89,11 +89,28 @@ DidDrawUnicodeText:
 
 } // namespace
 
-std::vector<mapi::GamePatch> MakeD2ClientDrawResolutionTextPatch_1_09D() {
+DrawResolutionTextPatch_1_09D::DrawResolutionTextPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void DrawResolutionTextPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void DrawResolutionTextPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+DrawResolutionTextPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x62627
   );
 
@@ -109,4 +126,4 @@ std::vector<mapi::GamePatch> MakeD2ClientDrawResolutionTextPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

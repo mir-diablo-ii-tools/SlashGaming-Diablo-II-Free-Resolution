@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -47,13 +47,12 @@
 
 #include <windows.h>
 
-#include <fmt/format.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/game_resolution.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 namespace {
 
 void DrawLeftInterfaceBarBackground() {
@@ -186,9 +185,9 @@ void DrawRightInterfaceBarBackground() {
 
 } // namespace
 
-void __cdecl SGD2FR_D2ClientDrawInterfaceBarBackground() {
+void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground() {
   DrawLeftInterfaceBarBackground();
   DrawRightInterfaceBarBackground();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

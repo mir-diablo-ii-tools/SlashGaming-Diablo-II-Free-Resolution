@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -45,47 +45,22 @@
 
 #include "patches.hpp"
 
-#include <algorithm>
-
-#include "draw/draw_patches.hpp"
-#include "interface_bar/interface_bar_patches.hpp"
-#include "inventory/inventory_patches.hpp"
-#include "required/required_patches.hpp"
-
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeGamePatches() {
-  std::vector<mapi::GamePatch> game_patches;
+Patches::Patches() = default;
 
-  std::vector required_patches = MakeRequiredPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(required_patches.begin()),
-      std::make_move_iterator(required_patches.end())
-  );
+void Patches::Apply() {
+  this->draw_patches_.Apply();
+  this->interface_bar_patches_.Apply();
+  this->inventory_patches_.Apply();
+  this->required_patches_.Apply();
+}
 
-  std::vector draw_patches = MakeDrawPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(draw_patches.begin()),
-      std::make_move_iterator(draw_patches.end())
-  );
-
-  std::vector inventory_patches = MakeInventoryPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(inventory_patches.begin()),
-      std::make_move_iterator(inventory_patches.end())
-  );
-
-  std::vector interface_bar_patches = MakeInterfaceBarPatches();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(interface_bar_patches.begin()),
-      std::make_move_iterator(interface_bar_patches.end())
-  );
-
-  return game_patches;
+void Patches::Remove() {
+  this->draw_patches_.Remove();
+  this->interface_bar_patches_.Remove();
+  this->inventory_patches_.Remove();
+  this->required_patches_.Remove();
 }
 
 } // namespace sgd2fr::patches

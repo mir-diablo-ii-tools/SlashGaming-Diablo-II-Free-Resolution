@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -45,10 +45,12 @@
 
 #include "d2common_get_global_equipment_slot_layout_patch_1_09d.hpp"
 
+#include <unordered_map>
+
 #include "../../../asm_x86_macro.h"
 #include "d2common_get_global_equipment_slot_layout.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2common {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -63,7 +65,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push dword ptr [ebp + 16]);
   ASM_X86(push dword ptr [ebp + 12]);
   ASM_X86(push dword ptr [ebp + 8]);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Common_GetGlobalEquipmentSlotLayout));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout));
   ASM_X86(add esp, 16);
 
   ASM_X86(pop edx);
@@ -76,17 +78,48 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalEquipmentSlotLayoutPatch_1_09D() {
-  std::vector<mapi::GamePatch> patches;
+GetGlobalEquipmentSlotLayoutPatch_1_09D
+::GetGlobalEquipmentSlotLayoutPatch_1_09D()
+  : patches_(MakePatches()) {
+}
 
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOrdinal(
-      mapi::DefaultLibrary::kD2Common,
-      10637
-  );
+void GetGlobalEquipmentSlotLayoutPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void GetGlobalEquipmentSlotLayoutPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+const mapi::GameAddress&
+GetGlobalEquipmentSlotLayoutPatch_1_09D::GetPatchAddress() {
+  static const std::unordered_map<
+      d2::GameVersion,
+      mapi::GameAddress
+  > kPatchAddresses = {
+      {
+          d2::GameVersion::k1_09D,
+          mapi::GameAddress::FromOrdinal(
+              ::d2::DefaultLibrary::kD2Common,
+              10637
+          )
+      }
+  };
+
+  return kPatchAddresses.at(::d2::game_version::GetRunning());
+}
+
+std::vector<mapi::GamePatch>
+GetGlobalEquipmentSlotLayoutPatch_1_09D::MakePatches() {
+  std::vector<mapi::GamePatch> patches;
 
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          GetPatchAddress(),
           mapi::BranchType::kJump,
           &InterceptionFunc_01,
           5
@@ -96,4 +129,4 @@ std::vector<mapi::GamePatch> Make_D2Common_GetGlobalEquipmentSlotLayoutPatch_1_0
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2common
