@@ -198,7 +198,8 @@ Glide3xVersion FileVersion::SearchGlide3xTable(
       FileVersionTableEntryCompareKey()
   );
 
-  if (search_range.first == kFileVersionSortedTable.cend()) {
+  if (search_range.first == kFileVersionSortedTable.cend()
+      || search_range.first == search_range.second) {
     ::mdc::error::ExitOnGeneralError(
         L"Error",
         L"Could not map the file version %d.%d.%d.%d to a known game"

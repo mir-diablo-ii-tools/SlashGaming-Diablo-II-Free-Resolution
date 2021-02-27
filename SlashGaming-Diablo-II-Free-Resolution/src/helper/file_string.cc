@@ -211,7 +211,8 @@ DDrawVersion FileString::SearchDDrawTable(
       FileStringTableEntryCompareKey()
   );
 
-  if (search_range.first == kFileStringSortedTable.cend()) {
+  if (search_range.first == kFileStringSortedTable.cend()
+      || search_range.first == search_range.second) {
     return DDrawVersion::kWindowsDefault;
   }
 
