@@ -202,8 +202,8 @@ Glide3xVersion FileVersion::SearchGlide3xTable(
       || search_range.first == search_range.second) {
     ::mdc::error::ExitOnGeneralError(
         L"Error",
-        L"Could not map the file version %d.%d.%d.%d to a known game"
-            L"version.",
+        L"Could not map the file version %d.%d.%d.%d to a known "
+            L"Glide3x version.",
         __FILEW__,
         __LINE__,
         std::get<0>(file_version.version()),
