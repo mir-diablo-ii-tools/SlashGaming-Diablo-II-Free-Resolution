@@ -148,12 +148,11 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
 
   std::call_once(
       *init_once_flag,
-      [=] () {
+      [&] () {
         d2::VideoMode current_video_mode = d2::d2gfx::GetVideoMode();
         const std::vector<std::tuple<int, int>>& selected_ingame_resolutions =
             SelectLocalOrOnlineResolutions();
 
-        selected_game_type = d2::d2client::GetGameType();
         non_crashing_ingame_resolutions.clear();
 
         if (current_video_mode == d2::VideoMode::kDirect3D
@@ -182,10 +181,18 @@ std::size_t GetMinConfigResolutionId() {
       : 1;
 }
 
+std::size_t GetMaxConfigResolutionId() {
+  return GetNumIngameResolutions() + GetMinConfigResolutionId();
+}
+
 std::size_t GetMinIngameResolutionId() {
   return GetNonCrashingIngameResolutions().at(0) == resolution_640x480
       ? 0
       : 2;
+}
+
+std::size_t GetMaxIngameResolutionId() {
+  return GetNumIngameResolutions() + GetMinIngameResolutionId();
 }
 
 std::size_t GetNumIngameResolutions() {
