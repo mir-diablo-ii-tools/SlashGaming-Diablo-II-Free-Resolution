@@ -43,23 +43,53 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MODL_EXPORTS_H_
-#define SGD2FR_SGD2MODL_EXPORTS_H_
+#include "../include/sgd2fml_mod_exports.h"
 
-#include "dllexport_define.inc"
+#include <mutex>
 
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
+#include <sgd2mapi.hpp>
+#include "config.hpp"
+#include "patches/patches.hpp"
 
-DLLEXPORT bool SGD2ModL_OnLoad(void);
-DLLEXPORT bool SGD2ModL_OnUnload(void);
+namespace {
 
-DLLEXPORT void SGD2ModL_LoadConfig(const wchar_t* config_path);
+static bool is_loaded = false;
 
-#ifdef __cplusplus
-} // extern "C"
-#endif // __cplusplus
+static sgd2fr::patches::Patches& GetPatches() {
+  static sgd2fr::patches::Patches patches;
 
-#include "dllexport_undefine.inc"
-#endif // SGD2FR_SGD2MODL_EXPORTS_H_
+  return patches;
+}
+
+} // namespace
+
+long Sgd2fml_Mod_GetMinRequiredApiVersion(void) {
+  return 0L;
+}
+
+void Sgd2fml_Mod_OnLoadMpqs() {
+  if (is_loaded) {
+    return;
+  }
+
+  GetPatches().Apply();
+
+  is_loaded = true;
+}
+
+void Sgd2fml_Mod_OnUnloadMpqs() {
+  if (!is_loaded) {
+    return;
+  }
+
+  GetPatches().Remove();
+
+  is_loaded = false;
+}
+
+void Sgd2fml_Mod_ReloadConfig() {
+  static std::mutex refresh_config_mutex;
+  std::lock_guard lock_guard(refresh_config_mutex);
+
+  sgd2fr::config::LoadConfig();
+}

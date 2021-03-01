@@ -45,7 +45,7 @@
 
 #include <windows.h>
 
-#include "../include/sgd2modl_exports.h"
+#include "../include/sgd2fml_mod_exports.h"
 
 #ifdef __cplusplus
 extern "C" {
@@ -58,11 +58,15 @@ BOOL WINAPI DllMain(
 ) {
   switch (fdwReason) {
     case DLL_PROCESS_ATTACH: {
-      return SGD2ModL_OnLoad();
+      Sgd2fml_Mod_OnLoadMpqs();
+
+      return TRUE;
     }
 
     case DLL_PROCESS_DETACH: {
-      return SGD2ModL_OnUnload();
+      Sgd2fml_Mod_OnUnloadMpqs();
+
+      return TRUE;
     }
   }
 
