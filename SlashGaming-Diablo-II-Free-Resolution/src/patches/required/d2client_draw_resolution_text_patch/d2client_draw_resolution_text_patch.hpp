@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -46,14 +46,30 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_HPP_
 
-#include <vector>
+#include <variant>
 
 #include <sgd2mapi.hpp>
+#include "d2client_draw_resolution_text_patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 
-std::vector<mapi::GamePatch> MakeD2ClientDrawResolutionTextPatch();
+class DrawResolutionTextPatch {
+ public:
+  using PatchVariant = std::variant<
+      DrawResolutionTextPatch_1_09D
+  >;
 
-} // namespace sgd2fr::patches
+  DrawResolutionTextPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchVariant patch_;
+
+  static PatchVariant MakePatch();
+};
+
+} // namespace sgd2fr::patches::d2client
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_HPP_

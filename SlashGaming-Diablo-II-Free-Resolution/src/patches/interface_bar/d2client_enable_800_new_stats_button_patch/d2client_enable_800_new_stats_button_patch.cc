@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -45,18 +45,33 @@
 
 #include "d2client_enable_800_new_stats_button_patch.hpp"
 
-#include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+Enable800NewStatsButtonPatch::Enable800NewStatsButtonPatch()
+  : patch_(MakePatch()) {
+}
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch() {
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+void Enable800NewStatsButtonPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
 
-  switch (running_game_version_id) {
+void Enable800NewStatsButtonPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+Enable800NewStatsButtonPatch::PatchVariant
+Enable800NewStatsButtonPatch::MakePatch() {
+  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+
+  switch (running_game_version) {
     case d2::GameVersion::k1_09D: {
-      return Make_D2Client_Click800NewStatsButtonPatch_1_09D();
+      return Enable800NewStatsButtonPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

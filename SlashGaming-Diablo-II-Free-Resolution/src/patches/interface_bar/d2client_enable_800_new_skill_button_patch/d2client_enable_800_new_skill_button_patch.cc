@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -45,18 +45,31 @@
 
 #include "d2client_enable_800_new_skill_button_patch.hpp"
 
-#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
+namespace sgd2fr::patches::d2client {
 
-namespace sgd2fr::patches {
+Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch() = default;
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewSkillButtonPatch() {
-  d2::GameVersion running_game_version_id = d2::GetRunningGameVersionId();
+void Enable800NewSkillButtonPatch::Apply() {
+  std::visit([](auto& patch) {
+    patch.Apply();
+  }, this->patch_);
+}
 
-  switch (running_game_version_id) {
-    case d2::GameVersion::k1_09D: {
-      return Make_D2Client_Click800NewSkillButtonPatch_1_09D();
+void Enable800NewSkillButtonPatch::Remove() {
+  std::visit([](auto& patch) {
+    patch.Remove();
+  }, this->patch_);
+}
+
+Enable800NewSkillButtonPatch::PatchVariant
+Enable800NewSkillButtonPatch::MakePatches() {
+  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return Enable800NewSkillButtonPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

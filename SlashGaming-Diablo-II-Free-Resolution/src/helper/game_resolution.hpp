@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -52,7 +52,11 @@
 namespace sgd2fr {
 
 std::size_t GetMinConfigResolutionId();
+std::size_t GetMaxConfigResolutionId();
+
 std::size_t GetMinIngameResolutionId();
+std::size_t GetMaxIngameResolutionId();
+
 std::size_t GetNumIngameResolutions();
 std::tuple<int, int> GetIngameResolutionFromId(std::size_t id);
 bool IsStandardResolution(const std::tuple<int, int>& width_and_height);

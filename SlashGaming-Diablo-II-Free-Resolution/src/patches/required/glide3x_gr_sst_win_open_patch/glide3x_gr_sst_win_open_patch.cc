@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -46,28 +46,51 @@
 #include "glide3x_gr_sst_win_open_patch.hpp"
 
 #include "../../../helper/glide3x_version.hpp"
-#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
-#include "glide3x_gr_sst_win_open_patch_sven_1_4_4_21.hpp"
-#include "glide3x_gr_sst_win_open_patch_sven_1_4_8_3.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::glide3x {
 
-std::vector<mapi::GamePatch> MakeGlide3xGrSstWinOpenPatch() {
-  Glide3xVersion running_glide3x_version_id = GetRunningGlide3xVersionId();
+GrSstWinOpenPatch::GrSstWinOpenPatch()
+  : patch_(MakePatch()) {
+}
 
-  switch (running_glide3x_version_id) {
+void GrSstWinOpenPatch::Apply() {
+  if (this->patch_.has_value()) {
+    std::visit([](auto& patch) {
+      patch.Apply();
+    }, this->patch_.value());
+  }
+}
+
+void GrSstWinOpenPatch::Remove() {
+  if (this->patch_.has_value()) {
+    std::visit([](auto& patch) {
+      patch.Remove();
+    }, this->patch_.value());
+  }
+}
+
+GrSstWinOpenPatch::PatchType
+GrSstWinOpenPatch::MakePatch() {
+  d2::VideoMode video_mode = d2::DetermineVideoMode();
+  if (video_mode != d2::VideoMode::kGlide) {
+    return std::nullopt;
+  }
+
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
+
+  switch (running_glide3x_version) {
     case Glide3xVersion::kSven1_4_4_21: {
-      return MakeGlide3xGrSstWinOpenPatch_Sven_1_4_4_21();
+      return GrSstWinOpenPatch_Sven_1_4_4_21();
     }
 
     case Glide3xVersion::kSven1_4_8_3: {
-      return MakeGlide3xGrSstWinOpenPatch_Sven_1_4_8_3();
+      return GrSstWinOpenPatch_Sven_1_4_8_3();
     }
 
     case Glide3xVersion::kNGlide3_10_0_658: {
-      return MakeGlide3xGrSstWinOpenPatch_NGlide_3_10_0_658();
+      return GrSstWinOpenPatch_NGlide_3_10_0_658();
     }
   }
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::glide3x

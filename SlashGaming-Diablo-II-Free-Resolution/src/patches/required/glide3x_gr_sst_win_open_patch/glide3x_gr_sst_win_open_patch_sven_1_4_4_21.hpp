@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,10 +50,21 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::glide3x {
 
-std::vector<mapi::GamePatch> MakeGlide3xGrSstWinOpenPatch_Sven_1_4_4_21();
+class GrSstWinOpenPatch_Sven_1_4_4_21 {
+ public:
+  GrSstWinOpenPatch_Sven_1_4_4_21();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::glide3x
 
 #endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_4_21_HPP_

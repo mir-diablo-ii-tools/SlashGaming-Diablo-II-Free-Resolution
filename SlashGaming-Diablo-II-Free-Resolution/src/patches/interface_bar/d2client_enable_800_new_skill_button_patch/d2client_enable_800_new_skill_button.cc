@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,15 +50,15 @@
 
 namespace sgd2fr::patches {
 
-std::uint32_t __cdecl SGD2FR_D2Client_Enable800NewSkillButton() {
+std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton() {
   return Get800InterfaceBarEnabledValue();
 }
 
-mapi::bool32 __cdecl SGD2FR_D2Client_IsMouseOver800NewSkillButton() {
+mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton() {
   return IsMouseOverNewSkillButton();
 }
 
-void __cdecl SGD2FR_D2Client_Set800NewSkillPopupText() {
+void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText() {
   const d2::UnicodeChar* new_stats_text = d2::d2lang::GetStringByIndex(3987);
   const std::tuple popup_text_position = GetNewSkillPopupTextPosition();
 
@@ -71,7 +71,7 @@ void __cdecl SGD2FR_D2Client_Set800NewSkillPopupText() {
   );
 }
 
-mapi::bool32 __cdecl SGD2FR_D2Client_Draw800NewSkillButton(
+mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
     d2::CelContext* cel_context
 ) {
   d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();

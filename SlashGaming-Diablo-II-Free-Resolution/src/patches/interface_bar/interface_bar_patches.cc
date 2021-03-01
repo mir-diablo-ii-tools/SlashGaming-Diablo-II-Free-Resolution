@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -45,42 +45,20 @@
 
 #include "interface_bar_patches.hpp"
 
-#include <algorithm>
-
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
-#include "d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
-#include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
-
 namespace sgd2fr::patches {
 
-std::vector<mapi::GamePatch> MakeInterfaceBarPatches() {
-  std::vector<mapi::GamePatch> game_patches;
+InterfaceBarPatches::InterfaceBarPatches() = default;
 
-  std::vector d2client_enable_800_interface_bar_patch =
-      Make_D2Client_Enable800InterfaceBarPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_interface_bar_patch.end())
-  );
+void InterfaceBarPatches::Apply() {
+  this->enable_800_interface_bar_patch_.Apply();
+  this->enable_800_new_skill_button_patch_.Apply();
+  this->enable_800_new_stats_button_patch_.Apply();
+}
 
-  std::vector d2client_enable_800_new_skill_button_patch =
-      Make_D2Client_Click800NewSkillButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.begin()),
-      std::make_move_iterator(d2client_enable_800_new_skill_button_patch.end())
-  );
-
-  std::vector d2client_click_new_stats_button_patch =
-      Make_D2Client_Click800NewStatsButtonPatch();
-  game_patches.insert(
-      game_patches.end(),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.begin()),
-      std::make_move_iterator(d2client_click_new_stats_button_patch.end())
-  );
-
-  return game_patches;
+void InterfaceBarPatches::Remove() {
+  this->enable_800_interface_bar_patch_.Remove();
+  this->enable_800_new_skill_button_patch_.Remove();
+  this->enable_800_new_stats_button_patch_.Remove();
 }
 
 } // namespace sgd2fr::patches

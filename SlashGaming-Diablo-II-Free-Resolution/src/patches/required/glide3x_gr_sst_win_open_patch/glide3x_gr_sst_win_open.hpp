@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -51,7 +51,7 @@
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl SGD2FR_SetGlide3xWindowWidthAndHeight(
+extern "C" void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     std::uint32_t glide_resolution_mode,
     std::int32_t* width,
     std::int32_t* height

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -48,7 +48,7 @@
 #include "../../../asm_x86_macro.h"
 #include "d2client_enable_800_new_stats_button.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2client {
 namespace {
 
 __declspec(naked) void __cdecl InterceptionFunc_01() {
@@ -58,7 +58,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Enable800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800NewStatsButton));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -73,7 +73,7 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
 
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_IsMouseOver800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_IsMouseOver800NewStatsButton));
 
   ASM_X86(pop edx);
 
@@ -95,7 +95,7 @@ __declspec(naked) void __cdecl InterceptionFunc_03() {
   ASM_X86(push ecx);
   ASM_X86(push edx);
 
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Set800NewStatsPopupText));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Set800NewStatsPopupText));
 
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
@@ -115,7 +115,7 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
   // Pushes the CelContext for the Level button.
   ASM_X86(lea eax, dword ptr [ebp + 20]);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewStatsButton));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);
@@ -135,7 +135,7 @@ __declspec(naked) void __cdecl InterceptionFunc_05() {
   // Pushes the CelContext for the Level button.
   ASM_X86(lea eax, dword ptr [ebp + 16]);
   ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(SGD2FR_D2Client_Draw800NewStatsButton));
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewStatsButton));
   ASM_X86(add esp, 4);
 
   ASM_X86(pop edx);
@@ -147,12 +147,29 @@ __declspec(naked) void __cdecl InterceptionFunc_05() {
 
 } // namespace
 
-std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
+Enable800NewStatsButtonPatch_1_09D::Enable800NewStatsButtonPatch_1_09D()
+  : patches_(MakePatches()) {
+}
+
+void Enable800NewStatsButtonPatch_1_09D::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void Enable800NewStatsButtonPatch_1_09D::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+std::vector<mapi::GamePatch>
+Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Enable the click on 800x600 New Stats button sound.
   mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48264
   );
 
@@ -166,7 +183,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   );
 
   mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48283
   );
 
@@ -181,7 +198,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Adjust the click detection of the New Stats button sound.
   mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x4831C
   );
 
@@ -197,7 +214,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   // Enable displaying of the (Lying) Character Screen when the 800x600 New
   // Stats button is clicked.
   mapi::GameAddress game_address_04 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48524
   );
 
@@ -211,7 +228,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   );
 
   mapi::GameAddress game_address_05 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48542
   );
 
@@ -227,7 +244,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   // Adjust the click detection of the New Stats button for opening the
   // (Lying) Character Screen.
   mapi::GameAddress game_address_06 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48608
   );
 
@@ -242,7 +259,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Enable setting the 800x600 New Stats button image frame on mouse over.
   mapi::GameAddress game_address_07 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48A19
   );
 
@@ -257,7 +274,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Set the 800x600 New Stats button image frame on mouse over.
   mapi::GameAddress game_address_08 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48B08
   );
 
@@ -272,7 +289,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Enable all repositioning of 800x600 text and level up buttons.
   mapi::GameAddress game_address_09 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x488CD
   );
 
@@ -286,7 +303,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   );
 
   mapi::GameAddress game_address_10 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x489A1
   );
 
@@ -301,7 +318,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Enable repositioning 800x600 "New Stats" text and New Stats button.
   mapi::GameAddress game_address_11 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48AA3
   );
 
@@ -316,7 +333,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Realign the mouse over detection for 800x600 New Stats text.
   mapi::GameAddress game_address_12 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48B5C
   );
 
@@ -331,7 +348,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Draw the "New Stats" text.
   mapi::GameAddress game_address_13 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48B93
   );
 
@@ -346,7 +363,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Draw the New Stats button.
   mapi::GameAddress game_address_14 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48BB1
   );
 
@@ -361,7 +378,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Enable repositioning of 800x600 inactive text and level up buttons.
   mapi::GameAddress game_address_15 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48803
   );
 
@@ -376,7 +393,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Realign the mouse over detection for 800x600 inactive New Stats text.
   mapi::GameAddress game_address_16 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48835
   );
 
@@ -391,7 +408,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Draw the inactive "New Stats" text.
   mapi::GameAddress game_address_17 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48873
   );
 
@@ -406,7 +423,7 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
 
   // Draw the inactive New Stats button.
   mapi::GameAddress game_address_18 = mapi::GameAddress::FromOffset(
-      mapi::DefaultLibrary::kD2Client,
+      ::d2::DefaultLibrary::kD2Client,
       0x48891
   );
 
@@ -422,4 +439,4 @@ std::vector<mapi::GamePatch> Make_D2Client_Click800NewStatsButtonPatch_1_09D() {
   return patches;
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr::patches::d2client

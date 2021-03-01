@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -51,7 +51,8 @@
 #include <mutex>
 #include <string>
 
-#include <fmt/format.h>
+#include <mdc/error/exit_on_error.hpp>
+#include <mdc/wchar_t/filew.h>
 #include <mjsoni/rapid_json_config_reader.hpp>
 #include "compile_time_switch.hpp"
 
@@ -574,33 +575,25 @@ mjsoni::RapidJsonConfigReader ReadConfig(
 
   bool is_read = config_reader.Read();
   if (!is_read) {
-    std::wstring failed_to_read_message = fmt::format(
-        L"Failed to read config in: {}",
-        config_file_path.wstring().data()
+    ::mdc::error::ExitOnGeneralError(
+        L"Failed to read config in %ls.",
+        L"Error",
+        __FILEW__,
+        __LINE__,
+        config_file_path.c_str()
     );
 
-    MessageBoxW(
-        nullptr,
-        failed_to_read_message.data(),
-        L"Failed to Read Config",
-        MB_OK | MB_ICONERROR
-    );
-
-    std::exit(0);
+    ::std::exit(0);
   }
 
   bool is_missing_entry_added = AddMissingConfigEntries(config_reader);
   if (!is_missing_entry_added) {
-    std::wstring failed_to_read_message = fmt::format(
-        L"Failed add missing entries to the config in: {}",
-        config_file_path.wstring().data()
-    );
-
-    MessageBoxW(
-        nullptr,
-        failed_to_read_message.data(),
-        L"Failed to Add Missing Entries to Config",
-        MB_OK | MB_ICONERROR
+    ::mdc::error::ExitOnGeneralError(
+        L"Failed add missing entries to the config in %ls.",
+        L"Error",
+        __FILEW__,
+        __LINE__,
+        config_file_path.c_str()
     );
 
     std::exit(0);

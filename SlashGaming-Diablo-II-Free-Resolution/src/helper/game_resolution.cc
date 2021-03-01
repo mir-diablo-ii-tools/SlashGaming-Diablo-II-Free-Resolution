@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -52,6 +52,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
+#include "ddraw_version.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -147,16 +148,16 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
 
   std::call_once(
       *init_once_flag,
-      [=] () {
+      [&] () {
         d2::VideoMode current_video_mode = d2::d2gfx::GetVideoMode();
         const std::vector<std::tuple<int, int>>& selected_ingame_resolutions =
             SelectLocalOrOnlineResolutions();
 
-        selected_game_type = d2::d2client::GetGameType();
         non_crashing_ingame_resolutions.clear();
 
         if (current_video_mode == d2::VideoMode::kDirect3D
-            || current_video_mode == d2::VideoMode::kDirectDraw) {
+            || (current_video_mode == d2::VideoMode::kDirectDraw
+                && ddraw_version::GetRunning() != DDrawVersion::kCnC)) {
           std::copy_if(
               selected_ingame_resolutions.cbegin(),
               selected_ingame_resolutions.cend(),
@@ -180,10 +181,18 @@ std::size_t GetMinConfigResolutionId() {
       : 1;
 }
 
+std::size_t GetMaxConfigResolutionId() {
+  return GetNumIngameResolutions() + GetMinConfigResolutionId();
+}
+
 std::size_t GetMinIngameResolutionId() {
   return GetNonCrashingIngameResolutions().at(0) == resolution_640x480
       ? 0
       : 2;
+}
+
+std::size_t GetMaxIngameResolutionId() {
+  return GetNumIngameResolutions() + GetMinIngameResolutionId();
 }
 
 std::size_t GetNumIngameResolutions() {

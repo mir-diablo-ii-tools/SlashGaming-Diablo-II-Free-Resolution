@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -46,14 +46,37 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_
 
+#include <optional>
 #include <vector>
 
 #include <sgd2mapi.hpp>
+#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
+#include "glide3x_gr_sst_win_open_patch_sven_1_4_4_21.hpp"
+#include "glide3x_gr_sst_win_open_patch_sven_1_4_8_3.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::glide3x {
 
-std::vector<mapi::GamePatch> MakeGlide3xGrSstWinOpenPatch();
+class GrSstWinOpenPatch {
+ public:
+  using PatchVariant = std::variant<
+      GrSstWinOpenPatch_NGlide_3_10_0_658,
+      GrSstWinOpenPatch_Sven_1_4_4_21,
+      GrSstWinOpenPatch_Sven_1_4_8_3
+  >;
 
-} // namespace sgd2fr::patches
+  using PatchType = std::optional<PatchVariant>;
+
+  GrSstWinOpenPatch();
+
+  void Apply();
+  void Remove();
+
+ private:
+  PatchType patch_;
+
+  static PatchType MakePatch();
+};
+
+} // namespace sgd2fr::patches::glide3x
 
 #endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_

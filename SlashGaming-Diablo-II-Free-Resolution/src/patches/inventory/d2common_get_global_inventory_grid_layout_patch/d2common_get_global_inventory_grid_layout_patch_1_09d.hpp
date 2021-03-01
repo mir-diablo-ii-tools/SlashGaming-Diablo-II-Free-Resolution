@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2020  Mir Drualga
+ * Copyright (C) 2019-2021  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,10 +50,22 @@
 
 #include <sgd2mapi.hpp>
 
-namespace sgd2fr::patches {
+namespace sgd2fr::patches::d2common {
 
-std::vector<mapi::GamePatch> Make_D2Common_GetGlobalInventoryGridLayoutPatch_1_09D();
+class GetGlobalInventoryGridLayoutPatch_1_09D {
+ public:
+  GetGlobalInventoryGridLayoutPatch_1_09D();
 
-} // namespace sgd2fr::patches
+  void Apply();
+  void Remove();
+
+ private:
+  std::vector<mapi::GamePatch> patches_;
+
+  static const mapi::GameAddress& GetPatchAddress();
+  static std::vector<mapi::GamePatch> MakePatches();
+};
+
+} // namespace sgd2fr::patches::d2common
 
 #endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
