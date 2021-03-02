@@ -83,7 +83,7 @@ VS_VERSION_INFO    VERSIONINFO
       VALUE "ProductName",      "Diablo II Free Resolution\0"
       VALUE "ProductVersion",   "3.0.0.1\0"
       VALUE "SpecialBuild",     "\0"
-      VALUE "Support",          "reddit.com/r/SlashGaming\0"
+      VALUE "Support",          "reddit.com/r/SlashDiablo\0"
     } // BLOCK "040904E4"
   } // BLOCK "StringFileInfo"
   BLOCK "VarFileInfo"
