@@ -55,8 +55,8 @@ SLASH_ICON ICON "slashgaming_game_loader.ico"
 LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 VS_VERSION_INFO    VERSIONINFO
-  FILEVERSION      3,0,0,0
-  PRODUCTVERSION   3,0,0,0
+  FILEVERSION      3,0,0,1
+  PRODUCTVERSION   3,0,0,1
   FILEFLAGSMASK    0x3fL // VS_FFI_FILEFLAGSMASK
 #ifdef _DEBUG
   FILEFLAGS        0x1L  // VS_FF_DEBUG|VS_FF_PRIVATEBUILD|VS_FF_PRERELEASE
@@ -83,7 +83,7 @@ VS_VERSION_INFO    VERSIONINFO
       VALUE "ProductName",      "Diablo II Free Resolution\0"
       VALUE "ProductVersion",   "3.0.0.1\0"
       VALUE "SpecialBuild",     "\0"
-      VALUE "Support",          "reddit.com/r/SlashGaming\0"
+      VALUE "Support",          "reddit.com/r/SlashDiablo\0"
     } // BLOCK "040904E4"
   } // BLOCK "StringFileInfo"
   BLOCK "VarFileInfo"
