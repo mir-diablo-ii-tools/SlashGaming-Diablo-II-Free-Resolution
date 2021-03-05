@@ -45,8 +45,6 @@
 
 #include "d2client_draw_interface_bar_background_patch.hpp"
 
-#include <unordered_map>
-
 #include <sgd2mapi.hpp>
 #include "../../../asm_x86_macro.h"
 
@@ -73,7 +71,8 @@ DrawInterfaceBarBackgroundPatch::MakePatch() {
   ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C: {
       return DrawInterfaceBarBackgroundPatch_1_09D();
     }
   }
