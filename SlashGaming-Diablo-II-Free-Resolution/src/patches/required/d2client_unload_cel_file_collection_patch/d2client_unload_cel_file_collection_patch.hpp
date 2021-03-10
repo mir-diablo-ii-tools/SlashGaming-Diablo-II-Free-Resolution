@@ -50,13 +50,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2client_unload_cel_file_collection_patch_1_09d.hpp"
+#include "d2client_unload_cel_file_collection_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2client {
 
 class UnloadCelFileCollectionPatch {
  public:
   using PatchVariant = std::variant<
-      UnloadCelFileCollectionPatch_1_09D
+      UnloadCelFileCollectionPatch_1_09D,
+      UnloadCelFileCollectionPatch_1_13C
   >;
 
   UnloadCelFileCollectionPatch();

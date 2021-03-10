@@ -61,8 +61,11 @@
 #include "d2direct3d_set_display_width_and_height_patch/d2direct3d_set_display_width_and_height_patch.hpp"
 #include "d2gdi_set_bit_block_width_and_height_patch/d2gdi_set_bit_block_width_and_height_patch.hpp"
 #include "d2gdi_set_cel_display_left_and_right_patch/d2gdi_set_cel_display_left_and_right_patch.hpp"
+#include "d2gfx_is_need_resize_window_patch/d2gfx_is_need_resize_window_patch.hpp"
+#include "d2gfx_is_need_restore_down_window_patch/d2gfx_is_need_restore_down_window_patch.hpp"
 #include "d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.hpp"
 #include "d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch.hpp"
+#include "d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch.hpp"
 #include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
 
 namespace sgd2fr::patches {
@@ -117,11 +120,20 @@ class RequiredPatches {
   d2gdi::SetCelDisplayLeftAndRightPatch
       d2gdi_set_cel_display_left_and_right_patch_;
 
+  d2gfx::IsNeedResizeWindowPatch
+      d2gfx_is_need_resize_window_patch_;
+
+  d2gfx::IsNeedRestoreDownWindowPatch
+      d2gfx_is_need_restore_down_window_patch_;
+
   d2gfx::SetDisplayWidthAndHeightPatch
       d2gfx_set_display_width_and_height_patch_;
 
   d2glide::SetDisplayWidthAndHeightPatch
       d2glide_set_display_width_and_height_patch_;
+
+  d2win::ResizeWindowOnMaximizePatch
+      d2win_resize_window_on_maximize_patch_;
 
   glide3x::GrSstWinOpenPatch
       gr_sst_win_open_patch_;

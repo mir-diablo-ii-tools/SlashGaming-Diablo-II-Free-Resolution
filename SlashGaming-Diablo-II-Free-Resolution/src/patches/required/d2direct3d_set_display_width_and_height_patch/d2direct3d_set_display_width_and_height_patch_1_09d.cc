@@ -53,7 +53,7 @@
 namespace sgd2fr::patches::d2direct3d {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc() {
+__declspec(naked) void __cdecl InterceptionFunc01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -74,15 +74,11 @@ __declspec(naked) void __cdecl InterceptionFunc() {
 }
 
 /**
- * nop
- * nop
- * nop
- * nop
  * cmp eax, 1
- * jne D2D2Direct3D.dll+20DB
+ * jne
  */
-constexpr std::array<std::uint8_t, 9> kPatchBuffer_02 = {
-    0x90, 0x90, 0x90, 0x90, 0x83, 0xF8, 0x01, 0x75, 0x0D
+constexpr std::array<std::uint8_t, 4> kPatchBuffer_02 = {
+    0x83, 0xF8, 0x01, 0x75
 };
 
 } // namespace
@@ -107,34 +103,63 @@ std::vector<mapi::GamePatch>
 SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Direct3D,
-      0x2085
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc,
-          0x20C5 - 0x2085
+          &InterceptionFunc01,
+          patch_address_and_size_01.second
       )
   );
 
-  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Direct3D,
-      0x20C5
-  );
-
+  
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
   patches.push_back(
       mapi::GamePatch::MakeGameBufferPatch(
-          std::move(game_address_02),
-          kPatchBuffer_02.cbegin(),
-          kPatchBuffer_02.cend()
+          patch_address_and_size_02.first,
+          kPatchBuffer_02.data(),
+          patch_address_and_size_02.second
       )
   );
 
   return patches;
+}
+
+SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2085
+          ),
+          0x20C9 - 0x2085
+      );
+    }
+  }
+}
+
+SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x20C9
+          ),
+          kPatchBuffer_02.size()
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2direct3d

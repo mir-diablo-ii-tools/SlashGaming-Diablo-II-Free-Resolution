@@ -95,33 +95,61 @@ std::vector<mapi::GamePatch>
 SetResolutionRegistryPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x61059
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
           &InterceptionFunc_01,
-          0x61074 - 0x61059
+          patch_address_and_size_01.second
       )
   );
 
-  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x61075
-  );
-
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
   patches.push_back(
       mapi::GamePatch::MakeGameNopPatch(
-          std::move(game_address_02),
-          0x6107C - 0x61075
+          patch_address_and_size_02.first,
+          patch_address_and_size_02.second
       )
   );
 
   return patches;
+}
+
+SetResolutionRegistryPatch_1_09D::PatchAddressAndSize
+SetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x61059
+          ),
+          0x61074 - 0x61059
+      );
+    }
+  }
+}
+
+SetResolutionRegistryPatch_1_09D::PatchAddressAndSize
+SetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x61075
+          ),
+          0x6107C - 0x61075
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2client

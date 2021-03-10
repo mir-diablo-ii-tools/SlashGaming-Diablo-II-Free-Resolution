@@ -50,6 +50,8 @@
 #include <set>
 #include <unordered_map>
 
+#include <mdc/error/exit_on_error.hpp>
+#include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
 #include "ddraw_version.hpp"
@@ -217,6 +219,50 @@ std::tuple<int, int> GetIngameResolutionFromId(std::size_t id) {
 
 bool IsStandardResolution(const std::tuple<int, int>& width_and_height) {
   return GetStandardResolutions().contains(width_and_height);
+}
+
+::std::tuple<int, int> GetVideoModeDisplayResolution() {
+  ::d2::VideoMode running_video_mode = ::d2::d2gfx::GetVideoMode();
+
+  switch (running_video_mode) {
+    case ::d2::VideoMode::kGdi: {
+      return ::std::make_tuple(
+          ::d2::d2gdi::GetBitBlockWidth(),
+          ::d2::d2gdi::GetBitBlockHeight()
+      );
+    }
+
+    case ::d2::VideoMode::kDirectDraw: {
+      return ::std::make_tuple(
+          ::d2::d2ddraw::GetDisplayWidth(),
+          ::d2::d2ddraw::GetDisplayHeight()
+      );
+    }
+
+    case ::d2::VideoMode::kGlide: {
+      return ::std::make_tuple(
+          ::d2::d2glide::GetDisplayWidth(),
+          ::d2::d2glide::GetDisplayHeight()
+      );
+    }
+
+    case ::d2::VideoMode::kDirect3D: {
+      return ::std::make_tuple(
+          ::d2::d2direct3d::GetDisplayWidth(),
+          ::d2::d2direct3d::GetDisplayHeight()
+      );
+    }
+
+    default: {
+      ::mdc::error::ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          static_cast<int>(running_video_mode)
+      );
+
+      return ::std::make_tuple(0, 0);
+    }
+  }
 }
 
 } // namespace sgd2fr

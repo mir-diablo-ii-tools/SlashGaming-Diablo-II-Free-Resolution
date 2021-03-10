@@ -91,21 +91,35 @@ std::vector<mapi::GamePatch>
 UnloadCelFileCollectionPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x57FB9
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          patch_address_and_size_01.first,
           mapi::BranchType::kJump,
           &InterceptionFunc_01,
-          5
+          patch_address_and_size_01.second
       )
   );
 
   return patches;
+}
+
+UnloadCelFileCollectionPatch_1_09D::PatchAddressAndSize
+UnloadCelFileCollectionPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x57FB9
+          ),
+          5
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2client

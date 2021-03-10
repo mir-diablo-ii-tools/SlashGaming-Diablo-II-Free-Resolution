@@ -61,10 +61,14 @@ void RequiredPatches::Apply() {
   this->d2ddraw_set_bit_block_width_and_height_patch_.Apply();
   this->d2ddraw_set_cel_display_left_and_right_patch_.Apply();
   this->d2ddraw_set_display_width_and_height_patch_.Apply();
+  this->d2direct3d_set_display_width_and_height_patch_.Apply();
   this->d2gdi_set_bit_block_width_and_height_patch_.Apply();
   this->d2gdi_set_cel_display_left_and_right_patch_.Apply();
+  this->d2gfx_is_need_resize_window_patch_.Apply();
+  this->d2gfx_is_need_restore_down_window_patch_.Apply();
   this->d2gfx_set_display_width_and_height_patch_.Apply();
   this->d2glide_set_display_width_and_height_patch_.Apply();
+  this->d2win_resize_window_on_maximize_patch_.Apply();
   this->gr_sst_win_open_patch_.Apply();
 }
 
@@ -80,10 +84,14 @@ void RequiredPatches::Remove() {
   this->d2ddraw_set_bit_block_width_and_height_patch_.Remove();
   this->d2ddraw_set_cel_display_left_and_right_patch_.Remove();
   this->d2ddraw_set_display_width_and_height_patch_.Remove();
+  this->d2direct3d_set_display_width_and_height_patch_.Remove();
   this->d2gdi_set_bit_block_width_and_height_patch_.Remove();
   this->d2gdi_set_cel_display_left_and_right_patch_.Remove();
+  this->d2gfx_is_need_resize_window_patch_.Remove();
+  this->d2gfx_is_need_restore_down_window_patch_.Remove();
   this->d2gfx_set_display_width_and_height_patch_.Remove();
   this->d2glide_set_display_width_and_height_patch_.Remove();
+  this->d2win_resize_window_on_maximize_patch_.Remove();
   this->gr_sst_win_open_patch_.Remove();
 }
 

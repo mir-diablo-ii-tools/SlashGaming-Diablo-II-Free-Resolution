@@ -50,13 +50,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2client_draw_resolution_text_patch_1_09d.hpp"
+#include "d2client_draw_resolution_text_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2client {
 
 class DrawResolutionTextPatch {
  public:
   using PatchVariant = std::variant<
-      DrawResolutionTextPatch_1_09D
+      DrawResolutionTextPatch_1_09D,
+      DrawResolutionTextPatch_1_13C
   >;
 
   DrawResolutionTextPatch();
