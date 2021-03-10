@@ -45,15 +45,13 @@
 
 #include "d2common_get_global_inventory_grid_layout_patch_1_09d.hpp"
 
-#include <unordered_map>
-
 #include "../../../asm_x86_macro.h"
 #include "d2common_get_global_inventory_grid_layout.hpp"
 
 namespace sgd2fr::patches::d2common {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc_01() {
+__declspec(naked) void __cdecl InterceptionFunc01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -94,38 +92,49 @@ void GetGlobalInventoryGridLayoutPatch_1_09D::Remove() {
   }
 }
 
-const mapi::GameAddress&
-GetGlobalInventoryGridLayoutPatch_1_09D::GetPatchAddress() {
-  static const std::unordered_map<
-      d2::GameVersion,
-      mapi::GameAddress
-  > kPatchAddresses = {
-      {
-          d2::GameVersion::k1_09D,
-          mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10636
-          )
-      }
-  };
-
-  return kPatchAddresses.at(::d2::game_version::GetRunning());
-}
-
 std::vector<mapi::GamePatch>
 GetGlobalInventoryGridLayoutPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          GetPatchAddress(),
+          patch_address_and_size_01.first,
           mapi::BranchType::kJump,
-          &InterceptionFunc_01,
-          5
+          &InterceptionFunc01,
+          patch_address_and_size_01.second
       )
   );
 
   return patches;
+}
+
+GetGlobalInventoryGridLayoutPatch_1_09D::PatchAddressAndSize
+GetGlobalInventoryGridLayoutPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOrdinal(
+              ::d2::DefaultLibrary::kD2Common,
+              10636
+          ),
+          5
+      );
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOrdinal(
+              ::d2::DefaultLibrary::kD2Common,
+              10760
+          ),
+          5
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2common
