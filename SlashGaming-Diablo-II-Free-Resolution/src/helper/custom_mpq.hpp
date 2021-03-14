@@ -43,16 +43,15 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#ifndef SGD2FR_HELPER_CUSTOM_MPQ_HPP_
+#define SGD2FR_HELPER_CUSTOM_MPQ_HPP_
 
-/**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
- */
+namespace sgd2fr {
 
-constexpr bool kIsAssetsPathCustomizable = true;
+void LoadMpqOnce();
 
-constexpr bool kIsLoadCustomMpq = true;
+void UnloadMpqOnce();
 
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+} // namespace sgd2fr
+
+#endif SGD2FR_HELPER_CUSTOM_MPQ_HPP_

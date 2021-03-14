@@ -61,6 +61,8 @@ std::tuple<int, int> GetMainMenuResolution();
 unsigned int GetIngameResolutionMode();
 void SetIngameResolutionMode(unsigned int resolution_mode);
 
+::std::string_view GetCustomMpqPath();
+
 std::string_view GetScreenBackgroundImagePath();
 
 std::string_view GetCustomLeftScreenBorderLeftImagePath();

@@ -94,6 +94,12 @@ constexpr std::string_view kDefaultMainMenuResolution = "800x600";
 constexpr std::string_view kIngameResolutionModeKey = "Ingame Resolution Mode";
 constexpr unsigned int kDefaultIngameResolutionMode = 0;
 
+// Custom MPQ
+constexpr ::std::string_view kCustomMpqPathKey =
+    "Custom MPQ File";
+constexpr ::std::string_view kDefaultCustomMpqPath =
+    "SGD2FreeRes.mpq";
+
 // Draw variables.
 constexpr std::string_view kScreenBackgroundImagePathKey =
     "Screen Background Image Path";
@@ -402,6 +408,16 @@ bool AddMissingConfigEntries(
         kMainEntryKey,
         kMainMenuResolutionKey
     );
+  }
+
+  if constexpr (kIsLoadCustomMpq) {
+    if (!config_reader.HasString(kMainEntryKey, kCustomMpqPathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomMpqPath.data(),
+          kMainEntryKey,
+          kCustomMpqPathKey
+      );
+    }
   }
 
   if constexpr (kIsAssetsPathCustomizable) {
@@ -714,6 +730,23 @@ void SetIngameResolutionMode(unsigned int resolution_mode) {
       );
 
   WriteConfig();
+}
+
+::std::string_view GetCustomMpqPath() {
+  static std::string custom_mpq_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomMpqPathKey),
+      [=] () {
+        custom_mpq_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomMpqPathKey
+            );
+      }
+  );
+
+  return custom_mpq_path;
 }
 
 std::string_view GetScreenBackgroundImagePath() {

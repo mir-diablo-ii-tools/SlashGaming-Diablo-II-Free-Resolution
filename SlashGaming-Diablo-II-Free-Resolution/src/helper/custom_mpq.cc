@@ -43,16 +43,46 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#include "custom_mpq.hpp"
 
-/**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
- */
+#include <sgd2mapi.hpp>
+#include "../config.hpp"
 
-constexpr bool kIsAssetsPathCustomizable = true;
+namespace sgd2fr {
+namespace {
 
-constexpr bool kIsLoadCustomMpq = true;
+static bool IsCustomMpqLoaded = false;
 
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+static ::d2::MpqArchiveHandle_Api& GetCustomMpq() {
+  static ::d2::MpqArchiveHandle_Api mpq;
+
+  return mpq;
+}
+
+} // namespace
+
+void LoadMpqOnce() {
+  if (IsCustomMpqLoaded) {
+    return;
+  }
+
+  GetCustomMpq().Open(
+      config::GetCustomMpqPath(),
+      false,
+      5000
+  );
+
+  IsCustomMpqLoaded = true;
+}
+
+void UnloadMpqOnce() {
+  if (!IsCustomMpqLoaded) {
+    return;
+  }
+
+  GetCustomMpq().Close();
+
+  IsCustomMpqLoaded = false;
+}
+
+} // namespace sgd2fr
