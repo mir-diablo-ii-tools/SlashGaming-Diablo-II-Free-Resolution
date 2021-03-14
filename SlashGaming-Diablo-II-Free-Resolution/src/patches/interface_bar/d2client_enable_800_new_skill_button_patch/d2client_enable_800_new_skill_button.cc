@@ -54,6 +54,10 @@ std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton() {
   return Get800InterfaceBarEnabledValue();
 }
 
+std::uint32_t __cdecl Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue() {
+  return Get800InterfaceBarEnabledValue();
+}
+
 mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton() {
   return IsMouseOverNewSkillButton();
 }

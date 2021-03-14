@@ -43,8 +43,8 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
 
 #include <cstddef>
 #include <utility>
@@ -54,9 +54,9 @@
 
 namespace sgd2fr::patches::d2client {
 
-class Enable800NewStatsButtonPatch_1_09D {
+class Enable800NewSkillButtonPatch_1_13C {
  public:
-  Enable800NewStatsButtonPatch_1_09D();
+  Enable800NewSkillButtonPatch_1_13C();
 
   void Apply();
   void Remove();
@@ -75,8 +75,13 @@ class Enable800NewStatsButtonPatch_1_09D {
   static PatchAddressAndSize GetPatchAddressAndSize02();
   static PatchAddressAndSize GetPatchAddressAndSize03();
   static PatchAddressAndSize GetPatchAddressAndSize04();
+  static PatchAddressAndSize GetPatchAddressAndSize05();
+  static PatchAddressAndSize GetPatchAddressAndSize06();
+  static PatchAddressAndSize GetPatchAddressAndSize07();
+  static PatchAddressAndSize GetPatchAddressAndSize08();
+  static PatchAddressAndSize GetPatchAddressAndSize09();
 };
 
 } // namespace sgd2fr::patches::d2client
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_

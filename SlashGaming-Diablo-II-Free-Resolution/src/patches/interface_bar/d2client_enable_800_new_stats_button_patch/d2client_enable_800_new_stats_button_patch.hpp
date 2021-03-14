@@ -50,13 +50,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
+#include "d2client_enable_800_new_stats_button_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2client {
 
 class Enable800NewStatsButtonPatch {
  public:
   using PatchVariant = std::variant<
-      Enable800NewStatsButtonPatch_1_09D
+      Enable800NewStatsButtonPatch_1_09D,
+      Enable800NewStatsButtonPatch_1_13C
   >;
 
   Enable800NewStatsButtonPatch();

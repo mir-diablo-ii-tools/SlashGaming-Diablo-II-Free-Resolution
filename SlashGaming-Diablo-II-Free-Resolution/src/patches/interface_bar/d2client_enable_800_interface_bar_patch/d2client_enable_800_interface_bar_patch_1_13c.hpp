@@ -43,20 +43,18 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_13C_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_13C_HPP_
 
-#include <cstddef>
-#include <utility>
 #include <vector>
 
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches::d2client {
 
-class Enable800NewStatsButtonPatch_1_09D {
+class Enable800InterfaceBarPatch_1_13C {
  public:
-  Enable800NewStatsButtonPatch_1_09D();
+  Enable800InterfaceBarPatch_1_13C();
 
   void Apply();
   void Remove();
@@ -72,11 +70,8 @@ class Enable800NewStatsButtonPatch_1_09D {
   static std::vector<mapi::GamePatch> MakePatches();
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
-  static PatchAddressAndSize GetPatchAddressAndSize04();
 };
 
 } // namespace sgd2fr::patches::d2client
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_13C_HPP_

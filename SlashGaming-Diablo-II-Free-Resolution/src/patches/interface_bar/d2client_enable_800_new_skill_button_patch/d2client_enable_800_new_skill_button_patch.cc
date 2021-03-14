@@ -47,7 +47,9 @@
 
 namespace sgd2fr::patches::d2client {
 
-Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch() = default;
+Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch()
+    : patch_(MakePatch()) {
+}
 
 void Enable800NewSkillButtonPatch::Apply() {
   std::visit([](auto& patch) {
@@ -62,12 +64,17 @@ void Enable800NewSkillButtonPatch::Remove() {
 }
 
 Enable800NewSkillButtonPatch::PatchVariant
-Enable800NewSkillButtonPatch::MakePatches() {
+Enable800NewSkillButtonPatch::MakePatch() {
   ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  MessageBoxA(nullptr, "HELLO1", "", MB_OK);
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
       return Enable800NewSkillButtonPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return Enable800NewSkillButtonPatch_1_13C();
     }
   }
 }

@@ -43,40 +43,100 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
+#include "d2client_enable_800_interface_bar_patch_1_13c.hpp"
 
-#include <cstddef>
-#include <utility>
-#include <vector>
-
-#include <sgd2mapi.hpp>
+#include "../../../asm_x86_macro.h"
+#include "d2client_enable_800_interface_bar.hpp"
 
 namespace sgd2fr::patches::d2client {
+namespace {
 
-class Enable800NewStatsButtonPatch_1_09D {
- public:
-  Enable800NewStatsButtonPatch_1_09D();
+__declspec(naked) void __cdecl InterceptionFunc01() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
 
-  void Apply();
-  void Remove();
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
 
- private:
-  using PatchAddressAndSize = ::std::pair<
-      ::mapi::GameAddress,
-      ::std::size_t
-  >;
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800InterfaceBar));
 
-  std::vector<mapi::GamePatch> patches_;
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
 
-  static std::vector<mapi::GamePatch> MakePatches();
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
-  static PatchAddressAndSize GetPatchAddressAndSize04();
-};
+__declspec(naked) void __cdecl InterceptionFunc02() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(push ecx);
+  ASM_X86(push edx);
+
+  ASM_X86(push ecx);
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800InterfaceBar));
+  ASM_X86(add esp, 4);
+
+  ASM_X86(pop edx);
+  ASM_X86(pop ecx);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+} // namespace
+
+Enable800InterfaceBarPatch_1_13C::Enable800InterfaceBarPatch_1_13C()
+  : patches_(MakePatches()) {
+}
+
+void Enable800InterfaceBarPatch_1_13C::Apply() {
+  for (auto& patch : this->patches_) {
+    patch.Apply();
+  }
+}
+
+void Enable800InterfaceBarPatch_1_13C::Remove() {
+  for (auto& patch : this->patches_) {
+    patch.Remove();
+  }
+}
+
+std::vector<mapi::GamePatch>
+Enable800InterfaceBarPatch_1_13C::MakePatches() {
+  std::vector<mapi::GamePatch> patches;
+
+  // Enable drawing the 800x600 interface bar.
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  patches.push_back(
+      mapi::GamePatch::MakeGameBranchPatch(
+          patch_address_and_size_01.first,
+          mapi::BranchType::kCall,
+          &InterceptionFunc01,
+          patch_address_and_size_01.second
+      )
+  );
+
+  return patches;
+}
+
+Enable800InterfaceBarPatch_1_13C::PatchAddressAndSize
+Enable800InterfaceBarPatch_1_13C::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x272A2
+          ),
+          0x272A7 - 0x272A2
+      );
+    }
+  }
+}
 
 } // namespace sgd2fr::patches::d2client
-
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_

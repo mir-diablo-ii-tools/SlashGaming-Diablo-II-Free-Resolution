@@ -50,13 +50,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
+#include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2client {
 
 class Enable800NewSkillButtonPatch {
  public:
   using PatchVariant = std::variant<
-      Enable800NewSkillButtonPatch_1_09D
+      Enable800NewSkillButtonPatch_1_09D,
+      Enable800NewSkillButtonPatch_1_13C
   >;
 
   Enable800NewSkillButtonPatch();
@@ -67,7 +69,7 @@ class Enable800NewSkillButtonPatch {
  private:
   PatchVariant patch_;
 
-  static PatchVariant MakePatches();
+  static PatchVariant MakePatch();
 };
 
 } // namespace sgd2fr::patches::d2client
