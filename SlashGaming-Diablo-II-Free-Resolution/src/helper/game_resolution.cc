@@ -94,13 +94,15 @@ constexpr std::tuple resolution_800x600 = std::make_tuple(800, 600);
 const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
     std::string_view ipv4_address
 ) {
+  // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4ResolutionTableEntry,
       3
   > kSortedIpv4ResolutionTable = {{
-      // play.slashdiablo.net
+
+      // evnt.slashdiablo.net
       Ipv4ResolutionTableEntry(
-          "209.222.25.91",
+          "207.252.75.177",
           {
               resolution_640x480,
               resolution_800x600,
@@ -108,9 +110,9 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
-      // evnt.slashdiablo.net
+      // play.slashdiablo.net
       Ipv4ResolutionTableEntry(
-          "207.252.75.177",
+          "209.222.25.91",
           {
               resolution_640x480,
               resolution_800x600,
