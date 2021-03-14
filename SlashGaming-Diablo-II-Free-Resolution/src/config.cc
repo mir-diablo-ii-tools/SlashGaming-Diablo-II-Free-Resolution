@@ -130,7 +130,7 @@ constexpr std::string_view kDefaultCustomLeftScreenBorderBottomRightImagePath =
 constexpr std::string_view kCustomRightScreenBorderRightImagePathKey =
     "Right Screen Border Right Image Path";
 constexpr std::string_view kDefaultCustomRightScreenBorderRightImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyBorderInterfaceRight";
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceRight";
 
 constexpr std::string_view kCustomRightScreenBorderTopImagePathKey =
     "Right Screen Border Top Image Path";
