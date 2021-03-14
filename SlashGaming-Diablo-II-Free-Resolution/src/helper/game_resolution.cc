@@ -45,10 +45,11 @@
 
 #include "game_resolution.hpp"
 
+#include <array>
 #include <algorithm>
 #include <mutex>
 #include <set>
-#include <unordered_map>
+#include <utility>
 
 #include <mdc/error/exit_on_error.hpp>
 #include <mdc/wchar_t/filew.h>
@@ -59,48 +60,93 @@
 namespace sgd2fr {
 namespace {
 
+using Ipv4ResolutionTableEntry = ::std::pair<
+    ::std::string_view,
+    ::std::vector<::std::tuple<int, int>>
+>;
+
+struct Ipv4ResolutionTableEntryCompareKey {
+  constexpr bool operator()(
+      const Ipv4ResolutionTableEntry& entry1,
+      const Ipv4ResolutionTableEntry& entry2
+  ) noexcept {
+    return entry1.first < entry2.first;
+  }
+
+  constexpr bool operator()(
+      const Ipv4ResolutionTableEntry::first_type& key,
+      const Ipv4ResolutionTableEntry& entry
+  ) noexcept {
+    return key < entry.first;
+  }
+
+  constexpr bool operator()(
+      const Ipv4ResolutionTableEntry& entry,
+      const Ipv4ResolutionTableEntry::first_type& key
+  ) noexcept {
+    return entry.first < key;
+  }
+};
+
 constexpr std::tuple resolution_640x480 = std::make_tuple(640, 480);
 constexpr std::tuple resolution_800x600 = std::make_tuple(800, 600);
 
-const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(std::string_view ipv4_address) {
-  static const std::unordered_map<
-      std::string_view,
-      std::vector<std::tuple<int, int>>
-  > acceptable_resolutions_from_ipv4 = {
+const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
+    std::string_view ipv4_address
+) {
+  static const ::std::array<
+      Ipv4ResolutionTableEntry,
+      3
+  > kSortedIpv4ResolutionTable = {{
       // play.slashdiablo.net
-      {
-          "209.222.25.91", {
+      Ipv4ResolutionTableEntry(
+          "209.222.25.91",
+          {
               resolution_640x480,
               resolution_800x600,
               std::make_tuple(1068, 600)
           }
-      },
+      ),
+
       // evnt.slashdiablo.net
-      {
-          "207.252.75.177", {
+      Ipv4ResolutionTableEntry(
+          "207.252.75.177",
+          {
               resolution_640x480,
               resolution_800x600,
               std::make_tuple(1068, 600)
           }
-      },
+      ),
+
       // realm.diablo09.com
-      {
-          "95.179.228.126", {
+      Ipv4ResolutionTableEntry(
+          "95.179.228.126",
+          {
               resolution_640x480,
               resolution_800x600,
               std::make_tuple(1068, 600)
           }
-      },
-  };
+      ),
+  }};
 
   static const std::vector default_resolutions = {
       resolution_640x480,
       resolution_800x600
   };
 
-  return acceptable_resolutions_from_ipv4.contains(ipv4_address)
-      ? acceptable_resolutions_from_ipv4.at(ipv4_address)
-      : default_resolutions;
+  ::std::pair search_range = ::std::equal_range(
+      kSortedIpv4ResolutionTable.cbegin(),
+      kSortedIpv4ResolutionTable.cend(),
+      ipv4_address,
+      Ipv4ResolutionTableEntryCompareKey()
+  );
+
+  if (search_range.first == kSortedIpv4ResolutionTable.cend()
+      || search_range.first == search_range.second) {
+    return default_resolutions;
+  }
+
+  return search_range.first->second;
 }
 
 const std::vector<std::tuple<int, int>>& SelectLocalOrOnlineResolutions() {
