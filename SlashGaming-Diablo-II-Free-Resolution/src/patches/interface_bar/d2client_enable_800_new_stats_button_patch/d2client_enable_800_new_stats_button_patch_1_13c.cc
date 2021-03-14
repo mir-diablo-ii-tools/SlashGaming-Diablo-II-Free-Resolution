@@ -198,6 +198,19 @@ Enable800NewStatsButtonPatch_1_13C::MakePatches() {
       )
   );
 
+  // Enable drawing the New Stats button press when there are no Stat
+  // points.
+  PatchAddressAndSize patch_address_and_size_10 =
+      GetPatchAddressAndSize10();
+  patches.push_back(
+      ::mapi::GamePatch::MakeGameBranchPatch(
+          patch_address_and_size_10.first,
+          ::mapi::BranchType::kCall,
+          &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
+          patch_address_and_size_10.second
+      )
+  );
+
   return patches;
 }
 
@@ -349,6 +362,23 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize09() {
               0x50B8E
           ),
           0x50B93 - 0x50B8E
+      );
+    }
+  }
+}
+
+Enable800NewStatsButtonPatch_1_13C::PatchAddressAndSize
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize10() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x50103
+          ),
+          0x50108 - 0x50103
       );
     }
   }

@@ -80,6 +80,7 @@ class Enable800NewSkillButtonPatch_1_13C {
   static PatchAddressAndSize GetPatchAddressAndSize07();
   static PatchAddressAndSize GetPatchAddressAndSize08();
   static PatchAddressAndSize GetPatchAddressAndSize09();
+  static PatchAddressAndSize GetPatchAddressAndSize10();
 };
 
 } // namespace sgd2fr::patches::d2client

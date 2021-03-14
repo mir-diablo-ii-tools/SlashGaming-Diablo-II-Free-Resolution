@@ -197,6 +197,19 @@ Enable800NewSkillButtonPatch_1_13C::MakePatches() {
       )
   );
 
+  // Enable drawing the New Skill button press when there are no skill
+  // points.
+  PatchAddressAndSize patch_address_and_size_10 =
+      GetPatchAddressAndSize10();
+  patches.push_back(
+      ::mapi::GamePatch::MakeGameBranchPatch(
+          patch_address_and_size_10.first,
+          ::mapi::BranchType::kCall,
+          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+          patch_address_and_size_10.second
+      )
+  );
+
   return patches;
 }
 
@@ -348,6 +361,23 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize09() {
               0x5082E
           ),
           0x50833 - 0x5082E
+      );
+    }
+  }
+}
+
+Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize10() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x50023
+          ),
+          0x50028 - 0x50023
       );
     }
   }
