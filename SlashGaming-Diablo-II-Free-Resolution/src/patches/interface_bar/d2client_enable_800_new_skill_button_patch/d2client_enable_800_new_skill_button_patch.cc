@@ -66,7 +66,6 @@ void Enable800NewSkillButtonPatch::Remove() {
 Enable800NewSkillButtonPatch::PatchVariant
 Enable800NewSkillButtonPatch::MakePatch() {
   ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
-  MessageBoxA(nullptr, "HELLO1", "", MB_OK);
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
