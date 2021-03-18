@@ -189,10 +189,12 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
   static d2::ClientGameType selected_game_type =
       d2::d2client::GetGameType();
   static std::vector<std::tuple<int, int>> non_crashing_ingame_resolutions;
+  static ::std::string gateway_ipv4_address;
 
   std::lock_guard lock(check_mutex);
 
-  if (selected_game_type != d2::d2client::GetGameType()) {
+  if (selected_game_type != d2::d2client::GetGameType()
+      || gateway_ipv4_address != ::d2::bnclient::GetGatewayIpV4Address()) {
     init_once_flag = std::make_unique<std::once_flag>();
   }
 
@@ -217,6 +219,9 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
         } else {
           non_crashing_ingame_resolutions = selected_ingame_resolutions;
         }
+
+        selected_game_type = d2::d2client::GetGameType();
+        gateway_ipv4_address = ::d2::bnclient::GetGatewayIpV4Address();
       }
   );
 
