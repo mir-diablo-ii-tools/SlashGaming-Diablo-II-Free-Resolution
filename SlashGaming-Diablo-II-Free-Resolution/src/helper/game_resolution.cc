@@ -88,8 +88,8 @@ struct Ipv4ResolutionTableEntryCompareKey {
   }
 };
 
-constexpr std::tuple resolution_640x480 = std::make_tuple(640, 480);
-constexpr std::tuple resolution_800x600 = std::make_tuple(800, 600);
+static constexpr std::tuple resolution_640x480 = std::make_tuple(640, 480);
+static constexpr std::tuple resolution_800x600 = std::make_tuple(800, 600);
 
 const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
     std::string_view ipv4_address
