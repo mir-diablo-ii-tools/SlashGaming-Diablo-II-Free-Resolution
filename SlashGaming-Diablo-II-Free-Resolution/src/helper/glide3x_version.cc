@@ -57,6 +57,10 @@ namespace sgd2fr::glide3x_version {
       return "Sven 1.4.4.21";
     }
 
+    case Glide3xVersion::kSven1_4_6_1: {
+      return "Sven 1.4.6.1";
+    }
+
     case Glide3xVersion::kSven1_4_8_3: {
       return "Sven 1.4.8.3";
     }

@@ -52,6 +52,7 @@ namespace sgd2fr {
 
 enum class Glide3xVersion {
   kSven1_4_4_21,
+  kSven1_4_6_1,
   kSven1_4_8_3,
   kNGlide3_10_0_658
 };
