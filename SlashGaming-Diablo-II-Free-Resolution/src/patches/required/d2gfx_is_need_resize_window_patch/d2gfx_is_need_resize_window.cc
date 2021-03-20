@@ -61,15 +61,10 @@ int __cdecl Sgd2fr_D2GFX_IsNeedResizeWindowPatch() {
       &client_rect
   );
 
+  // Original code does not exit on error, but effectively returns true
+  // on the windows resolution check.
   if (!is_get_client_rect_success) {
-    ::mdc::error::ExitOnWindowsFunctionError(
-        __FILEW__,
-        __LINE__,
-        L"GetClientRect",
-        GetLastError()
-    );
-
-    return false;
+    return true;
   }
 
   ::std::tuple ingame_resolution = GetVideoModeDisplayResolution();
