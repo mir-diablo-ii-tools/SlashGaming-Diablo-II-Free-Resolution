@@ -45,8 +45,6 @@
 
 #include "d2client_draw_interface_bar_background.hpp"
 
-#include <windows.h>
-
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
