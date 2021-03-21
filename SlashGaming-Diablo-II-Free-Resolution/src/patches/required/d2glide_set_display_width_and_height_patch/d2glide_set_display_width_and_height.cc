@@ -79,6 +79,7 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
 
     default: {
       *glide_res_id = 0x1000 + (resolution_mode - 3);
+      break;
     }
   }
 }

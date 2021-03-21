@@ -47,26 +47,17 @@
 
 #include <array>
 
-#include "../../../asm_x86_macro.h"
+#include "../../../helper/glide3x_version.hpp"
 #include "glide3x_gr_sst_win_open.hpp"
 
 namespace sgd2fr::patches::glide3x {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+extern "C" {
 
-  ASM_X86(add eax, 258);
+void __cdecl Glide3x_GrSstWinOpenPatch_Sven_1_4_4_21_InterceptionFunc01();
 
-  ASM_X86(sub esp, 8);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_Glide3x_SetWindowWidthAndHeight));
-  ASM_X86(add esp, 12);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
+} // extern "C"
 
 } // namespace
 
@@ -90,21 +81,45 @@ std::vector<mapi::GamePatch>
 GrSstWinOpenPatch_Sven_1_4_4_21::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
-      "glide3x.dll",
-      0xCBA9
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address),
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc,
-          0xCBB0 - 0xCBA9
+          &Glide3x_GrSstWinOpenPatch_Sven_1_4_4_21_InterceptionFunc01,
+          patch_address_and_size_01.second
       )
   );
 
   return patches;
+}
+
+PatchAddressAndSize
+GrSstWinOpenPatch_Sven_1_4_4_21::GetPatchAddressAndSize01() {
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
+
+  switch (running_glide3x_version) {
+    case Glide3xVersion::kSven1_4_4_21: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              L"glide3x.dll",
+              0xCBA9
+          ),
+          0xCBB0 - 0xCBA9
+      );
+    }
+
+    case Glide3xVersion::kSven1_4_6_1: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              L"glide3x.dll",
+              0xCAD5
+          ),
+          0xCADC - 0xCAD5
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::glide3x

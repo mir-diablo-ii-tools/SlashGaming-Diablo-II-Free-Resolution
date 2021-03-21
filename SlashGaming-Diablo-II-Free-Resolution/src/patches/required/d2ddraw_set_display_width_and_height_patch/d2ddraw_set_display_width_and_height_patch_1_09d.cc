@@ -94,33 +94,61 @@ std::vector<mapi::GamePatch>
 SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2DDraw,
-      0x181F
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
           &InterceptionFunc_01,
-          0x1832 - 0x181F
+          patch_address_and_size_01.second
       )
   );
 
-  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2DDraw,
-      0x1837
-  );
-
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
   patches.push_back(
       mapi::GamePatch::MakeGameNopPatch(
-          std::move(game_address_02),
-          0x183D - 0x1837
+          patch_address_and_size_02.first,
+          patch_address_and_size_02.second
       )
   );
 
   return patches;
+}
+
+SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x181F
+          ),
+          0x1832 - 0x181F
+      );
+    }
+  }
+}
+
+SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x1837
+          ),
+          0x183D - 0x1837
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2ddraw

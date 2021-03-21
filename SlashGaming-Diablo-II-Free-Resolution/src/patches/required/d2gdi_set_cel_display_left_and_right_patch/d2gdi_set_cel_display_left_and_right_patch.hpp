@@ -51,13 +51,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2gdi_set_cel_display_left_and_right_patch_1_09d.hpp"
+#include "d2gdi_set_cel_display_left_and_right_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2gdi {
 
 class SetCelDisplayLeftAndRightPatch {
  public:
   using PatchVariant = std::variant<
-      SetCelDisplayLeftAndRightPatch_1_09D
+      SetCelDisplayLeftAndRightPatch_1_09D,
+      SetCelDisplayLeftAndRightPatch_1_13C
   >;
 
   using PatchType = std::optional<PatchVariant>;
@@ -72,8 +74,6 @@ class SetCelDisplayLeftAndRightPatch {
 
   static PatchType MakePatch();
 };
-
-std::vector<mapi::GamePatch> MakeSetD2GDICelDisplayLeftAndRightPatch();
 
 } // namespace sgd2fr::patches::d2gdi
 

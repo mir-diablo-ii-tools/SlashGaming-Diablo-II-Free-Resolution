@@ -77,7 +77,7 @@ constexpr int kMajorVersionAValue = 3;
 constexpr std::string_view kMajorVersionBKey = "Major Version B";
 constexpr int kMajorVersionBValue = 0;
 constexpr std::string_view kMinorVersionAKey = "Minor Version A";
-constexpr int kMinorVersionAValue = 0;
+constexpr int kMinorVersionAValue = 1;
 constexpr std::string_view kMinorVersionBKey = "Minor Version B";
 constexpr int kMinorVersionBValue = 0;
 
@@ -93,6 +93,12 @@ constexpr std::string_view kDefaultMainMenuResolution = "800x600";
 
 constexpr std::string_view kIngameResolutionModeKey = "Ingame Resolution Mode";
 constexpr unsigned int kDefaultIngameResolutionMode = 0;
+
+// Custom MPQ
+constexpr ::std::string_view kCustomMpqPathKey =
+    "Custom MPQ File";
+constexpr ::std::string_view kDefaultCustomMpqPath =
+    "SGD2FreeRes.mpq";
 
 // Draw variables.
 constexpr std::string_view kScreenBackgroundImagePathKey =
@@ -130,7 +136,7 @@ constexpr std::string_view kDefaultCustomLeftScreenBorderBottomRightImagePath =
 constexpr std::string_view kCustomRightScreenBorderRightImagePathKey =
     "Right Screen Border Right Image Path";
 constexpr std::string_view kDefaultCustomRightScreenBorderRightImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyBorderInterfaceRight";
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceRight";
 
 constexpr std::string_view kCustomRightScreenBorderTopImagePathKey =
     "Right Screen Border Top Image Path";
@@ -402,6 +408,16 @@ bool AddMissingConfigEntries(
         kMainEntryKey,
         kMainMenuResolutionKey
     );
+  }
+
+  if constexpr (kIsLoadCustomMpq) {
+    if (!config_reader.HasString(kMainEntryKey, kCustomMpqPathKey)) {
+      config_reader.SetDeepString(
+          kDefaultCustomMpqPath.data(),
+          kMainEntryKey,
+          kCustomMpqPathKey
+      );
+    }
   }
 
   if constexpr (kIsAssetsPathCustomizable) {
@@ -714,6 +730,23 @@ void SetIngameResolutionMode(unsigned int resolution_mode) {
       );
 
   WriteConfig();
+}
+
+::std::string_view GetCustomMpqPath() {
+  static std::string custom_mpq_path;
+
+  std::call_once(
+      GetOnceFlag(kMainEntryKey, kCustomMpqPathKey),
+      [=] () {
+        custom_mpq_path = GetConfigReader()
+            .GetString(
+                kMainEntryKey,
+                kCustomMpqPathKey
+            );
+      }
+  );
+
+  return custom_mpq_path;
 }
 
 std::string_view GetScreenBackgroundImagePath() {

@@ -45,8 +45,6 @@
 
 #include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
-#include <unordered_map>
-
 #include <sgd2mapi.hpp>
 #include "../../../asm_x86_macro.h"
 #include "d2client_draw_interface_bar_background.hpp"
@@ -99,34 +97,44 @@ DrawInterfaceBarBackgroundPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Draw the new interface bar background.
+  PatchAddressAndSize patch_address_and_size = GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          GetPatchAddress(),
+          patch_address_and_size.first,
           mapi::BranchType::kCall,
           &InterceptionFunc01,
-          0x590A1 - 0x5909C
+          patch_address_and_size.second
       )
   );
 
   return patches;
 }
 
-const mapi::GameAddress&
-DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddress() {
-  static const std::unordered_map<
-      d2::GameVersion,
-      mapi::GameAddress
-  > kPatchAddresses = {
-      {
-          d2::GameVersion::k1_09D,
-          mapi::GameAddress::FromOffset(
+DrawInterfaceBarBackgroundPatch_1_09D::PatchAddressAndSize
+DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
               0x5909C
-          )
-      }
-  };
+          ),
+          0x590A1 - 0x5909C
+      );
+    }
 
-  return kPatchAddresses.at(::d2::game_version::GetRunning());
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+        ::mapi::GameAddress::FromOffset(
+            ::d2::DefaultLibrary::kD2Client,
+            0x27297
+        ),
+        0x2729C - 0x27297
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2client

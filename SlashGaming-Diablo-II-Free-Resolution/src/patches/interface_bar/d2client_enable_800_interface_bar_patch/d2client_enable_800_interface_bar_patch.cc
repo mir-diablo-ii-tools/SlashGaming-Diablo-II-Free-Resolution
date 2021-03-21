@@ -45,8 +45,6 @@
 
 #include "d2client_enable_800_interface_bar_patch.hpp"
 
-#include "d2client_enable_800_interface_bar_patch_1_09d.hpp"
-
 namespace sgd2fr::patches::d2client {
 
 Enable800InterfaceBarPatch::Enable800InterfaceBarPatch()
@@ -72,6 +70,10 @@ Enable800InterfaceBarPatch::MakePatch() {
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
       return Enable800InterfaceBarPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return Enable800InterfaceBarPatch_1_13C();
     }
   }
 }

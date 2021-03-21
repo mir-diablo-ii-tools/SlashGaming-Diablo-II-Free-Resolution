@@ -93,7 +93,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
  * cmp eax, 1
  * jne D2Glide.dll+1BD1
  */
-constexpr std::array<std::uint8_t, 10> kPatchBuffer_02 = {
+constexpr std::array<std::uint8_t, 10> kPatchBuffer02 = {
     0x90, 0x90, 0x90, 0x90, 0x90, 0x83, 0xF8, 0x01, 0x75, 0x11
 };
 
@@ -119,34 +119,62 @@ std::vector<mapi::GamePatch>
 SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Glide,
-      0x1B8B
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
           &InterceptionFunc_01,
-          0x1B9F - 0x1B8B
+          patch_address_and_size_01.second
       )
   );
 
-  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Glide,
-      0x1BB6
-  );
-
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
   patches.push_back(
       mapi::GamePatch::MakeGameBufferPatch(
-          std::move(game_address_02),
-          kPatchBuffer_02.cbegin(),
-          kPatchBuffer_02.end()
+          patch_address_and_size_02.first,
+          kPatchBuffer02.data(),
+          patch_address_and_size_02.second
       )
   );
 
   return patches;
+}
+
+SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1B8B
+          ),
+          0x1B9F - 0x1B8B
+      );
+    }
+  }
+}
+
+SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1BB6
+          ),
+          kPatchBuffer02.size()
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2glide

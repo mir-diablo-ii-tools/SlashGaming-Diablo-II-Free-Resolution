@@ -71,6 +71,10 @@ Enable800NewStatsButtonPatch::MakePatch() {
     case d2::GameVersion::k1_09D: {
       return Enable800NewStatsButtonPatch_1_09D();
     }
+
+    case d2::GameVersion::k1_13C: {
+      return Enable800NewStatsButtonPatch_1_13C();
+    }
   }
 }
 

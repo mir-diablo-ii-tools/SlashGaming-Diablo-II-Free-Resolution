@@ -50,13 +50,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
+#include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2client {
 
 class SetResolutionFromOptionsMenuPatch {
  public:
   using PatchVariant = std::variant<
-      SetResolutionFromOptionsMenuPatch_1_09D
+      SetResolutionFromOptionsMenuPatch_1_09D,
+      SetResolutionFromOptionsMenuPatch_1_13C
   >;
 
   SetResolutionFromOptionsMenuPatch();

@@ -45,8 +45,6 @@
 
 #include "d2client_draw_screen_background_patch_1_09d.hpp"
 
-#include <unordered_map>
-
 #include "../../../asm_x86_macro.h"
 #include "d2client_draw_screen_background.hpp"
 
@@ -55,12 +53,24 @@ namespace {
 
 extern "C" static std::intptr_t __cdecl
 Sgd2fr_D2Client_DrawScreenBackground_GetJumpAddress_1_09D() {
-  mapi::GameAddress address = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x35750
-  );
 
-  return address.raw_address();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0x35750
+      ).raw_address();
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0x5C5C0
+      ).raw_address();
+    }
+  }
 }
 
 static __declspec(naked) void __cdecl InterceptionFunc01() {
@@ -107,86 +117,116 @@ DrawScreenBackgroundPatch_1_09D::MakePatches() {
   ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
 
   // Draw the new screen background.
+  PatchAddressAndSize patch_address_and_size_01 = GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          GetPatchAddress01(),
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
           &InterceptionFunc01,
-          0x86970 - 0x8696B
+          patch_address_and_size_01.second
       )
   );
 
   // Disable the left screen background.
+  PatchAddressAndSize patch_address_and_size_02 = GetPatchAddressAndSize02();
   patches.push_back(
       mapi::GamePatch::MakeGameNopPatch(
-          GetPatchAddress02(),
-          0x58FB1 - 0x58F1B
+          patch_address_and_size_02.first,
+          patch_address_and_size_02.second
       )
   );
 
   // Disable the right screen background.
+  PatchAddressAndSize patch_address_and_size_03 = GetPatchAddressAndSize03();
   patches.push_back(
       mapi::GamePatch::MakeGameNopPatch(
-          GetPatchAddress03(),
-          0x5909C - 0x58FF0
+          patch_address_and_size_03.first,
+          patch_address_and_size_03.second
       )
   );
 
   return patches;
 }
 
-const mapi::GameAddress& 
-DrawScreenBackgroundPatch_1_09D::GetPatchAddress01() {
-  static const std::unordered_map<
-      d2::GameVersion,
-      mapi::GameAddress
-  > kPatchAddresses01 = {
-      {
-          d2::GameVersion::k1_09D,
-          mapi::GameAddress::FromOffset(
+DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
               0x8696B
-          )
-      }
-  };
+          ),
+          0x86970 - 0x8696B
+      );
+    }
 
-  return kPatchAddresses01.at(::d2::game_version::GetRunning());
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+        ::mapi::GameAddress::FromOffset(
+            ::d2::DefaultLibrary::kD2Client,
+            0xC3AA6
+        ),
+        0xC3AAB - 0xC3AA6
+      );
+    }
+  }
 }
 
-const mapi::GameAddress&
-DrawScreenBackgroundPatch_1_09D::GetPatchAddress02() {
-  static const std::unordered_map<
-      d2::GameVersion,
-      mapi::GameAddress
-  > kPatchAddresses02 = {
-      {
-          d2::GameVersion::k1_09D,
-          mapi::GameAddress::FromOffset(
+DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
               0x58F1B
-          )
-      }
-  };
+          ),
+          0x58FB1 - 0x58F1B
+      );
+    }
 
-  return kPatchAddresses02.at(::d2::game_version::GetRunning());
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+        ::mapi::GameAddress::FromOffset(
+            ::d2::DefaultLibrary::kD2Client,
+            0x271ED
+        ),
+        0x27287 - 0x271ED
+      );
+    }
+  }
 }
 
-const mapi::GameAddress&
-DrawScreenBackgroundPatch_1_09D::GetPatchAddress03() {
-  static const std::unordered_map<
-      d2::GameVersion,
-      mapi::GameAddress
-  > kPatchAddresses03 = {
-      {
-          d2::GameVersion::k1_09D,
-          mapi::GameAddress::FromOffset(
+DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
               0x58FF0
-          )
-      }
-  };
+          ),
+          0x5909C - 0x58FF0
+      );
+    }
 
-  return kPatchAddresses03.at(::d2::game_version::GetRunning());
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+        ::mapi::GameAddress::FromOffset(
+            ::d2::DefaultLibrary::kD2Client,
+            0x270F1
+        ),
+        0x271AE - 0x270F1
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2client

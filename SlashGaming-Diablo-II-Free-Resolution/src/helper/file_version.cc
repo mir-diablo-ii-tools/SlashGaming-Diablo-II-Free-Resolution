@@ -83,9 +83,10 @@ struct FileVersionTableEntryCompareKey {
 
 static constexpr const std::array<
     FileVersionTableEntry,
-    3
+    4
 > kFileVersionSortedTable = {{
     { FileVersion(1, 4, 4, 21), Glide3xVersion::kSven1_4_4_21 },
+    { FileVersion(1, 4, 6, 1), Glide3xVersion::kSven1_4_6_1 },
     { FileVersion(1, 4, 8, 3), Glide3xVersion::kSven1_4_8_3 },
     { FileVersion(3, 10, 0, 658), Glide3xVersion::kNGlide3_10_0_658 },
 }};

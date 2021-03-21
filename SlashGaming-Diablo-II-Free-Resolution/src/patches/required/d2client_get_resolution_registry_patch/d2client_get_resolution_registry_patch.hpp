@@ -50,13 +50,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2client_get_resolution_registry_patch_1_09d.hpp"
+#include "d2client_get_resolution_registry_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2client {
 
 class GetResolutionRegistryPatch {
  public:
   using PatchVariant = std::variant<
-      GetResolutionRegistryPatch_1_09D
+      GetResolutionRegistryPatch_1_09D,
+      GetResolutionRegistryPatch_1_13C
   >;
 
   GetResolutionRegistryPatch();

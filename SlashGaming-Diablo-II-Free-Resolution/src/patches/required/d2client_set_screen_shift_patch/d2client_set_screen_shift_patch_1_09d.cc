@@ -51,7 +51,7 @@
 namespace sgd2fr::patches::d2client {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc() {
+__declspec(naked) void __cdecl InterceptionFunc01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -91,21 +91,45 @@ std::vector<mapi::GamePatch>
 SetScreenShiftPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x865BF
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          game_address,
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc,
-          0x865E6 - 0x865BF
+          &InterceptionFunc01,
+          patch_address_and_size_01.second
       )
   );
 
   return patches;
+}
+
+SetScreenShiftPatch_1_09D::PatchAddressAndSize
+SetScreenShiftPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x865BF
+          ),
+          0x865E6 - 0x865BF
+      );
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+        ::mapi::GameAddress::FromOffset(
+            ::d2::DefaultLibrary::kD2Client,
+            0xC39F6
+        ),
+        0xC3A1D - 0xC39F6
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2client

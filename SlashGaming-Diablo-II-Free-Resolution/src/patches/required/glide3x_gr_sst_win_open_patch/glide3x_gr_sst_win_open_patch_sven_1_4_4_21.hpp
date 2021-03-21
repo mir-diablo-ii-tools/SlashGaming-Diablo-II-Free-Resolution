@@ -49,6 +49,7 @@
 #include <vector>
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr::patches::glide3x {
 
@@ -63,6 +64,8 @@ class GrSstWinOpenPatch_Sven_1_4_4_21 {
   std::vector<mapi::GamePatch> patches_;
 
   static std::vector<mapi::GamePatch> MakePatches();
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
 } // namespace sgd2fr::patches::glide3x

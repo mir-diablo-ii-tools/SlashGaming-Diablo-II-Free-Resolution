@@ -60,10 +60,16 @@ class GetGlobalInventoryGridLayoutPatch_1_09D {
   void Remove();
 
  private:
+  using PatchAddressAndSize = ::std::pair<
+      ::mapi::GameAddress,
+      ::std::size_t
+  >;
+
   std::vector<mapi::GamePatch> patches_;
 
-  static const mapi::GameAddress& GetPatchAddress();
   static std::vector<mapi::GamePatch> MakePatches();
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
 } // namespace sgd2fr::patches::d2common

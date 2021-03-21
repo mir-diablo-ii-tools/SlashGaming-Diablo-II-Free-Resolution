@@ -46,6 +46,8 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
 
+#include <cstddef>
+#include <utility>
 #include <vector>
 
 #include <sgd2mapi.hpp>
@@ -60,9 +62,16 @@ class SetCelDisplayLeftAndRightPatch_1_09D {
   void Remove();
 
  private:
+  using PatchAddressAndSize = ::std::pair<
+      ::mapi::GameAddress,
+      ::std::size_t
+  >;
+
   std::vector<mapi::GamePatch> patches_;
 
   static std::vector<mapi::GamePatch> MakePatches();
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
 } // namespace sgd2fr::patches::d2gdi

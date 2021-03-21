@@ -80,6 +80,10 @@ SetDisplayWidthAndHeightPatch::MakePatch() {
     case d2::GameVersion::k1_09D: {
       return SetDisplayWidthAndHeightPatch_1_09D();
     }
+
+    case d2::GameVersion::k1_13C: {
+      return SetDisplayWidthAndHeightPatch_1_13C();
+    }
   }
 }
 

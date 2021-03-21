@@ -51,7 +51,7 @@
 namespace sgd2fr::patches::d2client {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc_01() {
+__declspec(naked) void __cdecl InterceptionFunc01() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -67,7 +67,7 @@ __declspec(naked) void __cdecl InterceptionFunc_01() {
   ASM_X86(ret);
 }
 
-__declspec(naked) void __cdecl InterceptionFunc_02() {
+__declspec(naked) void __cdecl InterceptionFunc02() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -87,7 +87,7 @@ __declspec(naked) void __cdecl InterceptionFunc_02() {
   ASM_X86(ret);
 }
 
-__declspec(naked) void __cdecl InterceptionFunc_03() {
+__declspec(naked) void __cdecl InterceptionFunc03() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -105,7 +105,7 @@ __declspec(naked) void __cdecl InterceptionFunc_03() {
   ASM_X86(ret);
 }
 
-__declspec(naked) void __cdecl InterceptionFunc_04() {
+__declspec(naked) void __cdecl InterceptionFunc04() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -125,7 +125,7 @@ __declspec(naked) void __cdecl InterceptionFunc_04() {
   ASM_X86(ret);
 }
 
-__declspec(naked) void __cdecl InterceptionFunc_05() {
+__declspec(naked) void __cdecl InterceptionFunc05() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -168,62 +168,50 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
   // Enable the click on 800x600 New Stats button sound.
-  mapi::GameAddress game_address_01 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x48264
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_01),
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
-          0x48269 - 0x48264
+          &InterceptionFunc01,
+          patch_address_and_size_01.second
       )
   );
 
-  mapi::GameAddress game_address_02 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x48283
-  );
-
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_02),
+          patch_address_and_size_02.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
-          0x48288 - 0x48283
+          &InterceptionFunc01,
+          patch_address_and_size_02.second
       )
   );
 
   // Adjust the click detection of the New Stats button sound.
-  mapi::GameAddress game_address_03 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x4831C
-  );
-
+  PatchAddressAndSize patch_address_and_size_03 =
+      GetPatchAddressAndSize03();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_03),
+          patch_address_and_size_03.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
-          0x4834C - 0x4831C
+          &InterceptionFunc02,
+          patch_address_and_size_03.second
       )
   );
 
   // Enable displaying of the (Lying) Character Screen when the 800x600 New
   // Stats button is clicked.
-  mapi::GameAddress game_address_04 = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
-      0x48524
-  );
-
+  PatchAddressAndSize patch_address_and_size_04 =
+      GetPatchAddressAndSize04();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address_04),
+          patch_address_and_size_04.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
-          0x48529 - 0x48524
+          &InterceptionFunc01,
+          patch_address_and_size_04.second
       )
   );
 
@@ -236,7 +224,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_05),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &InterceptionFunc01,
           0x48547 - 0x48542
       )
   );
@@ -252,7 +240,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_06),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &InterceptionFunc02,
           0x48640 - 0x48608
       )
   );
@@ -267,7 +255,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_07),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &InterceptionFunc01,
           0x48A1E - 0x48A19
       )
   );
@@ -282,7 +270,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_08),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &InterceptionFunc02,
           0x48B40 - 0x48B08
       )
   );
@@ -297,7 +285,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_09),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &InterceptionFunc01,
           0x488D2 - 0x488CD
       )
   );
@@ -311,7 +299,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_10),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &InterceptionFunc01,
           0x489A6 - 0x489A1
       )
   );
@@ -326,7 +314,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_11),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &InterceptionFunc01,
           0x48AA8 - 0x48AA3
       )
   );
@@ -341,7 +329,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_12),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &InterceptionFunc02,
           0x48B81 - 0x48B5C
       )
   );
@@ -356,7 +344,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_13),
           mapi::BranchType::kCall,
-          &InterceptionFunc_03,
+          &InterceptionFunc03,
           0x48BB1 - 0x48B93
       )
   );
@@ -371,7 +359,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_14),
           mapi::BranchType::kCall,
-          &InterceptionFunc_04,
+          &InterceptionFunc04,
           0x48BCF - 0x48BB1
       )
   );
@@ -386,7 +374,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_15),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &InterceptionFunc01,
           0x48808 - 0x48803
       )
   );
@@ -401,7 +389,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_16),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &InterceptionFunc02,
           0x48861 - 0x48835
       )
   );
@@ -416,7 +404,7 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_17),
           mapi::BranchType::kCall,
-          &InterceptionFunc_03,
+          &InterceptionFunc03,
           0x48891 - 0x48873
       )
   );
@@ -431,12 +419,80 @@ Enable800NewStatsButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_18),
           mapi::BranchType::kCall,
-          &InterceptionFunc_05,
+          &InterceptionFunc05,
           0x488AF - 0x48891
       )
   );
 
   return patches;
+}
+
+Enable800NewStatsButtonPatch_1_09D::PatchAddressAndSize
+Enable800NewStatsButtonPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x48264
+          ),
+          0x48269 - 0x48264
+      );
+    }
+  }
+}
+
+Enable800NewStatsButtonPatch_1_09D::PatchAddressAndSize
+Enable800NewStatsButtonPatch_1_09D::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x48283
+          ),
+          0x48288 - 0x48283
+      );
+    }
+  }
+}
+
+Enable800NewStatsButtonPatch_1_09D::PatchAddressAndSize
+Enable800NewStatsButtonPatch_1_09D::GetPatchAddressAndSize03() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4831C
+          ),
+          0x4834C - 0x4831C
+      );
+    }
+  }
+}
+
+Enable800NewStatsButtonPatch_1_09D::PatchAddressAndSize
+Enable800NewStatsButtonPatch_1_09D::GetPatchAddressAndSize04() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x48524
+          ),
+          0x48529 - 0x48524
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2client

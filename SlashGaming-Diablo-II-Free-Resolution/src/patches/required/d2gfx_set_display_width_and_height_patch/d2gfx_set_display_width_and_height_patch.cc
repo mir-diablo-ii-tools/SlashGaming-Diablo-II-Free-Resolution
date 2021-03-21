@@ -65,11 +65,15 @@ void SetDisplayWidthAndHeightPatch::Remove() {
 
 SetDisplayWidthAndHeightPatch::PatchVariant
 SetDisplayWidthAndHeightPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
+    case ::d2::GameVersion::k1_09D: {
       return SetDisplayWidthAndHeightPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return SetDisplayWidthAndHeightPatch_1_13C();
     }
   }
 }
