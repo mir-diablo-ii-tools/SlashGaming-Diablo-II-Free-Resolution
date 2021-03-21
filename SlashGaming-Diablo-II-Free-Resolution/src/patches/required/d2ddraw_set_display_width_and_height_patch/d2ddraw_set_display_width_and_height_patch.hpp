@@ -51,13 +51,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2ddraw_set_display_width_and_height_patch_1_09d.hpp"
+#include "d2ddraw_set_display_width_and_height_patch_1_13c.hpp"
 
 namespace sgd2fr::patches::d2ddraw {
 
 class SetDisplayWidthAndHeightPatch {
  public:
   using PatchVariant = std::variant<
-      SetDisplayWidthAndHeightPatch_1_09D
+      SetDisplayWidthAndHeightPatch_1_09D,
+      SetDisplayWidthAndHeightPatch_1_13C
   >;
 
   using PatchType = std::optional<PatchVariant>;

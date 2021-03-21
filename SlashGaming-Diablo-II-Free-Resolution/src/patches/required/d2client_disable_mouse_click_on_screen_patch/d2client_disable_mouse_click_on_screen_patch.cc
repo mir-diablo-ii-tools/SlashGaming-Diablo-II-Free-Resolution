@@ -71,6 +71,10 @@ DisableMouseClickOnScreenPatch::MakePatch() {
     case d2::GameVersion::k1_09D: {
       return DisableMouseClickOnScreenPatch_1_09D();
     }
+
+    case d2::GameVersion::k1_13C: {
+      return DisableMouseClickOnScreenPatch_1_13C();
+    }
   }
 }
 

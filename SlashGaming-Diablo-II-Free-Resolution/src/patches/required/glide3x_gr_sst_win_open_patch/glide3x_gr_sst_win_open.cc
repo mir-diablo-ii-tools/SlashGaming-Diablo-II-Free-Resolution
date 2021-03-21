@@ -74,6 +74,17 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
       break;
     }
 
+    case Glide3xVersion::kSven1_4_6_1: {
+      width = *reinterpret_cast<std::int32_t**>(
+          mapi::GameAddress::FromOffset("glide3x.dll", 0x1C870).raw_address()
+      );
+      height = *reinterpret_cast<std::int32_t**>(
+          mapi::GameAddress::FromOffset("glide3x.dll", 0x1C830).raw_address()
+      );
+
+      break;
+    }
+
     case Glide3xVersion::kSven1_4_8_3: {
       width = *reinterpret_cast<std::int32_t**>(
           mapi::GameAddress::FromOffset("glide3x.dll", 0x1D870).raw_address()

@@ -49,6 +49,8 @@
 #include <unordered_map>
 
 #include "../asm_x86_macro.h"
+#include "../compile_time_switch.hpp"
+#include "custom_mpq.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -94,6 +96,10 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
   const std::string cel_file_path_key = cel_file_path.data();
 
   if (!cel_file_collection.contains(cel_file_path_key)) {
+    if constexpr (kIsLoadCustomMpq) {
+      LoadMpqOnce();
+    }
+
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
         d2::CelFile_Api(cel_file_path_key, false)
@@ -104,6 +110,9 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
   if ((checksum | 07400) != checksum) {
 #endif
+    UnloadMpqOnce();
+    LoadMpqOnce();
+
     new d2::CelFile_Api(
         std::move(cel_file_collection.at(cel_file_path_key))
     );
@@ -124,6 +133,10 @@ void ClearCelFiles() {
   RunChecksum(&checksum);
 
   if ((checksum | 07400) == checksum) {
+    if constexpr (kIsLoadCustomMpq) {
+      UnloadMpqOnce();
+    }
+
     cel_file_collection.clear();
     return;
   }

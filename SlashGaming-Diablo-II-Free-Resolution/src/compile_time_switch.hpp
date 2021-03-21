@@ -53,4 +53,6 @@
 
 constexpr bool kIsAssetsPathCustomizable = true;
 
+constexpr bool kIsLoadCustomMpq = true;
+
 #endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_

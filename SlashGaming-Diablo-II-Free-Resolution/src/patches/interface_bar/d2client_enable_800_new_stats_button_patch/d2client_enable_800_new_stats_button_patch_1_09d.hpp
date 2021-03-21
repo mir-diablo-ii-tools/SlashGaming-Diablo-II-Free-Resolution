@@ -46,6 +46,8 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_09D_HPP_
 
+#include <cstddef>
+#include <utility>
 #include <vector>
 
 #include <sgd2mapi.hpp>
@@ -60,9 +62,19 @@ class Enable800NewStatsButtonPatch_1_09D {
   void Remove();
 
  private:
+  using PatchAddressAndSize = ::std::pair<
+      ::mapi::GameAddress,
+      ::std::size_t
+  >;
+
   std::vector<mapi::GamePatch> patches_;
 
   static std::vector<mapi::GamePatch> MakePatches();
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static PatchAddressAndSize GetPatchAddressAndSize02();
+  static PatchAddressAndSize GetPatchAddressAndSize03();
+  static PatchAddressAndSize GetPatchAddressAndSize04();
 };
 
 } // namespace sgd2fr::patches::d2client

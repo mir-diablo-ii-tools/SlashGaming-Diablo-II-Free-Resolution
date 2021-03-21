@@ -45,8 +45,6 @@
 
 #include "d2client_draw_interface_bar_background.hpp"
 
-#include <windows.h>
-
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
@@ -55,20 +53,27 @@
 namespace sgd2fr {
 namespace {
 
-void DrawLeftInterfaceBarBackground() {
-  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+static void DrawAntiCheatBlackRectangle() {
+  static constexpr int interface_bar_height = 47;
 
-  d2::CelFile_Api& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
-  d2::CelFile_Api& interface_bar_background_left = GetCelFile(config::GetInterfaceBarBackgroundLeftImagePath());
+  ::std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   d2::d2gfx::DrawRectangle(
       0,
-      std::get<1>(width_and_height) - 47,
-      std::get<0>(width_and_height) / 2,
+      std::get<1>(width_and_height) - interface_bar_height,
+      std::get<0>(width_and_height),
       std::get<1>(width_and_height),
       0,
       d2::DrawEffect::kNone
+  );
+}
+
+static void DrawLeftInterfaceBarBackground() {
+  ::std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
   );
 
   d2::DrawCelFileFrameOptions frame_options;
@@ -80,10 +85,9 @@ void DrawLeftInterfaceBarBackground() {
   int width_covered = 117 + 48;
 
   // Draw the left part of the interface bar background.
-  std::vector<d2::Cel_View> left_cels;
-  for (unsigned int i = 0; i < interface_bar_background_left.GetNumFrames(); i += 1) {
-    left_cels.push_back(interface_bar_background_left.GetCel(0, i));
-  }
+  d2::CelFile_Api& interface_bar_background_left = GetCelFile(
+      config::GetInterfaceBarBackgroundLeftImagePath()
+  );
 
   for (unsigned int frame = 0;
       frame < interface_bar_background_left.GetNumFrames()
@@ -97,42 +101,44 @@ void DrawLeftInterfaceBarBackground() {
         frame_options
     );
 
-    width_covered += left_cels.at(frame).GetWidth();
+    width_covered += interface_bar_background_left
+        .GetCel(0, frame)
+        .GetWidth();
   }
 
   // Draw the center part of the interface bar background.
+  d2::CelFile_Api& interface_bar_background_center = GetCelFile(
+      config::GetInterfaceBarBackgroundCenterImagePath()
+  );
+
   std::vector<d2::Cel_View> center_cels;
-  for (unsigned int i = 0; i < interface_bar_background_center.GetNumFrames(); i += 1) {
+  for (unsigned int i = 0;
+      i < interface_bar_background_center.GetNumFrames();
+      i += 1) {
     center_cels.push_back(interface_bar_background_center.GetCel(0, i));
   }
 
-  for (unsigned int frame = 0; width_covered < (std::get<0>(width_and_height) / 2); frame += 1) {
+  for (unsigned int frame = 0;
+      width_covered < (std::get<0>(width_and_height) / 2);
+      frame += 1) {
+    unsigned int frame_to_draw =
+        frame % interface_bar_background_center.GetNumFrames();
+
     interface_bar_background_center.DrawFrame(
         width_covered,
         std::get<1>(width_and_height),
         0,
-        frame % interface_bar_background_center.GetNumFrames(),
+        frame_to_draw,
         frame_options
     );
 
-    width_covered += center_cels.at(frame).GetWidth();
+    width_covered += center_cels.at(frame_to_draw).GetWidth();
   }
 }
 
-void DrawRightInterfaceBarBackground() {
-  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
-
-  d2::CelFile_Api& interface_bar_background_center = GetCelFile(config::GetInterfaceBarBackgroundCenterImagePath());
-  d2::CelFile_Api& interface_bar_background_right = GetCelFile(config::GetInterfaceBarBackgroundRightImagePath());
-
-  // Draw a black rectangle to stop transparent DC6 cheaters.
-  d2::d2gfx::DrawRectangle(
-      std::get<0>(width_and_height) / 2,
-      std::get<1>(width_and_height) - 47,
-      std::get<0>(width_and_height),
-      std::get<1>(width_and_height),
-      0,
-      d2::DrawEffect::kNone
+static void DrawRightInterfaceBarBackground() {
+  ::std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
   );
 
   d2::DrawCelFileFrameOptions frame_options;
@@ -144,10 +150,9 @@ void DrawRightInterfaceBarBackground() {
   int width_covered = 117 + 48;
 
   // Draw the left part of the interface bar background.
-  std::vector<d2::Cel_View> right_cels;
-  for (unsigned int frame = 0; frame < interface_bar_background_right.GetNumFrames(); frame += 1) {
-    right_cels.push_back(interface_bar_background_right.GetCel(0, frame));
-  }
+  d2::CelFile_Api& interface_bar_background_right = GetCelFile(
+      config::GetInterfaceBarBackgroundRightImagePath()
+  );
 
   for (unsigned int frame = 0;
       frame < interface_bar_background_right.GetNumFrames()
@@ -161,31 +166,43 @@ void DrawRightInterfaceBarBackground() {
         frame_options
     );
 
-    width_covered += right_cels.at(frame).GetWidth();
+    width_covered += interface_bar_background_right
+        .GetCel(0, frame)
+        .GetWidth();
   }
 
   // Draw the center part of the interface bar background.
+  d2::CelFile_Api& interface_bar_background_center = GetCelFile(
+      config::GetInterfaceBarBackgroundCenterImagePath()
+  );
+
   std::vector<d2::Cel_View> center_cels;
-  for (unsigned int frame = 0; frame < interface_bar_background_center.GetNumFrames(); frame += 1) {
+  for (unsigned int frame = 0;
+      frame < interface_bar_background_center.GetNumFrames();
+      frame += 1) {
     center_cels.push_back(interface_bar_background_center.GetCel(0, frame));
   }
 
   for (unsigned int frame = 0; width_covered < (std::get<0>(width_and_height) / 2); frame += 1) {
+    unsigned int frame_to_draw =
+        frame % interface_bar_background_center.GetNumFrames();
+
     interface_bar_background_center.DrawFrame(
         std::get<0>(width_and_height) - width_covered,
         std::get<1>(width_and_height),
         0,
-        frame % interface_bar_background_center.GetNumFrames(),
+        frame_to_draw,
         frame_options
     );
 
-    width_covered += center_cels.at(frame).GetWidth();
+    width_covered += center_cels.at(frame_to_draw).GetWidth();
   }
 }
 
 } // namespace
 
 void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground() {
+  DrawAntiCheatBlackRectangle();
   DrawLeftInterfaceBarBackground();
   DrawRightInterfaceBarBackground();
 }

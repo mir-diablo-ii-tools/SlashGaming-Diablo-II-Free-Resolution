@@ -71,6 +71,10 @@ SetResolutionFromOptionsMenuPatch::MakePatch() {
     case d2::GameVersion::k1_09D: {
       return SetResolutionFromOptionsMenuPatch_1_09D();
     }
+
+    case d2::GameVersion::k1_13C: {
+      return SetResolutionFromOptionsMenuPatch_1_13C();
+    }
   }
 }
 

@@ -80,6 +80,10 @@ SetBitBlockWidthAndHeightPatch::MakePatch() {
     case d2::GameVersion::k1_09D: {
       return SetBitBlockWidthAndHeightPatch_1_09D();
     }
+
+    case d2::GameVersion::k1_13C: {
+      return SetBitBlockWidthAndHeightPatch_1_13C();
+    }
   }
 }
 

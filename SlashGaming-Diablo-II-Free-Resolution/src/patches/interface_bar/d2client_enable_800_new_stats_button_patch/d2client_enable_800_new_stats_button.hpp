@@ -54,6 +54,12 @@ namespace sgd2fr::patches {
 
 extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton();
 
+/**
+ * Returns 0 if using 640x480 style, or 2 if 800x600 style.
+ */
+extern "C" std::uint32_t __cdecl
+Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue();
+
 extern "C" mapi::bool32 __cdecl
 Sgd2fr_D2Client_IsMouseOver800NewStatsButton();
 

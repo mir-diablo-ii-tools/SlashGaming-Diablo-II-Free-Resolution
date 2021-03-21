@@ -51,7 +51,7 @@
 namespace sgd2fr::patches::d2gdi {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc() {
+__declspec(naked) void __cdecl InterceptionFunc01_1_09D() {
   ASM_X86(push ebp);
   ASM_X86(mov ebp, esp);
 
@@ -66,6 +66,36 @@ __declspec(naked) void __cdecl InterceptionFunc() {
   ASM_X86(pop edx);
   ASM_X86(pop ecx);
   ASM_X86(pop eax);
+
+  ASM_X86(leave);
+  ASM_X86(ret);
+}
+
+__declspec(naked) void __cdecl InterceptionFunc01_1_13C() {
+  ASM_X86(push ebp);
+  ASM_X86(mov ebp, esp);
+
+  ASM_X86(sub esp, 8);
+  ASM_X86(lea esi, dword ptr [ebp - 4]);
+  ASM_X86(lea edx, dword ptr [ebp - 8]);
+
+  ASM_X86(push eax);
+  ASM_X86(push ecx);
+
+  ASM_X86(push edx);
+  ASM_X86(push esi);
+  ASM_X86(push eax);
+  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GDI_GetBitBlockWidthAndHeight));
+  ASM_X86(add esp, 12);
+
+  ASM_X86(pop ecx);
+  ASM_X86(pop eax);
+
+  // Original code
+  ASM_X86(mov esi, dword ptr [ebp - 4]);
+  ASM_X86(mov edx, dword ptr [ebp - 8]);
+
+  ASM_X86(add esp, 8);
 
   ASM_X86(leave);
   ASM_X86(ret);
@@ -93,21 +123,35 @@ std::vector<mapi::GamePatch>
 SetBitBlockWidthAndHeightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2GDI,
-      0x114A
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          game_address,
+          patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc,
-          0x11AA - 0x114A
+          &InterceptionFunc01_1_09D,
+          patch_address_and_size_01.second
       )
   );
 
   return patches;
+}
+
+SetBitBlockWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetBitBlockWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x114A
+          ),
+          0x11AA - 0x114A
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2gdi

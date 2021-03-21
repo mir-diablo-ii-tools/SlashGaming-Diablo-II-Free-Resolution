@@ -93,21 +93,45 @@ std::vector<mapi::GamePatch>
 SetCelDisplayLeftAndRightPatch_1_09D::MakePatches() {
   std::vector<mapi::GamePatch> patches;
 
-  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2DDraw,
-      0x4430
-  );
-
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
   patches.push_back(
       mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address),
+          patch_address_and_size_01.first,
           mapi::BranchType::kJump,
           &InterceptionFunc,
-          0x4450 - 0x4430
+          patch_address_and_size_01.second
       )
   );
 
   return patches;
+}
+
+SetCelDisplayLeftAndRightPatch_1_09D::PatchAddressAndSize
+SetCelDisplayLeftAndRightPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x4430
+          ),
+          0x4450 - 0x4430
+      );
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x69F0
+          ),
+          0x6A10 - 0x69F0
+      );
+    }
+  }
 }
 
 } // namespace sgd2fr::patches::d2ddraw

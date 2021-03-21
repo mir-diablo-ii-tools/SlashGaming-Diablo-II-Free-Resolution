@@ -60,13 +60,14 @@ constexpr int source_display_height = 600;
 unsigned int Get800InterfaceBarEnabledValue() {
   unsigned int resolution_mode = d2::d2gfx::GetResolutionMode();
 
-  if (resolution_mode <= 2) {
-    return resolution_mode;
-  }
+  ::std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
 
-  return config::Is800InterfaceBarEnabled()
-      ? 2
-      : 0;
+  if (::std::get<0>(resolution) < 800
+      || !config::Is800InterfaceBarEnabled()) {
+    return 0;
+  } else {
+    return 2;
+  }
 }
 
 d2::PositionalRectangle_Api GetNewStatsButtonPosition() {

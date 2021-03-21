@@ -61,6 +61,12 @@ std::size_t GetNumIngameResolutions();
 std::tuple<int, int> GetIngameResolutionFromId(std::size_t id);
 bool IsStandardResolution(const std::tuple<int, int>& width_and_height);
 
+/**
+ * Returns the display resolution using the global variables
+ * corresponding to the current video mode.
+ */
+::std::tuple<int, int> GetVideoModeDisplayResolution();
+
 } // namespace sgd2fr
 
 #endif // SGD2FR_HELPER_GAME_RESOLUTION_HPP_
