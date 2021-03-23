@@ -88,24 +88,21 @@ struct Ipv4ResolutionTableEntryCompareKey {
   }
 };
 
-static constexpr std::tuple resolution_640x480 = std::make_tuple(640, 480);
-static constexpr std::tuple resolution_800x600 = std::make_tuple(800, 600);
-
 const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
     std::string_view ipv4_address
 ) {
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4ResolutionTableEntry,
-      3
+      4
   > kSortedIpv4ResolutionTable = {{
 
       // evnt.slashdiablo.net
       Ipv4ResolutionTableEntry(
           "207.252.75.177",
           {
-              resolution_640x480,
-              resolution_800x600,
+              kResolution640x480,
+              kResolution800x600,
               std::make_tuple(1068, 600)
           }
       ),
@@ -114,8 +111,18 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4ResolutionTableEntry(
           "209.222.25.91",
           {
-              resolution_640x480,
-              resolution_800x600,
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1068, 600)
+          }
+      ),
+
+      // Project Diablo 2
+      Ipv4ResolutionTableEntry(
+          "35.225.107.249",
+          {
+              kResolution640x480,
+              kResolution800x600,
               std::make_tuple(1068, 600)
           }
       ),
@@ -124,16 +131,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4ResolutionTableEntry(
           "95.179.228.126",
           {
-              resolution_640x480,
-              resolution_800x600,
+              kResolution640x480,
+              kResolution800x600,
               std::make_tuple(1068, 600)
           }
       ),
   }};
 
   static const std::vector default_resolutions = {
-      resolution_640x480,
-      resolution_800x600
+      kResolution640x480,
+      kResolution800x600
   };
 
   ::std::pair search_range = ::std::equal_range(
@@ -231,7 +238,7 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
 } // namespace
 
 std::size_t GetMinConfigResolutionId() {
-  return GetNonCrashingIngameResolutions().at(0) == resolution_640x480
+  return GetNonCrashingIngameResolutions().at(0) == kResolution640x480
       ? 0
       : 1;
 }
@@ -241,7 +248,7 @@ std::size_t GetMaxConfigResolutionId() {
 }
 
 std::size_t GetMinIngameResolutionId() {
-  return GetNonCrashingIngameResolutions().at(0) == resolution_640x480
+  return GetNonCrashingIngameResolutions().at(0) == kResolution640x480
       ? 0
       : 2;
 }
@@ -256,7 +263,7 @@ std::size_t GetNumIngameResolutions() {
 
 std::tuple<int, int> GetIngameResolutionFromId(std::size_t id) {
   if (id == 0) {
-    return resolution_640x480;
+    return kResolution640x480;
   } else if (id == 1) {
     return config::GetMainMenuResolution();
   }
@@ -315,6 +322,47 @@ bool IsStandardResolution(const std::tuple<int, int>& width_and_height) {
 
       return ::std::make_tuple(0, 0);
     }
+  }
+}
+
+unsigned int GetSourceInventoryArrangeMode() {
+  static constexpr unsigned int kDefaultSourceInventoryArrangeMode =
+      (kIsSourceInventoryArrange800)
+          ? 1
+          : 0;
+
+  unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
+
+  ::std::tuple<int, int> current_resolution = GetIngameResolutionFromId(
+      resolution_mode
+  );
+
+  if (current_resolution == kResolution640x480) {
+    return 0;
+  } else if (current_resolution == kResolution800x600) {
+    return 1;
+  } else {
+    return kDefaultSourceInventoryArrangeMode;
+  }
+}
+
+const ::std::tuple<int, int>& GetSourceInventoryArrangeResolution() {
+  unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
+
+  ::std::tuple<int, int> current_resolution = GetIngameResolutionFromId(
+      resolution_mode
+  );
+
+  if (current_resolution == kResolution640x480) {
+    return kResolution640x480;
+  } else if (current_resolution == kResolution800x600) {
+    return kResolution800x600;
+  }
+
+  if constexpr (kIsSourceInventoryArrange800) {
+    return kResolution800x600;
+  } else {
+    return kResolution640x480;
   }
 }
 

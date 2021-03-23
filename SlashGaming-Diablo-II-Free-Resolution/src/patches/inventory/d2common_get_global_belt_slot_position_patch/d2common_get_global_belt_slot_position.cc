@@ -51,6 +51,7 @@
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/game_resolution.hpp"
+#include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
 
@@ -62,9 +63,8 @@ void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
 ) {
   // Original code, copies the values of the specified Global Belt Slot
   // into the output Belt Slot.
-  unsigned int source_inventory_arrange_mode = (inventory_arrange_mode < 2)
-      ? inventory_arrange_mode
-      : 0;
+  unsigned int source_inventory_arrange_mode =
+      GetSourceInventoryArrangeMode();
 
   d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
 
@@ -87,50 +87,10 @@ void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
     return;
   }
 
-  // Adjustment code to ensure that the objects appear in the correct location.
-  std::tuple width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
-  );
-
-  int source_width;
-  int source_height;
-  if (source_inventory_arrange_mode == 0) {
-    source_width = 640;
-    source_height = 480;
-  } else {
-    source_width = 800;
-    source_height = 600;
-  }
-
-  // Set left and right values.
-  int dist_from_rect_left_to_display_center = out_belt_slot_wrapper.GetLeft()
-      - (source_width / 2);
-
-  int rectangle_width = out_belt_slot_wrapper.GetRight()
-      - out_belt_slot_wrapper.GetLeft();
-
-  out_belt_slot_wrapper.SetLeft(
-      (std::get<0>(width_and_height) / 2)
-          + dist_from_rect_left_to_display_center
-  );
-
-  out_belt_slot_wrapper.SetRight(
-      out_belt_slot_wrapper.GetLeft() + rectangle_width
-  );
-
-  // Set top and bottom values.
-  int dist_from_rect_top_to_display_bottom =
-      source_height - out_belt_slot_wrapper.GetTop();
-
-  int rectangle_height = out_belt_slot_wrapper.GetBottom()
-      - out_belt_slot_wrapper.GetTop();
-
-  out_belt_slot_wrapper.SetTop(
-      std::get<1>(width_and_height) - dist_from_rect_top_to_display_bottom
-  );
-
-  out_belt_slot_wrapper.SetBottom(
-      out_belt_slot_wrapper.GetTop() + rectangle_height
+  // Adjustment code to ensure that the objects appear in the correct
+  // position.
+  RealignPositionFromBottomCenter(
+      out_belt_slot_wrapper
   );
 }
 

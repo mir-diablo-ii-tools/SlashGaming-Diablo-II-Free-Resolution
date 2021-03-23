@@ -49,7 +49,12 @@
 #include <cstddef>
 #include <tuple>
 
+#include "../compile_time_switch.hpp"
+
 namespace sgd2fr {
+
+constexpr const ::std::tuple<int, int> kResolution640x480(640, 480);
+constexpr const ::std::tuple<int, int> kResolution800x600(800, 600);
 
 std::size_t GetMinConfigResolutionId();
 std::size_t GetMaxConfigResolutionId();
@@ -66,6 +71,10 @@ bool IsStandardResolution(const std::tuple<int, int>& width_and_height);
  * corresponding to the current video mode.
  */
 ::std::tuple<int, int> GetVideoModeDisplayResolution();
+
+unsigned int GetSourceInventoryArrangeMode();
+
+const ::std::tuple<int, int>& GetSourceInventoryArrangeResolution();
 
 } // namespace sgd2fr
 

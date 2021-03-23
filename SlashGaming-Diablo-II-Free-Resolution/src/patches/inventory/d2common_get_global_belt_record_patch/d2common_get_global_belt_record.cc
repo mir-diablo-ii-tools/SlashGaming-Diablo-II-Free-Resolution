@@ -61,9 +61,8 @@ void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
 ) {
   // Original code, copies the values of the specified Global Belt Slot
   // into the output Belt Slot.
-  unsigned int source_inventory_arrange_mode = (inventory_arrange_mode < 2)
-      ? inventory_arrange_mode
-      : 0;
+  unsigned int source_inventory_arrange_mode =
+      GetSourceInventoryArrangeMode();
 
   d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
   d2::BeltRecord_View global_belt_record_view(
