@@ -51,8 +51,11 @@
 namespace sgd2fr {
 
 void RealignPositionFromCenter(
-    unsigned int inventory_arrange_mode,
-    d2::PositionalRectangle_Wrapper out_position_wrapper
+    ::d2::PositionalRectangle_Wrapper out_position_wrapper
+);
+
+void RealignPositionFromBottomCenter(
+    ::d2::PositionalRectangle_Wrapper out_position_wrapper
 );
 
 } // namespace sgd2fr

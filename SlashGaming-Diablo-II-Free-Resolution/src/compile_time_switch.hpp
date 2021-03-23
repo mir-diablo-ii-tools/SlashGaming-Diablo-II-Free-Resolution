@@ -51,8 +51,26 @@
  * alter software behavior.
  */
 
-constexpr bool kIsAssetsPathCustomizable = true;
+/**
+ * If true, allow the user to configure the asset paths. Useful for
+ * debugging purposes or for customization-centric users.
+ */
+constexpr bool kIsAssetsPathCustomizable = false;
 
+/**
+ * If true, a custom MPQ will be used to store the additional assets
+ * required. Set to false if running a mod where it will be stored in
+ * Patch_D2.mpq instead.
+ */
 constexpr bool kIsLoadCustomMpq = true;
+
+/**
+ * If true, the inventory arrangement sources from 800x600 entries in
+ * calculations. Otherwise, sources from 640x480 entries.
+ *
+ * Warning: Setting this value to true will make inventory slots for
+ * heights less than 600 display incorrect.
+ */
+constexpr bool kIsSourceInventoryArrange800 = false;
 
 #endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
