@@ -46,6 +46,7 @@
 #include "d2common_get_global_equipment_slot_layout.hpp"
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/game_resolution.hpp"
 #include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
@@ -58,9 +59,8 @@ void __cdecl Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout(
 ) {
   // Original code, copies the values of the specified Global Inventory Grid
   // into the output Inventory Grid.
-  unsigned int source_inventory_arrange_mode = (inventory_arrange_mode < 2)
-      ? inventory_arrange_mode
-      : 0;
+  unsigned int source_inventory_arrange_mode =
+      GetSourceInventoryArrangeMode();
 
   d2::InventoryRecord_View global_inventory_txt_view(
       d2::d2common::GetGlobalInventoryTxt()
@@ -89,7 +89,6 @@ void __cdecl Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout(
   // Adjustment code to ensure that the objects appear in the correct
   // location.
   RealignPositionFromCenter(
-      inventory_arrange_mode,
       out_equipment_slot_layout_wrapper.GetPosition()
   );
 }

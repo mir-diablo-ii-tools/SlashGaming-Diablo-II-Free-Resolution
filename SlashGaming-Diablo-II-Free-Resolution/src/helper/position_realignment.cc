@@ -48,27 +48,19 @@
 #include "game_resolution.hpp"
 
 namespace sgd2fr {
-namespace {
-
-} // namespace
 
 void RealignPositionFromCenter(
-    unsigned int inventory_arrange_mode,
     d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
-  std::tuple width_and_height = GetIngameResolutionFromId(
+  std::tuple current_resolution = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
-  std::tuple<int, int> source_width_and_height;
-  if (inventory_arrange_mode == 1) {
-    source_width_and_height = GetIngameResolutionFromId(2);
-  } else {
-    source_width_and_height = GetIngameResolutionFromId(0);
-  }
+  const std::tuple<int, int>& source_resolution =
+      GetSourceInventoryArrangeResolution();
 
-  int source_width = std::get<0>(source_width_and_height);
-  int source_height = std::get<1>(source_width_and_height);
+  int source_width = std::get<0>(source_resolution);
+  int source_height = std::get<1>(source_resolution);
 
   // Set left and right values.
   int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()
@@ -78,7 +70,7 @@ void RealignPositionFromCenter(
       - out_position_wrapper.GetLeft();
 
   out_position_wrapper.SetLeft(
-      (std::get<0>(width_and_height) / 2)
+      (std::get<0>(current_resolution) / 2)
           + dist_from_rect_left_to_display_center
   );
 
@@ -94,7 +86,7 @@ void RealignPositionFromCenter(
       - out_position_wrapper.GetTop();
 
   out_position_wrapper.SetTop(
-      (std::get<1>(width_and_height) / 2)
+      (std::get<1>(current_resolution) / 2)
           + dist_from_rect_top_to_display_center
   );
 
@@ -103,6 +95,51 @@ void RealignPositionFromCenter(
   );
 }
 
+void RealignPositionFromBottomCenter(
+    d2::PositionalRectangle_Wrapper out_position_wrapper
+) {
+  std::tuple current_resolution = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
+
+  const std::tuple<int, int>& source_resolution =
+      GetSourceInventoryArrangeResolution();
+
+  int source_width = std::get<0>(source_resolution);
+  int source_height = std::get<1>(source_resolution);
+
+  // Set left and right values.
+  int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()
+      - (source_width / 2);
+
+  int rectangle_width = out_position_wrapper.GetRight()
+      - out_position_wrapper.GetLeft();
+
+  out_position_wrapper.SetLeft(
+      (std::get<0>(current_resolution) / 2)
+          + dist_from_rect_left_to_display_center
+  );
+
+  out_position_wrapper.SetRight(
+      out_position_wrapper.GetLeft() + rectangle_width
+  );
+
+  // Set top and bottom values.
+  int dist_from_rect_top_to_display_bottom = 
+      source_height - out_position_wrapper.GetTop();
+
+  int rectangle_height = out_position_wrapper.GetBottom()
+      - out_position_wrapper.GetTop();
+
+  out_position_wrapper.SetTop(
+      std::get<1>(current_resolution)
+          - dist_from_rect_top_to_display_bottom
+  );
+
+  out_position_wrapper.SetBottom(
+      out_position_wrapper.GetTop() + rectangle_height
+  );
+}
 
 } // namespace sgd2fr
 
