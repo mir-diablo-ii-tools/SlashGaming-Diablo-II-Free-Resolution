@@ -53,6 +53,7 @@
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/game_resolution.hpp"
+#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -915,6 +916,9 @@ void Sgd2fr_D2Client_DrawScreenBackground() {
       );
     }
   }
+
+  // Original code
+  ::d2::d2client::DrawScreens();
 }
 
 } // namespace sgd2fr

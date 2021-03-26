@@ -46,34 +46,16 @@
 #include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../asm_x86_macro.h"
 #include "d2client_draw_interface_bar_background.hpp"
 
+extern "C" {
+
+void __cdecl
+D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01();
+
+} // extern "C"
+
 namespace sgd2fr::patches::d2client {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  // Original code.
-  ASM_X86(mov ecx, 18);
-
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_DrawInterfaceBarBackground));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
 
 DrawInterfaceBarBackgroundPatch_1_09D
 ::DrawInterfaceBarBackgroundPatch_1_09D()
@@ -102,7 +84,7 @@ DrawInterfaceBarBackgroundPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01,
           patch_address_and_size.second
       )
   );
