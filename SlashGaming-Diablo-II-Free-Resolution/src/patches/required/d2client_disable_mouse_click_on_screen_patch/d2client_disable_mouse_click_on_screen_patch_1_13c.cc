@@ -45,8 +45,6 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-
 namespace sgd2fr::patches::d2client {
 
 DisableMouseClickOnScreenPatch_1_13C::DisableMouseClickOnScreenPatch_1_13C()

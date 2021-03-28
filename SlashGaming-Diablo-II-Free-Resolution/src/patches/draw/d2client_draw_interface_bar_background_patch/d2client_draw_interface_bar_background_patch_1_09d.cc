@@ -45,9 +45,6 @@
 
 #include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
-#include <sgd2mapi.hpp>
-#include "d2client_draw_interface_bar_background.hpp"
-
 extern "C" {
 
 void __cdecl

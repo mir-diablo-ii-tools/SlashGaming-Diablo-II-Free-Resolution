@@ -47,35 +47,19 @@
 
 #include <array>
 
-#include "../../../asm_x86_macro.h"
-#include "d2gfx_is_need_restore_down_window.hpp"
+extern "C" {
+
+void __cdecl
+D2GFX_IsNeedRestoreDownWindowPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2gfx {
 namespace {
 
-constexpr ::std::array<::std::uint8_t, 2> kJeOpcode = {
+static constexpr ::std::array<::std::uint8_t, 2> kJeOpcode = {
     0x0F, 0x84,
 };
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GFX_IsNeedRestoreDownWindowPatch));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-
-  // Original code, affects a `je` op.
-  ASM_X86(cmp eax, 0);
-
-  ASM_X86(ret);
-}
 
 } // namespace
 
@@ -105,7 +89,7 @@ IsNeedRestoreDownWindowPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2GFX_IsNeedRestoreDownWindowPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

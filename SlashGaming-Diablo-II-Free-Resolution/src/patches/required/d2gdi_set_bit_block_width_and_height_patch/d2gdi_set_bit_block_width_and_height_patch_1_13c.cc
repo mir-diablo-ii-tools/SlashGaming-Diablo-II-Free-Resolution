@@ -45,43 +45,14 @@
 
 #include "d2gdi_set_bit_block_width_and_height_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2gdi_set_bit_block_width_and_height.hpp"
+extern "C" {
+
+void __cdecl
+D2GDI_SetBitBlockWidthAndHeightPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2gdi {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(sub esp, 8);
-  ASM_X86(lea esi, dword ptr [ebp - 4]);
-  ASM_X86(lea edx, dword ptr [ebp - 8]);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-
-  ASM_X86(push edx);
-  ASM_X86(push esi);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GDI_GetBitBlockWidthAndHeight));
-  ASM_X86(add esp, 12);
-
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  // Original code
-  ASM_X86(mov esi, dword ptr [ebp - 4]);
-  ASM_X86(mov edx, dword ptr [ebp - 8]);
-
-  ASM_X86(add esp, 8);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
 
 SetBitBlockWidthAndHeightPatch_1_13C::SetBitBlockWidthAndHeightPatch_1_13C()
   : patches_(MakePatches()) {
@@ -109,7 +80,7 @@ SetBitBlockWidthAndHeightPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2GDI_SetBitBlockWidthAndHeightPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

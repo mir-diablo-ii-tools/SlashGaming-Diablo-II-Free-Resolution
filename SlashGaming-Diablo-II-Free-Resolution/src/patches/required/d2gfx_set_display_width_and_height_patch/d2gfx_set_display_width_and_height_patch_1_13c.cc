@@ -45,31 +45,14 @@
 
 #include "d2gfx_set_display_width_and_height_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2gfx_set_display_width_and_height.hpp"
+extern "C" {
+
+void __cdecl
+D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2gfx {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-
-  ASM_X86(push dword ptr [ebp + 20]);
-  ASM_X86(push dword ptr [ebp + 16]);
-  ASM_X86(push dword ptr [ebp + 12]);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GFX_SetDisplayWidthAndHeight));
-  ASM_X86(add esp, 12);
-
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
 
 SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
   : patches_(MakePatches()) {
@@ -97,7 +80,7 @@ SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

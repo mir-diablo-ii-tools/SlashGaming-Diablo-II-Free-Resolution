@@ -45,49 +45,14 @@
 
 #include "d2client_draw_resolution_text_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_draw_resolution_text.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_DrawResolutionTextPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2client {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  // Original code
-  ASM_X86(add edx, 230);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(push ebx);
-  ASM_X86(push edx);
-  ASM_X86(push esi);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_DrawResolutionText));
-  ASM_X86(add esp, 16);
-
-  // If the correct pieces executed, then remove the pushed arguments, then
-  // set the return address to a place after the original draw function call.
-  ASM_X86(test eax, eax);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-
-  ASM_X86(jnz DidDrawUnicodeText);
-  ASM_X86(ret);
-
-DidDrawUnicodeText:
-  ASM_X86(add dword ptr [esp], 6);
-  ASM_X86(ret 16);
-}
-
-} // namespace
 
 DrawResolutionTextPatch_1_13C::DrawResolutionTextPatch_1_13C()
   : patches_(MakePatches()) {
@@ -115,7 +80,7 @@ DrawResolutionTextPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2Client_DrawResolutionTextPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

@@ -45,8 +45,6 @@
 
 #include "d2client_draw_screen_background_patch_1_09d.hpp"
 
-#include "d2client_draw_screen_background.hpp"
-
 extern "C" {
 
 void __cdecl

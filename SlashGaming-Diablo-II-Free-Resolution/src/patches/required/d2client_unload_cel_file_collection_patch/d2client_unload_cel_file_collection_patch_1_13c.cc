@@ -45,36 +45,14 @@
 
 #include "d2client_unload_cel_file_collection_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_unload_cel_file_collection.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_UnloadCelFileCollectionPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2client {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_UnloadCelFileCollection));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-
-  // Original code
-  ASM_X86(pop edi);
-  ASM_X86(pop esi);
-
-  ASM_X86(ret);
-}
-
-} // namespace
 
 UnloadCelFileCollectionPatch_1_13C::UnloadCelFileCollectionPatch_1_13C()
   : patches_(MakePatches()) {
@@ -102,7 +80,7 @@ UnloadCelFileCollectionPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kJump,
-          &InterceptionFunc_01,
+          &D2Client_UnloadCelFileCollectionPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

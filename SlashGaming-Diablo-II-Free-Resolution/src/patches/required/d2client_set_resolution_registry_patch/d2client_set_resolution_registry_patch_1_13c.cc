@@ -45,41 +45,14 @@
 
 #include "d2client_set_resolution_registry_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_set_resolution_registry.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_SetResolutionRegistryPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2client {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(sub esp, 4);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(lea ecx, dword ptr [ebp - 4]);
-  ASM_X86(push ecx);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_SetResolutionRegistry));
-  ASM_X86(add esp, 8);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(mov esi, dword ptr [ebp - 4]);
-
-  ASM_X86(add esp, 4);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
 
 SetResolutionRegistryPatch_1_13C::SetResolutionRegistryPatch_1_13C()
   : patches_(MakePatches()) {
@@ -107,7 +80,7 @@ SetResolutionRegistryPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_SetResolutionRegistryPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

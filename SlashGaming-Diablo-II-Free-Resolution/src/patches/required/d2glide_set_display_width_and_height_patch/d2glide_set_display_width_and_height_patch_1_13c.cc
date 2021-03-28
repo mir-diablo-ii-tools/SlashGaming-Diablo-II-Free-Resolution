@@ -47,43 +47,15 @@
 
 #include <array>
 
-#include "../../../asm_x86_macro.h"
-#include "d2glide_set_display_width_and_height.hpp"
+extern "C" {
+
+void __cdecl
+D2Glide_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2glide {
 namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(sub esp, 12);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(lea eax, dword ptr [ebp - 12]);
-  ASM_X86(push eax);
-  ASM_X86(lea ecx, dword ptr [ebp - 8]);
-  ASM_X86(push ecx);
-  ASM_X86(lea edx, dword ptr [ebp - 4]);
-  ASM_X86(push edx);
-  ASM_X86(push esi);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Glide_SetDisplayWidthAndHeight));
-  ASM_X86(add esp, 16);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(mov ecx, dword ptr [ebp - 12]);
-
-  ASM_X86(add esp, 12);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
 
 constexpr ::std::uint8_t kJeOpcode = 0x74;
 constexpr ::std::uint8_t k01Byte = 0x01;
@@ -116,7 +88,7 @@ SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Glide_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );
