@@ -45,47 +45,14 @@
 
 #include "d2win_resize_window_on_maximize_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2win_resize_window_on_maximize.hpp"
+extern "C" {
+
+void __cdecl
+D2Win_ResizeWindowOnMaximizePatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2win {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(sub esp, 8);
-  ASM_X86(mov dword ptr [ebp - 4], ecx);
-  ASM_X86(mov dword ptr [ebp - 8], esi);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(lea eax, dword ptr [ebp - 8]);
-  ASM_X86(push eax);
-  ASM_X86(lea ecx, dword ptr [ebp - 4]);
-  ASM_X86(push ecx);
-  // The old ebp stores the value to be pushed.
-  ASM_X86(push dword ptr [ebp]);
-  ASM_X86(push edi);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Win_ResizeWindowOnMaximize));
-  ASM_X86(add esp, 16);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(mov ecx, dword ptr [ebp - 4]);
-  ASM_X86(mov esi, dword ptr [ebp - 8]);
-  ASM_X86(add esp, 8);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
 
 ResizeWindowOnMaximizePatch_1_13C::ResizeWindowOnMaximizePatch_1_13C()
   : patches_(MakePatches()) {
@@ -113,7 +80,7 @@ ResizeWindowOnMaximizePatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2Win_ResizeWindowOnMaximizePatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

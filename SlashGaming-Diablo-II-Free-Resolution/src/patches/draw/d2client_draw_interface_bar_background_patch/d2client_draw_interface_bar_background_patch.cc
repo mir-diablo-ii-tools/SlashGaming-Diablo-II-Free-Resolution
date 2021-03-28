@@ -46,7 +46,6 @@
 #include "d2client_draw_interface_bar_background_patch.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../asm_x86_macro.h"
 
 namespace sgd2fr::patches::d2client {
 

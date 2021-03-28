@@ -45,38 +45,14 @@
 
 #include "d2gdi_set_cel_display_left_and_right_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2gdi_set_cel_display_left_and_right.hpp"
+extern "C" {
+
+void __cdecl
+D2GDI_SetCelDisplayLeftAndRightPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2gdi {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01_1_13C() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(push esi);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GDI_SetCelDisplayLeftAndRight));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-
-  // Original code
-  ASM_X86(pop edi);
-  ASM_X86(pop esi);
-
-  ASM_X86(ret);
-}
-
-} // namespace
 
 SetCelDisplayLeftAndRightPatch_1_13C::SetCelDisplayLeftAndRightPatch_1_13C()
   : patches_(MakePatches()) {
@@ -105,7 +81,7 @@ SetCelDisplayLeftAndRightPatch_1_13C::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kJump,
-          &InterceptionFunc01_1_13C,
+          &D2GDI_SetCelDisplayLeftAndRightPatch_1_13C_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );

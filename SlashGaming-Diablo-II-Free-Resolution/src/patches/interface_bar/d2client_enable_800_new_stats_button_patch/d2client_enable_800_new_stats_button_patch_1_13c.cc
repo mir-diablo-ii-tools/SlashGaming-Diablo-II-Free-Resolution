@@ -45,9 +45,6 @@
 
 #include "d2client_enable_800_new_stats_button_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_enable_800_new_stats_button.hpp"
-
 namespace sgd2fr::patches::d2client {
 
 extern "C" {

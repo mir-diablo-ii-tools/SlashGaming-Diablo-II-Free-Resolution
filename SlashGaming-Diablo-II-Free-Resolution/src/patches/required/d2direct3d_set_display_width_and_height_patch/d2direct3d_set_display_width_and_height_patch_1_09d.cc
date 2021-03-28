@@ -47,37 +47,21 @@
 
 #include <array>
 
-#include "../../../asm_x86_macro.h"
-#include "d2direct3d_set_display_width_and_height.hpp"
+extern "C" {
+
+void __cdecl
+D2Direct3D_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2direct3d {
 namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx); 
-  ASM_X86(push edx);
-
-  ASM_X86(push edi);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx); 
-  ASM_X86(pop ecx);
-
-  ASM_X86(mov eax, edi);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
 
 /**
  * cmp eax, 1
  * jne
  */
-constexpr std::array<std::uint8_t, 4> kPatchBuffer_02 = {
+static constexpr std::array<std::uint8_t, 4> kPatchBuffer02 = {
     0x83, 0xF8, 0x01, 0x75
 };
 
@@ -109,7 +93,7 @@ SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2Direct3D_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );
@@ -120,7 +104,7 @@ SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   patches.push_back(
       mapi::GamePatch::MakeGameBufferPatch(
           patch_address_and_size_02.first,
-          kPatchBuffer_02.data(),
+          kPatchBuffer02.data(),
           patch_address_and_size_02.second
       )
   );
@@ -156,7 +140,7 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize02() {
               ::d2::DefaultLibrary::kD2Direct3D,
               0x20C9
           ),
-          kPatchBuffer_02.size()
+          kPatchBuffer02.size()
       );
     }
   }

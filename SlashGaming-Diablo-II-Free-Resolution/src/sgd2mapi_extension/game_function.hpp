@@ -43,31 +43,9 @@
  *  work.
  */
 
-/**
- * Warning: This header should never be used in any public interface!
- */
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_HPP_
+#define SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_HPP_
 
-#ifndef SGD2FR_ASM_X86_MACRO_HPP_
-#define SGD2FR_ASM_X86_MACRO_HPP_
+#include "game_function/d2client_function.hpp"
 
-#if defined(_MSC_VER)
-
-#define ASM_X86(...) \
-    __asm { \
-      __VA_ARGS__ \
-    }
-
-#define ASM_X86_FUNC(name) name
-
-#else
-
-#define ASM_X86(...) \
-    asm( \
-        #__VA_ARGS__ \
-    );
-
-#define ASM_X86_FUNC(name) _##name
-
-#endif
-
-#endif /* SGD2FR_ASM_X86_MACRO_HPP_ */
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_HPP_ */

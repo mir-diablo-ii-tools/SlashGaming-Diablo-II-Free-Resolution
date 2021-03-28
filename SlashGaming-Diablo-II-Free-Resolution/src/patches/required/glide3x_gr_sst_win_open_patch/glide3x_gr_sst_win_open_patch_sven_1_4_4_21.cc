@@ -45,13 +45,7 @@
 
 #include "glide3x_gr_sst_win_open_patch_sven_1_4_4_21.hpp"
 
-#include <array>
-
 #include "../../../helper/glide3x_version.hpp"
-#include "glide3x_gr_sst_win_open.hpp"
-
-namespace sgd2fr::patches::glide3x {
-namespace {
 
 extern "C" {
 
@@ -59,7 +53,7 @@ void __cdecl Glide3x_GrSstWinOpenPatch_Sven_1_4_4_21_InterceptionFunc01();
 
 } // extern "C"
 
-} // namespace
+namespace sgd2fr::patches::glide3x {
 
 GrSstWinOpenPatch_Sven_1_4_4_21::GrSstWinOpenPatch_Sven_1_4_4_21()
   : patches_(MakePatches()) {

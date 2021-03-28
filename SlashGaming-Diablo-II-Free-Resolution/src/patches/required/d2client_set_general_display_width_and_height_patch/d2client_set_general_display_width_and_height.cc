@@ -64,19 +64,10 @@ void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
   d2::d2client::SetGeneralDisplayWidth(width);
   d2::d2client::SetGeneralDisplayHeight(height);
 
-  // Workaround to prevent inventory arrangement from "transferring"
-  // between SP and MP resolutions.
-  unsigned int inventory_arrange_mode;
-
-  if (::d2::d2client::GetGameType() == ::d2::ClientGameType::kBattleNetJoin) {
-    inventory_arrange_mode = (resolution_mode == 0)
-        ? ::std::numeric_limits<::std::size_t>::max()
-        : ::std::numeric_limits<::std::size_t>::max() - (resolution_mode + 1);
-  } else {
-    inventory_arrange_mode = (resolution_mode == 0)
-        ? 0
-        : resolution_mode - 1;
-  }
+  // Workaround to prevent inventory arrangement from "transferring".
+  // Overflow is a non-issue and intentional.
+  static unsigned int inventory_arrange_mode = 0;
+  inventory_arrange_mode += 1;
 
   d2::d2client::SetInventoryArrangeMode(inventory_arrange_mode);
 }

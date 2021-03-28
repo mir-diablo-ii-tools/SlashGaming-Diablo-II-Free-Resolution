@@ -45,54 +45,14 @@
 
 #include "d2client_draw_screen_background_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_draw_screen_background.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2client {
-namespace {
-
-extern "C" static std::intptr_t __cdecl
-Sgd2fr_D2Client_DrawScreenBackground_GetJumpAddress_1_09D() {
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
-          0x35750
-      ).raw_address();
-    }
-
-    case ::d2::GameVersion::k1_13C: {
-      return mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
-          0x5C5C0
-      ).raw_address();
-    }
-  }
-}
-
-static __declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_DrawScreenBackground));
-  ASM_X86(call ASM_X86_FUNC(
-      Sgd2fr_D2Client_DrawScreenBackground_GetJumpAddress_1_09D
-  ));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(jmp eax);
-}
-
-} // namespace
 
 DrawScreenBackgroundPatch_1_09D::DrawScreenBackgroundPatch_1_09D()
     : patches_(MakePatches()) {
@@ -122,7 +82,7 @@ DrawScreenBackgroundPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );
