@@ -45,107 +45,26 @@
 
 #include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_enable_800_new_skill_button.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01();
+
+void __cdecl
+D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc03();
+
+void __cdecl
+D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc13();
+
+void __cdecl
+D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc14();
+
+void __cdecl
+D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc18();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2client {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800NewSkillButton));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc_02() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_IsMouseOver800NewSkillButton));
-
-  ASM_X86(pop edx);
-
-  // Affects the instructions:
-  // cmp eax, ecx
-  // jge
-  ASM_X86(mov ecx, eax);
-  ASM_X86(mov eax, 0);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc_03() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Set800NewSkillPopupText));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc_04() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  // Pushes the CelContext for the Level button.
-  ASM_X86(lea eax, dword ptr [ebp + 20]);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewSkillButton));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc_05() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  // Pushes the CelContext for the Level button.
-  ASM_X86(lea eax, dword ptr [ebp + 16]);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800NewSkillButton));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
 
 Enable800NewSkillButtonPatch_1_09D::Enable800NewSkillButtonPatch_1_09D()
   : patches_(MakePatches()) {
@@ -177,7 +96,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_01),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x483B9 - 0x483B4
       )
   );
@@ -191,7 +110,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_02),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x483D8 - 0x483D3
       )
   );
@@ -206,7 +125,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_03),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc03,
           0x484B5 - 0x4847D
       )
   );
@@ -222,7 +141,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_04),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x48699 - 0x48694
       )
   );
@@ -236,7 +155,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_05),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x486B7 - 0x486B2
       )
   );
@@ -252,7 +171,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_06),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc03,
           0x487C4 - 0x4878C
       )
   );
@@ -267,7 +186,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_07),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x48DEA - 0x48DE5
       )
   );
@@ -282,7 +201,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_08),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc03,
           0x48F29 - 0x48EF1
       )
   );
@@ -297,7 +216,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_09),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x48CB2 - 0x48CAD
       )
   );
@@ -311,7 +230,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_10),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x48D72 - 0x48D6D
       )
   );
@@ -326,7 +245,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_11),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x48E6E - 0x48E69
       )
   );
@@ -341,7 +260,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_12),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc03,
           0x48F6A - 0x48F3E
       )
   );
@@ -356,7 +275,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_13),
           mapi::BranchType::kCall,
-          &InterceptionFunc_03,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc13,
           0x48F9A - 0x48F7C
       )
   );
@@ -371,7 +290,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_14),
           mapi::BranchType::kCall,
-          &InterceptionFunc_04,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc14,
           0x48FB8 - 0x48F9A
       )
   );
@@ -386,7 +305,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_15),
           mapi::BranchType::kCall,
-          &InterceptionFunc_01,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc01,
           0x48BE8 - 0x48BE3
       )
   );
@@ -401,7 +320,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_16),
           mapi::BranchType::kCall,
-          &InterceptionFunc_02,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc03,
           0x48C41 - 0x48C15
       )
   );
@@ -416,7 +335,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_17),
           mapi::BranchType::kCall,
-          &InterceptionFunc_03,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc13,
           0x48C71 - 0x48C53
       )
   );
@@ -431,7 +350,7 @@ Enable800NewSkillButtonPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           std::move(game_address_18),
           mapi::BranchType::kCall,
-          &InterceptionFunc_05,
+          &D2Client_Enable800NewSkillButtonPatch_1_09D_InterceptionFunc18,
           0x48C8F - 0x48C71
       )
   );

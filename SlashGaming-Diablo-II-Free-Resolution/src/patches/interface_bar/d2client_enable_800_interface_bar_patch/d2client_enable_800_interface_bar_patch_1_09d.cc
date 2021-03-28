@@ -45,47 +45,17 @@
 
 #include "d2client_enable_800_interface_bar_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_enable_800_interface_bar.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_Enable800InterfaceBarPatch_1_09D_InterceptionFunc01();
+
+void __cdecl
+D2Client_Enable800InterfaceBarPatch_1_09D_InterceptionFunc02();
+
+} // extern "C"
 
 namespace sgd2fr::patches::d2client {
-namespace {
-
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800InterfaceBar));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc02() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(push ecx);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800InterfaceBar));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
 
 Enable800InterfaceBarPatch_1_09D::Enable800InterfaceBarPatch_1_09D()
   : patches_(MakePatches()) {
@@ -114,7 +84,7 @@ Enable800InterfaceBarPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_01.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc01,
+          &D2Client_Enable800InterfaceBarPatch_1_09D_InterceptionFunc01,
           patch_address_and_size_01.second
       )
   );
@@ -126,7 +96,7 @@ Enable800InterfaceBarPatch_1_09D::MakePatches() {
       mapi::GamePatch::MakeGameBranchPatch(
           patch_address_and_size_02.first,
           mapi::BranchType::kCall,
-          &InterceptionFunc02,
+          &D2Client_Enable800InterfaceBarPatch_1_09D_InterceptionFunc02,
           patch_address_and_size_02.second
       )
   );
