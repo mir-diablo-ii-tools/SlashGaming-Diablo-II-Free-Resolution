@@ -55,6 +55,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
+#include "../compile_time_switch.hpp"
 #include "ddraw_version.hpp"
 
 namespace sgd2fr {
@@ -94,7 +95,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4ResolutionTableEntry,
-      4
+      5
   > kSortedIpv4ResolutionTable = {{
 
       // evnt.slashdiablo.net
@@ -124,6 +125,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution640x480,
               kResolution800x600,
               std::make_tuple(1068, 600)
+          }
+      ),
+
+      // ip.d2lod.net
+      Ipv4ResolutionTableEntry(
+          "51.222.51.12",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1024, 768)
           }
       ),
 

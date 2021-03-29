@@ -49,8 +49,6 @@
 #include <cstddef>
 #include <tuple>
 
-#include "../compile_time_switch.hpp"
-
 namespace sgd2fr {
 
 constexpr const ::std::tuple<int, int> kResolution640x480(640, 480);
