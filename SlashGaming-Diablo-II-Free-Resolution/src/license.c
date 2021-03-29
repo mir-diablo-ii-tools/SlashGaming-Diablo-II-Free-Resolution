@@ -43,14 +43,12 @@
  *  work.
  */
 
-#include "../include/license.hpp"
+#include "../include/license.h"
 
-#include <cstdio>
-#include <string_view>
+#include <stddef.h>
+#include <stdio.h>
 
-namespace {
-
-static constexpr ::std::string_view kLicenseLines[] = {
+static const char* const kLicenseLines[] = {
     "SlashGaming Diablo II Free Resolution",
     "Copyright (C) 2019-2021  Mir Drualga",
     "",
@@ -72,10 +70,18 @@ static constexpr ::std::string_view kLicenseLines[] = {
     "information."
 };
 
-} // namespace
+enum {
+  kLicenseLinesCount = sizeof(kLicenseLines) / sizeof(kLicenseLines[0])
+};
 
-void PrintLicenseNotice() {
-  for (const std::string_view& line : kLicenseLines) {
-    ::std::printf("%s \n", line.data());
+/**
+ * External
+ */
+
+void PrintLicenseNotice(void) {
+  size_t i;
+
+  for (i = 0; i < kLicenseLinesCount; i += 1) {
+    printf("%s\n", kLicenseLines[i]);
   }
 }
