@@ -43,37 +43,47 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#include "evaluation.h"
 
-/**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
- */
+#include <stddef.h>
+#include <stdlib.h>
+#include <time.h>
+#include <windows.h>
 
-/**
- * If true, enables a nag warning message about evaluation software,
- * and closes the game if the trial period has expired.
- */
-constexpr bool kIsEvaluationSoftware = false;
+#define EVALUATORS L""
 
-/**
- * If true, allow the user to configure the asset paths. Useful for
- * debugging purposes or for customization-centric users.
- */
-constexpr bool kIsAssetsPathCustomizable = false;
+void ShowEvaluationMessage(void) {
+  MessageBoxW(
+      NULL,
+      L"This version of SGD2FreeRes is evaluation software. It is "
+          L"normally licensed under the AGPLv3, but the copyright "
+          L"holder(s) have permitted temporary internal proprietary "
+          L"use by " EVALUATORS L".",
+      L"Notice",
+      MB_OK
+  );
+}
 
-/**
- * If true, a custom MPQ will be used to store the additional assets
- * required. Set to false if running a mod where it will be stored in
- * Patch_D2.mpq instead.
- */
-constexpr bool kIsLoadCustomMpq = true;
+void EnforceTimeLimit(void) {
+  time_t current_time;
+  struct tm dead_tm = { 0 };
+  time_t dead_time;
 
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
+  dead_tm.tm_year = 2021 - 1900;
+  dead_tm.tm_mon = 4;
+  dead_tm.tm_mday = 1;
 
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+  dead_time = mktime(&dead_tm);
+  current_time = time(NULL);
+
+  if (difftime(dead_time, current_time) < 0) {
+    MessageBoxW(
+        NULL,
+        L"SGD2FreeRes's evaluation software trial has expired.",
+        L"Error",
+        MB_OK
+    );
+
+    exit(EXIT_FAILURE);
+  }
+}
