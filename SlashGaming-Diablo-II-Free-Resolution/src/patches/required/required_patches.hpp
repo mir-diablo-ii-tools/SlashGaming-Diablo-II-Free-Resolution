@@ -79,28 +79,28 @@ class RequiredPatches {
 
  private:
   d2client::DisableMouseClickOnScreenPatch
-      disable_mouse_click_on_screen_patch_;
+      d2client_disable_mouse_click_on_screen_patch_;
 
   d2client::DrawResolutionTextPatch
-      draw_resolution_text_patch_;
+      d2client_draw_resolution_text_patch_;
 
   d2client::GetResolutionRegistryPatch
-      get_resolution_registry_patch_;
+      d2client_get_resolution_registry_patch_;
 
   d2client::SetGeneralDisplayWidthAndHeightPatch
-      set_general_display_width_and_height_patch_;
+      d2client_set_general_display_width_and_height_patch_;
 
   d2client::SetResolutionFromOptionsMenuPatch
-      set_resolution_from_options_menu_patch_;
+      d2client_set_resolution_from_options_menu_patch_;
 
   d2client::SetResolutionRegistryPatch
-      set_resolution_registry_patch_;
+      d2client_set_resolution_registry_patch_;
 
   d2client::SetScreenShiftPatch
-      set_screen_shift_patch_;
+      d2client_set_screen_shift_patch_;
 
   d2client::UnloadCelFileCollectionPatch
-      unload_cel_file_collection_patch_;
+      d2client_unload_cel_file_collection_patch_;
 
   d2ddraw::SetBitBlockWidthAndHeightPatch
       d2ddraw_set_bit_block_width_and_height_patch_;
@@ -136,7 +136,7 @@ class RequiredPatches {
       d2win_resize_window_on_maximize_patch_;
 
   glide3x::GrSstWinOpenPatch
-      gr_sst_win_open_patch_;
+      glide3x_gr_sst_win_open_patch_;
 };
 
 } // namespace sgd2fr::patches
