@@ -43,37 +43,19 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#ifndef SGD2FR_HELPER_EVALUATION_H_
+#define SGD2FR_HELPER_EVALUATION_H_
 
-/**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
- */
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-/**
- * If true, enables a nag warning message about evaluation software,
- * and closes the game if the trial period has expired.
- */
-constexpr bool kIsEvaluationSoftware = false;
+void ShowEvaluationMessage(void);
 
-/**
- * If true, allow the user to configure the asset paths. Useful for
- * debugging purposes or for customization-centric users.
- */
-constexpr bool kIsAssetsPathCustomizable = false;
+void EnforceTimeLimit(void);
 
-/**
- * If true, a custom MPQ will be used to store the additional assets
- * required. Set to false if running a mod where it will be stored in
- * Patch_D2.mpq instead.
- */
-constexpr bool kIsLoadCustomMpq = true;
+#ifdef __cplusplus
+} // extern "C"
+#endif /* __cplusplus */
 
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
-
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#endif /* SGD2FR_HELPER_EVALUATION_H_ */
