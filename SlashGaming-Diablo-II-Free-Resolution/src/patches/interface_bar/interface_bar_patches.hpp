@@ -62,13 +62,13 @@ class InterfaceBarPatches {
 
  private:
   d2client::Enable800InterfaceBarPatch
-      enable_800_interface_bar_patch_;
+      d2client_enable_800_interface_bar_patch_;
 
   d2client::Enable800NewSkillButtonPatch
-      enable_800_new_skill_button_patch_;
+      d2client_enable_800_new_skill_button_patch_;
 
   d2client::Enable800NewStatsButtonPatch
-      enable_800_new_stats_button_patch_;
+      d2client_enable_800_new_stats_button_patch_;
 };
 
 } // namespace sgd2fr::patches

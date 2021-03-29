@@ -50,19 +50,19 @@ namespace sgd2fr::patches {
 InventoryPatches::InventoryPatches() = default;
 
 void InventoryPatches::Apply() {
-  this->get_global_belt_record_patch_.Apply();
-  this->get_global_belt_slot_position_patch_.Apply();
-  this->get_global_equipment_slot_layout_patch_.Apply();
-  this->get_global_inventory_grid_layout_patch_.Apply();
-  this->get_global_inventory_position_patch_.Apply();
+  this->d2common_get_global_belt_record_patch_.Apply();
+  this->d2common_get_global_belt_slot_position_patch_.Apply();
+  this->d2common_get_global_equipment_slot_layout_patch_.Apply();
+  this->d2common_get_global_inventory_grid_layout_patch_.Apply();
+  this->d2common_get_global_inventory_position_patch_.Apply();
 }
 
 void InventoryPatches::Remove() {
-  this->get_global_belt_record_patch_.Remove();
-  this->get_global_belt_slot_position_patch_.Remove();
-  this->get_global_equipment_slot_layout_patch_.Remove();
-  this->get_global_inventory_grid_layout_patch_.Remove();
-  this->get_global_inventory_position_patch_.Remove();
+  this->d2common_get_global_inventory_position_patch_.Remove();
+  this->d2common_get_global_inventory_grid_layout_patch_.Remove();
+  this->d2common_get_global_equipment_slot_layout_patch_.Remove();
+  this->d2common_get_global_belt_slot_position_patch_.Remove();
+  this->d2common_get_global_belt_record_patch_.Remove();
 }
 
 } // namespace sgd2fr::patches

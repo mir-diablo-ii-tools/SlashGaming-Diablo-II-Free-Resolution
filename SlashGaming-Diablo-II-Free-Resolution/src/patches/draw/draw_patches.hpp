@@ -61,10 +61,10 @@ class DrawPatches {
 
  private:
   d2client::DrawInterfaceBarBackgroundPatch
-      draw_interface_bar_background_patch_;
+      d2client_draw_interface_bar_background_patch_;
 
   d2client::DrawScreenBackgroundPatch
-      draw_screen_background_patch_;
+      d2client_draw_screen_background_patch_;
 };
 
 } // namespace sgd2fr::patches

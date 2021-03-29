@@ -64,19 +64,19 @@ class InventoryPatches {
 
  private:
   d2common::GetGlobalBeltRecordPatch
-      get_global_belt_record_patch_;
+      d2common_get_global_belt_record_patch_;
 
   d2common::GetGlobalBeltSlotPositionPatch
-      get_global_belt_slot_position_patch_;
+      d2common_get_global_belt_slot_position_patch_;
 
   d2common::GetGlobalEquipmentSlotLayoutPatch
-      get_global_equipment_slot_layout_patch_;
+      d2common_get_global_equipment_slot_layout_patch_;
 
   d2common::GetGlobalInventoryGridLayoutPatch
-      get_global_inventory_grid_layout_patch_;
+      d2common_get_global_inventory_grid_layout_patch_;
 
   d2common::GetGlobalInventoryPositionPatch
-      get_global_inventory_position_patch_;
+      d2common_get_global_inventory_position_patch_;
 };
 
 } // namespace sgd2fr::patches
