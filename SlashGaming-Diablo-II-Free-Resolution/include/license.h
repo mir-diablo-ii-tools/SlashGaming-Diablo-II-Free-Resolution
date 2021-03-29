@@ -43,20 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_LICENSE_HPP_
-#define SGD2FR_LICENSE_HPP_
+#ifndef SGD2FR_LICENSE_H_
+#define SGD2FR_LICENSE_H_
 
 #include "dllexport_define.inc"
 
 #ifdef __cplusplus
 extern "C" {
-#endif // __cplusplus
+#endif /* __cplusplus */
 
-DLLEXPORT void PrintLicenseNotice(void);
+__declspec(dllexport) void PrintLicenseNotice(void);
 
 #ifdef __cplusplus
-} // extern "C"
-#endif // __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
 #include "dllexport_undefine.inc"
-#endif  // SGD2FR_LICENSE_HPP_
+#endif  /* SGD2FR_LICENSE_H_ */
