@@ -69,7 +69,8 @@ GetGlobalInventoryGridLayoutPatch::MakePatch() {
 
   switch (running_game_version) {
     case d2::GameVersion::k1_09D:
-    case d2::GameVersion::k1_13C: {
+    case d2::GameVersion::k1_13C:
+    case d2::GameVersion::k1_13D: {
       return GetGlobalInventoryGridLayoutPatch_1_09D();
     }
   }
