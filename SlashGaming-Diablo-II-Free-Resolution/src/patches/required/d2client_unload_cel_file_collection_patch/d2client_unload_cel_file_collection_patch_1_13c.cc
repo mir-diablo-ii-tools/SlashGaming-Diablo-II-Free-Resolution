@@ -102,6 +102,16 @@ UnloadCelFileCollectionPatch_1_13C::GetPatchAddressAndSize01() {
           5
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x6D08B
+          ),
+          5
+      );
+    }
   }
 }
 

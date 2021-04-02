@@ -102,6 +102,16 @@ SetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
           0x662CC - 0x662AA
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xC454A
+          ),
+          0xC456C - 0xC454A
+      );
+    }
   }
 }
 

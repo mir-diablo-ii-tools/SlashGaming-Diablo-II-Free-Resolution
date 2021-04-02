@@ -126,6 +126,16 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
           (0xB9DE - kPatchBuffer02.size()) - 0xB9A4
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xBE64
+          ),
+          (0xBE9E - kPatchBuffer02.size()) - 0xBE64
+      );
+    }
   }
 }
 
@@ -139,6 +149,16 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Direct3D,
               0xB9DE - kPatchBuffer02.size()
+          ),
+          kPatchBuffer02.size()
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xBE9E - kPatchBuffer02.size()
           ),
           kPatchBuffer02.size()
       );

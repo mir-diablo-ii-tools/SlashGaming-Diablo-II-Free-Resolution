@@ -102,6 +102,16 @@ SetBitBlockWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
         0x6D5F - 0x6D34
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+        ::mapi::GameAddress::FromOffset(
+            ::d2::DefaultLibrary::kD2GDI,
+            0x7B84
+        ),
+        0x7BAF - 0x7B84
+      );
+    }
   }
 }
 

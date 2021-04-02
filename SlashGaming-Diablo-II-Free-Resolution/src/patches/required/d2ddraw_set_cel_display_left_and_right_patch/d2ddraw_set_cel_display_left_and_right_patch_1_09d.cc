@@ -96,7 +96,7 @@ SetCelDisplayLeftAndRightPatch_1_09D::GetPatchAddressAndSize01() {
     case ::d2::GameVersion::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Direct3D,
+              ::d2::DefaultLibrary::kD2DDraw,
               0x4430
           ),
           0x4450 - 0x4430
@@ -106,10 +106,20 @@ SetCelDisplayLeftAndRightPatch_1_09D::GetPatchAddressAndSize01() {
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Direct3D,
+              ::d2::DefaultLibrary::kD2DDraw,
               0x69F0
           ),
           0x6A10 - 0x69F0
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x8FE0
+          ),
+          0x9000 - 0x8FE0
       );
     }
   }
