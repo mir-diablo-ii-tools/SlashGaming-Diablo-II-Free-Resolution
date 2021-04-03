@@ -45,9 +45,15 @@
 
 #include "d2client_draw_screens.hpp"
 
+#include <stddef.h>
+
+#include <mdc/std/stdint.h>
+#include <mdc/wchar_t/filew.h>
+#include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
 
-namespace d2::d2client {
+namespace d2 {
+namespace d2client {
 namespace {
 
 static ::std::intptr_t GetGameAddress() {
@@ -55,7 +61,7 @@ static ::std::intptr_t GetGameAddress() {
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
-      return mapi::GameAddress::FromOffset(
+      return ::mapi::GameAddress::FromOffset(
           ::d2::DefaultLibrary::kD2Client,
           0x35750
       ).raw_address();
@@ -64,10 +70,27 @@ static ::std::intptr_t GetGameAddress() {
     }
 
     case ::d2::GameVersion::k1_13C: {
-      return mapi::GameAddress::FromOffset(
+      return ::mapi::GameAddress::FromOffset(
           ::d2::DefaultLibrary::kD2Client,
           0x5C5C0
       ).raw_address();
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return ::mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0x8A970
+      ).raw_address();
+    }
+
+    default: {
+      ::mdc::error::ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          static_cast<int>(running_game_version)
+      );
+
+      return NULL;
     }
   }
 }
@@ -77,9 +100,10 @@ using FuncType = void (*)();
 } // namespace
 
 void DrawScreens() {
-  static ::std::intptr_t game_address = GetGameAddress();
+  static intptr_t game_address = GetGameAddress();
 
   reinterpret_cast<FuncType>(game_address)();
 }
 
-} // namespace d2::d2client
+} // namespace d2client
+} // namespace d2

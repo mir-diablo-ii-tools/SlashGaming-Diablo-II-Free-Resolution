@@ -50,6 +50,8 @@
 #include <limits>
 #include <string>
 
+#include <mdc/wchar_t/filew.h>
+#include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
 #include "../../../helper/game_resolution.hpp"
 
@@ -92,9 +94,27 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
+    case ::d2::GameVersion::k1_13D: {
+      std::intptr_t raw_address = mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0xE48D0
+      ).raw_address();
+
+      comparing_cel_file_base_address = reinterpret_cast<d2::CelFile*>(
+          raw_address
+      );
+
+      break;
+    }
+
     default: {
-      // TODO (Mir Drualga): Get rid of this default case!
-      comparing_cel_file_base_address = nullptr;
+      ::mdc::error::ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          static_cast<int>(running_game_version)
+      );
+
+      return false;
     }
   }
 
@@ -126,7 +146,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       resolution_text_u8.data()
   );
 
-  d2::TextFont old_text_font = d2::d2win::SetTextFont(d2::TextFont::kDiabloMenu_30);
+  d2::TextFont old_text_font = ::d2::d2win::SetUnicodeTextFont(
+      d2::TextFont::kDiabloMenu_30
+  );
 
   d2::DrawTextOptions options;
   options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
@@ -134,7 +156,7 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
 
   text_unicode.Draw(right, top, options);
 
-  d2::d2win::SetTextFont(old_text_font);
+  ::d2::d2win::SetUnicodeTextFont(old_text_font);
 
   return true;
 }

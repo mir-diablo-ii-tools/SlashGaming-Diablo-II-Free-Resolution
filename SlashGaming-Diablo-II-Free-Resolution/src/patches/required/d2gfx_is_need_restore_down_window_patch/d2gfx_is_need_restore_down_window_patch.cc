@@ -76,7 +76,8 @@ IsNeedRestoreDownWindowPatch::MakePatch() {
   }
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
       return IsNeedRestoreDownWindowPatch_1_13C();
     }
   }

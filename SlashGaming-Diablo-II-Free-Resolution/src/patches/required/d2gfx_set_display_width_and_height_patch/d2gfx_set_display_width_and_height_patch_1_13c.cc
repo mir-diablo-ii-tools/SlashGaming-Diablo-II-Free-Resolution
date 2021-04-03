@@ -95,11 +95,21 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2GFX,
-            0x7FD0
-        ),
-        0x7FF4 - 0x7FD0
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x7FD0
+          ),
+          0x7FF4 - 0x7FD0
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xB0E0
+          ),
+          0xB104 - 0xB0E0
       );
     }
   }

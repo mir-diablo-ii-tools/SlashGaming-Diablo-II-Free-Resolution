@@ -106,11 +106,21 @@ DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
 
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2Client,
-            0x27297
-        ),
-        0x2729C - 0x27297
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x27297
+          ),
+          0x2729C - 0x27297
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x6D387
+          ),
+          0x6D38C - 0x6D387
       );
     }
   }

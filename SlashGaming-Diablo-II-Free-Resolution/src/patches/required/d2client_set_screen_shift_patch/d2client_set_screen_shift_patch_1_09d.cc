@@ -105,11 +105,21 @@ SetScreenShiftPatch_1_09D::GetPatchAddressAndSize01() {
 
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2Client,
-            0xC39F6
-        ),
-        0xC3A1D - 0xC39F6
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xC39F6
+          ),
+          0xC3A1D - 0xC39F6
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x1D3F6
+          ),
+          0x1D41D - 0x1D3F6
       );
     }
   }

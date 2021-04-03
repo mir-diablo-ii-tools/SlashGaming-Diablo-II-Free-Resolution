@@ -43,49 +43,34 @@
  *  work.
  */
 
-#include "d2gdi_set_cel_display_left_and_right_patch.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_1_13D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_1_13D_HPP_
 
-namespace sgd2fr::patches::d2gdi {
+#include <sgd2mapi.hpp>
+#include "../../../helper/patch_address_and_size.hpp"
 
-SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
-  : patch_(MakePatch()) {
-}
+namespace sgd2fr {
+namespace d2gfx {
 
-void SetCelDisplayLeftAndRightPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
-}
+class IsNeedResizeWindowPatch_1_13D {
+ public:
+  IsNeedResizeWindowPatch_1_13D();
 
-void SetCelDisplayLeftAndRightPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
+  void Apply();
+  void Remove();
 
-SetCelDisplayLeftAndRightPatch::PatchType
-SetCelDisplayLeftAndRightPatch::MakePatch() {
-  d2::VideoMode video_mode = d2::DetermineVideoMode();
-  if (video_mode != d2::VideoMode::kGdi) {
-    return std::nullopt;
-  }
+ private:
+  enum {
+    kPatchesCount = 2
+  };
 
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return SetCelDisplayLeftAndRightPatch_1_09D();
-    }
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static PatchAddressAndSize GetPatchAddressAndSize02();
+};
 
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return SetCelDisplayLeftAndRightPatch_1_13C();
-    }
-  }
-}
+} // namespace d2gfx
+} // namespace sgd2fr
 
-} // namespace sgd2fr::patches::d2gdi
+#endif /* SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_1_13D_HPP_ */

@@ -112,6 +112,16 @@ GetGlobalBeltSlotPositionPatch_1_09D::GetPatchAddressAndSize01() {
           5
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOrdinal(
+              ::d2::DefaultLibrary::kD2Common,
+              10689
+          ),
+          5
+      );
+    }
   }
 }
 

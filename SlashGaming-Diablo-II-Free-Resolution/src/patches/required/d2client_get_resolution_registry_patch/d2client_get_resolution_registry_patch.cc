@@ -72,7 +72,8 @@ GetResolutionRegistryPatch::MakePatch() {
       return GetResolutionRegistryPatch_1_09D();
     }
 
-    case d2::GameVersion::k1_13C: {
+    case d2::GameVersion::k1_13C:
+    case d2::GameVersion::k1_13D: {
       return GetResolutionRegistryPatch_1_13C();
     }
   }

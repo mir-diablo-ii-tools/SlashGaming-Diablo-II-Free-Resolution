@@ -79,6 +79,10 @@ IsNeedResizeWindowPatch::MakePatch() {
     case ::d2::GameVersion::k1_13C: {
       return IsNeedResizeWindowPatch_1_13C();
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return ::sgd2fr::d2gfx::IsNeedResizeWindowPatch_1_13D();
+    }
   }
 }
 

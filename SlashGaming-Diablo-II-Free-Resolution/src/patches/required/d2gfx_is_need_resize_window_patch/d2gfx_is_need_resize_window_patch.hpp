@@ -51,13 +51,15 @@
 
 #include <sgd2mapi.hpp>
 #include "d2gfx_is_need_resize_window_patch_1_13c.hpp"
+#include "d2gfx_is_need_resize_window_patch_1_13d.hpp"
 
 namespace sgd2fr::patches::d2gfx {
 
 class IsNeedResizeWindowPatch {
  public:
   using PatchVariant = std::variant<
-      IsNeedResizeWindowPatch_1_13C
+      IsNeedResizeWindowPatch_1_13C,
+      ::sgd2fr::d2gfx::IsNeedResizeWindowPatch_1_13D
   >;
 
   using PatchType = ::std::optional<PatchVariant>;

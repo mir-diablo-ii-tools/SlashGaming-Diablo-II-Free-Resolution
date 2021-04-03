@@ -125,11 +125,21 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
 
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2Client,
-            0xC3AA6
-        ),
-        0xC3AAB - 0xC3AA6
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xC3AA6
+          ),
+          0xC3AAB - 0xC3AA6
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x1D4A6
+          ),
+          0x1D4AB - 0x1D4A6
       );
     }
   }
@@ -152,11 +162,21 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
 
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2Client,
-            0x271ED
-        ),
-        0x27287 - 0x271ED
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x271ED
+          ),
+          0x27287 - 0x271ED
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x6D2DD
+          ),
+          0x6D377 - 0x6D2DD
       );
     }
   }
@@ -179,11 +199,21 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
 
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2Client,
-            0x270F1
-        ),
-        0x271AE - 0x270F1
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x270F1
+          ),
+          0x271AE - 0x270F1
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x6D1E1
+          ),
+          0x6D29E - 0x6D1E1
       );
     }
   }

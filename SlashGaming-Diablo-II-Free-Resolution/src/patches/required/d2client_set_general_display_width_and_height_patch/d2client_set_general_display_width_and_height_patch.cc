@@ -69,7 +69,8 @@ SetGeneralDisplayWidthAndHeightPatch::MakePatch() {
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
       return SetGeneralDisplayWidthAndHeightPatch_1_09D();
     }
   }

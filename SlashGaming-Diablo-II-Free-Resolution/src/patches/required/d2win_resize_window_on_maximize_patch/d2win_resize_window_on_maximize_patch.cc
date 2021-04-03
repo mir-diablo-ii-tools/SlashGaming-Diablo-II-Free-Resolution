@@ -72,7 +72,8 @@ ResizeWindowOnMaximizePatch::MakePatch() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
       return ResizeWindowOnMaximizePatch_1_13C();
     }
   }

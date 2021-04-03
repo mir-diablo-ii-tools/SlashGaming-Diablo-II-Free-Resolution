@@ -96,11 +96,21 @@ SetCelDisplayLeftAndRightPatch_1_13C::GetPatchAddressAndSize01() {
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2GDI,
-            0x7049
-        ),
-        0x7077 - 0x7049
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x7049
+          ),
+          0x7077 - 0x7049
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x7E99
+          ),
+          0x7EC7 - 0x7E99
       );
     }
   }
