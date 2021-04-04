@@ -73,5 +73,8 @@ _D2Direct3D_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01:
     pop ecx
     pop eax
 
+    ; Affects jne
+    cmp eax, 1
+
     leave
     ret
