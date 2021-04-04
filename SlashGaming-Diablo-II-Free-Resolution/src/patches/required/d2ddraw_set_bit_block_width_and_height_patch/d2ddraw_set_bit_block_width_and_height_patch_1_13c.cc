@@ -93,6 +93,46 @@ SetBitBlockWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x85D2
+          ),
+          0x85F6 - 0x85D2
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x8082
+          ),
+          0x80A6 - 0x8082
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x8CE2
+          ),
+          0x8D06 - 0x8CE2
+      );
+    }
+
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x75E2
+          ),
+          0x7606 - 0x75E2
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
