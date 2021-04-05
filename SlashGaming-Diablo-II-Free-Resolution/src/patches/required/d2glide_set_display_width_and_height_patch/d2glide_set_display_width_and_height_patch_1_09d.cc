@@ -45,7 +45,14 @@
 
 #include "d2glide_set_display_width_and_height_patch_1_09d.hpp"
 
-#include <array>
+#include <mdc/std/stdint.h>
+
+/*
+* How to find patch locations:
+* 1. Search for the locations where the text
+*    "Opening Glide window failed!" is used.
+* 2. Scroll up until values 640, 480, 800, and 600 are seen.
+*/
 
 extern "C" {
 
@@ -57,18 +64,16 @@ D2Glide_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01();
 namespace sgd2fr::patches::d2glide {
 namespace {
 
-/**
- * nop
- * nop
- * nop
- * nop
- * nop
- * cmp eax, 1
- * jne D2Glide.dll+1BD1
- */
-static constexpr std::array<std::uint8_t, 10> kPatchBuffer02 = {
-    0x90, 0x90, 0x90, 0x90, 0x90, 0x83, 0xF8, 0x01, 0x75, 0x11
+static const uint8_t kShortJneByteOpcodes[] = { 
+    0x75
 };
+
+enum {
+  kShortJneByteOpcodesSize = sizeof(kShortJneByteOpcodes)
+      / sizeof(kShortJneByteOpcodes[0])
+};
+
+static const uint8_t k0x01Byte = 0x01;
 
 } // namespace
 
@@ -108,8 +113,18 @@ SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   patches.push_back(
       mapi::GamePatch::MakeGameBufferPatch(
           patch_address_and_size_02.first,
-          kPatchBuffer02.data(),
+          &k0x01Byte,
           patch_address_and_size_02.second
+      )
+  );
+
+  PatchAddressAndSize patch_address_and_size_03 =
+      GetPatchAddressAndSize03();
+  patches.push_back(
+      mapi::GamePatch::MakeGameBufferPatch(
+          patch_address_and_size_03.first,
+          kShortJneByteOpcodes,
+          patch_address_and_size_03.second
       )
   );
 
@@ -121,6 +136,20 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1B3B
+          ),
+          0x1B4F - 0x1B3B
+      );
+    }
+
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
     case ::d2::GameVersion::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
@@ -128,6 +157,18 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
               0x1B8B
           ),
           0x1B9F - 0x1B8B
+      );
+    }
+
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1B96
+          ),
+          0x1BA5 - 0x1B96
       );
     }
   }
@@ -138,13 +179,82 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1B66 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
     case ::d2::GameVersion::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Glide,
-              0x1BB6
+              0x1BB6 + 2
           ),
-          kPatchBuffer02.size()
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1BC1 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+  }
+}
+
+SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize03() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1B69
+          ),
+          kShortJneByteOpcodesSize
+      );
+    }
+
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1BB9
+          ),
+          kShortJneByteOpcodesSize
+      );
+    }
+
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1BC4
+          ),
+          kShortJneByteOpcodesSize
       );
     }
   }

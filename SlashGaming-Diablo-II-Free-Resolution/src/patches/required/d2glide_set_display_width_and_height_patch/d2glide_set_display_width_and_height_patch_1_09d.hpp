@@ -73,6 +73,7 @@ class SetDisplayWidthAndHeightPatch_1_09D {
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
   static PatchAddressAndSize GetPatchAddressAndSize02();
+  static PatchAddressAndSize GetPatchAddressAndSize03();
 };
 
 } // namespace sgd2fr::patches::d2glide

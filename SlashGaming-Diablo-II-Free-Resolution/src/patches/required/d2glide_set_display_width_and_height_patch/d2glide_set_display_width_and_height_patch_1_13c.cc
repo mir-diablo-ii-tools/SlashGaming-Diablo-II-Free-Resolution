@@ -45,7 +45,14 @@
 
 #include "d2glide_set_display_width_and_height_patch_1_13c.hpp"
 
-#include <array>
+#include <mdc/std/stdint.h>
+
+/*
+* How to find patch locations:
+* 1. Search for the locations where the text
+*    "Opening Glide window failed!" is used.
+* 2. Scroll up until values 640, 480, 800, and 600 are seen.
+*/
 
 extern "C" {
 
@@ -57,8 +64,11 @@ D2Glide_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
 namespace sgd2fr::patches::d2glide {
 namespace {
 
-constexpr ::std::uint8_t kJeOpcode = 0x74;
-constexpr ::std::uint8_t k01Byte = 0x01;
+static const uint8_t kShortJeByteOpcodes[] = {
+    0x74
+};
+
+static const uint8_t k0x01Byte = 0x01;
 
 } // namespace
 
@@ -98,7 +108,7 @@ SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
   patches.push_back(
       mapi::GamePatch::MakeGameBufferPatch(
           patch_address_and_size_02.first,
-          &k01Byte,
+          &k0x01Byte,
           patch_address_and_size_02.second
       )
   );
@@ -108,7 +118,7 @@ SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
   patches.push_back(
       mapi::GamePatch::MakeGameBufferPatch(
           patch_address_and_size_03.first,
-          &kJeOpcode,
+          kShortJeByteOpcodes,
           patch_address_and_size_03.second
       )
   );
@@ -121,6 +131,46 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0xC051
+          ),
+          0xC06A - 0xC051
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x8CD1
+          ),
+          0x8CEA - 0x8CD1
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0xBD51
+          ),
+          0xBD6A - 0xBD51
+      );
+    }
+
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x9411
+          ),
+          0x942A - 0x9411
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
@@ -140,6 +190,46 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
           0xD61A - 0xD601
       );
     }
+
+    case ::d2::GameVersion::kLod1_14A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x35CC0
+          ),
+          0x35CD9 - 0x35CC0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1079B0
+          ),
+          0x1079C9 - 0x1079B0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1075A0
+          ),
+          0x1075B9 - 0x1075A0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x109C26
+          ),
+          0x109C3F - 0x109C26
+      );
+    }
   }
 }
 
@@ -148,13 +238,53 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0xC075 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x8CF5 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0xBD75 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x9435 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Glide,
               0xDD15 + 2
           ),
-          sizeof(k01Byte)
+          sizeof(k0x01Byte)
       );
     }
 
@@ -164,7 +294,47 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
               ::d2::DefaultLibrary::kD2Glide,
               0xD625 + 2
           ),
-          sizeof(k01Byte)
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x35CE4 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1079D4 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1075C4 + 2
+          ),
+          sizeof(k0x01Byte)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x109C4A + 2
+          ),
+          sizeof(k0x01Byte)
       );
     }
   }
@@ -175,13 +345,53 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0xC07E
+          ),
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x8CFE
+          ),
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0xBD7E
+          ),
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x943E
+          ),
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Glide,
               0xDD1E
           ),
-          sizeof(kJeOpcode)
+          sizeof(kShortJeByteOpcodes)
       );
     }
 
@@ -191,7 +401,47 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize03() {
               ::d2::DefaultLibrary::kD2Glide,
               0xD62E
           ),
-          sizeof(kJeOpcode)
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x35CED
+          ),
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1079DD
+          ),
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x1075CD
+          ),
+          sizeof(kShortJeByteOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Glide,
+              0x109C53
+          ),
+          sizeof(kShortJeByteOpcodes)
       );
     }
   }
