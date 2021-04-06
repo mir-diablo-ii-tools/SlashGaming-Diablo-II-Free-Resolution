@@ -43,65 +43,33 @@
  *  work.
  */
 
-#include "d2gdi_set_cel_display_left_and_right_patch.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
 
-namespace sgd2fr::patches::d2gdi {
+#include <sgd2mapi.hpp>
+#include "../../../helper/patch_address_and_size.hpp"
 
-SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
-  : patch_(MakePatch()) {
-}
+namespace sgd2fr {
+namespace d2gdi {
 
-void SetCelDisplayLeftAndRightPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
-}
+class SetBitBlockWidthAndHeightPatch_Lod1_14A {
+ public:
+  SetBitBlockWidthAndHeightPatch_Lod1_14A();
 
-void SetCelDisplayLeftAndRightPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
+  void Apply();
+  void Remove();
 
-SetCelDisplayLeftAndRightPatch::PatchType
-SetCelDisplayLeftAndRightPatch::MakePatch() {
-  d2::VideoMode video_mode = d2::DetermineVideoMode();
-  if (video_mode != d2::VideoMode::kGdi) {
-    return std::nullopt;
-  }
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return SetCelDisplayLeftAndRightPatch_1_09D();
-    }
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return SetCelDisplayLeftAndRightPatch_1_13C();
-    }
-  }
-}
+} // namespace d2gdi
+} // namespace sgd2fr
 
-} // namespace sgd2fr::patches::d2gdi
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_

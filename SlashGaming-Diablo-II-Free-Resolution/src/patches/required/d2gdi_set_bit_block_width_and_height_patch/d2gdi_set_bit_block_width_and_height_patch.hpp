@@ -52,6 +52,7 @@
 #include <sgd2mapi.hpp>
 #include "d2gdi_set_bit_block_width_and_height_patch_1_09d.hpp"
 #include "d2gdi_set_bit_block_width_and_height_patch_1_13c.hpp"
+#include "d2gdi_set_bit_block_width_and_height_patch_lod_1_14a.hpp"
 
 namespace sgd2fr::patches::d2gdi {
 
@@ -59,7 +60,8 @@ class SetBitBlockWidthAndHeightPatch {
  public:
   using PatchVariant = std::variant<
       SetBitBlockWidthAndHeightPatch_1_09D,
-      SetBitBlockWidthAndHeightPatch_1_13C
+      SetBitBlockWidthAndHeightPatch_1_13C,
+      ::sgd2fr::d2gdi::SetBitBlockWidthAndHeightPatch_Lod1_14A
   >;
 
   using PatchType = std::optional<PatchVariant>;

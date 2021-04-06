@@ -77,13 +77,32 @@ SetBitBlockWidthAndHeightPatch::MakePatch() {
   ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
       return SetBitBlockWidthAndHeightPatch_1_09D();
     }
 
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_11B:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
       return SetBitBlockWidthAndHeightPatch_1_13C();
+    }
+
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return ::sgd2fr::d2gdi::SetBitBlockWidthAndHeightPatch_Lod1_14A();
     }
   }
 }
