@@ -43,71 +43,28 @@
  *  work.
  */
 
-#include "glide3x_version.hpp"
+#include <windows.h>
 
-#include <mdc/error/exit_on_error.hpp>
-#include <mdc/wchar_t/filew.h>
-#include "file_version.hpp"
-#include "glide3x_d2dx.hpp"
+namespace sgd2fr {
+namespace d2dx_glide {
 
-namespace sgd2fr::glide3x_version {
-namespace {
+bool IsD2dxGlideWrapper(const wchar_t* path);
 
-static const wchar_t* const kGlide3xPath = L"glide3x.dll";
+/**
+ * Wrapper for ID2DXConfigurator::SetCustomResolution.
+ */
+HRESULT SetCustomResolution(
+    int width,
+    int height
+);
 
-static Glide3xVersion DetermineGlide3xVersion() {
-  if (d2dx_glide::IsD2dxGlideWrapper(kGlide3xPath)) {
-    return Glide3xVersion::kD2dx;
-  }
+/**
+ * Wrapper for ID2DXConfigurator::GetSuggestedCustomResolution.
+ */
+HRESULT GetSuggestedCustomResolution(
+    /* [out] */ int* width,
+    /* [out] */ int* height
+);
 
-  return FileVersion::GuessGlide3xVersion(kGlide3xPath);
-}
-
-} // namespace
-
-::std::string_view GetName(Glide3xVersion glide3x_version) {
-  switch (glide3x_version) {
-    case Glide3xVersion::kSven1_4_4_21: {
-      return "Sven 1.4.4.21";
-    }
-
-    case Glide3xVersion::kSven1_4_6_1: {
-      return "Sven 1.4.6.1";
-    }
-
-    case Glide3xVersion::kSven1_4_8_3: {
-      return "Sven 1.4.8.3";
-    }
-
-    case Glide3xVersion::kNGlide3_10_0_658: {
-      return "nGlide 3.10.0.658";
-    }
-
-    default: {
-      ::mdc::error::ExitOnConstantMappingError(
-          __FILEW__,
-          __LINE__,
-          static_cast<int>(glide3x_version)
-      );
-
-      return "";
-    }
-  }
-}
-
-Glide3xVersion GetRunning() {
-  static Glide3xVersion running_glide3x_version =
-      DetermineGlide3xVersion();
-
-  return running_glide3x_version;
-}
-
-::std::string_view GetRunningName() {
-  static ::std::string_view running_glide3x_version_name = GetName(
-      GetRunning()
-  );
-
-  return running_glide3x_version_name;
-}
-
-} // namespace sgd2fr::glide3x_version
+} // namespace d2dx
+} // namespace sgd2fr
