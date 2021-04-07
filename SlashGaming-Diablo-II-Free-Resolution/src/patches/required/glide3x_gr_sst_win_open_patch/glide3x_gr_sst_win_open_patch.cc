@@ -91,6 +91,11 @@ GrSstWinOpenPatch::MakePatch() {
     case Glide3xVersion::kNGlide3_10_0_658: {
       return GrSstWinOpenPatch_NGlide_3_10_0_658();
     }
+
+    case Glide3xVersion::kD2dx: {
+      // The D2DX API extensions are used instead.
+      return ::std::nullopt;
+    }
   }
 }
 

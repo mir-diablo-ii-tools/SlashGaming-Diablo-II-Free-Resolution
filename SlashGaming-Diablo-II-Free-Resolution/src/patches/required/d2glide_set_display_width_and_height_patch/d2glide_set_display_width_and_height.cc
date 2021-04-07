@@ -48,6 +48,8 @@
 #include <sgd2mapi.hpp>
 
 #include "../../../helper/game_resolution.hpp"
+#include "../../../helper/glide3x_d2dx.hpp"
+#include "../../../helper/glide3x_version.hpp"
 
 namespace sgd2fr::patches {
 
@@ -81,6 +83,10 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
       *glide_res_id = 0x1000 + (resolution_mode - 3);
       break;
     }
+  }
+
+  if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
+    d2dx_glide::SetCustomResolution(*width, *height);
   }
 }
 
