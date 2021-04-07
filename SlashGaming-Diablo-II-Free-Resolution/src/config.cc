@@ -592,8 +592,11 @@ mjsoni::RapidJsonConfigReader ReadConfig(
   bool is_read = config_reader.Read();
   if (!is_read) {
     ::mdc::error::ExitOnGeneralError(
-        L"Failed to read config in %ls.",
         L"Error",
+        L"Failed to read config in %ls. The file may be missing read "
+            L"permissions, or the config is not strictly JSON "
+            L"compliant (such as containing a trailing comma after "
+            L"the last resolution entry).",
         __FILEW__,
         __LINE__,
         config_file_path.c_str()
@@ -605,8 +608,8 @@ mjsoni::RapidJsonConfigReader ReadConfig(
   bool is_missing_entry_added = AddMissingConfigEntries(config_reader);
   if (!is_missing_entry_added) {
     ::mdc::error::ExitOnGeneralError(
-        L"Failed add missing entries to the config in %ls.",
         L"Error",
+        L"Failed add missing entries to the config in %ls.",
         __FILEW__,
         __LINE__,
         config_file_path.c_str()
