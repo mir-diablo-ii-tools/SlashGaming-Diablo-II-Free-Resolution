@@ -43,39 +43,33 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-
-#include <cstddef>
-#include <utility>
-#include <vector>
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr::patches::d2glide {
+namespace sgd2fr {
+namespace d2gdi {
 
-class SetDisplayWidthAndHeightPatch_1_09D {
+class SetBitBlockWidthAndHeightPatch_Lod1_14A {
  public:
-  SetDisplayWidthAndHeightPatch_1_09D();
+  SetBitBlockWidthAndHeightPatch_Lod1_14A();
 
   void Apply();
   void Remove();
 
  private:
-  using PatchAddressAndSize = ::std::pair<
-      ::mapi::GameAddress,
-      ::std::size_t
-  >;
+  enum {
+    kPatchesCount = 1
+  };
 
-  std::vector<mapi::GamePatch> patches_;
-
-  static std::vector<mapi::GamePatch> MakePatches();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
 };
 
-} // namespace sgd2fr::patches::d2glide
+} // namespace d2gdi
+} // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_

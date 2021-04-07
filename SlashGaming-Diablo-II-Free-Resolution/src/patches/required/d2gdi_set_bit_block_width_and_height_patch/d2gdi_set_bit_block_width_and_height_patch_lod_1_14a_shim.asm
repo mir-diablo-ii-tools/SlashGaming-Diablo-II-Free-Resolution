@@ -43,9 +43,9 @@
 ;  work.
 ;
 
-global _D2Direct3D_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01
+global _D2GDI_SetBitBlockWidthAndHeightPatch_Lod1_14A_InterceptionFunc01
 
-extern _Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight
+extern _Sgd2fr_D2GDI_GetBitBlockWidthAndHeight
 
 section .data
 
@@ -57,24 +57,32 @@ section .text
 ; External
 ;
 
-_D2Direct3D_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01:
+_D2GDI_SetBitBlockWidthAndHeightPatch_Lod1_14A_InterceptionFunc01:
     push ebp
     mov ebp, esp
+
+    sub esp, 8
 
     push eax
     push ecx
     push edx
 
+    lea edi, dword [ebp - 8]
+    push edi
+    lea esi, dword [ebp - 4]
+    push esi
     push eax
-    call _Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight
-    add esp, 4
+    call _Sgd2fr_D2GDI_GetBitBlockWidthAndHeight
+    add esp, 12
 
-    pop edx
     pop ecx
     pop eax
 
-    ; Affects jne
-    cmp eax, 1
+    ; Original code
+    mov edi, dword [ebp - 4]
+    mov esi, dword [ebp - 8]
+
+    add esp, 8
 
     leave
     ret

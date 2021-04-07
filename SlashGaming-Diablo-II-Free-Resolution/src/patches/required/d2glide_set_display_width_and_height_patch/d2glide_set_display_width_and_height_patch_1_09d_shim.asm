@@ -76,13 +76,13 @@ _D2Glide_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01:
     call _Sgd2fr_D2Glide_SetDisplayWidthAndHeight
     add esp, 16
 
-    ; Load the values to set up the proper state.
-    mov eax, dword [ebx]
-    mov ecx, dword [ebx + 4]
-    mov ebx, dword [ebx + 8]
-
     pop edx
 
+    ; Load the values to set up the proper state.
+    ; width in eax, height in ecx, glide_res_id in ebx
+    mov eax, dword [ebp - 4]
+    mov ecx, dword [ebp - 8]
+    mov ebx, dword [ebp - 12]
     add esp, 12
 
     leave

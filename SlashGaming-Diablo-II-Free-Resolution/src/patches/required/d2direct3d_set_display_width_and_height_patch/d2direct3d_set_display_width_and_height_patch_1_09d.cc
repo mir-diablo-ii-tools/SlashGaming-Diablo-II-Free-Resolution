@@ -45,7 +45,16 @@
 
 #include "d2direct3d_set_display_width_and_height_patch_1_09d.hpp"
 
-#include <array>
+#include <stddef.h>
+
+#include <mdc/std/stdint.h>
+
+/*
+* How to find patch locations:
+* 1. Search for the locations where the text
+*    "Failed to create D3D device!" is used.
+* 2. Scroll up until values 640, 480, 800, and 600 are seen.
+*/
 
 extern "C" {
 
@@ -57,12 +66,13 @@ D2Direct3D_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01();
 namespace sgd2fr::patches::d2direct3d {
 namespace {
 
-/**
- * cmp eax, 1
- * jne
- */
-static constexpr std::array<std::uint8_t, 4> kPatchBuffer02 = {
-    0x83, 0xF8, 0x01, 0x75
+static const uint8_t kShortJneByteOpcodes[] = {
+    0x75
+};
+
+enum {
+  kShortJneByteOpcodesCount = sizeof(kShortJneByteOpcodes)
+      / sizeof(kShortJneByteOpcodes[0])
 };
 
 } // namespace
@@ -104,7 +114,7 @@ SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
   patches.push_back(
       mapi::GamePatch::MakeGameBufferPatch(
           patch_address_and_size_02.first,
-          kPatchBuffer02.data(),
+          kShortJneByteOpcodes,
           patch_address_and_size_02.second
       )
   );
@@ -117,13 +127,39 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
     case ::d2::GameVersion::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Direct3D,
               0x2085
           ),
-          0x20C9 - 0x2085
+          0x20C7 - 0x2085
+      );
+    }
+
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2065
+          ),
+          0x20A7 - 0x2065
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2055
+          ),
+          0x2097 - 0x2055
       );
     }
   }
@@ -134,13 +170,39 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
     case ::d2::GameVersion::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Direct3D,
-              0x20C9
+              0x20C7
           ),
-          kPatchBuffer02.size()
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x20A7
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2097
+          ),
+          kShortJneByteOpcodesCount
       );
     }
   }

@@ -58,9 +58,13 @@ section .text
 ;
 
 _D2Direct3D_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01:
+    ; Original code
+    mov eax, edi
+
     push ebp
     mov ebp, esp
 
+    push eax
     push ecx
     push edx
 
@@ -70,8 +74,10 @@ _D2Direct3D_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01:
 
     pop edx
     pop ecx
+    pop eax
 
-    mov eax, edi
+    ; Affects jne
+    cmp eax, 1
 
     leave
     ret
