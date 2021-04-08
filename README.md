@@ -23,6 +23,15 @@ The DLL does nothing on its own and must be loaded into the game via external to
 ## Multiplayer Use
 Multiplayer use is restricted to certain gateways. This cannot be changed easily and prevents unintentional abuse where it is not allowed (i.e. Battle.net). If used in unpermitted environments, the resolution is hardcoded to run with only 640x480 or 800x600. It is also still possible to be detected by anti-cheat systems and be banned for unauthorized modification of the game client, even if the functionality is ineffective. Where it is permitted, the resolutions are preset for the server.
 
+Any server owner that wishes to authorize the usage of SGD2FreeRes on their server should contact Mir Drualga on the SlashDiablo Discord.
+
+Servers that permit SGD2FreeRes:
+- [Diablo 09](https://www.diablo09.com/): 640x480, 800x600, 1068x600
+- [SlashDiablo](https://slashdiablo.net/): 640x480, 800x600, 1068x600
+- [Resurgence](https://resurgence.slashgaming.net/): 640x480, 800x600, 1068x600
+- [Project Diablo 2](https://www.projectdiablo2.com/): 640x480, 800x600, 1068x600
+- [D2LOD.NET](http://d2lod.net/): 640x480, 800x600, 1024x768, 1068x600
+
 ## Contribution
 SGD2FreeRes is coded in C++20. It currently is intended to compile with Visual Studio 2019.
 
