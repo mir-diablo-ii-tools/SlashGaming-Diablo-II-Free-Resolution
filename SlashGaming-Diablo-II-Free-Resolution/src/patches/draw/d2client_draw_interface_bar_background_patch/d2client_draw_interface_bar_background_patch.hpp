@@ -46,19 +46,20 @@
 #ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_HPP_
 #define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_HPP_
 
-#include <variant>
-
 #include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 class DrawInterfaceBarBackgroundPatch {
  public:
-  using PatchVariant = std::variant<
-      DrawInterfaceBarBackgroundPatch_1_09D
-  >;
+  union PatchVariant {
+    DrawInterfaceBarBackgroundPatch_1_09D* patch_1_09d;
+  };
 
   DrawInterfaceBarBackgroundPatch();
+
+  ~DrawInterfaceBarBackgroundPatch();
 
   void Apply();
   void Remove();
@@ -69,6 +70,7 @@ class DrawInterfaceBarBackgroundPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_HPP_

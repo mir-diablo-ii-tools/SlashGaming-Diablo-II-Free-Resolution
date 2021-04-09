@@ -46,13 +46,11 @@
 #ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_1_09D_HPP_
 #define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_1_09D_HPP_
 
-#include <cstddef>
-#include <utility>
-#include <vector>
-
 #include <sgd2mapi.hpp>
+#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 class DrawInterfaceBarBackgroundPatch_1_09D {
  public:
@@ -62,18 +60,16 @@ class DrawInterfaceBarBackgroundPatch_1_09D {
   void Remove();
 
  private:
-  using PatchAddressAndSize = ::std::pair<
-      ::mapi::GameAddress,
-      ::std::size_t
-  >;
+  enum {
+    kPatchesCount = 1
+  };
 
-  std::vector<mapi::GamePatch> patches_;
-
-  static std::vector<mapi::GamePatch> MakePatches();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_1_09D_HPP_

@@ -45,6 +45,8 @@
 
 #include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,44 +54,37 @@ D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 DrawInterfaceBarBackgroundPatch_1_09D
 ::DrawInterfaceBarBackgroundPatch_1_09D()
-    : patches_(MakePatches()) {
+    : patches_() {
+  // Draw the new interface bar background.
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      mapi::BranchType::kCall,
+      &D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
 void DrawInterfaceBarBackgroundPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = 0; i < kPatchesCount; i += 1) {
+    this->patches_[i].Apply();
   }
 }
 
 void DrawInterfaceBarBackgroundPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
+  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
+    this->patches_[i].Remove();
   }
 }
 
-std::vector<mapi::GamePatch>
-DrawInterfaceBarBackgroundPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  // Draw the new interface bar background.
-  PatchAddressAndSize patch_address_and_size = GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size.first,
-          mapi::BranchType::kCall,
-          &D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size.second
-      )
-  );
-
-  return patches;
-}
-
-DrawInterfaceBarBackgroundPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -126,4 +121,5 @@ DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
