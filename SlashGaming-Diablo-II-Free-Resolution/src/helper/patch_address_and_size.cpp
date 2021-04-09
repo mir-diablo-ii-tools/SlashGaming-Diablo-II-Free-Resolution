@@ -43,25 +43,16 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_PATCH_ADDRESS_AND_SIZE_HPP_
-#define SGD2FR_HELPER_PATCH_ADDRESS_AND_SIZE_HPP_
-
-#include <stddef.h>
-
-#include <sgd2mapi.hpp>
+#include "patch_address_and_size.hpp"
 
 namespace sgd2fr {
 
-struct PatchAddressAndSize {
-  ::mapi::GameAddress first;
-  size_t second;
-
-  PatchAddressAndSize(
-      ::mapi::GameAddress patch_address,
-      size_t patch_size
-  );
-};
+PatchAddressAndSize::PatchAddressAndSize(
+    ::mapi::GameAddress patch_address,
+    size_t patch_size
+)
+    : first(patch_address),
+      second(patch_size) {
+}
 
 } // namespace sgd2fr
-
-#endif // SGD2FR_HELPER_PATCH_ADDRESS_AND_SIZE_HPP_
