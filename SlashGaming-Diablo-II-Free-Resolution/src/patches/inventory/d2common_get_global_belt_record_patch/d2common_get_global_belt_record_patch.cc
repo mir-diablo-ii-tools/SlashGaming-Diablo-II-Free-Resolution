@@ -45,35 +45,71 @@
 
 #include "d2common_get_global_belt_record_patch.hpp"
 
-namespace sgd2fr::patches::d2common {
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2common {
 
 GetGlobalBeltRecordPatch::GetGlobalBeltRecordPatch()
-  : patch_(MakePatch()) {
+    : patch_(MakePatch()) {
 }
 
-void GetGlobalBeltRecordPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
-}
-
-void GetGlobalBeltRecordPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
-
-GetGlobalBeltRecordPatch::PatchVariant
-GetGlobalBeltRecordPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+GetGlobalBeltRecordPatch::~GetGlobalBeltRecordPatch() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D:
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
-      return GetGlobalBeltRecordPatch_1_09D();
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      delete this->patch_.patch_1_09d;
+      break;
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2common
+void GetGlobalBeltRecordPatch::Apply() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_09d->Apply();
+      break;
+    }
+  }
+}
+
+void GetGlobalBeltRecordPatch::Remove() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_09d->Remove();
+      break;
+    }
+  }
+}
+
+GetGlobalBeltRecordPatch::PatchVariant
+GetGlobalBeltRecordPatch::MakePatch() {
+  PatchVariant patch;
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      patch.patch_1_09d = new GetGlobalBeltRecordPatch_1_09D();
+      break;
+    }
+  }
+
+  return patch;
+}
+
+} // namespace d2common
+} // namespace sgd2fr

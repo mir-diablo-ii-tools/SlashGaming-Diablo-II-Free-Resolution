@@ -45,35 +45,71 @@
 
 #include "d2common_get_global_inventory_grid_layout_patch.hpp"
 
-namespace sgd2fr::patches::d2common {
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2common {
 
 GetGlobalInventoryGridLayoutPatch::GetGlobalInventoryGridLayoutPatch()
-  : patch_(MakePatch()) {
+    : patch_(MakePatch()) {
 }
 
-void GetGlobalInventoryGridLayoutPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
-}
-
-void GetGlobalInventoryGridLayoutPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
-
-GetGlobalInventoryGridLayoutPatch::PatchVariant
-GetGlobalInventoryGridLayoutPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+GetGlobalInventoryGridLayoutPatch::~GetGlobalInventoryGridLayoutPatch() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D:
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
-      return GetGlobalInventoryGridLayoutPatch_1_09D();
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      delete this->patch_.patch_1_09d;
+      break;
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2common
+void GetGlobalInventoryGridLayoutPatch::Apply() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_09d->Apply();
+      break;
+    }
+  }
+}
+
+void GetGlobalInventoryGridLayoutPatch::Remove() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_09d->Remove();
+      break;
+    }
+  }
+}
+
+GetGlobalInventoryGridLayoutPatch::PatchVariant
+GetGlobalInventoryGridLayoutPatch::MakePatch() {
+  PatchVariant patch;
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      patch.patch_1_09d = new GetGlobalInventoryGridLayoutPatch_1_09D();
+      break;
+    }
+  }
+
+  return patch;
+}
+
+} // namespace d2common
+} // namespace sgd2fr

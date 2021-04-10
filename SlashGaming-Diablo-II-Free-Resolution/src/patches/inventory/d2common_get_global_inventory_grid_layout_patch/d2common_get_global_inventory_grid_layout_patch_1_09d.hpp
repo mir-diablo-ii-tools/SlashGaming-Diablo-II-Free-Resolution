@@ -46,11 +46,11 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
 
-#include <vector>
-
 #include <sgd2mapi.hpp>
+#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr::patches::d2common {
+namespace sgd2fr {
+namespace d2common {
 
 class GetGlobalInventoryGridLayoutPatch_1_09D {
  public:
@@ -60,18 +60,16 @@ class GetGlobalInventoryGridLayoutPatch_1_09D {
   void Remove();
 
  private:
-  using PatchAddressAndSize = ::std::pair<
-      ::mapi::GameAddress,
-      ::std::size_t
-  >;
+  enum {
+    kPatchesCount = 1
+  };
 
-  std::vector<mapi::GamePatch> patches_;
-
-  static std::vector<mapi::GamePatch> MakePatches();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_

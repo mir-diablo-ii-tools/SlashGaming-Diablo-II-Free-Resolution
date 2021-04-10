@@ -45,6 +45,8 @@
 
 #include "d2common_get_global_belt_record_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,43 +54,35 @@ D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2common {
+namespace sgd2fr {
+namespace d2common {
 
 GetGlobalBeltRecordPatch_1_09D::GetGlobalBeltRecordPatch_1_09D()
-  : patches_(MakePatches()) {
+    : patches_() {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kJump,
+      &D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
 void GetGlobalBeltRecordPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = 0; i < kPatchesCount; i += 1) {
+    this->patches_[i].Apply();
   }
 }
 
 void GetGlobalBeltRecordPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
+  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
+    this->patches_[i].Remove();
   }
 }
 
-std::vector<mapi::GamePatch>
-GetGlobalBeltRecordPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kJump,
-          &D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
-  );
-
-  return patches;
-}
-
-GetGlobalBeltRecordPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 GetGlobalBeltRecordPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -125,4 +119,5 @@ GetGlobalBeltRecordPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr

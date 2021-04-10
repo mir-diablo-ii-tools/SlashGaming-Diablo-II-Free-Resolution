@@ -45,9 +45,7 @@
 
 #include "inventory_patches.hpp"
 
-namespace sgd2fr::patches {
-
-InventoryPatches::InventoryPatches() = default;
+namespace sgd2fr {
 
 void InventoryPatches::Apply() {
   this->d2common_get_global_belt_record_patch_.Apply();
@@ -65,4 +63,4 @@ void InventoryPatches::Remove() {
   this->d2common_get_global_belt_record_patch_.Remove();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

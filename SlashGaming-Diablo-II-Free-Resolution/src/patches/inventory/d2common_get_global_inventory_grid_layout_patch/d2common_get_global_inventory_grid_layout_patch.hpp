@@ -46,20 +46,20 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2common_get_global_inventory_grid_layout_patch_1_09d.hpp"
 
-namespace sgd2fr::patches::d2common {
+namespace sgd2fr {
+namespace d2common {
 
 class GetGlobalInventoryGridLayoutPatch {
  public:
-  using PatchVariant = std::variant<
-      GetGlobalInventoryGridLayoutPatch_1_09D
-  >;
+  union PatchVariant {
+    GetGlobalInventoryGridLayoutPatch_1_09D* patch_1_09d;
+  };
 
   GetGlobalInventoryGridLayoutPatch();
+
+  ~GetGlobalInventoryGridLayoutPatch();
 
   void Apply();
   void Remove();
@@ -70,6 +70,7 @@ class GetGlobalInventoryGridLayoutPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_HPP_

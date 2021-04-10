@@ -46,20 +46,20 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2common_get_global_equipment_slot_layout_patch_1_09d.hpp"
 
-namespace sgd2fr::patches::d2common {
+namespace sgd2fr {
+namespace d2common {
 
 class GetGlobalEquipmentSlotLayoutPatch {
  public:
-  using PatchVariant = std::variant<
-      GetGlobalEquipmentSlotLayoutPatch_1_09D
-  >;
+  union PatchVariant {
+    GetGlobalEquipmentSlotLayoutPatch_1_09D* patch_1_09d;
+  };
 
   GetGlobalEquipmentSlotLayoutPatch();
+
+  ~GetGlobalEquipmentSlotLayoutPatch();
 
   void Apply();
   void Remove();
@@ -70,6 +70,7 @@ class GetGlobalEquipmentSlotLayoutPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_HPP_
