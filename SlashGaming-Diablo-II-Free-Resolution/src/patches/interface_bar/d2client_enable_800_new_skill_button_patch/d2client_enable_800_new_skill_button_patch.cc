@@ -45,38 +45,87 @@
 
 #include "d2client_enable_800_new_skill_button_patch.hpp"
 
-namespace sgd2fr::patches::d2client {
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2client {
 
 Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch()
     : patch_(MakePatch()) {
 }
 
-void Enable800NewSkillButtonPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
-}
-
-void Enable800NewSkillButtonPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
-
-Enable800NewSkillButtonPatch::PatchVariant
-Enable800NewSkillButtonPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+Enable800NewSkillButtonPatch::~Enable800NewSkillButtonPatch() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
-      return Enable800NewSkillButtonPatch_1_09D();
+      delete this->patch_.patch_1_09d;
+      break;
     }
 
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      return Enable800NewSkillButtonPatch_1_13C();
+      delete this->patch_.patch_1_13c;
+      break;
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+void Enable800NewSkillButtonPatch::Apply() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      this->patch_.patch_1_09d->Apply();
+      break;
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_13c->Apply();
+      break;
+    }
+  }
+}
+
+void Enable800NewSkillButtonPatch::Remove() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      this->patch_.patch_1_09d->Remove();
+      break;
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_13c->Remove();
+      break;
+    }
+  }
+}
+
+Enable800NewSkillButtonPatch::PatchVariant
+Enable800NewSkillButtonPatch::MakePatch() {
+  PatchVariant patch;
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      patch.patch_1_09d = new Enable800NewSkillButtonPatch_1_09D();
+      break;
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      patch.patch_1_13c = new Enable800NewSkillButtonPatch_1_13C();
+      break;
+    }
+  }
+
+  return patch;
+}
+
+} // namespace d2client
+} // namespace sgd2fr

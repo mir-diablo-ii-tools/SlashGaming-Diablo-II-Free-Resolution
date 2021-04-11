@@ -46,17 +46,14 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
 
-#include <sgd2mapi.hpp>
 #include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
 #include "d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
 #include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
 class InterfaceBarPatches {
  public:
-  InterfaceBarPatches();
-
   void Apply();
   void Remove();
 
@@ -71,6 +68,6 @@ class InterfaceBarPatches {
       d2client_enable_800_new_stats_button_patch_;
 };
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_

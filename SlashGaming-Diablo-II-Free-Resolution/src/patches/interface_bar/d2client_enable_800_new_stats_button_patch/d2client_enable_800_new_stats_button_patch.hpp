@@ -46,22 +46,22 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
 #include "d2client_enable_800_new_stats_button_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 class Enable800NewStatsButtonPatch {
  public:
-  using PatchVariant = std::variant<
-      Enable800NewStatsButtonPatch_1_09D,
-      Enable800NewStatsButtonPatch_1_13C
-  >;
+  union PatchVariant {
+    Enable800NewStatsButtonPatch_1_09D* patch_1_09d;
+    Enable800NewStatsButtonPatch_1_13C* patch_1_13c;
+  };
 
   Enable800NewStatsButtonPatch();
+
+  ~Enable800NewStatsButtonPatch();
 
   void Apply();
   void Remove();
@@ -72,6 +72,7 @@ class Enable800NewStatsButtonPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_HPP_
