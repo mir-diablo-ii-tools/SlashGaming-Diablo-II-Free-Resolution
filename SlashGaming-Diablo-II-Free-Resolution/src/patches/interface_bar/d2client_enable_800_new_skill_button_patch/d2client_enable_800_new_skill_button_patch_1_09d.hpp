@@ -64,7 +64,7 @@ class Enable800NewSkillButtonPatch_1_09D {
     kPatchesCount = 18
   };
 
-  ::mapi::GamePatch patches_[18];
+  ::mapi::GamePatch patches_[kPatchesCount];
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
   static PatchAddressAndSize GetPatchAddressAndSize02();
