@@ -45,9 +45,7 @@
 
 #include "required_patches.hpp"
 
-namespace sgd2fr::patches {
-
-RequiredPatches::RequiredPatches() = default;
+namespace sgd2fr {
 
 void RequiredPatches::Apply() {
   this->d2client_disable_mouse_click_on_screen_patch_.Apply();
@@ -95,4 +93,4 @@ void RequiredPatches::Remove() {
   this->d2client_disable_mouse_click_on_screen_patch_.Remove();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

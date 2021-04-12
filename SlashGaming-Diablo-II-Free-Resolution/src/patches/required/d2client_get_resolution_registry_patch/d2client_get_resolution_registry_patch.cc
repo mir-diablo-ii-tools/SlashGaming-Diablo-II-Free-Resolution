@@ -45,38 +45,87 @@
 
 #include "d2client_get_resolution_registry_patch.hpp"
 
-namespace sgd2fr::patches::d2client {
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2client {
 
 GetResolutionRegistryPatch::GetResolutionRegistryPatch()
   : patch_(MakePatch()) {
 }
 
-void GetResolutionRegistryPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
-}
-
-void GetResolutionRegistryPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
-
-GetResolutionRegistryPatch::PatchVariant
-GetResolutionRegistryPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+GetResolutionRegistryPatch::~GetResolutionRegistryPatch() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
-      return GetResolutionRegistryPatch_1_09D();
+    case ::d2::GameVersion::k1_09D: {
+      delete this->patch_.patch_1_09d;
+      break;
     }
 
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
-      return GetResolutionRegistryPatch_1_13C();
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      delete this->patch_.patch_1_13c;
+      break;
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+void GetResolutionRegistryPatch::Apply() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      this->patch_.patch_1_09d->Apply();
+      break;
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_13c->Apply();
+      break;
+    }
+  }
+}
+
+void GetResolutionRegistryPatch::Remove() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      this->patch_.patch_1_09d->Remove();
+      break;
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      this->patch_.patch_1_13c->Remove();
+      break;
+    }
+  }
+}
+
+GetResolutionRegistryPatch::PatchVariant
+GetResolutionRegistryPatch::MakePatch() {
+  PatchVariant patch;
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      patch.patch_1_09d = new GetResolutionRegistryPatch_1_09D();
+      break;
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      patch.patch_1_13c = new GetResolutionRegistryPatch_1_13C();
+      break;
+    }
+  }
+
+  return patch;
+}
+
+} // namespace d2client
+} // namespace sgd2fr

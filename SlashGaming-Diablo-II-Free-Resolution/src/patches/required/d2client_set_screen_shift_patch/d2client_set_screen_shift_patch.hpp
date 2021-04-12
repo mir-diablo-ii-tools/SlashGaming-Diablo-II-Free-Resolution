@@ -46,20 +46,20 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_D2CLIENT_SET_SCREEN_SHIFT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_D2CLIENT_SET_SCREEN_SHIFT_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2client_set_screen_shift_patch_1_09d.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 class SetScreenShiftPatch {
  public:
-  using PatchVariant = std::variant<
-      SetScreenShiftPatch_1_09D
-  >;
+  union PatchVariant {
+    SetScreenShiftPatch_1_09D* patch_1_09d;
+  };
 
   SetScreenShiftPatch();
+
+  ~SetScreenShiftPatch();
 
   void Apply();
   void Remove();
@@ -70,6 +70,7 @@ class SetScreenShiftPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_D2CLIENT_SET_SCREEN_SHIFT_PATCH_HPP_

@@ -45,6 +45,8 @@
 
 #include "d2client_set_general_display_width_and_height_patch_1_09.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,44 +54,36 @@ D2Client_SetGeneralDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 SetGeneralDisplayWidthAndHeightPatch_1_09D
 ::SetGeneralDisplayWidthAndHeightPatch_1_09D()
-  : patches_(MakePatches()) {
+    : patches_() {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_SetGeneralDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
 void SetGeneralDisplayWidthAndHeightPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = 0; i < kPatchesCount; i += 1) {
+    this->patches_[i].Apply();
   }
 }
 
 void SetGeneralDisplayWidthAndHeightPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
+    this->patches_[i].Remove();
   }
 }
 
-std::vector<mapi::GamePatch>
-SetGeneralDisplayWidthAndHeightPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Client_SetGeneralDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
-  );
-
-  return patches;
-}
-
-SetGeneralDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 SetGeneralDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -126,4 +120,5 @@ SetGeneralDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

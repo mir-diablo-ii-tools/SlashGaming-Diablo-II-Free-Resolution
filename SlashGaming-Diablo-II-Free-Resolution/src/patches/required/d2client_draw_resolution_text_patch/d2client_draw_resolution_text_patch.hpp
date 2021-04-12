@@ -46,22 +46,22 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2client_draw_resolution_text_patch_1_09d.hpp"
 #include "d2client_draw_resolution_text_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 class DrawResolutionTextPatch {
  public:
-  using PatchVariant = std::variant<
-      DrawResolutionTextPatch_1_09D,
-      DrawResolutionTextPatch_1_13C
-  >;
+  union PatchVariant {
+    DrawResolutionTextPatch_1_09D* patch_1_09d;
+    DrawResolutionTextPatch_1_13C* patch_1_13c;
+  };
 
   DrawResolutionTextPatch();
+
+  ~DrawResolutionTextPatch();
 
   void Apply();
   void Remove();
@@ -72,6 +72,7 @@ class DrawResolutionTextPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_HPP_

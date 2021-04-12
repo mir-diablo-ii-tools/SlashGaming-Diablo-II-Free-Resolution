@@ -46,22 +46,22 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2client_get_resolution_registry_patch_1_09d.hpp"
 #include "d2client_get_resolution_registry_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 class GetResolutionRegistryPatch {
  public:
-  using PatchVariant = std::variant<
-      GetResolutionRegistryPatch_1_09D,
-      GetResolutionRegistryPatch_1_13C
-  >;
+  union PatchVariant {
+    GetResolutionRegistryPatch_1_09D* patch_1_09d;
+    GetResolutionRegistryPatch_1_13C* patch_1_13c;
+  };
 
   GetResolutionRegistryPatch();
+
+  ~GetResolutionRegistryPatch();
 
   void Apply();
   void Remove();
@@ -72,6 +72,7 @@ class GetResolutionRegistryPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_HPP_

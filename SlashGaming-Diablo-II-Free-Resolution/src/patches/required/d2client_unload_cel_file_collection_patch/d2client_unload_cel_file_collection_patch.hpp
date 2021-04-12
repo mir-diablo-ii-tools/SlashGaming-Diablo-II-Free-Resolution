@@ -46,22 +46,22 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2client_unload_cel_file_collection_patch_1_09d.hpp"
 #include "d2client_unload_cel_file_collection_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 class UnloadCelFileCollectionPatch {
  public:
-  using PatchVariant = std::variant<
-      UnloadCelFileCollectionPatch_1_09D,
-      UnloadCelFileCollectionPatch_1_13C
-  >;
+  union PatchVariant {
+    UnloadCelFileCollectionPatch_1_09D* patch_1_09d;
+    UnloadCelFileCollectionPatch_1_13C* patch_1_13c;
+  };
 
   UnloadCelFileCollectionPatch();
+
+  ~UnloadCelFileCollectionPatch();
 
   void Apply();
   void Remove();
@@ -72,6 +72,7 @@ class UnloadCelFileCollectionPatch {
   static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
