@@ -46,33 +46,31 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
 
-#include <optional>
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2ddraw_set_cel_display_left_and_right_patch_1_09d.hpp"
 
-namespace sgd2fr::patches::d2ddraw {
+namespace sgd2fr {
+namespace d2ddraw {
 
 class SetCelDisplayLeftAndRightPatch {
  public:
-  using PatchVariant = std::variant<
-      SetCelDisplayLeftAndRightPatch_1_09D
-  >;
-
-  using PatchType = std::optional<PatchVariant>;
+  union PatchVariant {
+    SetCelDisplayLeftAndRightPatch_1_09D* patch_1_09d;
+  };
 
   SetCelDisplayLeftAndRightPatch();
+
+  ~SetCelDisplayLeftAndRightPatch();
 
   void Apply();
   void Remove();
 
  private:
-  PatchType patch_;
+  PatchVariant patch_;
 
-  static PatchType MakePatch();
+  static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2ddraw
+} // namespace d2ddraw
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_

@@ -46,35 +46,33 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <optional>
-#include <variant>
-
-#include <sgd2mapi.hpp>
 #include "d2ddraw_set_bit_block_width_and_height_patch_1_09d.hpp"
 #include "d2ddraw_set_bit_block_width_and_height_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2ddraw {
+namespace sgd2fr {
+namespace d2ddraw {
 
 class SetBitBlockWidthAndHeightPatch {
  public:
-  using PatchVariant = std::variant<
-      SetBitBlockWidthAndHeightPatch_1_09D,
-      SetBitBlockWidthAndHeightPatch_1_13C
-  >;
-
-  using PatchType = std::optional<PatchVariant>;
+  union PatchVariant {
+    SetBitBlockWidthAndHeightPatch_1_09D* patch_1_09d;
+    SetBitBlockWidthAndHeightPatch_1_13C* patch_1_13c;
+  };
 
   SetBitBlockWidthAndHeightPatch();
+
+  ~SetBitBlockWidthAndHeightPatch();
 
   void Apply();
   void Remove();
 
  private:
-  PatchType patch_;
+  PatchVariant patch_;
 
-  static PatchType MakePatch();
+  static PatchVariant MakePatch();
 };
 
-} // namespace sgd2fr::patches::d2ddraw
+} // namespace d2ddraw
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_

@@ -45,6 +45,8 @@
 
 #include "d2ddraw_set_display_width_and_height_patch_1_13c.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,52 +54,43 @@ D2DDraw_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2ddraw {
+namespace sgd2fr {
+namespace d2ddraw {
 
 SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
-  : patches_(MakePatches()) {
+    : patches_() {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2DDraw_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
+  );
+  this->patches_[1].Swap(patch_02);
 }
 
 void SetDisplayWidthAndHeightPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = 0; i < kPatchesCount; i += 1) {
+    this->patches_[i].Apply();
   }
 }
 
 void SetDisplayWidthAndHeightPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
+    this->patches_[i].Remove();
   }
 }
 
-std::vector<mapi::GamePatch>
-SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2DDraw_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
-  );
-
-  PatchAddressAndSize patch_address_and_size_02 =
-      GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_02.first,
-          patch_address_and_size_02.second
-      )
-  );
-
-  return patches;
-}
-
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -164,7 +157,7 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   }
 }
 
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -231,4 +224,5 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
   }
 }
 
-} // namespace sgd2fr::patches::d2ddraw
+} // namespace d2ddraw
+} // namespace sgd2fr

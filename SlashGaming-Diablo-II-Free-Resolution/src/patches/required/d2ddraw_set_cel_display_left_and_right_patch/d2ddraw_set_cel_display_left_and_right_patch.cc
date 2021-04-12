@@ -45,36 +45,23 @@
 
 #include "d2ddraw_set_cel_display_left_and_right_patch.hpp"
 
-namespace sgd2fr::patches::d2ddraw {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2ddraw {
 
 SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
-  : patch_(MakePatch()) {
+    : patch_(MakePatch()) {
 }
 
-void SetCelDisplayLeftAndRightPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
-}
-
-void SetCelDisplayLeftAndRightPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
-
-SetCelDisplayLeftAndRightPatch::PatchType
-SetCelDisplayLeftAndRightPatch::MakePatch() {
-  d2::VideoMode video_mode = d2::DetermineVideoMode();
-  if (video_mode != d2::VideoMode::kDirectDraw) {
-    return std::nullopt;
+SetCelDisplayLeftAndRightPatch::~SetCelDisplayLeftAndRightPatch() {
+  if (this->patch_.patch_1_09d == NULL) {
+    return;
   }
 
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_07Beta:
@@ -96,9 +83,117 @@ SetCelDisplayLeftAndRightPatch::MakePatch() {
     case ::d2::GameVersion::kLod1_14B:
     case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      return SetCelDisplayLeftAndRightPatch_1_09D();
+      delete this->patch_.patch_1_09d;
+      break;
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2ddraw
+void SetCelDisplayLeftAndRightPatch::Apply() {
+  if (this->patch_.patch_1_09d == NULL) {
+    return;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_11B:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      this->patch_.patch_1_09d->Apply();
+      break;
+    }
+  }
+}
+
+void SetCelDisplayLeftAndRightPatch::Remove() {
+  if (this->patch_.patch_1_09d == NULL) {
+    return;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_11B:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      this->patch_.patch_1_09d->Remove();
+      break;
+    }
+  }
+}
+
+SetCelDisplayLeftAndRightPatch::PatchVariant
+SetCelDisplayLeftAndRightPatch::MakePatch() {
+  PatchVariant patch;
+
+  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  if (video_mode != ::d2::VideoMode::kDirectDraw) {
+    patch.patch_1_09d = NULL;
+    return patch;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_11B:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      patch.patch_1_09d = new SetCelDisplayLeftAndRightPatch_1_09D();
+      break;
+    }
+  }
+
+  return patch;
+}
+
+} // namespace d2ddraw
+} // namespace sgd2fr
