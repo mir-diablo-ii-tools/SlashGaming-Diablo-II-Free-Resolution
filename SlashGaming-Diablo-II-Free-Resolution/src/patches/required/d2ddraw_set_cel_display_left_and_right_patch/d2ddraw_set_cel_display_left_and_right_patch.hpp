@@ -46,28 +46,21 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
 
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2ddraw_set_cel_display_left_and_right_patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2ddraw {
 
-class SetCelDisplayLeftAndRightPatch {
+class SetCelDisplayLeftAndRightPatch
+    : public AbstractMultiversionPatch {
  public:
-  union PatchVariant {
-    SetCelDisplayLeftAndRightPatch_1_09D* patch_1_09d;
-  };
-
   SetCelDisplayLeftAndRightPatch();
 
-  ~SetCelDisplayLeftAndRightPatch();
-
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2ddraw

@@ -53,116 +53,17 @@ namespace sgd2fr {
 namespace d2ddraw {
 
 SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-SetCelDisplayLeftAndRightPatch::~SetCelDisplayLeftAndRightPatch() {
-  if (this->patch_.patch_1_09d == NULL) {
-    return;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
-  }
-}
-
-void SetCelDisplayLeftAndRightPatch::Apply() {
-  if (this->patch_.patch_1_09d == NULL) {
-    return;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-  }
-}
-
-void SetCelDisplayLeftAndRightPatch::Remove() {
-  if (this->patch_.patch_1_09d == NULL) {
-    return;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-  }
-}
-
-SetCelDisplayLeftAndRightPatch::PatchVariant
-SetCelDisplayLeftAndRightPatch::MakePatch() {
-  PatchVariant patch;
-
+bool SetCelDisplayLeftAndRightPatch::IsApplicable() {
   ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  if (video_mode != ::d2::VideoMode::kDirectDraw) {
-    patch.patch_1_09d = NULL;
-    return patch;
+  return (video_mode == ::d2::VideoMode::kDirectDraw);
+}
+
+AbstractVersionPatch* SetCelDisplayLeftAndRightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
@@ -187,12 +88,9 @@ SetCelDisplayLeftAndRightPatch::MakePatch() {
     case ::d2::GameVersion::kLod1_14B:
     case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      patch.patch_1_09d = new SetCelDisplayLeftAndRightPatch_1_09D();
-      break;
+      return new SetCelDisplayLeftAndRightPatch_1_09D();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2ddraw

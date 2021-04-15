@@ -53,128 +53,18 @@ namespace sgd2fr {
 namespace d2ddraw {
 
 SetBitBlockWidthAndHeightPatch::SetBitBlockWidthAndHeightPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-SetBitBlockWidthAndHeightPatch::~SetBitBlockWidthAndHeightPatch() {
-  if (this->patch_.patch_1_09d == NULL) {
-    return;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
-
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_13c;
-      break;
-    }
-  }
-}
-
-void SetBitBlockWidthAndHeightPatch::Apply() {
-  if (this->patch_.patch_1_09d == NULL) {
-    return;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_13c->Apply();
-      break;
-    }
-  }
-}
-
-void SetBitBlockWidthAndHeightPatch::Remove() {
-  if (this->patch_.patch_1_09d == NULL) {
-    return;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_13c->Remove();
-      break;
-    }
-  }
-}
-
-SetBitBlockWidthAndHeightPatch::PatchVariant
-SetBitBlockWidthAndHeightPatch::MakePatch() {
-  PatchVariant patch;
-
+bool SetBitBlockWidthAndHeightPatch::IsApplicable() {
   ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  if (video_mode != ::d2::VideoMode::kDirectDraw) {
-    patch.patch_1_09d = NULL;
-    return patch;
+  return (video_mode == ::d2::VideoMode::kDirectDraw);
+}
+
+AbstractVersionPatch*
+SetBitBlockWidthAndHeightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
@@ -193,8 +83,7 @@ SetBitBlockWidthAndHeightPatch::MakePatch() {
     case ::d2::GameVersion::kLod1_14B:
     case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      patch.patch_1_09d = new SetBitBlockWidthAndHeightPatch_1_09D();
-      break;
+      return new SetBitBlockWidthAndHeightPatch_1_09D();
     }
 
     case ::d2::GameVersion::k1_11:
@@ -203,12 +92,9 @@ SetBitBlockWidthAndHeightPatch::MakePatch() {
     case ::d2::GameVersion::k1_13ABeta:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_13c = new SetBitBlockWidthAndHeightPatch_1_13C();
-      break;
+      return new SetBitBlockWidthAndHeightPatch_1_13C();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2ddraw

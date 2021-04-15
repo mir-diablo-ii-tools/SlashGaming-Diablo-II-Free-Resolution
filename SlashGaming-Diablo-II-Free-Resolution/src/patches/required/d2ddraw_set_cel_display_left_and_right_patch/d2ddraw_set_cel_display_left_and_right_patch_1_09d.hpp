@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2ddraw {
 
-class SetCelDisplayLeftAndRightPatch_1_09D {
+class SetCelDisplayLeftAndRightPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   SetCelDisplayLeftAndRightPatch_1_09D();
 
