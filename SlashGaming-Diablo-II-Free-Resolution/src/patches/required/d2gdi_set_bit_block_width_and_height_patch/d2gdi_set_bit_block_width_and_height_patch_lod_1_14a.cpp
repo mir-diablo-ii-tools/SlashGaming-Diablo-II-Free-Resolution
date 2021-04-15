@@ -62,7 +62,7 @@ SetBitBlockWidthAndHeightPatch_Lod1_14A
     : patches_() {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = mapi::GamePatch::MakeGameBranchPatch(
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
       &D2GDI_SetBitBlockWidthAndHeightPatch_Lod1_14A_InterceptionFunc01,
