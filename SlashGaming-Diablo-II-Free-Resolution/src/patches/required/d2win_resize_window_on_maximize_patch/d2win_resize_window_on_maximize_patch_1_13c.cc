@@ -45,6 +45,8 @@
 
 #include "d2win_resize_window_on_maximize_patch_1_13c.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,63 +54,54 @@ D2Win_ResizeWindowOnMaximizePatch_1_13C_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2win {
+namespace sgd2fr {
+namespace d2win {
 
 ResizeWindowOnMaximizePatch_1_13C::ResizeWindowOnMaximizePatch_1_13C()
-  : patches_(MakePatches()) {
+    : patches_() {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Win_ResizeWindowOnMaximizePatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
+  );
+  this->patches_[1].Swap(patch_02);
 }
 
 void ResizeWindowOnMaximizePatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = 0; i < kPatchesCount; i += 1) {
+    this->patches_[i].Apply();
   }
 }
 
 void ResizeWindowOnMaximizePatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
+    this->patches_[i].Remove();
   }
 }
 
-std::vector<mapi::GamePatch>
-ResizeWindowOnMaximizePatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Win_ResizeWindowOnMaximizePatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
-  );
-
-  PatchAddressAndSize patch_address_and_size_02 =
-      GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_02.first,
-          patch_address_and_size_02.second
-      )
-  );
-
-  return patches;
-}
-
-ResizeWindowOnMaximizePatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 ResizeWindowOnMaximizePatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2Win,
-            0x175C8
-        ),
-        0x175D9 - 0x175C8
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Win,
+              0x175C8
+          ),
+          0x175D9 - 0x175C8
       );
     }
 
@@ -124,7 +117,7 @@ ResizeWindowOnMaximizePatch_1_13C::GetPatchAddressAndSize01() {
   }
 }
 
-ResizeWindowOnMaximizePatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 ResizeWindowOnMaximizePatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -151,4 +144,5 @@ ResizeWindowOnMaximizePatch_1_13C::GetPatchAddressAndSize02() {
   }
 }
 
-} // namespace sgd2fr::patches::d2win
+} // namespace d2win
+} // namespace sgd2fr

@@ -46,32 +46,25 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2gfx_set_display_width_and_height_patch_1_09d.hpp"
 #include "d2gfx_set_display_width_and_height_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2gfx {
+namespace sgd2fr {
+namespace d2gfx {
 
-class SetDisplayWidthAndHeightPatch {
+class SetDisplayWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      SetDisplayWidthAndHeightPatch_1_09D,
-      SetDisplayWidthAndHeightPatch_1_13C
-  >;
-
   SetDisplayWidthAndHeightPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

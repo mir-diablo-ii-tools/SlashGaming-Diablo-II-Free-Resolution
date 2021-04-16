@@ -99,40 +99,40 @@ class RequiredPatches {
   d2client::UnloadCelFileCollectionPatch
       d2client_unload_cel_file_collection_patch_;
 
-  sgd2fr::patches::d2ddraw::SetBitBlockWidthAndHeightPatch
+  d2ddraw::SetBitBlockWidthAndHeightPatch
       d2ddraw_set_bit_block_width_and_height_patch_;
 
-  sgd2fr::patches::d2ddraw::SetCelDisplayLeftAndRightPatch
+  d2ddraw::SetCelDisplayLeftAndRightPatch
       d2ddraw_set_cel_display_left_and_right_patch_;
 
-  sgd2fr::patches::d2ddraw::SetDisplayWidthAndHeightPatch
+  d2ddraw::SetDisplayWidthAndHeightPatch
       d2ddraw_set_display_width_and_height_patch_;
 
-  sgd2fr::patches::d2direct3d::SetDisplayWidthAndHeightPatch
+  d2direct3d::SetDisplayWidthAndHeightPatch
       d2direct3d_set_display_width_and_height_patch_;
 
-  sgd2fr::patches::d2gdi::SetBitBlockWidthAndHeightPatch
+  d2gdi::SetBitBlockWidthAndHeightPatch
       d2gdi_set_bit_block_width_and_height_patch_;
 
-  sgd2fr::patches::d2gdi::SetCelDisplayLeftAndRightPatch
+  d2gdi::SetCelDisplayLeftAndRightPatch
       d2gdi_set_cel_display_left_and_right_patch_;
 
-  sgd2fr::patches::d2gfx::IsNeedResizeWindowPatch
+  d2gfx::IsNeedResizeWindowPatch
       d2gfx_is_need_resize_window_patch_;
 
-  sgd2fr::patches::d2gfx::IsNeedRestoreDownWindowPatch
+  d2gfx::IsNeedRestoreDownWindowPatch
       d2gfx_is_need_restore_down_window_patch_;
 
-  sgd2fr::patches::d2gfx::SetDisplayWidthAndHeightPatch
+  d2gfx::SetDisplayWidthAndHeightPatch
       d2gfx_set_display_width_and_height_patch_;
 
-  sgd2fr::patches::d2glide::SetDisplayWidthAndHeightPatch
+  d2glide::SetDisplayWidthAndHeightPatch
       d2glide_set_display_width_and_height_patch_;
 
-  sgd2fr::patches::d2win::ResizeWindowOnMaximizePatch
+  d2win::ResizeWindowOnMaximizePatch
       d2win_resize_window_on_maximize_patch_;
 
-  sgd2fr::patches::glide3x::GrSstWinOpenPatch
+  glide3x::GrSstWinOpenPatch
       glide3x_gr_sst_win_open_patch_;
 };
 

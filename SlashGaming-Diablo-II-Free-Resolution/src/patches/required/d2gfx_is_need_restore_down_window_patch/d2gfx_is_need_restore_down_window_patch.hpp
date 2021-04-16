@@ -46,33 +46,24 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_HPP_
 
-#include <optional>
-#include <variant>
-
-#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2gfx_is_need_restore_down_window_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2gfx {
+namespace sgd2fr {
+namespace d2gfx {
 
-class IsNeedRestoreDownWindowPatch {
+class IsNeedRestoreDownWindowPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      IsNeedRestoreDownWindowPatch_1_13C
-  >;
-
-  using PatchType = ::std::optional<PatchVariant>;
-
   IsNeedRestoreDownWindowPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchType patch_;
-
-  static PatchType MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_HPP_

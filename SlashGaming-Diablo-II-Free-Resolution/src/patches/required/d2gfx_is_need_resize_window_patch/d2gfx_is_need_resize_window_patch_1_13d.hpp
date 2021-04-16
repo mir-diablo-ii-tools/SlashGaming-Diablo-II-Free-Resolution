@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_1_13D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2gfx {
 
-class IsNeedResizeWindowPatch_1_13D {
+class IsNeedResizeWindowPatch_1_13D
+    : public AbstractVersionPatch {
  public:
   IsNeedResizeWindowPatch_1_13D();
 

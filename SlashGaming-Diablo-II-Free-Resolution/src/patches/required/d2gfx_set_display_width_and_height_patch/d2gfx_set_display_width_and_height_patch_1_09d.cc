@@ -45,6 +45,8 @@
 
 #include "d2gfx_set_display_width_and_height_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,43 +54,35 @@ D2GFX_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2gfx {
+namespace sgd2fr {
+namespace d2gfx {
 
 SetDisplayWidthAndHeightPatch_1_09D::SetDisplayWidthAndHeightPatch_1_09D()
-  : patches_(MakePatches()) {
+    : patches_() {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GFX_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
 void SetDisplayWidthAndHeightPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = 0; i < kPatchesCount; i += 1) {
+    this->patches_[i].Apply();
   }
 }
 
 void SetDisplayWidthAndHeightPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
+    this->patches_[i].Remove();
   }
 }
 
-std::vector<mapi::GamePatch>
-SetDisplayWidthAndHeightPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2GFX_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
-  );
-
-  return patches;
-}
-
-SetDisplayWidthAndHeightPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -105,4 +99,5 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr

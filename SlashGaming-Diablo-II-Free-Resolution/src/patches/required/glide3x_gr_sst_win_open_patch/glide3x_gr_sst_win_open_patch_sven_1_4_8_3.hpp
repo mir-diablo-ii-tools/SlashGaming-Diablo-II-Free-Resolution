@@ -46,14 +46,15 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_8_3_HPP_
 #define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_8_3_HPP_
 
-#include <vector>
-
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr::patches::glide3x {
+namespace sgd2fr {
+namespace glide3x {
 
-class GrSstWinOpenPatch_Sven_1_4_8_3 {
+class GrSstWinOpenPatch_Sven_1_4_8_3
+    : public AbstractVersionPatch {
  public:
   GrSstWinOpenPatch_Sven_1_4_8_3();
 
@@ -61,13 +62,16 @@ class GrSstWinOpenPatch_Sven_1_4_8_3 {
   void Remove();
 
  private:
-  std::vector<mapi::GamePatch> patches_;
+  enum {
+    kPatchesCount = 1
+  };
 
-  static std::vector<mapi::GamePatch> MakePatches();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
-} // namespace sgd2fr::patches::glide3x
+} // namespace glide3x
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_8_3_HPP_

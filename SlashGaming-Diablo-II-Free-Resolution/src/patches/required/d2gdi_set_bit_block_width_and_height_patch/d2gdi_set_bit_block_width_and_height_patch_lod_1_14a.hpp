@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2gdi {
 
-class SetBitBlockWidthAndHeightPatch_Lod1_14A {
+class SetBitBlockWidthAndHeightPatch_Lod1_14A
+    : public AbstractVersionPatch {
  public:
   SetBitBlockWidthAndHeightPatch_Lod1_14A();
 

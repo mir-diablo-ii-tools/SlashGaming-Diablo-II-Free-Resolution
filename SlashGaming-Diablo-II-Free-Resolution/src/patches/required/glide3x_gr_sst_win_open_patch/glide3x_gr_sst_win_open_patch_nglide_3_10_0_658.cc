@@ -45,6 +45,8 @@
 
 #include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
 
+#include <stddef.h>
+
 #include "../../../helper/glide3x_version.hpp"
 
 extern "C" {
@@ -53,40 +55,32 @@ void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::glide3x {
+namespace sgd2fr {
+namespace glide3x {
 
 GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-  : patches_(MakePatches()) {
+    : patches_() {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
 void GrSstWinOpenPatch_NGlide_3_10_0_658::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = 0; i < kPatchesCount; i += 1) {
+    this->patches_[i].Apply();
   }
 }
 
 void GrSstWinOpenPatch_NGlide_3_10_0_658::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
+  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
+    this->patches_[i].Remove();
   }
-}
-
-std::vector<mapi::GamePatch>
-GrSstWinOpenPatch_NGlide_3_10_0_658::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
-  );
-
-  return patches;
 }
 
 PatchAddressAndSize
@@ -106,4 +100,5 @@ GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::glide3x
+} // namespace glide3x
+} // namespace sgd2fr
