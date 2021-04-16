@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class GetResolutionRegistryPatch_1_09D {
+class GetResolutionRegistryPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   GetResolutionRegistryPatch_1_09D();
 

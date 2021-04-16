@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_D2CLIENT_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class SetScreenShiftPatch_1_09D {
+class SetScreenShiftPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   SetScreenShiftPatch_1_09D();
 

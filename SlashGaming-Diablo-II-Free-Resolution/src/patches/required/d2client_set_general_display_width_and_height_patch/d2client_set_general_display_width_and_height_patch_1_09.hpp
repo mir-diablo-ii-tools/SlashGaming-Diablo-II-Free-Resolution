@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class SetGeneralDisplayWidthAndHeightPatch_1_09D {
+class SetGeneralDisplayWidthAndHeightPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   SetGeneralDisplayWidthAndHeightPatch_1_09D();
 

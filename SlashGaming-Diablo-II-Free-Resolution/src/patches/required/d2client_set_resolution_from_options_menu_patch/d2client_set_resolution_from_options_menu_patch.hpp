@@ -46,30 +46,22 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_
 
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
 #include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class SetResolutionFromOptionsMenuPatch {
+class SetResolutionFromOptionsMenuPatch
+    : public AbstractMultiversionPatch {
  public:
-  union PatchVariant {
-    SetResolutionFromOptionsMenuPatch_1_09D* patch_1_09d;
-    SetResolutionFromOptionsMenuPatch_1_13C* patch_1_13c;
-  };
-
   SetResolutionFromOptionsMenuPatch();
 
-  ~SetResolutionFromOptionsMenuPatch();
-
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2client

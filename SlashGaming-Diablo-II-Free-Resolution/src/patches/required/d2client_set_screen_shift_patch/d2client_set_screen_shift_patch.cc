@@ -45,57 +45,26 @@
 
 #include "d2client_set_screen_shift_patch.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2client {
 
 SetScreenShiftPatch::SetScreenShiftPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-SetScreenShiftPatch::~SetScreenShiftPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool SetScreenShiftPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
+AbstractVersionPatch*
+SetScreenShiftPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void SetScreenShiftPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-  }
-}
-
-void SetScreenShiftPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-  }
-}
-
-SetScreenShiftPatch::PatchVariant
-SetScreenShiftPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -103,12 +72,9 @@ SetScreenShiftPatch::MakePatch() {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_09d = new SetScreenShiftPatch_1_09D();
-      break;
+      return new SetScreenShiftPatch_1_09D();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2client
