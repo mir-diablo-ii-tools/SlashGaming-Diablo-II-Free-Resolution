@@ -52,8 +52,63 @@
 namespace sgd2fr {
 namespace {
 
-constexpr int source_display_width = 800;
-constexpr int source_display_height = 600;
+// Display width and height constants.
+enum {
+  kSourceDisplayWidth = 800,
+  kSourceDisplayHeight = 600,
+};
+
+// New Stats button constants.
+enum {
+  // In 800x600 mode, the New Stats button is normally positioned at:
+  // left: 206, right: 240, top: 800 - 42, bottom: 800 - 8
+
+  // Text is positioned at:
+  // x: 221, y: 550
+
+  // The constants have been positioned in a way to simplify customization.
+
+  kSourceNewStatsButtonLeft = 206,
+  kSourceNewStatsButtonTop = kSourceDisplayHeight - 42,
+
+  kSourceNewStatsButtonWidth = 34,
+  kSourceNewStatsButtonHeight = 34,
+
+  kSourceNewStatsButtonRight = kSourceNewStatsButtonLeft
+      + kSourceNewStatsButtonWidth,
+  kSourceNewStatsButtonBottom = kSourceNewStatsButtonTop
+      + kSourceNewStatsButtonHeight,
+
+  kSourceNewStatsTextPositionX = kSourceNewStatsButtonLeft
+      + (kSourceNewStatsButtonWidth / 2) - 2,
+  kSourceNewStatsTextPositionY = kSourceNewStatsButtonTop - 8,
+};
+
+// New Skill button constants.
+enum {
+  // In 800x600 mode, the New Skill button is normally positioned at:
+  // left: 563, right: 597, top: 800 - 42, bottom: 800 - 8
+
+  // Text is positioned at:
+  // x: 578, y: 550
+
+  // The constants have been positioned in a way to simplify customization.
+
+  kSourceNewSkillButtonLeft = 563,
+  kSourceNewSkillButtonTop = kSourceDisplayHeight - 42,
+
+  kSourceNewSkillButtonWidth = 34,
+  kSourceNewSkillButtonHeight = 34,
+
+  kSourceNewSkillButtonRight = kSourceNewSkillButtonLeft
+      + kSourceNewSkillButtonWidth,
+  kSourceNewSkillButtonBottom = kSourceNewSkillButtonTop
+      + kSourceNewSkillButtonHeight,
+
+  kSourceNewSkillTextPositionX = kSourceNewSkillButtonLeft
+      + (kSourceNewSkillButtonWidth / 2) - 2,
+  kSourceNewSkillTextPositionY = kSourceNewSkillButtonTop - 8,
+};
 
 } // namespace
 
@@ -71,12 +126,16 @@ unsigned int Get800InterfaceBarEnabledValue() {
 }
 
 d2::PositionalRectangle_Api GetNewStatsButtonPosition() {
-  constexpr int dist_from_left_to_display_center =
-      (source_display_width / 2) - 206;
-  constexpr int dist_from_right_to_display_center =
-      (source_display_width / 2) - 240;
-  constexpr int dist_from_top_to_display_bottom = 42;
-  constexpr int dist_from_bottom_to_display_bottom = 8;
+  enum {
+    kDistanceFromLeftToDisplayCenter = (kSourceDisplayWidth / 2)
+        - kSourceNewStatsButtonLeft,
+    kDistanceFromRightToDisplayCenter = (kSourceDisplayWidth / 2)
+        - kSourceNewStatsButtonRight,
+    kDistanceFromTopToDisplayBottom = kSourceDisplayHeight
+        - kSourceNewStatsButtonTop,
+    kDistanceFromBottomToDisplayBottom = kSourceDisplayHeight
+        - kSourceNewStatsButtonBottom,
+  };
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
@@ -86,22 +145,26 @@ d2::PositionalRectangle_Api GetNewStatsButtonPosition() {
   const int display_height = std::get<1>(display_width_and_height);
 
   ::d2::PositionalRectangle_Api button_position(
-      display_half_width - dist_from_left_to_display_center,
-      display_half_width - dist_from_right_to_display_center,
-      display_height - dist_from_top_to_display_bottom,
-      display_height - dist_from_bottom_to_display_bottom
+      display_half_width - kDistanceFromLeftToDisplayCenter,
+      display_half_width - kDistanceFromRightToDisplayCenter,
+      display_height - kDistanceFromTopToDisplayBottom,
+      display_height - kDistanceFromBottomToDisplayBottom
   );
 
   return button_position;
 }
 
 d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
-  constexpr int dist_from_left_to_display_center =
-      (source_display_width / 2) - 563;
-  constexpr int dist_from_right_to_display_center =
-      (source_display_width / 2) - 597;
-  constexpr int dist_from_top_to_display_bottom = 42;
-  constexpr int dist_from_bottom_to_display_bottom = 8;
+  enum {
+    kDistanceFromLeftToDisplayCenter = (kSourceDisplayWidth / 2)
+        - kSourceNewSkillButtonLeft,
+    kDistanceFromRightToDisplayCenter = (kSourceDisplayWidth / 2)
+        - kSourceNewSkillButtonRight,
+    kDistanceFromTopToDisplayBottom = kSourceDisplayHeight
+        - kSourceNewSkillButtonTop,
+    kDistanceFromBottomToDisplayBottom = kSourceDisplayHeight
+        - kSourceNewSkillButtonBottom,
+  };
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
@@ -111,20 +174,22 @@ d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
   const int display_height = std::get<1>(display_width_and_height);
 
   ::d2::PositionalRectangle_Api button_position(
-      display_half_width - dist_from_left_to_display_center,
-      display_half_width - dist_from_right_to_display_center,
-      display_height - dist_from_top_to_display_bottom,
-      display_height - dist_from_bottom_to_display_bottom
+      display_half_width - kDistanceFromLeftToDisplayCenter,
+      display_half_width - kDistanceFromRightToDisplayCenter,
+      display_height - kDistanceFromTopToDisplayBottom,
+      display_height - kDistanceFromBottomToDisplayBottom
   );
 
   return button_position;
 }
 
 std::tuple<int, int> GetNewStatsPopupTextPosition() {
-  constexpr int dist_from_left_to_display_center =
-      (source_display_width / 2) - 221;
-  constexpr int dist_from_top_to_display_bottom =
-      (source_display_height) - 550;
+  enum {
+    kDistanceFromPositionXToDisplayCenter = (kSourceDisplayWidth / 2)
+        - kSourceNewStatsTextPositionX,
+    kDistanceFromPositionYToDisplayBottom = kSourceDisplayHeight
+        - kSourceNewStatsTextPositionY,
+  };
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
@@ -134,16 +199,18 @@ std::tuple<int, int> GetNewStatsPopupTextPosition() {
   const int display_height = std::get<1>(display_width_and_height);
 
   return std::make_tuple(
-      display_half_width - dist_from_left_to_display_center,
-      display_height - dist_from_top_to_display_bottom
+      display_half_width - kDistanceFromPositionXToDisplayCenter,
+      display_height - kDistanceFromPositionYToDisplayBottom
   );
 }
 
 std::tuple<int, int> GetNewSkillPopupTextPosition() {
-  constexpr int dist_from_left_to_display_center =
-      (source_display_width / 2) - 578;
-  constexpr int dist_from_top_to_display_bottom =
-      (source_display_height) - 550;
+  enum {
+    kDistanceFromPositionXToDisplayCenter = (kSourceDisplayWidth / 2)
+        - kSourceNewSkillTextPositionX,
+    kDistanceFromPositionYToDisplayBottom = kSourceDisplayHeight
+        - kSourceNewSkillTextPositionY,
+  };
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
@@ -153,8 +220,8 @@ std::tuple<int, int> GetNewSkillPopupTextPosition() {
   const int display_height = std::get<1>(display_width_and_height);
 
   return std::make_tuple(
-      display_half_width - dist_from_left_to_display_center,
-      display_height - dist_from_top_to_display_bottom
+      display_half_width - kDistanceFromPositionXToDisplayCenter,
+      display_height - kDistanceFromPositionYToDisplayBottom
   );
 }
 
