@@ -63,9 +63,9 @@ DrawInterfaceBarBackgroundPatch_1_09D
   // Draw the new interface bar background.
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = mapi::GamePatch::MakeGameBranchPatch(
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
-      mapi::BranchType::kCall,
+      ::mapi::BranchType::kCall,
       &D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01,
       patch_address_and_size_01.second
   );

@@ -64,8 +64,8 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
   *width = std::get<0>(resolution);
   *height = std::get<1>(resolution);
 
-  d2::d2glide::SetDisplayWidth(*width);
-  d2::d2glide::SetDisplayHeight(*height);
+  ::d2::d2glide::SetDisplayWidth(*width);
+  ::d2::d2glide::SetDisplayHeight(*height);
 
   switch (resolution_mode) {
     case 0: {

@@ -58,7 +58,7 @@ constexpr int source_display_height = 600;
 } // namespace
 
 unsigned int Get800InterfaceBarEnabledValue() {
-  unsigned int resolution_mode = d2::d2gfx::GetResolutionMode();
+  unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
 
   ::std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
 
@@ -79,13 +79,13 @@ d2::PositionalRectangle_Api GetNewStatsButtonPosition() {
   constexpr int dist_from_bottom_to_display_bottom = 8;
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   const int display_half_width = (std::get<0>(display_width_and_height) / 2);
   const int display_height = std::get<1>(display_width_and_height);
 
-  d2::PositionalRectangle_Api button_position(
+  ::d2::PositionalRectangle_Api button_position(
       display_half_width - dist_from_left_to_display_center,
       display_half_width - dist_from_right_to_display_center,
       display_height - dist_from_top_to_display_bottom,
@@ -104,13 +104,13 @@ d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
   constexpr int dist_from_bottom_to_display_bottom = 8;
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   const int display_half_width = (std::get<0>(display_width_and_height) / 2);
   const int display_height = std::get<1>(display_width_and_height);
 
-  d2::PositionalRectangle_Api button_position(
+  ::d2::PositionalRectangle_Api button_position(
       display_half_width - dist_from_left_to_display_center,
       display_half_width - dist_from_right_to_display_center,
       display_height - dist_from_top_to_display_bottom,
@@ -127,7 +127,7 @@ std::tuple<int, int> GetNewStatsPopupTextPosition() {
       (source_display_height) - 550;
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   const int display_half_width = (std::get<0>(display_width_and_height) / 2);
@@ -146,7 +146,7 @@ std::tuple<int, int> GetNewSkillPopupTextPosition() {
       (source_display_height) - 550;
 
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   const int display_half_width = (std::get<0>(display_width_and_height) / 2);
@@ -159,12 +159,12 @@ std::tuple<int, int> GetNewSkillPopupTextPosition() {
 }
 
 bool IsMouseOverNewStatsButton() {
-  d2::PositionalRectangle_Api button_position = GetNewStatsButtonPosition();
+  ::d2::PositionalRectangle_Api button_position = GetNewStatsButtonPosition();
 
   const int ingame_mouse_position_x =
-      d2::d2client::GetIngameMousePositionX();
+      ::d2::d2client::GetIngameMousePositionX();
   const int ingame_mouse_position_y =
-      d2::d2client::GetIngameMousePositionY();
+      ::d2::d2client::GetIngameMousePositionY();
 
   return ingame_mouse_position_x > button_position.GetLeft()
       && ingame_mouse_position_x < button_position.GetRight()
@@ -173,12 +173,12 @@ bool IsMouseOverNewStatsButton() {
 }
 
 bool IsMouseOverNewSkillButton() {
-  d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
+  ::d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
 
   const int ingame_mouse_position_x =
-      d2::d2client::GetIngameMousePositionX();
+      ::d2::d2client::GetIngameMousePositionX();
   const int ingame_mouse_position_y =
-      d2::d2client::GetIngameMousePositionY();
+      ::d2::d2client::GetIngameMousePositionY();
 
   return ingame_mouse_position_x > button_position.GetLeft()
       && ingame_mouse_position_x < button_position.GetRight()

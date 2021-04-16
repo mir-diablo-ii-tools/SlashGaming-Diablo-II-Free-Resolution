@@ -63,7 +63,7 @@ DrawScreenBackgroundPatch_1_09D::DrawScreenBackgroundPatch_1_09D()
   PatchAddressAndSize patch_address_and_size_01 = GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
-      mapi::BranchType::kCall,
+      ::mapi::BranchType::kCall,
       &D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01,
       patch_address_and_size_01.second
   );

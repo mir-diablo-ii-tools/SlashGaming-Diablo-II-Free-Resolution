@@ -45,6 +45,8 @@
 
 #include "d2client_draw_screen_background_patch.hpp"
 
+#include <sgd2mapi.hpp>
+
 namespace sgd2fr {
 namespace d2client {
 

@@ -59,8 +59,8 @@ void __cdecl Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight(
   int width = std::get<0>(resolution);
   int height = std::get<1>(resolution);
 
-  d2::d2direct3d::SetDisplayWidth(width);
-  d2::d2direct3d::SetDisplayHeight(height);
+  ::d2::d2direct3d::SetDisplayWidth(width);
+  ::d2::d2direct3d::SetDisplayHeight(height);
 }
 
 } // namespace sgd2fr::patches
