@@ -45,86 +45,39 @@
 
 #include "d2client_draw_resolution_text_patch.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2client {
 
 DrawResolutionTextPatch::DrawResolutionTextPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-DrawResolutionTextPatch::~DrawResolutionTextPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool DrawResolutionTextPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_13c;
-      break;
-    }
+AbstractVersionPatch*
+DrawResolutionTextPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void DrawResolutionTextPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_13c->Apply();
-      break;
-    }
-  }
-}
-
-void DrawResolutionTextPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_13c->Remove();
-      break;
-    }
-  }
-}
-
-DrawResolutionTextPatch::PatchVariant
-DrawResolutionTextPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
-      patch.patch_1_09d = new DrawResolutionTextPatch_1_09D();
-      break;
+      return new DrawResolutionTextPatch_1_09D();
     }
 
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_13c = new DrawResolutionTextPatch_1_13C();
-      break;
+      return new DrawResolutionTextPatch_1_13C();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2client
