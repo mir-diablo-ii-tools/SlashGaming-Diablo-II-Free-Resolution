@@ -58,9 +58,6 @@ class Enable800NewStatsButtonPatch_1_09D
  public:
   Enable800NewStatsButtonPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 18

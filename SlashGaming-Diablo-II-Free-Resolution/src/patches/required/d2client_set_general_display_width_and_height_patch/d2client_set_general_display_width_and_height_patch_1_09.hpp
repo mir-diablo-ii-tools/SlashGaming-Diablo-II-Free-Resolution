@@ -58,9 +58,6 @@ class SetGeneralDisplayWidthAndHeightPatch_1_09D
  public:
   SetGeneralDisplayWidthAndHeightPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

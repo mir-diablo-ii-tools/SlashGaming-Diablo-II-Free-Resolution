@@ -50,4 +50,24 @@ namespace sgd2fr {
 AbstractVersionPatch::~AbstractVersionPatch() {
 }
 
+void AbstractVersionPatch::Apply() {
+  for (size_t i = 0; i < this->patches_count_; i += 1) {
+    this->patches_ptr_[i].Apply();
+  }
+}
+
+void AbstractVersionPatch::Remove() {
+  for (size_t i = this->patches_count_ - 1; (i + 1) > 0; i -= 1) {
+    this->patches_ptr_[i].Remove();
+  }
+}
+
+AbstractVersionPatch::AbstractVersionPatch(
+    ::mapi::GamePatch* patches_ptr,
+    size_t patches_count
+)
+    : patches_ptr_(patches_ptr),
+      patches_count_(patches_count) {
+}
+
 } // namespace sgd2fr

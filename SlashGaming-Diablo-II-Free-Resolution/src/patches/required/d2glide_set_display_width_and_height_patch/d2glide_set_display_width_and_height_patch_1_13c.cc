@@ -76,7 +76,7 @@ static const uint8_t k0x01Byte = 0x01;
 } // namespace
 
 SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
@@ -104,18 +104,6 @@ SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
       patch_address_and_size_03.second
   );
   this->patches_[2].Swap(patch_03);
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

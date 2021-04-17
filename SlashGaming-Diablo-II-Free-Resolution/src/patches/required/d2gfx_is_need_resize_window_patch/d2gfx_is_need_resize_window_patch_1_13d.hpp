@@ -58,9 +58,6 @@ class IsNeedResizeWindowPatch_1_13D
  public:
   IsNeedResizeWindowPatch_1_13D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 2

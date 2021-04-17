@@ -70,7 +70,7 @@ namespace sgd2fr {
 namespace d2client {
 
 Enable800NewStatsButtonPatch_1_09D::Enable800NewStatsButtonPatch_1_09D()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Enable the click on 800x600 New Stats button sound.
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
@@ -267,18 +267,6 @@ Enable800NewStatsButtonPatch_1_09D::Enable800NewStatsButtonPatch_1_09D()
       patch_address_and_size_18.second
   );
   this->patches_[17].Swap(patch_18);
-}
-
-void Enable800NewStatsButtonPatch_1_09D::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void Enable800NewStatsButtonPatch_1_09D::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

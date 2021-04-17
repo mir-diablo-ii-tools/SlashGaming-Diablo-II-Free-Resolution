@@ -58,9 +58,6 @@ class SetCelDisplayLeftAndRightPatch_1_09D
  public:
   SetCelDisplayLeftAndRightPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

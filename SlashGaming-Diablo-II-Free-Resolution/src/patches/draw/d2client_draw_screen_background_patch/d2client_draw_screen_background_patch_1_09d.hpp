@@ -58,9 +58,6 @@ class DrawScreenBackgroundPatch_1_09D
  public:
   DrawScreenBackgroundPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 3

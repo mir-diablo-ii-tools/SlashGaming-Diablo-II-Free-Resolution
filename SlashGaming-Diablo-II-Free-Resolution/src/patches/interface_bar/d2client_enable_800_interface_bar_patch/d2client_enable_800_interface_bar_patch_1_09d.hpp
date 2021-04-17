@@ -58,9 +58,6 @@ class Enable800InterfaceBarPatch_1_09D
  public:
   Enable800InterfaceBarPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 2

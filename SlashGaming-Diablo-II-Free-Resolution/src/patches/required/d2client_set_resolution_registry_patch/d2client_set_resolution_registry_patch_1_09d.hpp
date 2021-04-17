@@ -58,9 +58,6 @@ class SetResolutionRegistryPatch_1_09D
  public:
   SetResolutionRegistryPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 2

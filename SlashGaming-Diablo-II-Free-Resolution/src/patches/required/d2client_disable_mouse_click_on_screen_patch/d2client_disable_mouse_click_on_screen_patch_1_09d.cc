@@ -51,7 +51,7 @@ namespace sgd2fr {
 namespace d2client {
 
 DisableMouseClickOnScreenPatch_1_09D::DisableMouseClickOnScreenPatch_1_09D()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Disable left screen click-through.
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
@@ -78,18 +78,6 @@ DisableMouseClickOnScreenPatch_1_09D::DisableMouseClickOnScreenPatch_1_09D()
       patch_address_and_size_03.second
   );
   this->patches_[2].Swap(patch_03);
-}
-
-void DisableMouseClickOnScreenPatch_1_09D::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void DisableMouseClickOnScreenPatch_1_09D::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

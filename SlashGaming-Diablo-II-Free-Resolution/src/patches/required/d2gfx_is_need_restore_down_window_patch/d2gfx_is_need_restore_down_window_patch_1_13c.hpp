@@ -58,9 +58,6 @@ class IsNeedRestoreDownWindowPatch_1_13C
  public:
   IsNeedRestoreDownWindowPatch_1_13C();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 2

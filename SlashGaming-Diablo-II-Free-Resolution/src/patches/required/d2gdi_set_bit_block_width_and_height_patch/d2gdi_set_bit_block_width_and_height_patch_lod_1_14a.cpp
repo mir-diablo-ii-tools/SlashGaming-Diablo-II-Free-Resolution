@@ -59,7 +59,7 @@ namespace d2gdi {
 
 SetBitBlockWidthAndHeightPatch_Lod1_14A
 ::SetBitBlockWidthAndHeightPatch_Lod1_14A()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
@@ -69,22 +69,6 @@ SetBitBlockWidthAndHeightPatch_Lod1_14A
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
-}
-
-void SetBitBlockWidthAndHeightPatch_Lod1_14A::Apply() {
-  size_t i;
-
-  for (i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void SetBitBlockWidthAndHeightPatch_Lod1_14A::Remove() {
-  size_t i;
-
-  for (i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

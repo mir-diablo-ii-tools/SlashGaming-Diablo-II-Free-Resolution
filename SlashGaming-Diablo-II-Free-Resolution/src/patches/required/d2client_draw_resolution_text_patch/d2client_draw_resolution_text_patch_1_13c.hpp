@@ -58,9 +58,6 @@ class DrawResolutionTextPatch_1_13C
  public:
   DrawResolutionTextPatch_1_13C();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

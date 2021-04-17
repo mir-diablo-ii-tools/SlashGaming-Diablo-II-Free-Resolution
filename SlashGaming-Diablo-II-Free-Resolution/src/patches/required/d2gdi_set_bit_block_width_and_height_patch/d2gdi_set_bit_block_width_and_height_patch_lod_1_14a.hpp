@@ -58,9 +58,6 @@ class SetBitBlockWidthAndHeightPatch_Lod1_14A
  public:
   SetBitBlockWidthAndHeightPatch_Lod1_14A();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

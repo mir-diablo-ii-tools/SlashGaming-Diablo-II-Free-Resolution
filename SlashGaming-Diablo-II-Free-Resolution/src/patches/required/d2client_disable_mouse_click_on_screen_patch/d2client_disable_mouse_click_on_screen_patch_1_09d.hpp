@@ -58,9 +58,6 @@ class DisableMouseClickOnScreenPatch_1_09D
  public:
   DisableMouseClickOnScreenPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 3

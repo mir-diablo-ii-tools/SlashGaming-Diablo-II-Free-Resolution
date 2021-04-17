@@ -58,9 +58,6 @@ class GrSstWinOpenPatch_Sven_1_4_8_3
  public:
   GrSstWinOpenPatch_Sven_1_4_8_3();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

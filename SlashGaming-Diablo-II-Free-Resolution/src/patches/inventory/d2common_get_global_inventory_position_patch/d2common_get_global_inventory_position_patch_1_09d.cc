@@ -59,7 +59,7 @@ namespace d2common {
 
 GetGlobalInventoryPositionPatch_1_09D
 ::GetGlobalInventoryPositionPatch_1_09D()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
@@ -69,18 +69,6 @@ GetGlobalInventoryPositionPatch_1_09D
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
-}
-
-void GetGlobalInventoryPositionPatch_1_09D::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void GetGlobalInventoryPositionPatch_1_09D::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

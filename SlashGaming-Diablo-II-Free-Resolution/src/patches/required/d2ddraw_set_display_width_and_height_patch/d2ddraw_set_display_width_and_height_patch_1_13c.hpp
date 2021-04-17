@@ -58,9 +58,6 @@ class SetDisplayWidthAndHeightPatch_1_13C
  public:
   SetDisplayWidthAndHeightPatch_1_13C();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 2

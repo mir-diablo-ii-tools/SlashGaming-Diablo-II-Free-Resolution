@@ -58,9 +58,6 @@ class SetResolutionFromOptionsMenuPatch_1_13C
  public:
   SetResolutionFromOptionsMenuPatch_1_13C();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

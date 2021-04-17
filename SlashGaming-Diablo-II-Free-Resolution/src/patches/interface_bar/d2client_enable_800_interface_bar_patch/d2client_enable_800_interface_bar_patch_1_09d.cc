@@ -61,7 +61,7 @@ namespace sgd2fr {
 namespace d2client {
 
 Enable800InterfaceBarPatch_1_09D::Enable800InterfaceBarPatch_1_09D()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Enable drawing the 800x600 interface bar.
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
@@ -83,18 +83,6 @@ Enable800InterfaceBarPatch_1_09D::Enable800InterfaceBarPatch_1_09D()
       patch_address_and_size_02.second
   );
   this->patches_[1].Swap(patch_02);
-}
-
-void Enable800InterfaceBarPatch_1_09D::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void Enable800InterfaceBarPatch_1_09D::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

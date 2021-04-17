@@ -46,15 +46,29 @@
 #ifndef SGD2FR_HELPER_ABSTRACT_VERSION_PATCH_HPP_
 #define SGD2FR_HELPER_ABSTRACT_VERSION_PATCH_HPP_
 
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+
 namespace sgd2fr {
 
 class AbstractVersionPatch {
  public:
   virtual ~AbstractVersionPatch();
 
-  virtual void Apply() = 0;
+  void Apply();
 
-  virtual void Remove() = 0;
+  void Remove();
+
+ protected:
+  AbstractVersionPatch(
+      ::mapi::GamePatch* patches_ptr,
+      size_t patches_count
+  );
+
+ private:
+   ::mapi::GamePatch* patches_ptr_;
+   size_t patches_count_;
 };
 
 } // namespace sgd2fr

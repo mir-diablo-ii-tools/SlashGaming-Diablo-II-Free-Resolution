@@ -58,9 +58,6 @@ class ResizeWindowOnMaximizePatch_1_13C
  public:
   ResizeWindowOnMaximizePatch_1_13C();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 2

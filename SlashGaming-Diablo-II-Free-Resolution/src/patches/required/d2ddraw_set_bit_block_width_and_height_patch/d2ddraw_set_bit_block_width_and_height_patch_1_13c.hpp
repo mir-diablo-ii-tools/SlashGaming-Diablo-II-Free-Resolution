@@ -58,9 +58,6 @@ class SetBitBlockWidthAndHeightPatch_1_13C
  public:
   SetBitBlockWidthAndHeightPatch_1_13C();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

@@ -61,7 +61,7 @@ namespace sgd2fr {
 namespace d2client {
 
 Enable800NewSkillButtonPatch_1_13C::Enable800NewSkillButtonPatch_1_13C()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Enable drawing the New Skill button on the interface bar when the
   // Skill Tree Screen is open or screens on both sides are open.
   PatchAddressAndSize patch_address_and_size_01 =
@@ -181,18 +181,6 @@ Enable800NewSkillButtonPatch_1_13C::Enable800NewSkillButtonPatch_1_13C()
       patch_address_and_size_10.second
   );
   this->patches_[9].Swap(patch_10);
-}
-
-void Enable800NewSkillButtonPatch_1_13C::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void Enable800NewSkillButtonPatch_1_13C::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

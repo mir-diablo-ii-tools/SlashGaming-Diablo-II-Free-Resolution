@@ -58,7 +58,7 @@ namespace sgd2fr {
 namespace d2client {
 
 DrawScreenBackgroundPatch_1_09D::DrawScreenBackgroundPatch_1_09D()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Draw the new screen background.
   PatchAddressAndSize patch_address_and_size_01 = GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
@@ -84,18 +84,6 @@ DrawScreenBackgroundPatch_1_09D::DrawScreenBackgroundPatch_1_09D()
       patch_address_and_size_03.second
   );
   this->patches_[2].Swap(patch_03);
-}
-
-void DrawScreenBackgroundPatch_1_09D::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void DrawScreenBackgroundPatch_1_09D::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
 }
 
 PatchAddressAndSize

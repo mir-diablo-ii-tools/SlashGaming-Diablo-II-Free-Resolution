@@ -58,9 +58,6 @@ class GrSstWinOpenPatch_NGlide_3_10_0_658
  public:
   GrSstWinOpenPatch_NGlide_3_10_0_658();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

@@ -58,9 +58,6 @@ class GetGlobalBeltRecordPatch_1_09D
  public:
   GetGlobalBeltRecordPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1

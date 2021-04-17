@@ -47,17 +47,16 @@
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class UnloadCelFileCollectionPatch_1_09D {
+class UnloadCelFileCollectionPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   UnloadCelFileCollectionPatch_1_09D();
-
-  void Apply();
-  void Remove();
 
  private:
   enum {

@@ -58,9 +58,6 @@ class GetGlobalInventoryPositionPatch_1_09D
  public:
   GetGlobalInventoryPositionPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
   enum {
     kPatchesCount = 1
