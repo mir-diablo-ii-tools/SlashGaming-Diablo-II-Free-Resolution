@@ -45,57 +45,26 @@
 
 #include "d2common_get_global_inventory_position_patch.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2common {
 
 GetGlobalInventoryPositionPatch::GetGlobalInventoryPositionPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-GetGlobalInventoryPositionPatch::~GetGlobalInventoryPositionPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool GetGlobalInventoryPositionPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
+AbstractVersionPatch*
+GetGlobalInventoryPositionPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void GetGlobalInventoryPositionPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-  }
-}
-
-void GetGlobalInventoryPositionPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-  }
-}
-
-GetGlobalInventoryPositionPatch::PatchVariant
-GetGlobalInventoryPositionPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -103,12 +72,9 @@ GetGlobalInventoryPositionPatch::MakePatch() {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_09d = new GetGlobalInventoryPositionPatch_1_09D();
-      break;
+      return new GetGlobalInventoryPositionPatch_1_09D();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2common

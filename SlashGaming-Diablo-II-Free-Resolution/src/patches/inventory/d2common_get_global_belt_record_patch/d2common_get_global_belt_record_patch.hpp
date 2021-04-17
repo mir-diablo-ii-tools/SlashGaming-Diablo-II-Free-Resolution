@@ -46,28 +46,21 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_RECORD_PATCH_D2COMMON_GET_GLOBAL_BELT_RECORD_PATCH_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_RECORD_PATCH_D2COMMON_GET_GLOBAL_BELT_RECORD_PATCH_HPP_
 
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2common_get_global_belt_record_patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2common {
 
-class GetGlobalBeltRecordPatch {
+class GetGlobalBeltRecordPatch
+    : public AbstractMultiversionPatch {
  public:
-  union PatchVariant {
-    GetGlobalBeltRecordPatch_1_09D* patch_1_09d;
-  };
-
   GetGlobalBeltRecordPatch();
 
-  ~GetGlobalBeltRecordPatch();
-
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2common

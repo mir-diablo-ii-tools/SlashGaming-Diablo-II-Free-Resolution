@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2common {
 
-class GetGlobalInventoryPositionPatch_1_09D {
+class GetGlobalInventoryPositionPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   GetGlobalInventoryPositionPatch_1_09D();
 

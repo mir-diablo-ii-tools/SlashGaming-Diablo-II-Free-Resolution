@@ -46,28 +46,21 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_
 
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2common_get_global_belt_slot_position_patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2common {
 
-class GetGlobalBeltSlotPositionPatch {
+class GetGlobalBeltSlotPositionPatch
+    : public AbstractMultiversionPatch {
  public:
-  union PatchVariant {
-    GetGlobalBeltSlotPositionPatch_1_09D* patch_1_09d;
-  };
-
   GetGlobalBeltSlotPositionPatch();
 
-  ~GetGlobalBeltSlotPositionPatch();
-
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2common

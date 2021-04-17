@@ -45,57 +45,26 @@
 
 #include "d2common_get_global_equipment_slot_layout_patch.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2common {
 
 GetGlobalEquipmentSlotLayoutPatch::GetGlobalEquipmentSlotLayoutPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-GetGlobalEquipmentSlotLayoutPatch::~GetGlobalEquipmentSlotLayoutPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool GetGlobalEquipmentSlotLayoutPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
+AbstractVersionPatch*
+GetGlobalEquipmentSlotLayoutPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void GetGlobalEquipmentSlotLayoutPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-  }
-}
-
-void GetGlobalEquipmentSlotLayoutPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-  }
-}
-
-GetGlobalEquipmentSlotLayoutPatch::PatchVariant
-GetGlobalEquipmentSlotLayoutPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -103,12 +72,9 @@ GetGlobalEquipmentSlotLayoutPatch::MakePatch() {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_09d = new GetGlobalEquipmentSlotLayoutPatch_1_09D();
-      break;
+      return new GetGlobalEquipmentSlotLayoutPatch_1_09D();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2common

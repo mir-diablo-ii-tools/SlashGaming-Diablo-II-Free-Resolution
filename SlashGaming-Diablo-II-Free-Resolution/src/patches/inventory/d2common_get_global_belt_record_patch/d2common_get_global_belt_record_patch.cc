@@ -45,57 +45,26 @@
 
 #include "d2common_get_global_belt_record_patch.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2common {
 
 GetGlobalBeltRecordPatch::GetGlobalBeltRecordPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-GetGlobalBeltRecordPatch::~GetGlobalBeltRecordPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool GetGlobalBeltRecordPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
+AbstractVersionPatch*
+GetGlobalBeltRecordPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void GetGlobalBeltRecordPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-  }
-}
-
-void GetGlobalBeltRecordPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-  }
-}
-
-GetGlobalBeltRecordPatch::PatchVariant
-GetGlobalBeltRecordPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -103,12 +72,10 @@ GetGlobalBeltRecordPatch::MakePatch() {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_09d = new GetGlobalBeltRecordPatch_1_09D();
+      return new GetGlobalBeltRecordPatch_1_09D();
       break;
     }
   }
-
-  return patch;
 }
 
 } // namespace d2common

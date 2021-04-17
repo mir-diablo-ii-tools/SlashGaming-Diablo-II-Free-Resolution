@@ -45,57 +45,26 @@
 
 #include "d2common_get_global_belt_slot_position_patch.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2common {
 
 GetGlobalBeltSlotPositionPatch::GetGlobalBeltSlotPositionPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-GetGlobalBeltSlotPositionPatch::~GetGlobalBeltSlotPositionPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool GetGlobalBeltSlotPositionPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
+AbstractVersionPatch*
+GetGlobalBeltSlotPositionPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void GetGlobalBeltSlotPositionPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-  }
-}
-
-void GetGlobalBeltSlotPositionPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-  }
-}
-
-GetGlobalBeltSlotPositionPatch::PatchVariant
-GetGlobalBeltSlotPositionPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -103,12 +72,9 @@ GetGlobalBeltSlotPositionPatch::MakePatch() {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_09d = new GetGlobalBeltSlotPositionPatch_1_09D();
-      break;
+      return new GetGlobalBeltSlotPositionPatch_1_09D();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2common
