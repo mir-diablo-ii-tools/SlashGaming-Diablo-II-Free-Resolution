@@ -46,28 +46,21 @@
 #ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_HPP_
 #define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_HPP_
 
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2client_draw_screen_background_patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DrawScreenBackgroundPatch {
+class DrawScreenBackgroundPatch
+    : public AbstractMultiversionPatch {
  public:
-  union PatchVariant {
-    DrawScreenBackgroundPatch_1_09D* patch_1_09d;
-  };
-
   DrawScreenBackgroundPatch();
 
-  ~DrawScreenBackgroundPatch();
-
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2client

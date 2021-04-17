@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DrawInterfaceBarBackgroundPatch_1_09D {
+class DrawInterfaceBarBackgroundPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   DrawInterfaceBarBackgroundPatch_1_09D();
 

@@ -45,57 +45,25 @@
 
 #include "d2client_draw_interface_bar_background_patch.hpp"
 
+#include <stddef.h>
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2client {
 
 DrawInterfaceBarBackgroundPatch::DrawInterfaceBarBackgroundPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-DrawInterfaceBarBackgroundPatch::~DrawInterfaceBarBackgroundPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool DrawInterfaceBarBackgroundPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
+AbstractVersionPatch*
+DrawInterfaceBarBackgroundPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void DrawInterfaceBarBackgroundPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-  }
-}
-
-void DrawInterfaceBarBackgroundPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-  }
-}
-
-DrawInterfaceBarBackgroundPatch::PatchVariant
-DrawInterfaceBarBackgroundPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -103,13 +71,10 @@ DrawInterfaceBarBackgroundPatch::MakePatch() {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_09d = new DrawInterfaceBarBackgroundPatch_1_09D();
-      break;
+      return new DrawInterfaceBarBackgroundPatch_1_09D();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2client
-} // namespace sgd2fr::patches::d2client
+} // namespace sgd2fr
