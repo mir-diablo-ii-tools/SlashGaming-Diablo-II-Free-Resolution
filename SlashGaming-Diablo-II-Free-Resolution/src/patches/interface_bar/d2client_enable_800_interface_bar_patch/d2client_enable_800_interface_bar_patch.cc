@@ -45,86 +45,39 @@
 
 #include "d2client_enable_800_interface_bar_patch.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 namespace d2client {
 
 Enable800InterfaceBarPatch::Enable800InterfaceBarPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-Enable800InterfaceBarPatch::~Enable800InterfaceBarPatch() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool Enable800InterfaceBarPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      delete this->patch_.patch_1_09d;
-      break;
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      delete this->patch_.patch_1_13c;
-      break;
-    }
+AbstractVersionPatch*
+Enable800InterfaceBarPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
-
-void Enable800InterfaceBarPatch::Apply() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      this->patch_.patch_1_09d->Apply();
-      break;
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_13c->Apply();
-      break;
-    }
-  }
-}
-
-void Enable800InterfaceBarPatch::Remove() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      this->patch_.patch_1_09d->Remove();
-      break;
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      this->patch_.patch_1_13c->Remove();
-      break;
-    }
-  }
-}
-
-Enable800InterfaceBarPatch::PatchVariant
-Enable800InterfaceBarPatch::MakePatch() {
-  PatchVariant patch;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
-      patch.patch_1_09d = new Enable800InterfaceBarPatch_1_09D();
-      break;
+      return new Enable800InterfaceBarPatch_1_09D();
     }
 
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      patch.patch_1_13c = new Enable800InterfaceBarPatch_1_13C();
-      break;
+      return new Enable800InterfaceBarPatch_1_13C();
     }
   }
-
-  return patch;
 }
 
 } // namespace d2client

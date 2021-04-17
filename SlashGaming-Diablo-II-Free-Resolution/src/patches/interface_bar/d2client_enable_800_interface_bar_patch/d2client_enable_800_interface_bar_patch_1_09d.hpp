@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class Enable800InterfaceBarPatch_1_09D {
+class Enable800InterfaceBarPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   Enable800InterfaceBarPatch_1_09D();
 

@@ -47,12 +47,14 @@
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_13C_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
 #include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class Enable800NewStatsButtonPatch_1_13C {
+class Enable800NewStatsButtonPatch_1_13C
+    : public AbstractVersionPatch {
  public:
   Enable800NewStatsButtonPatch_1_13C();
 
