@@ -105,6 +105,16 @@ GetGlobalInventoryPositionPatch_1_09D::GetPatchAddressAndSize01() {
           5
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Common,
+              0x25E280
+          ),
+          5
+      );
+    }
   }
 }
 
