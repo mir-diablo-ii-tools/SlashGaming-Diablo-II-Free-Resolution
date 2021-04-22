@@ -43,19 +43,31 @@
  *  work.
  */
 
-#ifndef SGD2FR_WIDE_MACRO_H_
-#define SGD2FR_WIDE_MACRO_H_
+#include "abstract_version_patch.hpp"
 
-#ifndef MAPI_CAT
-#define MAPI_CAT(a, b) a##b
-#endif /* MAPI_CAT */
+namespace sgd2fr {
 
-#ifndef MAPI_WIDE_LIT
-#define MAPI_WIDE_LIT(s) MAPI_CAT(a, b)
-#endif /* MAPI_WIDE_LIT */
+AbstractVersionPatch::~AbstractVersionPatch() {
+}
 
-#ifndef __FILEW__
-#define __FILEW__ MAPI_WIDE_LIT(__FILE__)
-#endif /* __FILEW__ */
+void AbstractVersionPatch::Apply() {
+  for (size_t i = 0; i < this->patches_count_; i += 1) {
+    this->patches_ptr_[i].Apply();
+  }
+}
 
-#endif /* SGD2FR_WIDE_MACRO_H_ */
+void AbstractVersionPatch::Remove() {
+  for (size_t i = this->patches_count_ - 1; (i + 1) > 0; i -= 1) {
+    this->patches_ptr_[i].Remove();
+  }
+}
+
+AbstractVersionPatch::AbstractVersionPatch(
+    ::mapi::GamePatch* patches_ptr,
+    size_t patches_count
+)
+    : patches_ptr_(patches_ptr),
+      patches_count_(patches_count) {
+}
+
+} // namespace sgd2fr

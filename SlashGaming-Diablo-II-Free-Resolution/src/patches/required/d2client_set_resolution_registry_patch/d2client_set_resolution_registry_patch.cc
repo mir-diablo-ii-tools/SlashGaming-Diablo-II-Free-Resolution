@@ -45,40 +45,40 @@
 
 #include "d2client_set_resolution_registry_patch.hpp"
 
-#include "d2client_set_resolution_registry_patch_1_09d.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2client {
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2client {
 
 SetResolutionRegistryPatch::SetResolutionRegistryPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void SetResolutionRegistryPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool SetResolutionRegistryPatch::IsApplicable() {
+  return true;
 }
 
-void SetResolutionRegistryPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+SetResolutionRegistryPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-SetResolutionRegistryPatch::PatchVariant
-SetResolutionRegistryPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
-      return SetResolutionRegistryPatch_1_09D();
+    case ::d2::GameVersion::k1_09D: {
+      return new SetResolutionRegistryPatch_1_09D();
     }
 
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
-      return SetResolutionRegistryPatch_1_13C();
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      return new SetResolutionRegistryPatch_1_13C();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

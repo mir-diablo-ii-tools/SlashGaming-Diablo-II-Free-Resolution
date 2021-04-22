@@ -45,38 +45,40 @@
 
 #include "d2gfx_set_display_width_and_height_patch.hpp"
 
-namespace sgd2fr::patches::d2gfx {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2gfx {
 
 SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void SetDisplayWidthAndHeightPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool SetDisplayWidthAndHeightPatch::IsApplicable() {
+  return true;
 }
 
-void SetDisplayWidthAndHeightPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+SetDisplayWidthAndHeightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-SetDisplayWidthAndHeightPatch::PatchVariant
-SetDisplayWidthAndHeightPatch::MakePatch() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
-      return SetDisplayWidthAndHeightPatch_1_09D();
+      return new SetDisplayWidthAndHeightPatch_1_09D();
     }
 
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      return SetDisplayWidthAndHeightPatch_1_13C();
+      return new SetDisplayWidthAndHeightPatch_1_13C();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr

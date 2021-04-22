@@ -46,30 +46,24 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2client_set_general_display_width_and_height_patch_1_09.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
-class SetGeneralDisplayWidthAndHeightPatch {
+class SetGeneralDisplayWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      SetGeneralDisplayWidthAndHeightPatch_1_09D
-  >;
-
   SetGeneralDisplayWidthAndHeightPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_SET_D2CLIENT_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

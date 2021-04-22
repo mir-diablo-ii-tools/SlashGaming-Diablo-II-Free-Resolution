@@ -43,66 +43,32 @@
  *  work.
  */
 
-#include "d2gdi_set_bit_block_width_and_height_patch_1_09d.hpp"
+#ifndef SGD2FR_HELPER_ABSTRACT_MULTIVERSION_PATCH_HPP_
+#define SGD2FR_HELPER_ABSTRACT_MULTIVERSION_PATCH_HPP_
 
-#include <stddef.h>
-
-extern "C" {
-
-void __cdecl
-D2GDI_SetBitBlockWidthAndHeightPatch_1_09D_InterceptionFunc01();
-
-} // extern "C"
+#include "abstract_version_patch.hpp"
 
 namespace sgd2fr {
-namespace d2gdi {
 
-SetBitBlockWidthAndHeightPatch_1_09D::SetBitBlockWidthAndHeightPatch_1_09D()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2GDI_SetBitBlockWidthAndHeightPatch_1_09D_InterceptionFunc01,
-      patch_address_and_size_01.second
+class AbstractMultiversionPatch {
+ public:
+  virtual ~AbstractMultiversionPatch();
+
+  void Apply();
+
+  void Remove();
+
+ protected:
+  AbstractMultiversionPatch(
+      bool is_applicable,
+      AbstractVersionPatch* patch
   );
-  this->patches_[0].Swap(patch_01);
-}
 
-PatchAddressAndSize
-SetBitBlockWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+ private:
+  bool is_applicable_;
+  AbstractVersionPatch* patch_;
+};
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
-              0x115A
-          ),
-          0x11BA - 0x115A
-      );
-    }
-
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
-              0x114A
-          ),
-          0x11AA - 0x114A
-      );
-    }
-  }
-}
-
-} // namespace d2gdi
 } // namespace sgd2fr
+
+#endif /* SGD2FR_HELPER_ABSTRACT_MULTIVERSION_PATCH_HPP_ */

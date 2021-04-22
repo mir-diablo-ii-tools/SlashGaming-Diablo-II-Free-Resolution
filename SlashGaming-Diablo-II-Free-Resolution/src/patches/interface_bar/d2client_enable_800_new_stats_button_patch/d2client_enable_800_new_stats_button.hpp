@@ -60,13 +60,13 @@ extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton();
 extern "C" std::uint32_t __cdecl
 Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue();
 
-extern "C" mapi::bool32 __cdecl
+extern "C" ::mapi::bool32 __cdecl
 Sgd2fr_D2Client_IsMouseOver800NewStatsButton();
 
 extern "C" void __cdecl Sgd2fr_D2Client_Set800NewStatsPopupText();
 
-extern "C" mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewStatsButton(
-    d2::CelContext* cel_context
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewStatsButton(
+    ::d2::CelContext* cel_context
 );
 
 } // namespace sgd2fr::patches

@@ -45,38 +45,40 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch.hpp"
 
-namespace sgd2fr::patches::d2client {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2client {
 
 DisableMouseClickOnScreenPatch::DisableMouseClickOnScreenPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void DisableMouseClickOnScreenPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool DisableMouseClickOnScreenPatch::IsApplicable() {
+  return true;
 }
 
-void DisableMouseClickOnScreenPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+DisableMouseClickOnScreenPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-DisableMouseClickOnScreenPatch::PatchVariant
-DisableMouseClickOnScreenPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
-      return DisableMouseClickOnScreenPatch_1_09D();
+    case ::d2::GameVersion::k1_09D: {
+      return new DisableMouseClickOnScreenPatch_1_09D();
     }
 
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
-      return DisableMouseClickOnScreenPatch_1_13C();
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      return new DisableMouseClickOnScreenPatch_1_13C();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

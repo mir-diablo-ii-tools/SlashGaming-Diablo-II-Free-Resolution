@@ -50,10 +50,10 @@
 namespace sgd2fr {
 
 void RealignPositionFromCenter(
-    d2::PositionalRectangle_Wrapper out_position_wrapper
+    ::d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
   std::tuple current_resolution = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   const std::tuple<int, int>& source_resolution =
@@ -96,10 +96,10 @@ void RealignPositionFromCenter(
 }
 
 void RealignPositionFromBottomCenter(
-    d2::PositionalRectangle_Wrapper out_position_wrapper
+    ::d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
   std::tuple current_resolution = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   const std::tuple<int, int>& source_resolution =

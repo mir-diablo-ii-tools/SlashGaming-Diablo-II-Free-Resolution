@@ -46,32 +46,25 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
 #include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
-class Enable800NewSkillButtonPatch {
+class Enable800NewSkillButtonPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      Enable800NewSkillButtonPatch_1_09D,
-      Enable800NewSkillButtonPatch_1_13C
-  >;
-
   Enable800NewSkillButtonPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_

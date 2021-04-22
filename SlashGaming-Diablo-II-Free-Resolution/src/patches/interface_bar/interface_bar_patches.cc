@@ -45,9 +45,7 @@
 
 #include "interface_bar_patches.hpp"
 
-namespace sgd2fr::patches {
-
-InterfaceBarPatches::InterfaceBarPatches() = default;
+namespace sgd2fr {
 
 void InterfaceBarPatches::Apply() {
   this->d2client_enable_800_interface_bar_patch_.Apply();
@@ -61,4 +59,4 @@ void InterfaceBarPatches::Remove() {
   this->d2client_enable_800_interface_bar_patch_.Remove();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

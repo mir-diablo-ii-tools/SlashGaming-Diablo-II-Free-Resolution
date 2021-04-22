@@ -60,12 +60,12 @@ extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton();
 extern "C" std::uint32_t __cdecl
 Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue();
 
-extern "C" mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton();
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton();
 
 extern "C" void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText();
 
-extern "C" mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
-    d2::CelContext* cel_context
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
+    ::d2::CelContext* cel_context
 );
 
 } // namespace sgd2fr::patches

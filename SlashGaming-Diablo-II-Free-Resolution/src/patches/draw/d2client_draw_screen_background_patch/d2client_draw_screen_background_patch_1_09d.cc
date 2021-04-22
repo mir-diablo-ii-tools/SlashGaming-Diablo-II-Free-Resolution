@@ -45,6 +45,8 @@
 
 #include "d2client_draw_screen_background_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,63 +54,39 @@ D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 DrawScreenBackgroundPatch_1_09D::DrawScreenBackgroundPatch_1_09D()
-    : patches_(MakePatches()) {
-}
-
-void DrawScreenBackgroundPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void DrawScreenBackgroundPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-DrawScreenBackgroundPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Draw the new screen background.
   PatchAddressAndSize patch_address_and_size_01 = GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   // Disable the left screen background.
   PatchAddressAndSize patch_address_and_size_02 = GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_02.first,
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patch_02);
 
   // Disable the right screen background.
   PatchAddressAndSize patch_address_and_size_03 = GetPatchAddressAndSize03();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_03.first,
-          patch_address_and_size_03.second
-      )
+  ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_03.first,
+      patch_address_and_size_03.second
   );
-
-  return patches;
+  this->patches_[2].Swap(patch_03);
 }
 
-DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -145,7 +123,7 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -182,7 +160,7 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
   }
 }
 
-DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -219,4 +197,5 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

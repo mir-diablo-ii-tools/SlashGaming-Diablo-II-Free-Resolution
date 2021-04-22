@@ -52,6 +52,6 @@ namespace d2client {
 void DrawScreens();
 
 } // namespace d2client
-} // namespace d2::d2client
+} // namespace d2
 
 #endif /* SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_D2CLIENT_FUNCTION_D2CLIENT_DRAW_SCREENS_HPP_ */

@@ -45,38 +45,37 @@
 
 #include "d2win_resize_window_on_maximize_patch.hpp"
 
-namespace sgd2fr::patches::d2win {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2win {
 
 ResizeWindowOnMaximizePatch::ResizeWindowOnMaximizePatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void ResizeWindowOnMaximizePatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
+bool ResizeWindowOnMaximizePatch::IsApplicable() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  return (running_game_version >= ::d2::GameVersion::k1_13C);
+}
+
+AbstractVersionPatch*
+ResizeWindowOnMaximizePatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
 
-void ResizeWindowOnMaximizePatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
-
-ResizeWindowOnMaximizePatch::PatchType
-ResizeWindowOnMaximizePatch::MakePatch() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      return ResizeWindowOnMaximizePatch_1_13C();
+      return new ResizeWindowOnMaximizePatch_1_13C();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2win
+} // namespace d2win
+} // namespace sgd2fr

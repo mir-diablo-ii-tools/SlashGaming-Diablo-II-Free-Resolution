@@ -45,52 +45,34 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2client {
+#include <stddef.h>
+
+namespace sgd2fr {
+namespace d2client {
 
 DisableMouseClickOnScreenPatch_1_13C::DisableMouseClickOnScreenPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void DisableMouseClickOnScreenPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void DisableMouseClickOnScreenPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-DisableMouseClickOnScreenPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Disable left screen click-through.
-  PatchAddressAndSize patch_address_and_size_01 = GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_01.first,
-          patch_address_and_size_01.second
-      )
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_01.first,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   // Disable right screen click-through.
-  PatchAddressAndSize patch_address_and_size_02 = GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_02.first,
-          patch_address_and_size_02.second
-      )
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
   );
-
-  return patches;
+  this->patches_[1].Swap(patch_02);
 }
 
-DisableMouseClickOnScreenPatch_1_13C::PatchAddressAndSize
+
+PatchAddressAndSize
 DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -117,7 +99,7 @@ DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize01() {
   }
 }
 
-DisableMouseClickOnScreenPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -144,4 +126,5 @@ DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize02() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

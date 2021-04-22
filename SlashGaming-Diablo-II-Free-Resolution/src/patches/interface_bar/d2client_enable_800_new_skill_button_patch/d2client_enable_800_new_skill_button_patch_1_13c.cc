@@ -45,6 +45,8 @@
 
 #include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -55,162 +57,133 @@ D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc02();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 Enable800NewSkillButtonPatch_1_13C::Enable800NewSkillButtonPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void Enable800NewSkillButtonPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void Enable800NewSkillButtonPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-Enable800NewSkillButtonPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Enable drawing the New Skill button on the interface bar when the
   // Skill Tree Screen is open or screens on both sides are open.
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   // Disable drawing the 640x480 "New Skill" text and New Skill button
   // underlay on the left side.
   PatchAddressAndSize patch_address_and_size_02 =
       GetPatchAddressAndSize02();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_02.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_02.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patch_02);
 
   // Enable drawing the New Skill button animation when button is
   // pressed.
   PatchAddressAndSize patch_address_and_size_03 =
       GetPatchAddressAndSize03();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_03.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_03.second
-      )
+  ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_03.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_03.second
   );
+  this->patches_[2].Swap(patch_03);
 
   // Enable drawing the New Skill button when there are skill points to
   // spend.
   PatchAddressAndSize patch_address_and_size_04 =
       GetPatchAddressAndSize04();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_04.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_04.second
-      )
+  ::mapi::GamePatch patch_04 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_04.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_04.second
   );
+  this->patches_[3].Swap(patch_04);
 
   // Adjust the mouse position detection for New Skill button.
   PatchAddressAndSize patch_address_and_size_05 =
       GetPatchAddressAndSize05();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_05.first,
-          ::mapi::BranchType::kJump,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc02,
-          patch_address_and_size_05.second
-      )
+  ::mapi::GamePatch patch_05 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_05.first,
+      ::mapi::BranchType::kJump,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc02,
+      patch_address_and_size_05.second
   );
+  this->patches_[4].Swap(patch_05);
 
   // Enable additional New Skill button pressed check for mouse
   // position detection for New Skill button press.
   PatchAddressAndSize patch_address_and_size_06 =
       GetPatchAddressAndSize06();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_06.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_06.second
-      )
+  ::mapi::GamePatch patch_06 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_06.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_06.second
   );
+  this->patches_[5].Swap(patch_06);
 
   // Enable use of 800x600 mouse positon detection code for New Skill
   // button press.
   PatchAddressAndSize patch_address_and_size_07 =
       GetPatchAddressAndSize07();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_07.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_07.second
-      )
+  ::mapi::GamePatch patch_07 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_07.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_07.second
   );
+  this->patches_[6].Swap(patch_07);
 
   // Enable additional New Skill button pressed check for mouse
   // position detection for New Skill button press and opening the
   // Skill Tree Screen.
   PatchAddressAndSize patch_address_and_size_08 =
       GetPatchAddressAndSize08();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_08.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_08.second
-      )
+  ::mapi::GamePatch patch_08 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_08.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_08.second
   );
+  this->patches_[7].Swap(patch_08);
 
   // Enable use of 800x600 mouse positon detection code for New Skill
   // button press and opening the Skill Tree Screen.
   PatchAddressAndSize patch_address_and_size_09 =
       GetPatchAddressAndSize09();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_09.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_09.second
-      )
+  ::mapi::GamePatch patch_09 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_09.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_09.second
   );
+  this->patches_[8].Swap(patch_09);
 
   // Enable drawing the New Skill button press when there are no skill
   // points.
   PatchAddressAndSize patch_address_and_size_10 =
       GetPatchAddressAndSize10();
-  patches.push_back(
-      ::mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_10.first,
-          ::mapi::BranchType::kCall,
-          &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_10.second
-      )
+  ::mapi::GamePatch patch_10 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_10.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800NewSkillButtonPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_10.second
   );
-
-  return patches;
+  this->patches_[9].Swap(patch_10);
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -237,7 +210,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize01() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -264,7 +237,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize02() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -291,7 +264,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize03() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize04() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -318,7 +291,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize04() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize05() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -345,7 +318,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize05() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize06() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -372,7 +345,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize06() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize07() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -399,7 +372,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize07() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize08() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -426,7 +399,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize08() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize09() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -453,7 +426,7 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize09() {
   }
 }
 
-Enable800NewSkillButtonPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize10() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -480,4 +453,5 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize10() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

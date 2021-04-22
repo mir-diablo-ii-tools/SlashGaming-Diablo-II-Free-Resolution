@@ -46,17 +46,21 @@
 #ifndef SGD2FR_HELPER_PATCH_ADDRESS_AND_SIZE_HPP_
 #define SGD2FR_HELPER_PATCH_ADDRESS_AND_SIZE_HPP_
 
-#include <cstddef>
-#include <utility>
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 
-using PatchAddressAndSize = ::std::pair<
-    ::mapi::GameAddress,
-    ::std::size_t
->;
+struct PatchAddressAndSize {
+  ::mapi::GameAddress first;
+  size_t second;
+
+  PatchAddressAndSize(
+      ::mapi::GameAddress patch_address,
+      size_t patch_size
+  );
+};
 
 } // namespace sgd2fr
 

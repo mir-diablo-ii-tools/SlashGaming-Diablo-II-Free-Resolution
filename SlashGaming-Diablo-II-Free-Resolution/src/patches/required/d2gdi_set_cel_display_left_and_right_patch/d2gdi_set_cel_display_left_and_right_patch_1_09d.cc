@@ -45,6 +45,8 @@
 
 #include "d2gdi_set_cel_display_left_and_right_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,44 +54,23 @@ D2GDI_SetCelDisplayLeftAndRightPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2gdi {
+namespace sgd2fr {
+namespace d2gdi {
 
 SetCelDisplayLeftAndRightPatch_1_09D::SetCelDisplayLeftAndRightPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void SetCelDisplayLeftAndRightPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetCelDisplayLeftAndRightPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetCelDisplayLeftAndRightPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2GDI_SetCelDisplayLeftAndRightPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GDI_SetCelDisplayLeftAndRightPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-SetCelDisplayLeftAndRightPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 SetCelDisplayLeftAndRightPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -172,4 +153,5 @@ SetCelDisplayLeftAndRightPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2gdi
+} // namespace d2gdi
+} // namespace sgd2fr

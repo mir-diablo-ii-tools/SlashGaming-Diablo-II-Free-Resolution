@@ -46,7 +46,6 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
 #define SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
 
-#include <sgd2mapi.hpp>
 #include "d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.hpp"
 #include "d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch.hpp"
 #include "d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch.hpp"
@@ -68,12 +67,10 @@
 #include "d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch.hpp"
 #include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
 class RequiredPatches {
  public:
-  RequiredPatches();
-
   void Apply();
   void Remove();
 
@@ -139,6 +136,6 @@ class RequiredPatches {
       glide3x_gr_sst_win_open_patch_;
 };
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_

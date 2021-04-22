@@ -74,8 +74,8 @@ void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
   int bit_block_width = ::std::get<0>(resolution);
   int bit_block_height = ::std::get<1>(resolution);
 
-  d2::d2gdi::SetBitBlockWidth(bit_block_width);
-  d2::d2gdi::SetBitBlockHeight(bit_block_height);
+  ::d2::d2gdi::SetBitBlockWidth(bit_block_width);
+  ::d2::d2gdi::SetBitBlockHeight(bit_block_height);
 }
 
 } // namespace sgd2fr::patches

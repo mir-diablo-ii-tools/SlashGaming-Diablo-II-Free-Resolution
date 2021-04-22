@@ -46,36 +46,31 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
 
-#include <cstddef>
-#include <utility>
-#include <vector>
-
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr::patches::d2direct3d {
+namespace sgd2fr {
+namespace d2direct3d {
 
-class SetDisplayWidthAndHeightPatch_1_13C {
+class SetDisplayWidthAndHeightPatch_1_13C
+    : public AbstractVersionPatch {
  public:
   SetDisplayWidthAndHeightPatch_1_13C();
 
-  void Apply();
-  void Remove();
-
  private:
-  using PatchAddressAndSize = ::std::pair<
-      ::mapi::GameAddress,
-      ::std::size_t
-  >;
+  enum {
+    kPatchesCount = 3
+  };
 
-  std::vector<mapi::GamePatch> patches_;
-
-  static std::vector<mapi::GamePatch> MakePatches();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
   static PatchAddressAndSize GetPatchAddressAndSize02();
   static PatchAddressAndSize GetPatchAddressAndSize03();
 };
 
-} // namespace sgd2fr::patches::d2direct3d
+} // namespace d2direct3d
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_

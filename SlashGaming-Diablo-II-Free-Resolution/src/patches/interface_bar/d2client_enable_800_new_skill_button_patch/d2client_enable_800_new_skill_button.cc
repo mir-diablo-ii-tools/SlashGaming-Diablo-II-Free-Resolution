@@ -63,24 +63,24 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton() {
 }
 
 void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText() {
-  const d2::UnicodeChar* new_stats_text = d2::d2lang::GetStringByIndex(3987);
+  const ::d2::UnicodeChar* new_stats_text = ::d2::d2lang::GetStringByIndex(3987);
   const std::tuple popup_text_position = GetNewSkillPopupTextPosition();
 
-  d2::d2win::SetPopUpUnicodeText(
+  ::d2::d2win::SetPopUpUnicodeText(
       new_stats_text,
       std::get<0>(popup_text_position),
       std::get<1>(popup_text_position),
-      d2::TextColor::kWhite,
+      ::d2::TextColor::kWhite,
       true
   );
 }
 
 mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
-    d2::CelContext* cel_context
+    ::d2::CelContext* cel_context
 ) {
-  d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
+  ::d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
 
-  d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+  ::d2::CelContext_Wrapper cel_context_wrapper(cel_context);
 
   return cel_context_wrapper.DrawFrame(
       button_position.GetLeft(),

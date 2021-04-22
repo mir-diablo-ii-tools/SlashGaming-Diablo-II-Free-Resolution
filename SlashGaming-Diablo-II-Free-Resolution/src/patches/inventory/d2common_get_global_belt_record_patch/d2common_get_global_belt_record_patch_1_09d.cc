@@ -45,6 +45,8 @@
 
 #include "d2common_get_global_belt_record_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,43 +54,23 @@ D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2common {
+namespace sgd2fr {
+namespace d2common {
 
 GetGlobalBeltRecordPatch_1_09D::GetGlobalBeltRecordPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void GetGlobalBeltRecordPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void GetGlobalBeltRecordPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-GetGlobalBeltRecordPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kJump,
-          &D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kJump,
+      &D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-GetGlobalBeltRecordPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 GetGlobalBeltRecordPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -125,4 +107,5 @@ GetGlobalBeltRecordPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr

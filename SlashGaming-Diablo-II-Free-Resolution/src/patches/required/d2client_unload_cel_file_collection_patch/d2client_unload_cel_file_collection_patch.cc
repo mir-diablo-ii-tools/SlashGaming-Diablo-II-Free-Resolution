@@ -45,38 +45,40 @@
 
 #include "d2client_unload_cel_file_collection_patch.hpp"
 
-namespace sgd2fr::patches::d2client {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+
+namespace sgd2fr {
+namespace d2client {
 
 UnloadCelFileCollectionPatch::UnloadCelFileCollectionPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void UnloadCelFileCollectionPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool UnloadCelFileCollectionPatch::IsApplicable() {
+  return true;
 }
 
-void UnloadCelFileCollectionPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+UnloadCelFileCollectionPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-UnloadCelFileCollectionPatch::PatchVariant
-UnloadCelFileCollectionPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
-      return UnloadCelFileCollectionPatch_1_09D();
+    case ::d2::GameVersion::k1_09D: {
+      return new UnloadCelFileCollectionPatch_1_09D();
     }
 
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
-      return UnloadCelFileCollectionPatch_1_13C();
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      return new UnloadCelFileCollectionPatch_1_13C();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

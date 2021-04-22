@@ -61,15 +61,15 @@ void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
   int width = std::get<0>(resolution);
   int height = std::get<1>(resolution);
 
-  d2::d2client::SetGeneralDisplayWidth(width);
-  d2::d2client::SetGeneralDisplayHeight(height);
+  ::d2::d2client::SetGeneralDisplayWidth(width);
+  ::d2::d2client::SetGeneralDisplayHeight(height);
 
   // Workaround to prevent inventory arrangement from "transferring".
   // Overflow is a non-issue and intentional.
   static unsigned int inventory_arrange_mode = 0;
-  inventory_arrange_mode += 1;
 
-  d2::d2client::SetInventoryArrangeMode(inventory_arrange_mode);
+  ::d2::d2client::SetInventoryArrangeMode(inventory_arrange_mode);
+  inventory_arrange_mode += 1;
 }
 
 } // namespace sgd2fr::patches

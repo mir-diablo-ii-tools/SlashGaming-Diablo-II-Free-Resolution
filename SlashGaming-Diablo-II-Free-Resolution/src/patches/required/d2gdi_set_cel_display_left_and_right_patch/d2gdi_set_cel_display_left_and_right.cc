@@ -58,8 +58,8 @@ void __cdecl Sgd2fr_D2GDI_SetCelDisplayLeftAndRight(
 
   int width = std::get<0>(resolution);
 
-  d2::d2gdi::SetCelDisplayLeft(0);
-  d2::d2gdi::SetCelDisplayRight(width);
+  ::d2::d2gdi::SetCelDisplayLeft(0);
+  ::d2::d2gdi::SetCelDisplayRight(width);
 }
 
 } // namespace sgd2fr::patches

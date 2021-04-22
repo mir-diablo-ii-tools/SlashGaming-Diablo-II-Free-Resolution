@@ -46,32 +46,25 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_
 
-#include <variant>
-
-#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
 #include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
-class SetResolutionFromOptionsMenuPatch {
+class SetResolutionFromOptionsMenuPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      SetResolutionFromOptionsMenuPatch_1_09D,
-      SetResolutionFromOptionsMenuPatch_1_13C
-  >;
-
   SetResolutionFromOptionsMenuPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_HPP_

@@ -46,35 +46,25 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <optional>
-#include <variant>
-
-#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "d2ddraw_set_display_width_and_height_patch_1_09d.hpp"
 #include "d2ddraw_set_display_width_and_height_patch_1_13c.hpp"
 
-namespace sgd2fr::patches::d2ddraw {
+namespace sgd2fr {
+namespace d2ddraw {
 
-class SetDisplayWidthAndHeightPatch {
+class SetDisplayWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      SetDisplayWidthAndHeightPatch_1_09D,
-      SetDisplayWidthAndHeightPatch_1_13C
-  >;
-
-  using PatchType = std::optional<PatchVariant>;
-
   SetDisplayWidthAndHeightPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchType patch_;
-
-  static PatchType MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2ddraw
+} // namespace d2ddraw
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

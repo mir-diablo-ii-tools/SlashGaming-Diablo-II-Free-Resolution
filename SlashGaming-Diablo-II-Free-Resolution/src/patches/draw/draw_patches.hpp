@@ -46,16 +46,13 @@
 #ifndef SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
 #define SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
 
-#include <sgd2mapi.hpp>
 #include "d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
 #include "d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
 class DrawPatches {
  public:
-  DrawPatches();
-
   void Apply();
   void Remove();
 
@@ -67,6 +64,6 @@ class DrawPatches {
       d2client_draw_screen_background_patch_;
 };
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
