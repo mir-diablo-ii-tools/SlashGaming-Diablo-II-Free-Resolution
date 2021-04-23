@@ -83,6 +83,13 @@ static ::std::intptr_t GetGameAddress() {
       ).raw_address();
     }
 
+    case ::d2::GameVersion::kLod1_14C: {
+      return ::mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0x8F800
+      ).raw_address();
+    }
+
     default: {
       ::mdc::error::ExitOnConstantMappingError(
           __FILEW__,

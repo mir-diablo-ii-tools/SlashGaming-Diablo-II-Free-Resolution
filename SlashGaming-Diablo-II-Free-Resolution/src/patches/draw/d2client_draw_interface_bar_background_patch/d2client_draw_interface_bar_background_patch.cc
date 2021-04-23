@@ -46,7 +46,10 @@
 #include "d2client_draw_interface_bar_background_patch.hpp"
 
 #include <stddef.h>
+
 #include <sgd2mapi.hpp>
+#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
+#include "d2client_draw_interface_bar_background_patch_lod_1_14c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -72,6 +75,10 @@ DrawInterfaceBarBackgroundPatch::InitPatch() {
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
       return new DrawInterfaceBarBackgroundPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return new DrawInterfaceBarBackgroundPatch_Lod1_14C();
     }
   }
 }

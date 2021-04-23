@@ -88,6 +88,15 @@ DrawScreenBackgroundPatch_1_09D::DrawScreenBackgroundPatch_1_09D()
 
 PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character.
+  * 2. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "A1Q1" is used.
+  * 3. Breakpoint in the function and follow the code to the return.
+  * 4. The return address is the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -120,11 +129,30 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
           0x1D4AB - 0x1D4A6
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x5264D
+          ),
+          0x52652 - 0x5264D
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "Panel\800BorderFrame" is used. There will be two
+  *    addresses.
+  * 2. Determine which one of the addresses is used for the left
+  *    screen.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -157,11 +185,30 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
           0x6D377 - 0x6D2DD
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x94B0C
+          ),
+          0x94BB6 - 0x94B0C
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "Panel\800BorderFrame" is used. There will be two
+  *    addresses.
+  * 2. Determine which one of the addresses is used for the right
+  *    screen.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -192,6 +239,16 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
               0x6D1E1
           ),
           0x6D29E - 0x6D1E1
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x94BF1
+          ),
+          0x94CA4 - 0x94BF1
       );
     }
   }
