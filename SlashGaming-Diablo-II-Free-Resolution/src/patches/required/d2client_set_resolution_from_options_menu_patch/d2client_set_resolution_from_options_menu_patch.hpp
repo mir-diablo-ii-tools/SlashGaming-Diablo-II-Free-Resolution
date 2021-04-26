@@ -48,8 +48,6 @@
 
 #include "../../../helper/abstract_multiversion_patch.hpp"
 #include "../../../helper/abstract_version_patch.hpp"
-#include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
-#include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2client {

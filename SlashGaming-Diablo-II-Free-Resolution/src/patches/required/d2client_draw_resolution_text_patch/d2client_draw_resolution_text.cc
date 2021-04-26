@@ -107,6 +107,19 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
+    case ::d2::GameVersion::kLod1_14C: {
+      std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0x319280
+      ).raw_address();
+
+      comparing_cel_file_base_address = reinterpret_cast<d2::CelFile*>(
+          raw_address
+      );
+
+      break;
+    }
+
     default: {
       ::mdc::error::ExitOnConstantMappingError(
           __FILEW__,

@@ -72,6 +72,20 @@ UnloadCelFileCollectionPatch_1_09D::UnloadCelFileCollectionPatch_1_09D()
 
 PatchAddressAndSize
 UnloadCelFileCollectionPatch_1_09D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character.
+  * 2. Locate the variable for a CelFile that is associated with the
+  *     text "Panel\CtrlPnl7".
+  * 3. Set a write breakpoint on the variable.
+  * 4. Save and Exit the current game. Do not stop/exit/kill the game
+  *    process.
+  * 5. The write breakpoint list should now contain a location in the
+  *    function containing the patch location.
+  * 6. Scroll down to the bottom of the function to find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -80,6 +94,16 @@ UnloadCelFileCollectionPatch_1_09D::GetPatchAddressAndSize01() {
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
               0x57FB9
+          ),
+          5
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x92F49
           ),
           5
       );

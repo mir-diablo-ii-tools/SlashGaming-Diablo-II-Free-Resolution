@@ -48,6 +48,8 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
+#include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -74,7 +76,8 @@ SetResolutionFromOptionsMenuPatch::InitPatch() {
     }
 
     case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C: {
       return new SetResolutionFromOptionsMenuPatch_1_13C();
     }
   }

@@ -72,6 +72,15 @@ SetScreenShiftPatch_1_09D::SetScreenShiftPatch_1_09D()
 
 PatchAddressAndSize
 SetScreenShiftPatch_1_09D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character.
+  * 2. Set a write breakpoint on D2Client's ScreenShiftX or
+  *    ScreenShiftY variable.
+  * 3. Go to the code location where the variable's value is modified.
+  * 4. Scroll up until the patch location is found.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -102,6 +111,16 @@ SetScreenShiftPatch_1_09D::GetPatchAddressAndSize01() {
               0x1D3F6
           ),
           0x1D41D - 0x1D3F6
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x5259B
+          ),
+          0x525C2 - 0x5259B
       );
     }
   }

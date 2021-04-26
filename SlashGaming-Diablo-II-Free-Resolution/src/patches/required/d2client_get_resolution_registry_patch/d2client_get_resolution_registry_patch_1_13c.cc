@@ -108,6 +108,15 @@ GetResolutionRegistryPatch_1_13C::GetResolutionRegistryPatch_1_13C()
 
 PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -135,6 +144,15 @@ GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
 
 PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -162,6 +180,15 @@ GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize02() {
 
 PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize03() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -189,6 +216,15 @@ GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize03() {
 
 PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize04() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {

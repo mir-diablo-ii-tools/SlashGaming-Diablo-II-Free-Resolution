@@ -72,6 +72,33 @@ DrawResolutionTextPatch_1_13C::DrawResolutionTextPatch_1_13C()
 
 PatchAddressAndSize
 DrawResolutionTextPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character. Do not open the Game Menu.
+  * 2. Set a read breakpoint on D2Client's GeneralDisplayWidth
+  *    variable.
+  * 3. Move the mouse, click, and interact with as many things as
+  *    possible on the screen to trigger code that will be added to
+  *    the top of the list. Any breakpoint triggers in this list are
+  *    to be ignored.
+  * 4. Open the game menu.
+  * 5. Select the Options menu. Next, select the Video Options menu.
+  * 6. Wait for a bit and then leave the Video Options menu by
+  *    selecting the Previous Menu. Do not press the ESC key.
+  * 7. At the very bottom of the breakpoint trigger list are 5
+  *    opcodes. 3 of them belong to a "set" because they trigger at
+  *    the same rate. In other words, their trigger counter value is
+  *    the same. There is a second "set" containing the other 2
+  *    opcodes.
+  * 8. In the second "set", go to the address of the second opcode.
+  * 9. Follow the sequence of opcodes to a function call. The patch
+  *    address is the opcode immediately preceding the function call.
+  * 10. The patch also requires the use of a pointer. This pointer is
+  *     determined by the value of one or more of the stack and
+  *     registers' values at that point in the code. Open the Video
+  *     Options menu and set a breakpoint at the function call.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {

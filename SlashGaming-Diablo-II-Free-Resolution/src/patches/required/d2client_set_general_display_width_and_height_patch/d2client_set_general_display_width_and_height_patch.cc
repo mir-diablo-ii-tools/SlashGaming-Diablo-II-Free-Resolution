@@ -48,6 +48,7 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2client_set_general_display_width_and_height_patch_1_09.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -71,7 +72,8 @@ SetGeneralDisplayWidthAndHeightPatch::InitPatch() {
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C: {
       return new SetGeneralDisplayWidthAndHeightPatch_1_09D();
     }
   }
