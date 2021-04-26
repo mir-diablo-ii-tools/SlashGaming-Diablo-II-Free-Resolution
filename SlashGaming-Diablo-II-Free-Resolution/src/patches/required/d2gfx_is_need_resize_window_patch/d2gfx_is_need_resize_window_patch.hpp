@@ -48,8 +48,6 @@
 
 #include "../../../helper/abstract_multiversion_patch.hpp"
 #include "../../../helper/abstract_version_patch.hpp"
-#include "d2gfx_is_need_resize_window_patch_1_13c.hpp"
-#include "d2gfx_is_need_resize_window_patch_1_13d.hpp"
 
 namespace sgd2fr {
 namespace d2gfx {

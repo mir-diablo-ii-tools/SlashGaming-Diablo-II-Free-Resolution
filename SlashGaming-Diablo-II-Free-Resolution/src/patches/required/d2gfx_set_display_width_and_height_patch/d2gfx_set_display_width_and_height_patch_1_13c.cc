@@ -72,6 +72,13 @@ SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
 
 PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Go to D2GFX's IsNeedResizeWindowPatch patch address.
+  * 2. Scroll down to the very first function call that appears after
+  *    the patch location. That is the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -92,6 +99,16 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
               0xB0E0
           ),
           0xB104 - 0xB0E0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF2B10
+          ),
+          0xF2B34 - 0xF2B10
       );
     }
   }

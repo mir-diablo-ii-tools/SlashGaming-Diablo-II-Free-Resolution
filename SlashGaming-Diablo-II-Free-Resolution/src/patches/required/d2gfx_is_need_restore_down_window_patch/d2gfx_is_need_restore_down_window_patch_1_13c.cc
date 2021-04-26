@@ -90,6 +90,18 @@ IsNeedRestoreDownWindowPatch_1_13C::IsNeedRestoreDownWindowPatch_1_13C()
 
 PatchAddressAndSize
 IsNeedRestoreDownWindowPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Go to User32.dll's SystemParametersInfoA function.
+  * 2. Set a code breakpoint at the start of the function.
+  * 3. Maximize the game window, if the game window is not maximized
+  *    and then Restore Down the game window.
+  * 4. The breakpoint will trigger. Step over the code until the
+  *    function returns.
+  * 5. Scroll up to find the patch location. A call to User32.dll's
+  *    GetClientRect should be nearby.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -112,11 +124,33 @@ IsNeedRestoreDownWindowPatch_1_13C::GetPatchAddressAndSize01() {
           0xB26A - 0xB22B
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF31CE
+          ),
+          0xF3209 - 0xF31CE
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 IsNeedRestoreDownWindowPatch_1_13C::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Go to User32.dll's SystemParametersInfoA function.
+  * 2. Set a code breakpoint at the start of the function.
+  * 3. Maximize the game window, if the game window is not maximized
+  *    and then Restore Down the game window.
+  * 4. The breakpoint will trigger. Step over the code until the
+  *    function returns.
+  * 5. Scroll up to find the patch location. A call to User32.dll's
+  *    GetClientRect should be nearby.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -135,6 +169,16 @@ IsNeedRestoreDownWindowPatch_1_13C::GetPatchAddressAndSize02() {
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2GFX,
               0xB26A
+          ),
+          sizeof(kJeOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF3209
           ),
           sizeof(kJeOpcodes)
       );
