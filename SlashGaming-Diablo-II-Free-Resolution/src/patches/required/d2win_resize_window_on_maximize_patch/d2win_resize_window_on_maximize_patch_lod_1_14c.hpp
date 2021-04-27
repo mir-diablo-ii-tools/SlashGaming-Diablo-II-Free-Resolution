@@ -43,45 +43,33 @@
  *  work.
  */
 
-#include "d2win_resize_window_on_maximize_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_LOD_1_14C_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_LOD_1_14C_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2win_resize_window_on_maximize_patch_1_13c.hpp"
-#include "d2win_resize_window_on_maximize_patch_lod_1_14c.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2win {
 
-ResizeWindowOnMaximizePatch::ResizeWindowOnMaximizePatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class ResizeWindowOnMaximizePatch_Lod1_14C
+    : public AbstractVersionPatch {
+ public:
+  ResizeWindowOnMaximizePatch_Lod1_14C();
 
-bool ResizeWindowOnMaximizePatch::IsApplicable() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-  return (running_game_version >= ::d2::GameVersion::k1_13C);
-}
+ private:
+  enum {
+    kPatchesCount = 2
+  };
 
-AbstractVersionPatch*
-ResizeWindowOnMaximizePatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return new ResizeWindowOnMaximizePatch_1_13C();
-    }
-
-    case ::d2::GameVersion::kLod1_14C: {
-      return new ResizeWindowOnMaximizePatch_Lod1_14C();
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static PatchAddressAndSize GetPatchAddressAndSize02();
+};
 
 } // namespace d2win
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_LOD_1_14C_HPP_

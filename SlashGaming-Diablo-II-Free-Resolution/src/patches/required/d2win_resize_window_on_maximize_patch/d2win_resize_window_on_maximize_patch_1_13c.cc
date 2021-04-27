@@ -80,6 +80,17 @@ ResizeWindowOnMaximizePatch_1_13C::ResizeWindowOnMaximizePatch_1_13C()
 
 PatchAddressAndSize
 ResizeWindowOnMaximizePatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start the game in windowed GDI mode.
+  * 2. Make sure that the game window is not Maximized. Restore Down
+  *    the game window if required.
+  * 3. Set a code breakpoint in User32.dll's SetWindowPos function.
+  * 4. Maximize the game window.
+  * 5. In the debugger, Step Over until the function returns.
+  * 6. Scroll up to find the values 3 and 4 hardcoded in add opcodes.
+  *    Nearby is the patch location.
+  */
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
