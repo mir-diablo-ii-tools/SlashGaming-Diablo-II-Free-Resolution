@@ -97,12 +97,13 @@ PatchAddressAndSize
 IsNeedResizeWindowPatch_1_13D::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
-  * 1. Go to User32.dll's AdjustWindowRectEx function.
-  * 2. Set a code breakpoint at the start of the function.
-  * 3. Start a game with any character.
-  * 4. The breakpoint will trigger. Step over the code until the
+  * 1. Start the game in windowed GDI mode.
+  * 2. Go to User32.dll's AdjustWindowRectEx function.
+  * 3. Set a code breakpoint at the start of the function.
+  * 4. Start a game with any character.
+  * 5. The breakpoint will trigger. Step over the code until the
   *    function returns.
-  * 5. Scroll up to find the patch location. A call to User32.dll's
+  * 6. Scroll up to find the patch location. A call to User32.dll's
   *    GetClientRect should be nearby.
   */
 

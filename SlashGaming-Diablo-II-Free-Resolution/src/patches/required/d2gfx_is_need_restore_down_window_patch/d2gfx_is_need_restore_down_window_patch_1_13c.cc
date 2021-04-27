@@ -92,13 +92,14 @@ PatchAddressAndSize
 IsNeedRestoreDownWindowPatch_1_13C::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
-  * 1. Go to User32.dll's SystemParametersInfoA function.
-  * 2. Set a code breakpoint at the start of the function.
-  * 3. Maximize the game window, if the game window is not maximized
-  *    and then Restore Down the game window.
-  * 4. The breakpoint will trigger. Step over the code until the
+  * 1. Start the game in windowed GDI mode.
+  * 2. Maximize the game window, if the game window is not maximized.
+  * 3. Go to User32.dll's SystemParametersInfoA function.
+  * 4. Set a code breakpoint at the start of the function.
+  * 5. Restore Down the game window.
+  * 6. The breakpoint will trigger. Step over the code until the
   *    function returns.
-  * 5. Scroll up to find the patch location. A call to User32.dll's
+  * 7. Scroll up to find the patch location. A call to User32.dll's
   *    GetClientRect should be nearby.
   */
 
