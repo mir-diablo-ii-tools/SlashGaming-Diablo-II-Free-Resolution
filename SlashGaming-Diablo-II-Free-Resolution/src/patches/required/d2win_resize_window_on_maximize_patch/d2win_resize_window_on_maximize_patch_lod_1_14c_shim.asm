@@ -73,7 +73,6 @@ _D2Win_ResizeWindowOnMaximizePatch_Lod1_14C_InterceptionFunc01:
     push eax
     lea ecx, dword [ebp - 4]
     push ecx
-    ; The old ebp stores the value to be pushed.
     push dword [ebp + 0x38]
     push eax
     call _Sgd2fr_D2Win_ResizeWindowOnMaximize
