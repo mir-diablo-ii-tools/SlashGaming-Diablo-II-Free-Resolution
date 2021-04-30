@@ -60,7 +60,7 @@ SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
 
 bool SetDisplayWidthAndHeightPatch::IsApplicable() {
   ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  return (video_mode == ::d2::VideoMode::kDirectDraw);
+  return (video_mode == ::d2::VideoMode::kDirect3D);
 }
 
 AbstractVersionPatch*
