@@ -72,6 +72,15 @@ SetResolutionRegistryPatch_1_13C::SetResolutionRegistryPatch_1_13C()
 
 PatchAddressAndSize
 SetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results. One of those is the setter function.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {

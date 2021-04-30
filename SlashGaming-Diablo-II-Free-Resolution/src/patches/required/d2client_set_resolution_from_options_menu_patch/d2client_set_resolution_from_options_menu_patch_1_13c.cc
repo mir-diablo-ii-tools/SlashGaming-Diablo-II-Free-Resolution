@@ -73,6 +73,14 @@ SetResolutionFromOptionsMenuPatch_1_13C
 
 PatchAddressAndSize
 SetResolutionFromOptionsMenuPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Make sure to find the patch location of the D2Client
+  *    SetResolutionRegistryPatch. Set a code breakpoint there.
+  * 2. Step over until the very first function return is executed.
+  * 3. Scroll up to find the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -93,6 +101,16 @@ SetResolutionFromOptionsMenuPatch_1_13C::GetPatchAddressAndSize01() {
               0xC33A0
           ),
           0xC33AA - 0xC33A0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x79411
+          ),
+          0x7941B - 0x79411
       );
     }
   }

@@ -48,6 +48,8 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2gdi_set_cel_display_left_and_right_patch_1_09d.hpp"
+#include "d2gdi_set_cel_display_left_and_right_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2gdi {

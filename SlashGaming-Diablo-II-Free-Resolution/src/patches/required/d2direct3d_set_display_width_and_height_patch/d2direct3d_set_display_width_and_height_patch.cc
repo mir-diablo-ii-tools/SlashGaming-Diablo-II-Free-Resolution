@@ -48,6 +48,8 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2direct3d_set_display_width_and_height_patch_1_09d.hpp"
+#include "d2direct3d_set_display_width_and_height_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2direct3d {
@@ -58,7 +60,7 @@ SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
 
 bool SetDisplayWidthAndHeightPatch::IsApplicable() {
   ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  return (video_mode == ::d2::VideoMode::kDirectDraw);
+  return (video_mode == ::d2::VideoMode::kDirect3D);
 }
 
 AbstractVersionPatch*

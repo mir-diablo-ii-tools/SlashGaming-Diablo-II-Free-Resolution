@@ -48,6 +48,8 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2client_unload_cel_file_collection_patch_1_09d.hpp"
+#include "d2client_unload_cel_file_collection_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -69,7 +71,8 @@ UnloadCelFileCollectionPatch::InitPatch() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::kLod1_14C: {
       return new UnloadCelFileCollectionPatch_1_09D();
     }
 

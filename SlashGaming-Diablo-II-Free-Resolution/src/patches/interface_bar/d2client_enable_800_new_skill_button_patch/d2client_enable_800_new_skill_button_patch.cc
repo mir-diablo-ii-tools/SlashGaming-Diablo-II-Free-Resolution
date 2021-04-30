@@ -48,6 +48,8 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
+#include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -74,7 +76,8 @@ Enable800NewSkillButtonPatch::InitPatch() {
     }
 
     case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C: {
       return new Enable800NewSkillButtonPatch_1_13C();
     }
   }

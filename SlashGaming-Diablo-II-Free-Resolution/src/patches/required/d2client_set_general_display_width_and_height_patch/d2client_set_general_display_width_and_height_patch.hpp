@@ -48,7 +48,6 @@
 
 #include "../../../helper/abstract_multiversion_patch.hpp"
 #include "../../../helper/abstract_version_patch.hpp"
-#include "d2client_set_general_display_width_and_height_patch_1_09.hpp"
 
 namespace sgd2fr {
 namespace d2client {

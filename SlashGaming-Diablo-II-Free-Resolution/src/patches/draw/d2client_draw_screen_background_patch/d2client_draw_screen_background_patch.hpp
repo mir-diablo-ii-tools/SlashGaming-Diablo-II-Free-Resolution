@@ -48,7 +48,6 @@
 
 #include "../../../helper/abstract_multiversion_patch.hpp"
 #include "../../../helper/abstract_version_patch.hpp"
-#include "d2client_draw_screen_background_patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2client {

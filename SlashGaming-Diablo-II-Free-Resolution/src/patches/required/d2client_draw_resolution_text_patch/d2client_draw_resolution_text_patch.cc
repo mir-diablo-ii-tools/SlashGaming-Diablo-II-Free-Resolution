@@ -48,6 +48,9 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2client_draw_resolution_text_patch_1_09d.hpp"
+#include "d2client_draw_resolution_text_patch_1_13c.hpp"
+#include "d2client_draw_resolution_text_patch_lod_1_14c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -76,6 +79,10 @@ DrawResolutionTextPatch::InitPatch() {
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
       return new DrawResolutionTextPatch_1_13C();
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return new DrawResolutionTextPatch_Lod1_14C();
     }
   }
 }

@@ -48,8 +48,6 @@
 
 #include "../../../helper/abstract_multiversion_patch.hpp"
 #include "../../../helper/abstract_version_patch.hpp"
-#include "d2client_disable_mouse_click_on_screen_patch_1_09d.hpp"
-#include "d2client_disable_mouse_click_on_screen_patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2client {

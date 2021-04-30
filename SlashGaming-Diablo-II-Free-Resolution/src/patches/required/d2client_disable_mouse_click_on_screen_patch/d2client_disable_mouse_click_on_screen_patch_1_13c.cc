@@ -74,6 +74,23 @@ DisableMouseClickOnScreenPatch_1_13C::DisableMouseClickOnScreenPatch_1_13C()
 
 PatchAddressAndSize
 DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character.
+  * 2. Set a read breakpoint for D2Client's GeneralDisplayHeight
+  *    variable.
+  * 3. Open the (Lying) Character Screen.
+  * 4. Click anywhere that is not on the left half of the screen.
+  * 5. Click the screen's border frame.
+  * 6. If done correctly, the read opcode listed near the bottom
+  *    should be inside of the patch location's function. Its counter
+  *    only increases when the screen border frame is clicked.
+  * 7. Go to the location of this opcode.
+  * 8. Select the opcode that calls the getter function for D2GFX's
+  *    ResolutionMode variable and compares its value to 2.
+  * 9. Scroll up to locate the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -96,11 +113,40 @@ DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize01() {
           0xBF2DA - 0xBF2D0
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3DA0
+          ),
+          0xA3DAA - 0xA3DA0
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character.
+  * 2. Set a read breakpoint for D2Client's GeneralDisplayHeight
+  *    variable.
+  * 3. Open the Inventory Screen. Although the Skill Tree Screen is a
+  *    screen that appear on the right side of the display, clicks in
+  *    certain places will not trigger the code that will be patched.
+  * 4. Click anywhere that is not on the right half of the screen.
+  * 5. Click the screen's border frame.
+  * 6. If done correctly, the read opcode listed near the bottom
+  *    should be inside of the patch location's function. Its counter
+  *    only increases when the screen border frame is clicked.
+  * 7. Go to the location of this opcode.
+  * 8. Select the opcode that calls the getter function for D2GFX's
+  *    ResolutionMode variable and compares its value to 2.
+  * 9. Scroll up to locate the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -121,6 +167,16 @@ DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize02() {
               0x94820
           ),
           0x9482A - 0x94820
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x82FE0
+          ),
+          0x82FEA - 0x82FE0
       );
     }
   }
