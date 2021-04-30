@@ -77,7 +77,8 @@ DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
   * 1. Search for the locations where the 7-bit null-terminated ASCII
-  *    text "Panel\CtrlPnl7" is used.
+  *    text "Panel\CtrlPnl7" is used. This text should be in a Read
+  *    Only section.
   * 2. Scroll up to the top of the function.
   */
 

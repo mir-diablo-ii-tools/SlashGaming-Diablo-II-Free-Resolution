@@ -76,7 +76,7 @@ UnloadCelFileCollectionPatch_1_13C::GetPatchAddressAndSize01() {
   * How to find patch locations:
   * 1. Start a game with any character.
   * 2. Locate the variable for a CelFile that is associated with the
-  *     text "Panel\CtrlPnl7".
+  *    text "Panel\CtrlPnl7".
   * 3. Set a write breakpoint on the variable.
   * 4. Save and Exit the current game. Do not stop/exit/kill the game
   *    process.
