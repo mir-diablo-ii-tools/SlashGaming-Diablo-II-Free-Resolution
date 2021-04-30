@@ -73,6 +73,16 @@ Enable800InterfaceBarPatch_1_13C::Enable800InterfaceBarPatch_1_13C()
 
 PatchAddressAndSize
 Enable800InterfaceBarPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character. This is to get D2Client.dll
+  *    loaded.
+  * 2. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "Panel\CtrlPnl7" is used. This text should be in a Read
+  *    Only section.
+  * 3. Scroll up to find the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -93,6 +103,16 @@ Enable800InterfaceBarPatch_1_13C::GetPatchAddressAndSize01() {
               0x6D392
           ),
           0x6D397 - 0x6D392
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x94876
+          ),
+          0x9487B - 0x94876
       );
     }
   }

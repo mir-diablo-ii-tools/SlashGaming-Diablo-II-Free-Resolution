@@ -185,6 +185,17 @@ Enable800NewSkillButtonPatch_1_13C::Enable800NewSkillButtonPatch_1_13C()
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read breakpoint on D2Client's IsNewSkillButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -207,11 +218,32 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize01() {
           0x20B7C - 0x20B77
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA352F
+          ),
+          0xA3534 - 0xA352F
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read breakpoint on D2Client's IsNewSkillButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -234,11 +266,32 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize02() {
           0x20C1A - 0x20C15
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA35BA
+          ),
+          0xA35BF - 0xA35BA
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize03() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read breakpoint on D2Client's IsNewSkillButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -261,11 +314,32 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize03() {
           0x20C91 - 0x20C8C
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3632
+          ),
+          0xA3637 - 0xA3632
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize04() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read breakpoint on D2Client's IsNewSkillButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -288,11 +362,33 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize04() {
           0x20CF5 - 0x20CF0
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA369A
+          ),
+          0xA369F - 0xA369A
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize05() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read breakpoint on D2Client's IsNewSkillButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list. Note that this is only the function that calls
+  *    the actual function containing the patch location.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -315,11 +411,33 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize05() {
           0x20A54 - 0x20A10
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2D60
+          ),
+          0xA2DA9 - 0xA2D60
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize06() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewSkillButtonPressed variable.
+  * 3. Click on the New Skill button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    2nd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -342,11 +460,33 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize06() {
           0x211E4 - 0x211DF
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2E5F
+          ),
+          0xA2E64 - 0xA2E5F
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize07() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewSkillButtonPressed variable.
+  * 3. Click on the New Skill button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    2nd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -369,11 +509,33 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize07() {
           0x211FE - 0x211F9
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2E7D
+          ),
+          0xA2E82 - 0xA2E7D
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize08() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewSkillButtonPressed variable.
+  * 3. Click on the New Skill button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    3rd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -396,11 +558,33 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize08() {
           0x21345 - 0x21340
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2FDF
+          ),
+          0xA2FE4 - 0xA2FDF
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize09() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 skill point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewSkillButtonPressed variable.
+  * 3. Click on the New Skill button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    3rd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -423,11 +607,34 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize09() {
           0x21363 - 0x2135E
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3000
+          ),
+          0xA3005 - 0xA3000
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize10() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with no skill points.
+  * 2. Set a read breakpoint on D2Client's GeneralDisplayWidth
+  *    variable.
+  * 3. Allow the read breakpoint list to fill up.
+  * 4. Mouse over the New Skill button.
+  * 5. In the read breakpoint trigger list, scroll down and select the
+  *    last result. Go to that code location.
+  * 6. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -448,6 +655,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize10() {
               0x20DA3
           ),
           0x20DA8 - 0x20DA3
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3463
+          ),
+          0xA3468 - 0xA3463
       );
     }
   }

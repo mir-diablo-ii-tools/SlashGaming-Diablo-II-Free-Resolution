@@ -63,7 +63,7 @@ D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc02();
 Enable800NewStatsButtonPatch_1_13C::Enable800NewStatsButtonPatch_1_13C()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Enable drawing the New Stats button on the interface bar when the
-  // (Lying) Charater Screen is open or screens on both sides are
+  // (Lying) Character Screen is open or screens on both sides are
   // open.
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
@@ -186,6 +186,17 @@ Enable800NewStatsButtonPatch_1_13C::Enable800NewStatsButtonPatch_1_13C()
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read breakpoint on D2Client's IsNewStatsButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -208,11 +219,32 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize01() {
           0x20E6C - 0x20E67
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA31EF
+          ),
+          0xA31F4 - 0xA31EF
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read breakpoint on D2Client's IsNewStatsButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -235,11 +267,32 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize02() {
           0x20F11 - 0x20F0C
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3279
+          ),
+          0xA327E - 0xA3279
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize03() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read breakpoint on D2Client's IsNewStatsButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -262,11 +315,32 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize03() {
           0x20F88 - 0x20F83
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA32F1
+          ),
+          0xA32F6 - 0xA32F1
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize04() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read breakpoint on D2Client's IsNewStatsButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -289,11 +363,33 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize04() {
           0x20FED - 0x20FE8
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA335A
+          ),
+          0xA335F - 0xA335A
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize05() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read breakpoint on D2Client's IsNewStatsButtonPressed
+  *    variable. Only 1 result should show.
+  * 3. Go to the code location that is listed in the breakpoint
+  *    trigger list. Note that this is only the function that calls
+  *    the actual function containing the patch location.
+  * 4. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -316,11 +412,33 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize05() {
           0x20AF5 - 0x20AB0
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2CB0
+          ),
+          0xA2CFA - 0xA2CB0
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize06() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewStatButtonPressed variable.
+  * 3. Click on the New Stats button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    2nd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -343,11 +461,33 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize06() {
           0x21294 - 0x2128F
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2DBF
+          ),
+          0xA2DC4 - 0xA2DBF
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize07() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewStatButtonPressed variable.
+  * 3. Click on the New Stats button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    2nd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -370,11 +510,33 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize07() {
           0x212B2 - 0x212AD
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2DDD
+          ),
+          0xA2DE2 - 0xA2DDD
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize08() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewStatsButtonPressed variable.
+  * 3. Click on the New Stats button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    3rd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -397,11 +559,33 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize08() {
           0x216A5 - 0x216A0
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2EFF
+          ),
+          0xA2F04 - 0xA2EFF
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize09() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with at least 1 stat point.
+  * 2. Set a read and write breakpoint on D2Client's
+  *    IsNewStatsButtonPressed variable.
+  * 3. Click on the New Stats button.
+  * 4. In the read and write breakpoint trigger list, select the
+  *    3rd result and go to that code location.
+  * 5. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -424,11 +608,34 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize09() {
           0x216C3 - 0x216BE
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2F20
+          ),
+          0xA2F25 - 0xA2F20
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize10() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with a character with no stat points.
+  * 2. Set a read breakpoint on D2Client's GeneralDisplayWidth
+  *    variable.
+  * 3. Allow the read breakpoint list to fill up.
+  * 4. Mouse over the New Stats button.
+  * 5. In the read breakpoint trigger list, scroll down and select the
+  *    last result. Go to that code location.
+  * 6. Scroll up to the top of the function and find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -449,6 +656,16 @@ Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize10() {
               0x21093
           ),
           0x21098 - 0x21093
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3123
+          ),
+          0xA3128 - 0xA3123
       );
     }
   }
