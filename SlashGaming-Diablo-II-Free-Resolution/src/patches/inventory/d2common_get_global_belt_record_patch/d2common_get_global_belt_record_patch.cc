@@ -48,6 +48,7 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "d2common_get_global_belt_record_patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2common {
