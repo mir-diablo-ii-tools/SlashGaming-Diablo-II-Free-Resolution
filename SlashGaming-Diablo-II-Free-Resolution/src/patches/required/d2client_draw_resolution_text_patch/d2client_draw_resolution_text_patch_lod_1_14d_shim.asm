@@ -71,7 +71,7 @@ _D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01:
     push edi
     push edx
     mov ecx, dword [ebp]
-    push dword [ecx + 0x0C]
+    push dword [ecx - 0x0C]
     push eax
     call _Sgd2fr_D2Client_DrawResolutionText
     add esp, 16
