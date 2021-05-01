@@ -43,47 +43,56 @@
  *  work.
  */
 
-#include "d2client_draw_interface_bar_background_patch.hpp"
+#include "d2client_draw_interface_bar_background_patch_lod_1_14d.hpp"
 
 #include <stddef.h>
 
-#include <sgd2mapi.hpp>
-#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
-#include "d2client_draw_interface_bar_background_patch_lod_1_14c.hpp"
-#include "d2client_draw_interface_bar_background_patch_lod_1_14d.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14D_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-DrawInterfaceBarBackgroundPatch::DrawInterfaceBarBackgroundPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+DrawInterfaceBarBackgroundPatch_Lod1_14D
+::DrawInterfaceBarBackgroundPatch_Lod1_14D()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  // Draw the new interface bar background.
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
-bool DrawInterfaceBarBackgroundPatch::IsApplicable() {
-  return true;
-}
-
-AbstractVersionPatch*
-DrawInterfaceBarBackgroundPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+PatchAddressAndSize
+DrawInterfaceBarBackgroundPatch_Lod1_14D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "Panel\CtrlPnl7" is used. This text should be in a Read
+  *    Only section.
+  * 2. Scroll up to the top of the function.
+  */
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return new DrawInterfaceBarBackgroundPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::kLod1_14C: {
-      return new DrawInterfaceBarBackgroundPatch_Lod1_14C();
-    }
-
     case ::d2::GameVersion::kLod1_14D: {
-      return new DrawInterfaceBarBackgroundPatch_Lod1_14D();
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x983D9
+          ),
+          0x983DE - 0x983D9
+      );
     }
   }
 }

@@ -43,50 +43,32 @@
  *  work.
  */
 
-#include "d2client_draw_interface_bar_background_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14D_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
-#include "d2client_draw_interface_bar_background_patch_lod_1_14c.hpp"
-#include "d2client_draw_interface_bar_background_patch_lod_1_14d.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-DrawInterfaceBarBackgroundPatch::DrawInterfaceBarBackgroundPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class DrawInterfaceBarBackgroundPatch_Lod1_14D
+    : public AbstractVersionPatch {
+ public:
+  DrawInterfaceBarBackgroundPatch_Lod1_14D();
 
-bool DrawInterfaceBarBackgroundPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-AbstractVersionPatch*
-DrawInterfaceBarBackgroundPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return new DrawInterfaceBarBackgroundPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::kLod1_14C: {
-      return new DrawInterfaceBarBackgroundPatch_Lod1_14C();
-    }
-
-    case ::d2::GameVersion::kLod1_14D: {
-      return new DrawInterfaceBarBackgroundPatch_Lod1_14D();
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
 } // namespace d2client
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14D_HPP_
