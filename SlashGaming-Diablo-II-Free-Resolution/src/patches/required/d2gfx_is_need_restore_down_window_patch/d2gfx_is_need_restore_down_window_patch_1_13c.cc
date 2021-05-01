@@ -135,6 +135,16 @@ IsNeedRestoreDownWindowPatch_1_13C::GetPatchAddressAndSize01() {
           0xF3209 - 0xF31CE
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF5C0F
+          ),
+          0xF5C45 - 0xF5C0F
+      );
+    }
   }
 }
 
@@ -180,6 +190,16 @@ IsNeedRestoreDownWindowPatch_1_13C::GetPatchAddressAndSize02() {
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2GFX,
               0xF3209
+          ),
+          sizeof(kJeOpcodes)
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF5C45
           ),
           sizeof(kJeOpcodes)
       );

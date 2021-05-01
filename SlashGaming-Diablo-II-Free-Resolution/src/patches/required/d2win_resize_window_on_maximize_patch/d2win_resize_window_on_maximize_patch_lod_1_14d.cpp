@@ -43,47 +43,82 @@
  *  work.
  */
 
-#include "d2win_resize_window_on_maximize_patch.hpp"
+#include "d2win_resize_window_on_maximize_patch_lod_1_14d.hpp"
 
 #include <stddef.h>
 
-#include <sgd2mapi.hpp>
-#include "d2win_resize_window_on_maximize_patch_1_13c.hpp"
-#include "d2win_resize_window_on_maximize_patch_lod_1_14c.hpp"
-#include "d2win_resize_window_on_maximize_patch_lod_1_14d.hpp"
+extern "C" {
+
+void __cdecl
+D2Win_ResizeWindowOnMaximizePatch_Lod1_14D_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2win {
 
-ResizeWindowOnMaximizePatch::ResizeWindowOnMaximizePatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+ResizeWindowOnMaximizePatch_Lod1_14D::ResizeWindowOnMaximizePatch_Lod1_14D()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Win_ResizeWindowOnMaximizePatch_Lod1_14D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
+  );
+  this->patches_[1].Swap(patch_02);
 }
 
-bool ResizeWindowOnMaximizePatch::IsApplicable() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-  return (running_game_version >= ::d2::GameVersion::k1_13C);
-}
-
-AbstractVersionPatch*
-ResizeWindowOnMaximizePatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
+PatchAddressAndSize
+ResizeWindowOnMaximizePatch_Lod1_14D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start the game in windowed GDI mode.
+  * 2. Make sure that the game window is not Maximized. Restore Down
+  *    the game window if required.
+  * 3. Set a code breakpoint in User32.dll's SetWindowPos function.
+  * 4. Maximize the game window.
+  * 5. In the debugger, Step Over until the function returns.
+  * 6. Scroll up to find the values 3 and 4 hardcoded in add opcodes.
+  *    Nearby is the patch location.
+  */
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return new ResizeWindowOnMaximizePatch_1_13C();
-    }
-
-    case ::d2::GameVersion::kLod1_14C: {
-      return new ResizeWindowOnMaximizePatch_Lod1_14C();
-    }
-
     case ::d2::GameVersion::kLod1_14D: {
-      return new ResizeWindowOnMaximizePatch_Lod1_14D();
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Win,
+              0xF9E35
+          ),
+          0xF9E47 - 0xF9E35
+      );
+    }
+  }
+}
+
+PatchAddressAndSize
+ResizeWindowOnMaximizePatch_Lod1_14D::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Win,
+              0xF9E51
+          ),
+          0xF9E54 - 0xF9E51
+      );
     }
   }
 }
