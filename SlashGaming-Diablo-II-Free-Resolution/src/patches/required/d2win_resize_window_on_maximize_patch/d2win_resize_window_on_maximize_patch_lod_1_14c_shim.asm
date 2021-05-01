@@ -69,8 +69,8 @@ _D2Win_ResizeWindowOnMaximizePatch_Lod1_14C_InterceptionFunc01:
     push ecx
     push edx
 
-    lea eax, dword [ebp - 8]
-    push eax
+    lea edx, dword [ebp - 8]
+    push edx
     lea ecx, dword [ebp - 4]
     push ecx
     push dword [ebp + 0x38]
