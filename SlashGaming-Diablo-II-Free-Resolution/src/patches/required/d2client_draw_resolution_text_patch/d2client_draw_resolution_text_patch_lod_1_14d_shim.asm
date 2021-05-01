@@ -43,10 +43,9 @@
 ;  work.
 ;
 
-global _D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01
-global _D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc02
+global _D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01
 
-extern _Sgd2fr_D2Client_GetResolutionRegistry
+extern _Sgd2fr_D2Client_DrawResolutionText
 
 section .data
 
@@ -58,57 +57,39 @@ section .text
 ; External
 ;
 
-_D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01:
+_D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01:
     ; Original code
-    lea eax, dword [ecx + 0x124]
+    add edx, 230
 
     push ebp
     mov ebp, esp
-
-    sub esp, 4
 
     push eax
     push ecx
     push edx
 
-    lea ecx, dword [ebp - 4]
-    push ecx
-    push eax
-    call _Sgd2fr_D2Client_GetResolutionRegistry
-    add esp, 8
-
-    pop edx
-    pop ecx
-    pop eax
-
-    mov ecx, dword [ebp - 4]
-    add esp, 4
-
-    leave
-    ret
-
-_D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc02:
-    push ebp
-    mov ebp, esp
-
-    sub esp, 4
-
-    push eax
-    push ecx
+    push edi
     push edx
-
-    lea ecx, dword [ebp - 4]
-    push ecx
+    mov ecx, dword [ebp]
+    push dword [ecx + 0x0C]
     push eax
-    call _Sgd2fr_D2Client_GetResolutionRegistry
-    add esp, 8
+    call _Sgd2fr_D2Client_DrawResolutionText
+    add esp, 16
+
+    ; If the correct pieces executed, then remove the pushed
+    ; arguments, then set the return address to a place after the
+    ; original draw function call.
+    test eax, eax
 
     pop edx
     pop ecx
     pop eax
 
-    mov ecx, dword [ebp - 4]
-    add esp, 4
-
     leave
+
+    jnz DidDrawUnicodeText
     ret
+
+  DidDrawUnicodeText:
+    add dword [esp], 6
+    ret 16

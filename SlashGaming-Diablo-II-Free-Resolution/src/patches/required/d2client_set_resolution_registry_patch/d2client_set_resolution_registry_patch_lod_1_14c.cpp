@@ -93,6 +93,16 @@ SetResolutionRegistryPatch_Lod1_14C::GetPatchAddressAndSize01() {
           0x78EBC - 0x78E90
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x7D0A0
+          ),
+          0x7D0CC - 0x7D0A0
+      );
+    }
   }
 }
 

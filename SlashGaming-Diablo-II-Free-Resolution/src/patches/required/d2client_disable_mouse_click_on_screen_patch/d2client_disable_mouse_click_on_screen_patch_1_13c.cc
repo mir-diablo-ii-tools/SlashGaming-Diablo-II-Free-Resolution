@@ -123,6 +123,16 @@ DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize01() {
           0xA3DAA - 0xA3DA0
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA76C0
+          ),
+          0xA76CA - 0xA76C0
+      );
+    }
   }
 }
 
@@ -177,6 +187,16 @@ DisableMouseClickOnScreenPatch_1_13C::GetPatchAddressAndSize02() {
               0x82FE0
           ),
           0x82FEA - 0x82FE0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x86E63
+          ),
+          0x86E6D - 0x86E63
       );
     }
   }

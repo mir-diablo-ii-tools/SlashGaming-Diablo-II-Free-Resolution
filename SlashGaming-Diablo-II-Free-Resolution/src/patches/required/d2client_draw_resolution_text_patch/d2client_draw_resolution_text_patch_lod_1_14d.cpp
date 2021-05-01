@@ -43,113 +43,72 @@
  *  work.
  */
 
-#include "d2client_get_resolution_registry_patch_lod_1_14c.hpp"
+#include "d2client_draw_resolution_text_patch_lod_1_14d.hpp"
 
 #include <stddef.h>
 
 extern "C" {
 
 void __cdecl
-D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01();
-
-void __cdecl
-D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc02();
+D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01();
 
 } // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-GetResolutionRegistryPatch_Lod1_14C::GetResolutionRegistryPatch_Lod1_14C()
+DrawResolutionTextPatch_Lod1_14D::DrawResolutionTextPatch_Lod1_14D()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
-      &D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01,
+      &D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01,
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
-
-  PatchAddressAndSize patch_address_and_size_02 =
-      GetPatchAddressAndSize02();
-  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_02.first,
-      ::mapi::BranchType::kCall,
-      &D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc02,
-      patch_address_and_size_02.second
-  );
-  this->patches_[1].Swap(patch_02);
 }
 
 PatchAddressAndSize
-GetResolutionRegistryPatch_Lod1_14C::GetPatchAddressAndSize01() {
+DrawResolutionTextPatch_Lod1_14D::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
-  * 1. Search for the location of the 7-bit null-terminated ASCII text
-  *    "Resolution". This text should be in a Read Only section.
-  * 2. Search for the locations where "Resolution" is used. There will
-  *    be 3 results.
-  * 3. Choose the patch location with the matching interception shim.
+  * 1. Start a game with any character. Do not open the Game Menu.
+  * 2. Set a read breakpoint on D2Client's GeneralDisplayWidth
+  *    variable.
+  * 3. Move the mouse, click, and interact with as many things as
+  *    possible on the screen to trigger code that will be added to
+  *    the top of the list. Any breakpoint triggers in this list are
+  *    to be ignored.
+  * 4. Open the game menu.
+  * 5. Select the Options menu. Next, select the Video Options menu.
+  * 6. Wait for a bit and then leave the Video Options menu by
+  *    selecting the Previous Menu. Do not press the ESC key.
+  * 7. At the very bottom of the breakpoint trigger list are 5
+  *    opcodes. 3 of them belong to a "set" because they trigger at
+  *    the same rate. In other words, their trigger counter value is
+  *    the same. There is a second "set" containing the other 2
+  *    opcodes.
+  * 8. In the second "set", go to the address of the second opcode.
+  * 9. Follow the sequence of opcodes to a function call. The patch
+  *    address is the opcode immediately preceding the function call.
+  * 10. The patch also requires the use of a pointer. This pointer is
+  *     determined by the value of one or more of the stack and
+  *     registers' values at that point in the code. Open the Video
+  *     Options menu and set a breakpoint at the function call.
   */
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x78ED0
-          ),
-          0x78F00 - 0x78ED0
-      );
-    }
-
     case ::d2::GameVersion::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x7D0E0
+              0x7E5AB
           ),
-          0x7D110 - 0x7D0E0
-      );
-    }
-  }
-}
-
-PatchAddressAndSize
-GetResolutionRegistryPatch_Lod1_14C::GetPatchAddressAndSize02() {
-  /*
-  * How to find patch locations:
-  * 1. Search for the location of the 7-bit null-terminated ASCII text
-  *    "Resolution". This text should be in a Read Only section.
-  * 2. Search for the locations where "Resolution" is used. There will
-  *    be 3 results.
-  * 3. Choose the patch location with the matching interception shim.
-  */
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x7AFE4
-          ),
-          0x7B00E - 0x7AFE4
-      );
-    }
-
-    case ::d2::GameVersion::kLod1_14D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x7F1D7
-          ),
-          0x7F201 - 0x7F1D7
+          0x7E5B1 - 0x7E5AB
       );
     }
   }
