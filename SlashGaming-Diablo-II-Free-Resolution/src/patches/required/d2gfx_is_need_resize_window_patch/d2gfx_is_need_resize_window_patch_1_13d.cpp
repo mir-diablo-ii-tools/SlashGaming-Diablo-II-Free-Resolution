@@ -72,7 +72,7 @@ enum {
 } // namespace
 
 IsNeedResizeWindowPatch_1_13D::IsNeedResizeWindowPatch_1_13D()
-    : patches_() {
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
@@ -93,20 +93,20 @@ IsNeedResizeWindowPatch_1_13D::IsNeedResizeWindowPatch_1_13D()
   this->patches_[1].Swap(patch_02);
 }
 
-void IsNeedResizeWindowPatch_1_13D::Apply() {
-  for (size_t i = 0; i < kPatchesCount; i += 1) {
-    this->patches_[i].Apply();
-  }
-}
-
-void IsNeedResizeWindowPatch_1_13D::Remove() {
-  for (size_t i = kPatchesCount - 1; (i + 1) > 0; i -= 1) {
-    this->patches_[i].Remove();
-  }
-}
-
 PatchAddressAndSize
 IsNeedResizeWindowPatch_1_13D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start the game in windowed GDI mode.
+  * 2. Go to User32.dll's AdjustWindowRectEx function.
+  * 3. Set a code breakpoint at the start of the function.
+  * 4. Start a game with any character.
+  * 5. The breakpoint will trigger. Step over the code until the
+  *    function returns.
+  * 6. Scroll up to find the patch location. A call to User32.dll's
+  *    GetClientRect should be nearby.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -119,11 +119,42 @@ IsNeedResizeWindowPatch_1_13D::GetPatchAddressAndSize01() {
           0xB444 - 0xB405
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF30B4
+          ),
+          0xF30F3 - 0xF30B4
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF5B05
+          ),
+          0xF5B3B - 0xF5B05
+      );
+    }
   }
 }
 
 PatchAddressAndSize
 IsNeedResizeWindowPatch_1_13D::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Go to User32.dll's AdjustWindowRectEx function.
+  * 2. Set a code breakpoint at the start of the function.
+  * 3. Start a game with any character.
+  * 4. The breakpoint will trigger. Step over the code until the
+  *    function returns.
+  * 5. Scroll up to find the patch location. A call to User32.dll's
+  *    GetClientRect should be nearby.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -132,6 +163,26 @@ IsNeedResizeWindowPatch_1_13D::GetPatchAddressAndSize02() {
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2GFX,
               0xB444
+          ),
+          kJeOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF30F3
+          ),
+          kJeOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF5B3B
           ),
           kJeOpcodesCount
       );

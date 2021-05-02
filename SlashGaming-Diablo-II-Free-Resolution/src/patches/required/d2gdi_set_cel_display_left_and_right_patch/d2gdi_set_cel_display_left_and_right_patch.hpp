@@ -46,35 +46,23 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
 
-#include <optional>
-#include <variant>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
-#include "d2gdi_set_cel_display_left_and_right_patch_1_09d.hpp"
-#include "d2gdi_set_cel_display_left_and_right_patch_1_13c.hpp"
+namespace sgd2fr {
+namespace d2gdi {
 
-namespace sgd2fr::patches::d2gdi {
-
-class SetCelDisplayLeftAndRightPatch {
+class SetCelDisplayLeftAndRightPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      SetCelDisplayLeftAndRightPatch_1_09D,
-      SetCelDisplayLeftAndRightPatch_1_13C
-  >;
-
-  using PatchType = std::optional<PatchVariant>;
-
   SetCelDisplayLeftAndRightPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchType patch_;
-
-  static PatchType MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2gdi
+} // namespace d2gdi
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_

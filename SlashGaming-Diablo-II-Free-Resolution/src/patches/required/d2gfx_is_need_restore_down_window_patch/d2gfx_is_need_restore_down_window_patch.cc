@@ -45,42 +45,40 @@
 
 #include "d2gfx_is_need_restore_down_window_patch.hpp"
 
-namespace sgd2fr::patches::d2gfx {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2gfx_is_need_restore_down_window_patch_1_13c.hpp"
+
+namespace sgd2fr {
+namespace d2gfx {
 
 IsNeedRestoreDownWindowPatch::IsNeedRestoreDownWindowPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void IsNeedRestoreDownWindowPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
-}
-
-void IsNeedRestoreDownWindowPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
-
-IsNeedRestoreDownWindowPatch::PatchType
-IsNeedRestoreDownWindowPatch::MakePatch() {
+bool IsNeedRestoreDownWindowPatch::IsApplicable() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  return (running_game_version >= ::d2::GameVersion::k1_13C);
+}
 
-  if (running_game_version < ::d2::GameVersion::k1_13C) {
-    return ::std::nullopt;
+AbstractVersionPatch*
+IsNeedRestoreDownWindowPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return IsNeedRestoreDownWindowPatch_1_13C();
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new IsNeedRestoreDownWindowPatch_1_13C();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr

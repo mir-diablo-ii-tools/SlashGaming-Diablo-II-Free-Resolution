@@ -45,8 +45,9 @@
 
 #include "d2client_get_resolution_registry.hpp"
 
-#include <sgd2mapi.hpp>
+#include <stddef.h>
 
+#include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/game_resolution.hpp"
 
@@ -59,9 +60,11 @@ void __cdecl Sgd2fr_D2Client_GetResolutionRegistry(
   // Check the user's input to prevent out-of-index selections.
   *reg_resolution_mode = config::GetIngameResolutionMode();
 
-  if (*reg_resolution_mode < GetMinConfigResolutionId()
+  size_t min_config_resolution_id = GetMinConfigResolutionId();
+
+  if (*reg_resolution_mode < min_config_resolution_id
       || *reg_resolution_mode >= GetMaxConfigResolutionId()) {
-    *reg_resolution_mode = GetMinConfigResolutionId();
+    *reg_resolution_mode = min_config_resolution_id;
   }
 
   if (*reg_resolution_mode == 0) {

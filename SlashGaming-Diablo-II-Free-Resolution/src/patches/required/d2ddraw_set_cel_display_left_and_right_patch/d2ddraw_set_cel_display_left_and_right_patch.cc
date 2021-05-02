@@ -45,36 +45,29 @@
 
 #include "d2ddraw_set_cel_display_left_and_right_patch.hpp"
 
-namespace sgd2fr::patches::d2ddraw {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2ddraw_set_cel_display_left_and_right_patch_1_09d.hpp"
+
+namespace sgd2fr {
+namespace d2ddraw {
 
 SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void SetCelDisplayLeftAndRightPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
+bool SetCelDisplayLeftAndRightPatch::IsApplicable() {
+  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  return (video_mode == ::d2::VideoMode::kDirectDraw);
 }
 
-void SetCelDisplayLeftAndRightPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
-
-SetCelDisplayLeftAndRightPatch::PatchType
-SetCelDisplayLeftAndRightPatch::MakePatch() {
-  d2::VideoMode video_mode = d2::DetermineVideoMode();
-  if (video_mode != d2::VideoMode::kDirectDraw) {
-    return std::nullopt;
+AbstractVersionPatch* SetCelDisplayLeftAndRightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
 
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_07Beta:
@@ -96,9 +89,10 @@ SetCelDisplayLeftAndRightPatch::MakePatch() {
     case ::d2::GameVersion::kLod1_14B:
     case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      return SetCelDisplayLeftAndRightPatch_1_09D();
+      return new SetCelDisplayLeftAndRightPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2ddraw
+} // namespace d2ddraw
+} // namespace sgd2fr

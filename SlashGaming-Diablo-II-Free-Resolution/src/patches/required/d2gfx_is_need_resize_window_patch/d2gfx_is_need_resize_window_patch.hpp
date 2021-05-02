@@ -46,35 +46,23 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_HPP_
 
-#include <optional>
-#include <variant>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
-#include "d2gfx_is_need_resize_window_patch_1_13c.hpp"
-#include "d2gfx_is_need_resize_window_patch_1_13d.hpp"
+namespace sgd2fr {
+namespace d2gfx {
 
-namespace sgd2fr::patches::d2gfx {
-
-class IsNeedResizeWindowPatch {
+class IsNeedResizeWindowPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      IsNeedResizeWindowPatch_1_13C,
-      ::sgd2fr::d2gfx::IsNeedResizeWindowPatch_1_13D
-  >;
-
-  using PatchType = ::std::optional<PatchVariant>;
-
   IsNeedResizeWindowPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchType patch_;
-
-  static PatchType MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_HPP_

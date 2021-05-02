@@ -52,7 +52,7 @@ namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2Client_GetResolutionRegistry(
     std::uint32_t* reg_resolution_mode,
-    std::uint32_t* actual_resolution_mode
+    std::uint32_t* ingame_resolution_mode
 );
 
 } // namespace sgd2fr::patches

@@ -46,30 +46,23 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_HPP_
 
-#include <variant>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
-#include "d2common_get_global_inventory_position_patch_1_09d.hpp"
+namespace sgd2fr {
+namespace d2common {
 
-namespace sgd2fr::patches::d2common {
-
-class GetGlobalInventoryPositionPatch {
+class GetGlobalInventoryPositionPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      GetGlobalInventoryPositionPatch_1_09D
-  >;
-
   GetGlobalInventoryPositionPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_HPP_

@@ -45,6 +45,8 @@
 
 #include "d2client_get_resolution_registry_patch_1_13c.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -58,77 +60,63 @@ D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc04();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 GetResolutionRegistryPatch_1_13C::GetResolutionRegistryPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void GetResolutionRegistryPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void GetResolutionRegistryPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-GetResolutionRegistryPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   PatchAddressAndSize patch_address_and_size_02 =
       GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_02.first,
-          mapi::BranchType::kCall,
-          &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_02.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patch_02);
 
   PatchAddressAndSize patch_address_and_size_03 =
       GetPatchAddressAndSize03();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_03.first,
-          mapi::BranchType::kCall,
-          &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc03,
-          patch_address_and_size_03.second
-      )
+  ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_03.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc03,
+      patch_address_and_size_03.second
   );
+  this->patches_[2].Swap(patch_03);
 
   PatchAddressAndSize patch_address_and_size_04 =
       GetPatchAddressAndSize04();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_04.first,
-          mapi::BranchType::kCall,
-          &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc04,
-          patch_address_and_size_04.second
-      )
+  ::mapi::GamePatch patch_04 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_04.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_GetResolutionRegistryPatch_1_13C_InterceptionFunc04,
+      patch_address_and_size_04.second
   );
-
-  return patches;
+  this->patches_[3].Swap(patch_04);
 }
 
-GetResolutionRegistryPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -154,8 +142,17 @@ GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
   }
 }
 
-GetResolutionRegistryPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -181,8 +178,17 @@ GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize02() {
   }
 }
 
-GetResolutionRegistryPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize03() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -208,8 +214,17 @@ GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize03() {
   }
 }
 
-GetResolutionRegistryPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize04() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -235,4 +250,5 @@ GetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize04() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

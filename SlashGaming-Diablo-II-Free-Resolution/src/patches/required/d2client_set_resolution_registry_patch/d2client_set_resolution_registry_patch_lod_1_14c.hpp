@@ -43,19 +43,32 @@
  *  work.
  */
 
-#ifndef SGD2FR_WIDE_MACRO_H_
-#define SGD2FR_WIDE_MACRO_H_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_LOD_1_14C_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_LOD_1_14C_HPP_
 
-#ifndef MAPI_CAT
-#define MAPI_CAT(a, b) a##b
-#endif /* MAPI_CAT */
+#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
-#ifndef MAPI_WIDE_LIT
-#define MAPI_WIDE_LIT(s) MAPI_CAT(a, b)
-#endif /* MAPI_WIDE_LIT */
+namespace sgd2fr {
+namespace d2client {
 
-#ifndef __FILEW__
-#define __FILEW__ MAPI_WIDE_LIT(__FILE__)
-#endif /* __FILEW__ */
+class SetResolutionRegistryPatch_Lod1_14C
+    : public AbstractVersionPatch {
+ public:
+  SetResolutionRegistryPatch_Lod1_14C();
 
-#endif /* SGD2FR_WIDE_MACRO_H_ */
+ private:
+  enum {
+    kPatchesCount = 1
+  };
+
+  ::mapi::GamePatch patches_[kPatchesCount];
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
+
+} // namespace d2client
+} // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_LOD_1_14C_HPP_

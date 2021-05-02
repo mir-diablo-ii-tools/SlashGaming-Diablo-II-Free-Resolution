@@ -45,9 +45,7 @@
 
 #include "draw_patches.hpp"
 
-namespace sgd2fr::patches {
-
-DrawPatches::DrawPatches() = default;
+namespace sgd2fr {
 
 void DrawPatches::Apply() {
   this->d2client_draw_interface_bar_background_patch_.Apply();
@@ -59,4 +57,4 @@ void DrawPatches::Remove() {
   this->d2client_draw_interface_bar_background_patch_.Remove();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

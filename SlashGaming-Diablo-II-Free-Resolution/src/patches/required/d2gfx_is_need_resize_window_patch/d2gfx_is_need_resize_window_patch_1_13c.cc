@@ -45,7 +45,9 @@
 
 #include "d2gfx_is_need_resize_window_patch_1_13c.hpp"
 
-#include <array>
+#include <stddef.h>
+
+#include <mdc/std/stdint.h>
 
 extern "C" {
 
@@ -54,111 +56,71 @@ D2GFX_IsNeedResizeWindowPatch_1_13C_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2gfx {
+namespace sgd2fr {
+namespace d2gfx {
 namespace {
 
-static constexpr ::std::array<::std::uint8_t, 2> kJeOpcode = {
+static const uint8_t kJeOpcodes[] = {
     0x0F, 0x84,
 };
 
 } // namespace
 
 IsNeedResizeWindowPatch_1_13C::IsNeedResizeWindowPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void IsNeedResizeWindowPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void IsNeedResizeWindowPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-IsNeedResizeWindowPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2GFX_IsNeedResizeWindowPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GFX_IsNeedResizeWindowPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   PatchAddressAndSize patch_address_and_size_02 =
       GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBufferPatch(
-          patch_address_and_size_02.first,
-          kJeOpcode.data(),
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBufferPatch(
+      patch_address_and_size_02.first,
+      kJeOpcodes,
+      patch_address_and_size_02.second
   );
-
-  return patches;
+  this->patches_[1].Swap(patch_02);
 }
 
-IsNeedResizeWindowPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 IsNeedResizeWindowPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2GFX,
-            0x83CE
-        ),
-        0x8409 - 0x83CE
-      );
-    }
-
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2GFX,
-              0xB405
+              0x83CE
           ),
-          0xB444 - 0xB405
+          0x8409 - 0x83CE
       );
     }
   }
 }
 
-IsNeedResizeWindowPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 IsNeedResizeWindowPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2GFX,
-            0x8409
-        ),
-        kJeOpcode.size()
-      );
-    }
-
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2GFX,
-              0xB444
+              0x8409
           ),
-          kJeOpcode.size()
+          sizeof(kJeOpcodes)
       );
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr

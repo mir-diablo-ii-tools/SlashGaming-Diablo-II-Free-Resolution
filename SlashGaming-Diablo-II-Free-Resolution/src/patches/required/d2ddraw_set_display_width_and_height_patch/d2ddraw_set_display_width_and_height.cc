@@ -61,8 +61,8 @@ void __cdecl Sgd2fr_D2DDraw_SetDisplayWidthAndHeight(
   *width = std::get<0>(resolution);
   *height = std::get<1>(resolution);
 
-  d2::d2ddraw::SetDisplayWidth(*width);
-  d2::d2ddraw::SetDisplayHeight(*height);
+  ::d2::d2ddraw::SetDisplayWidth(*width);
+  ::d2::d2ddraw::SetDisplayHeight(*height);
 }
 
 } // namespace sgd2fr::patches

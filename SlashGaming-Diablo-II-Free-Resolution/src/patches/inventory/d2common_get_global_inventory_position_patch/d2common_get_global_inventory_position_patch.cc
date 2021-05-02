@@ -45,35 +45,40 @@
 
 #include "d2common_get_global_inventory_position_patch.hpp"
 
-namespace sgd2fr::patches::d2common {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2common_get_global_inventory_position_patch_1_09d.hpp"
+
+namespace sgd2fr {
+namespace d2common {
 
 GetGlobalInventoryPositionPatch::GetGlobalInventoryPositionPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void GetGlobalInventoryPositionPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool GetGlobalInventoryPositionPatch::IsApplicable() {
+  return true;
 }
 
-void GetGlobalInventoryPositionPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+GetGlobalInventoryPositionPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-GetGlobalInventoryPositionPatch::PatchVariant
-GetGlobalInventoryPositionPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D:
-    case d2::GameVersion::k1_13C:
-    case d2::GameVersion::k1_13D: {
-      return GetGlobalInventoryPositionPatch_1_09D();
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new GetGlobalInventoryPositionPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr

@@ -58,7 +58,7 @@ namespace sgd2fr::patches {
 void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
     std::uint32_t belt_record_index,
     std::uint32_t inventory_arrange_mode,
-    d2::PositionalRectangle* out_belt_slot,
+    ::d2::PositionalRectangle* out_belt_slot,
     std::uint32_t belt_slot_index
 ) {
   // Original code, copies the values of the specified Global Belt Slot
@@ -66,14 +66,14 @@ void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
   unsigned int source_inventory_arrange_mode =
       GetSourceInventoryArrangeMode();
 
-  d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
+  ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
 
-  d2::PositionalRectangle_View global_belt_slot_position(
+  ::d2::PositionalRectangle_View global_belt_slot_position(
       global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
           .GetSlotPositions()[belt_slot_index]
   );
 
-  d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
+  ::d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
   out_belt_slot_wrapper.AssignMembers(global_belt_slot_position);
 
   // Do not adjust positions if the entries are empty, which use value 0.

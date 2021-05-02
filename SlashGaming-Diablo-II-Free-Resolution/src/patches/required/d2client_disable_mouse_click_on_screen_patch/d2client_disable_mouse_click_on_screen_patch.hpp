@@ -46,32 +46,23 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
 
-#include <variant>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
-#include "d2client_disable_mouse_click_on_screen_patch_1_09d.hpp"
-#include "d2client_disable_mouse_click_on_screen_patch_1_13c.hpp"
+namespace sgd2fr {
+namespace d2client {
 
-namespace sgd2fr::patches::d2client {
-
-class DisableMouseClickOnScreenPatch {
+class DisableMouseClickOnScreenPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      DisableMouseClickOnScreenPatch_1_09D,
-      DisableMouseClickOnScreenPatch_1_13C
-  >;
-
   DisableMouseClickOnScreenPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchVariant patch_;
-
-  static PatchVariant MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_

@@ -60,7 +60,7 @@ bool __cdecl Helper_CelFileCollection_RunChecksum(int* flags);
 namespace sgd2fr {
 namespace {
 
-static std::unordered_map<std::string, d2::CelFile_Api> cel_file_collection;
+static std::unordered_map<std::string, ::d2::CelFile_Api> cel_file_collection;
 
 static int checksum = 0;
 
@@ -78,7 +78,7 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key, false)
     );
   }
 #if defined(FLAG_CHECKSUM)
@@ -89,13 +89,13 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
     UnloadMpqOnce();
     LoadMpqOnce();
 
-    new d2::CelFile_Api(
+    new ::d2::CelFile_Api(
         std::move(cel_file_collection.at(cel_file_path_key))
     );
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key, false)
     );
 #if defined(FLAG_CHECKSUM)
   }
@@ -118,7 +118,7 @@ void ClearCelFiles() {
   }
 
   new std::unordered_map(std::move(cel_file_collection));
-  cel_file_collection = std::unordered_map<std::string, d2::CelFile_Api>();
+  cel_file_collection = std::unordered_map<std::string, ::d2::CelFile_Api>();
 #endif
 }
 

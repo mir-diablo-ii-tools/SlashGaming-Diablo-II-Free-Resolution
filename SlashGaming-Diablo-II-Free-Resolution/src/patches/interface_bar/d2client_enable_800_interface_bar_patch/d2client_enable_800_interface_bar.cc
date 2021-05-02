@@ -56,42 +56,42 @@ std::uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar() {
 }
 
 mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
-    d2::CelContext* cel_context
+    ::d2::CelContext* cel_context
 ) {
   // Grab the CelFile from the CelContext.
-  d2::CelContext_Wrapper cel_context_wrapper(cel_context);
-  d2::CelFile_Wrapper cel_file_wrapper(cel_context_wrapper.GetCelFile());
+  ::d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+  ::d2::CelFile_Wrapper cel_file_wrapper(cel_context_wrapper.GetCelFile());
 
   // Determine the width and height of the interface bar. Note that only
   // frames 1 - 4 should be drawn.
   unsigned int interface_bar_width = 0;
 
   for (unsigned int frame = 1; frame <= 4; frame += 1) {
-    d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
+    ::d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
 
     interface_bar_width += cel_view.GetWidth();
   }
 
-  unsigned int interface_bar_height = d2::Cel_View(
+  unsigned int interface_bar_height = ::d2::Cel_View(
       cel_file_wrapper.GetCel(0, 0)
   ).GetHeight();
 
   // Determine the start draw positions of the interface bar.
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   int draw_position_x =
       (std::get<0>(display_width_and_height) - interface_bar_width) / 2;
 
   // Draw the interface bar. Note that only frames 1 - 4 should be drawn.
-  d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::Rgba32BitColor();
-  frame_options.draw_effect = d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
+  ::d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = ::mapi::Rgba32BitColor();
+  frame_options.draw_effect = ::d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
+  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
 
-  mapi::bool32 total_result = true;
+  ::mapi::bool32 total_result = true;
   for (unsigned int frame = 1; frame <= 4; frame += 1) {
     bool result = cel_file_wrapper.DrawFrame(
         draw_position_x,
@@ -101,7 +101,7 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
         frame_options
     );
 
-    d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
+    ::d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
     draw_position_x += cel_view.GetWidth();
 
     total_result = total_result && result;

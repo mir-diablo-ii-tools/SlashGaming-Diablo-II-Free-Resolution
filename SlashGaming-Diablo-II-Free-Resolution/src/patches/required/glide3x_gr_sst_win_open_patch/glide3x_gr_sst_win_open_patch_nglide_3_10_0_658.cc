@@ -45,6 +45,8 @@
 
 #include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
 
+#include <stddef.h>
+
 #include "../../../helper/glide3x_version.hpp"
 
 extern "C" {
@@ -53,40 +55,20 @@ void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::glide3x {
+namespace sgd2fr {
+namespace glide3x {
 
 GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-  : patches_(MakePatches()) {
-}
-
-void GrSstWinOpenPatch_NGlide_3_10_0_658::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void GrSstWinOpenPatch_NGlide_3_10_0_658::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-GrSstWinOpenPatch_NGlide_3_10_0_658::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
 PatchAddressAndSize
@@ -106,4 +88,5 @@ GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::glide3x
+} // namespace glide3x
+} // namespace sgd2fr

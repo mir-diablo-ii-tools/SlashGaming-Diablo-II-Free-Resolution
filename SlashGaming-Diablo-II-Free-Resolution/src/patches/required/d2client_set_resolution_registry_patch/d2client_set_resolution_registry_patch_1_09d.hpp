@@ -46,35 +46,30 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_1_09D_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_1_09D_HPP_
 
-#include <cstddef>
-#include <utility>
-#include <vector>
-
 #include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
-class SetResolutionRegistryPatch_1_09D {
+class SetResolutionRegistryPatch_1_09D
+    : public AbstractVersionPatch {
  public:
   SetResolutionRegistryPatch_1_09D();
 
-  void Apply();
-  void Remove();
-
  private:
-  using PatchAddressAndSize = ::std::pair<
-      ::mapi::GameAddress,
-      ::std::size_t
-  >;
+  enum {
+    kPatchesCount = 2
+  };
 
-  std::vector<mapi::GamePatch> patches_;
-
-  static std::vector<mapi::GamePatch> MakePatches();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
   static PatchAddressAndSize GetPatchAddressAndSize01();
   static PatchAddressAndSize GetPatchAddressAndSize02();
 };
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_1_09D_HPP_

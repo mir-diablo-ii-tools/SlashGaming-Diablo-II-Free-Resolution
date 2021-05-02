@@ -45,35 +45,40 @@
 
 #include "d2client_draw_screen_background_patch.hpp"
 
-namespace sgd2fr::patches::d2client {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2client_draw_screen_background_patch_1_09d.hpp"
+
+namespace sgd2fr {
+namespace d2client {
 
 DrawScreenBackgroundPatch::DrawScreenBackgroundPatch()
-    : patches_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void DrawScreenBackgroundPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patches_);
+bool DrawScreenBackgroundPatch::IsApplicable() {
+  return true;
 }
 
-void DrawScreenBackgroundPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patches_);
-}
+AbstractVersionPatch*
+DrawScreenBackgroundPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-DrawScreenBackgroundPatch::PatchVariant
-DrawScreenBackgroundPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return DrawScreenBackgroundPatch_1_09D();
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DrawScreenBackgroundPatch_1_09D();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

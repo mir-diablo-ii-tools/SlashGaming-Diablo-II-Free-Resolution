@@ -45,6 +45,8 @@
 
 #include "d2client_draw_resolution_text_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,45 +54,23 @@ D2Client_DrawResolutionTextPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 DrawResolutionTextPatch_1_09D::DrawResolutionTextPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void DrawResolutionTextPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void DrawResolutionTextPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-DrawResolutionTextPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Client_DrawResolutionTextPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_DrawResolutionTextPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-DrawResolutionTextPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawResolutionTextPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -107,4 +87,5 @@ DrawResolutionTextPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

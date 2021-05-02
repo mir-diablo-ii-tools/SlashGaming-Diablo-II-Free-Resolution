@@ -46,19 +46,16 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
 #define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
 
-#include <sgd2mapi.hpp>
 #include "d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
 #include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
 #include "d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.hpp"
 #include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
 #include "d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
 
 class InventoryPatches {
  public:
-  InventoryPatches();
-
   void Apply();
   void Remove();
 
@@ -79,6 +76,6 @@ class InventoryPatches {
       d2common_get_global_inventory_position_patch_;
 };
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_

@@ -45,6 +45,8 @@
 
 #include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,45 +54,33 @@ D2Client_SetResolutionFromOptionsMenuPatch_1_13C_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 SetResolutionFromOptionsMenuPatch_1_13C
 ::SetResolutionFromOptionsMenuPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void SetResolutionFromOptionsMenuPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetResolutionFromOptionsMenuPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetResolutionFromOptionsMenuPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Client_SetResolutionFromOptionsMenuPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_SetResolutionFromOptionsMenuPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-SetResolutionFromOptionsMenuPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetResolutionFromOptionsMenuPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Make sure to find the patch location of the D2Client
+  *    SetResolutionRegistryPatch. Set a code breakpoint there.
+  * 2. Step over until the very first function return is executed.
+  * 3. Scroll up to find the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -113,7 +103,28 @@ SetResolutionFromOptionsMenuPatch_1_13C::GetPatchAddressAndSize01() {
           0xC33AA - 0xC33A0
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x79411
+          ),
+          0x7941B - 0x79411
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x7D621
+          ),
+          0x7D62B - 0x7D621
+      );
+    }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

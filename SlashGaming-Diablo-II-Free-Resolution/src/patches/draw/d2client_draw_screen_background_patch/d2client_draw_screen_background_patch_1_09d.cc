@@ -45,6 +45,8 @@
 
 #include "d2client_draw_screen_background_patch_1_09d.hpp"
 
+#include <stddef.h>
+
 extern "C" {
 
 void __cdecl
@@ -52,64 +54,49 @@ D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 DrawScreenBackgroundPatch_1_09D::DrawScreenBackgroundPatch_1_09D()
-    : patches_(MakePatches()) {
-}
-
-void DrawScreenBackgroundPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void DrawScreenBackgroundPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-DrawScreenBackgroundPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Draw the new screen background.
   PatchAddressAndSize patch_address_and_size_01 = GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_DrawScreenBackgroundPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   // Disable the left screen background.
   PatchAddressAndSize patch_address_and_size_02 = GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_02.first,
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patch_02);
 
   // Disable the right screen background.
   PatchAddressAndSize patch_address_and_size_03 = GetPatchAddressAndSize03();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_03.first,
-          patch_address_and_size_03.second
-      )
+  ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_03.first,
+      patch_address_and_size_03.second
   );
-
-  return patches;
+  this->patches_[2].Swap(patch_03);
 }
 
-DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character.
+  * 2. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "ACT%d" is used.
+  * 3. Breakpoint in the function and follow the code to the return.
+  * 4. The return address is the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -142,11 +129,40 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
           0x1D4AB - 0x1D4A6
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x5264D
+          ),
+          0x52652 - 0x5264D
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x56FAF
+          ),
+          0x56FB4 - 0x56FAF
+      );
+    }
   }
 }
 
-DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "Panel\800BorderFrame" is used. There will be two
+  *    addresses.
+  * 2. Determine which one of the addresses is used for the left
+  *    screen.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -179,11 +195,40 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
           0x6D377 - 0x6D2DD
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x94B0C
+          ),
+          0x94BB6 - 0x94B0C
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x9865E
+          ),
+          0x986FC - 0x9865E
+      );
+    }
   }
 }
 
-DrawScreenBackgroundPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "Panel\800BorderFrame" is used. There will be two
+  *    addresses.
+  * 2. Determine which one of the addresses is used for the right
+  *    screen.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -216,7 +261,28 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
           0x6D29E - 0x6D1E1
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x94BF1
+          ),
+          0x94CA4 - 0x94BF1
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x98733
+          ),
+          0x987DA - 0x98733
+      );
+    }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

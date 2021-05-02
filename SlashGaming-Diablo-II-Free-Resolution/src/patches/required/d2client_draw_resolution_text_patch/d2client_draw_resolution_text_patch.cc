@@ -45,38 +45,52 @@
 
 #include "d2client_draw_resolution_text_patch.hpp"
 
-namespace sgd2fr::patches::d2client {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2client_draw_resolution_text_patch_1_09d.hpp"
+#include "d2client_draw_resolution_text_patch_1_13c.hpp"
+#include "d2client_draw_resolution_text_patch_lod_1_14c.hpp"
+#include "d2client_draw_resolution_text_patch_lod_1_14d.hpp"
+
+namespace sgd2fr {
+namespace d2client {
 
 DrawResolutionTextPatch::DrawResolutionTextPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void DrawResolutionTextPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool DrawResolutionTextPatch::IsApplicable() {
+  return true;
 }
 
-void DrawResolutionTextPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+DrawResolutionTextPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-DrawResolutionTextPatch::PatchVariant
-DrawResolutionTextPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
-      return DrawResolutionTextPatch_1_09D();
+      return new DrawResolutionTextPatch_1_09D();
     }
 
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
-      return DrawResolutionTextPatch_1_13C();
+      return new DrawResolutionTextPatch_1_13C();
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return new DrawResolutionTextPatch_Lod1_14C();
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DrawResolutionTextPatch_Lod1_14D();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

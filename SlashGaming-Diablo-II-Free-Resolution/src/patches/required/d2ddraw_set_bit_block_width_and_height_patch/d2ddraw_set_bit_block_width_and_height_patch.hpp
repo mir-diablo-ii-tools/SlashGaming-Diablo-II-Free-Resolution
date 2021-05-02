@@ -46,35 +46,23 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <optional>
-#include <variant>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
-#include "d2ddraw_set_bit_block_width_and_height_patch_1_09d.hpp"
-#include "d2ddraw_set_bit_block_width_and_height_patch_1_13c.hpp"
+namespace sgd2fr {
+namespace d2ddraw {
 
-namespace sgd2fr::patches::d2ddraw {
-
-class SetBitBlockWidthAndHeightPatch {
+class SetBitBlockWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      SetBitBlockWidthAndHeightPatch_1_09D,
-      SetBitBlockWidthAndHeightPatch_1_13C
-  >;
-
-  using PatchType = std::optional<PatchVariant>;
-
   SetBitBlockWidthAndHeightPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchType patch_;
-
-  static PatchType MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2ddraw
+} // namespace d2ddraw
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_

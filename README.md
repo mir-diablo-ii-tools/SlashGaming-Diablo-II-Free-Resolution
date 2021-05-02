@@ -7,7 +7,7 @@ This is a project aimed at modding Diablo II to support any resolution.
 - Allows limited customization of the UI.
 
 ## Compatibility
-- Supports 1.09D, 1.13C, and 1.13D.
+- Supports 1.09D, 1.13C, 1.13D, 1.14C, and 1.14D.
 - Supports multiple video modes.
   - Supports standard GDI mode. Resolutions are unrestricted.
   - Supports standard DirectDraw and Direct3D modes, restricted to "standard" resolutions.

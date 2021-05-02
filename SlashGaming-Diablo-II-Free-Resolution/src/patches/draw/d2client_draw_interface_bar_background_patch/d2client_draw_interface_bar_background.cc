@@ -57,35 +57,35 @@ static void DrawAntiCheatBlackRectangle() {
   static constexpr int interface_bar_height = 47;
 
   ::std::tuple width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
-  d2::d2gfx::DrawRectangle(
+  ::d2::d2gfx::DrawRectangle(
       0,
       std::get<1>(width_and_height) - interface_bar_height,
       std::get<0>(width_and_height),
       std::get<1>(width_and_height),
       0,
-      d2::DrawEffect::kNone
+      ::d2::DrawEffect::kNone
   );
 }
 
 static void DrawLeftInterfaceBarBackground() {
   ::std::tuple width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
-  d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::Rgba32BitColor();
-  frame_options.draw_effect = d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kLeft;
-  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
+  ::d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = ::mapi::Rgba32BitColor();
+  frame_options.draw_effect = ::d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
+  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
 
   int width_covered = 117 + 48;
 
   // Draw the left part of the interface bar background.
-  d2::CelFile_Api& interface_bar_background_left = GetCelFile(
+  ::d2::CelFile_Api& interface_bar_background_left = GetCelFile(
       config::GetInterfaceBarBackgroundLeftImagePath()
   );
 
@@ -107,7 +107,7 @@ static void DrawLeftInterfaceBarBackground() {
   }
 
   // Draw the center part of the interface bar background.
-  d2::CelFile_Api& interface_bar_background_center = GetCelFile(
+  ::d2::CelFile_Api& interface_bar_background_center = GetCelFile(
       config::GetInterfaceBarBackgroundCenterImagePath()
   );
 
@@ -138,19 +138,19 @@ static void DrawLeftInterfaceBarBackground() {
 
 static void DrawRightInterfaceBarBackground() {
   ::std::tuple width_and_height = GetIngameResolutionFromId(
-      d2::d2gfx::GetResolutionMode()
+      ::d2::d2gfx::GetResolutionMode()
   );
 
-  d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = mapi::Rgba32BitColor();
-  frame_options.draw_effect = d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = d2::DrawPositionXBehavior::kRight;
-  frame_options.position_y_behavior = d2::DrawPositionYBehavior::kBottom;
+  ::d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = ::mapi::Rgba32BitColor();
+  frame_options.draw_effect = ::d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
+  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
 
   int width_covered = 117 + 48;
 
   // Draw the left part of the interface bar background.
-  d2::CelFile_Api& interface_bar_background_right = GetCelFile(
+  ::d2::CelFile_Api& interface_bar_background_right = GetCelFile(
       config::GetInterfaceBarBackgroundRightImagePath()
   );
 
@@ -172,7 +172,7 @@ static void DrawRightInterfaceBarBackground() {
   }
 
   // Draw the center part of the interface bar background.
-  d2::CelFile_Api& interface_bar_background_center = GetCelFile(
+  ::d2::CelFile_Api& interface_bar_background_center = GetCelFile(
       config::GetInterfaceBarBackgroundCenterImagePath()
   );
 

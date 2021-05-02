@@ -45,6 +45,8 @@
 
 #include "d2glide_set_display_width_and_height_patch_1_13c.hpp"
 
+#include <stddef.h>
+
 #include <mdc/std/stdint.h>
 
 /*
@@ -61,7 +63,8 @@ D2Glide_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
 
 } // extern "C"
 
-namespace sgd2fr::patches::d2glide {
+namespace sgd2fr {
+namespace d2glide {
 namespace {
 
 static const uint8_t kShortJeByteOpcodes[] = {
@@ -73,60 +76,37 @@ static const uint8_t k0x01Byte = 0x01;
 } // namespace
 
 SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &D2Glide_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Glide_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   PatchAddressAndSize patch_address_and_size_02 =
       GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBufferPatch(
-          patch_address_and_size_02.first,
-          &k0x01Byte,
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBufferPatch(
+      patch_address_and_size_02.first,
+      &k0x01Byte,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patch_02);
 
   PatchAddressAndSize patch_address_and_size_03 =
       GetPatchAddressAndSize03();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBufferPatch(
-          patch_address_and_size_03.first,
-          kShortJeByteOpcodes,
-          patch_address_and_size_03.second
-      )
+  ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameBufferPatch(
+      patch_address_and_size_03.first,
+      kShortJeByteOpcodes,
+      patch_address_and_size_03.second
   );
-
-  return patches;
+  this->patches_[2].Swap(patch_03);
 }
 
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -233,7 +213,7 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   }
 }
 
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -340,7 +320,7 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
   }
 }
 
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -447,4 +427,5 @@ SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize03() {
   }
 }
 
-} // namespace sgd2fr::patches::d2glide
+} // namespace d2glide
+} // namespace sgd2fr
