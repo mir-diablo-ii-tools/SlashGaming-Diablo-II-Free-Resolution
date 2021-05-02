@@ -6,7 +6,7 @@ The DLL does nothing on its own and must be loaded into the game via external to
 
 Multiplayer use is restricted to certain gateways. This cannot be changed easily and prevents unintentional abuse where it is not allowed (i.e. Battle.net). If used in unpermitted environments, the resolution is hardcoded to run with only 640x480 or 800x600. It is also still possible to be detected by anti-cheat systems and be banned for unauthorized modification of the game client, even if the functionality is ineffective. Where it is permitted, the resolutions are preset for the server.
 
-Currently, the project supports Diablo II: Lord of Destruction, version 1.09D.
+Currently, the project supports Diablo II: Lord of Destruction, versions 1.09D, 1.13C, 1.13D, 1.14C, and 1.14D.
 
 ## Contribution
 SGD2FreeRes is coded in C++20. It currently is intended to compile with Visual Studio 2019.
