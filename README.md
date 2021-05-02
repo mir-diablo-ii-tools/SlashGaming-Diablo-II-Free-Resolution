@@ -26,11 +26,11 @@ Multiplayer use is restricted to certain gateways. This cannot be changed easily
 Any server owner that wishes to authorize the usage of SGD2FreeRes on their server should contact Mir Drualga on the SlashDiablo Discord.
 
 Servers that permit SGD2FreeRes:
-- [Diablo 09](https://www.diablo09.com/): 640x480, 800x600, 1068x600
-- [SlashDiablo](https://slashdiablo.net/): 640x480, 800x600, 1068x600
-- [Resurgence](https://resurgence.slashgaming.net/): 640x480, 800x600, 1068x600
-- [Project Diablo 2](https://www.projectdiablo2.com/): 640x480, 800x600, 1068x600
-- [D2LOD.NET](http://d2lod.net/): 640x480, 800x600, 1024x768, 1068x600
+- [Diablo 09](https://www.diablo09.com/): 640x480, 800x600, 856x480, 1068x600
+- [SlashDiablo](https://slashdiablo.net/): 640x480, 800x600, 856x480, 1068x600
+- [Resurgence](https://resurgence.slashgaming.net/): 640x480, 800x600, 856x480, 1068x600
+- [Project Diablo 2](https://www.projectdiablo2.com/): 640x480, 800x600, 856x480, 1068x600
+- [D2LOD.NET](http://d2lod.net/): 640x480, 800x600, 856x480, 1024x768, 1068x600
 
 ## Contribution
 SGD2FreeRes is coded in C++20. It currently is intended to compile with Visual Studio 2019.
