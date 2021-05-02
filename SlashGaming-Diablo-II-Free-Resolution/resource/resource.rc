@@ -71,7 +71,7 @@ VS_VERSION_INFO    VERSIONINFO
   {
     BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
     {
-      VALUE "Build",            "2021-04-07\0"
+      VALUE "Build",            "2021-05-01\0"
       VALUE "Comments",         "Licensed under Affero GPL v3+.\0"
       VALUE "CompanyName",      "SlashGaming\0"
       VALUE "Developer",        "Mir Drualga\0"
