@@ -50,6 +50,7 @@
 #include <sgd2mapi.hpp>
 #include "d2win_resize_window_on_maximize_patch_1_13c.hpp"
 #include "d2win_resize_window_on_maximize_patch_lod_1_14c.hpp"
+#include "d2win_resize_window_on_maximize_patch_lod_1_14d.hpp"
 
 namespace sgd2fr {
 namespace d2win {
@@ -79,6 +80,10 @@ ResizeWindowOnMaximizePatch::InitPatch() {
 
     case ::d2::GameVersion::kLod1_14C: {
       return new ResizeWindowOnMaximizePatch_Lod1_14C();
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return new ResizeWindowOnMaximizePatch_Lod1_14D();
     }
   }
 }

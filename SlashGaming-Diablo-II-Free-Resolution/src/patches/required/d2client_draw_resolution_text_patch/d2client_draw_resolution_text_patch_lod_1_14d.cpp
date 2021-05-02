@@ -43,43 +43,73 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_skill_button_patch.hpp"
+#include "d2client_draw_resolution_text_patch_lod_1_14d.hpp"
 
 #include <stddef.h>
 
-#include <sgd2mapi.hpp>
-#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
-#include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+DrawResolutionTextPatch_Lod1_14D::DrawResolutionTextPatch_Lod1_14D()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
-bool Enable800NewSkillButtonPatch::IsApplicable() {
-  return true;
-}
-
-AbstractVersionPatch*
-Enable800NewSkillButtonPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+PatchAddressAndSize
+DrawResolutionTextPatch_Lod1_14D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character. Do not open the Game Menu.
+  * 2. Set a read breakpoint on D2Client's GeneralDisplayWidth
+  *    variable.
+  * 3. Move the mouse, click, and interact with as many things as
+  *    possible on the screen to trigger code that will be added to
+  *    the top of the list. Any breakpoint triggers in this list are
+  *    to be ignored.
+  * 4. Open the game menu.
+  * 5. Select the Options menu. Next, select the Video Options menu.
+  * 6. Wait for a bit and then leave the Video Options menu by
+  *    selecting the Previous Menu. Do not press the ESC key.
+  * 7. At the very bottom of the breakpoint trigger list are 5
+  *    opcodes. 3 of them belong to a "set" because they trigger at
+  *    the same rate. In other words, their trigger counter value is
+  *    the same. There is a second "set" containing the other 2
+  *    opcodes.
+  * 8. In the second "set", go to the address of the second opcode.
+  * 9. Follow the sequence of opcodes to a function call. The patch
+  *    address is the opcode immediately preceding the function call.
+  * 10. The patch also requires the use of a pointer. This pointer is
+  *     determined by the value of one or more of the stack and
+  *     registers' values at that point in the code. Open the Video
+  *     Options menu and set a breakpoint at the function call.
+  */
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return new Enable800NewSkillButtonPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      return new Enable800NewSkillButtonPatch_1_13C();
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x7E5AB
+          ),
+          0x7E5B1 - 0x7E5AB
+      );
     }
   }
 }

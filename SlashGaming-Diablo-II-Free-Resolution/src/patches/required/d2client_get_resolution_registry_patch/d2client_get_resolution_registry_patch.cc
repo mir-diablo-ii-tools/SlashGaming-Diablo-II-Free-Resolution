@@ -81,7 +81,8 @@ GetResolutionRegistryPatch::InitPatch() {
       return new GetResolutionRegistryPatch_1_13C();
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
       return new GetResolutionRegistryPatch_Lod1_14C();
     }
   }

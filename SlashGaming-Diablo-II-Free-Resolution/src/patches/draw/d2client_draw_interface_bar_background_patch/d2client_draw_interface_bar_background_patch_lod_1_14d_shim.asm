@@ -43,10 +43,9 @@
 ;  work.
 ;
 
-global _D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01
-global _D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc02
+global _D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14D_InterceptionFunc01
 
-extern _Sgd2fr_D2Client_GetResolutionRegistry
+extern _Sgd2fr_D2Client_DrawInterfaceBarBackground
 
 section .data
 
@@ -58,57 +57,23 @@ section .text
 ; External
 ;
 
-_D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01:
-    ; Original code
-    lea eax, dword [ecx + 0x124]
+_D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14D_InterceptionFunc01:
+    ; Original code.
+    xor edi, edi
+    lea eax, dword [ebp - 0x48]
 
     push ebp
     mov ebp, esp
-
-    sub esp, 4
 
     push eax
     push ecx
     push edx
 
-    lea ecx, dword [ebp - 4]
-    push ecx
-    push eax
-    call _Sgd2fr_D2Client_GetResolutionRegistry
-    add esp, 8
+    call _Sgd2fr_D2Client_DrawInterfaceBarBackground
 
     pop edx
     pop ecx
     pop eax
-
-    mov ecx, dword [ebp - 4]
-    add esp, 4
-
-    leave
-    ret
-
-_D2Client_GetResolutionRegistryPatch_Lod1_14C_InterceptionFunc02:
-    push ebp
-    mov ebp, esp
-
-    sub esp, 4
-
-    push eax
-    push ecx
-    push edx
-
-    lea ecx, dword [ebp - 4]
-    push ecx
-    push eax
-    call _Sgd2fr_D2Client_GetResolutionRegistry
-    add esp, 8
-
-    pop edx
-    pop ecx
-    pop eax
-
-    mov ecx, dword [ebp - 4]
-    add esp, 4
 
     leave
     ret

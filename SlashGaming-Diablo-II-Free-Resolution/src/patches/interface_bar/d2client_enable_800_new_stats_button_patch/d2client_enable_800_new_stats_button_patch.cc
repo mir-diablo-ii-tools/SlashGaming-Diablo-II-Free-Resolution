@@ -77,7 +77,8 @@ Enable800NewStatsButtonPatch::InitPatch() {
 
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
       return new Enable800NewStatsButtonPatch_1_13C();
     }
   }

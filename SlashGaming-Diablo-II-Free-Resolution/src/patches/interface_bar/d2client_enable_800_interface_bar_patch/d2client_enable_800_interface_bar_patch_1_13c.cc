@@ -115,6 +115,16 @@ Enable800InterfaceBarPatch_1_13C::GetPatchAddressAndSize01() {
           0x9487B - 0x94876
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x983E8
+          ),
+          0x983ED - 0x983E8
+      );
+    }
   }
 }
 

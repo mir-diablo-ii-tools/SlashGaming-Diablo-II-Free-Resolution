@@ -92,7 +92,7 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
   * How to find patch locations:
   * 1. Start a game with any character.
   * 2. Search for the locations where the 7-bit null-terminated ASCII
-  *    text "A1Q1" is used.
+  *    text "ACT%d" is used.
   * 3. Breakpoint in the function and follow the code to the return.
   * 4. The return address is the patch location.
   */
@@ -137,6 +137,16 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
               0x5264D
           ),
           0x52652 - 0x5264D
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x56FAF
+          ),
+          0x56FB4 - 0x56FAF
       );
     }
   }
@@ -195,6 +205,16 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize02() {
           0x94BB6 - 0x94B0C
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x9865E
+          ),
+          0x986FC - 0x9865E
+      );
+    }
   }
 }
 
@@ -249,6 +269,16 @@ DrawScreenBackgroundPatch_1_09D::GetPatchAddressAndSize03() {
               0x94BF1
           ),
           0x94CA4 - 0x94BF1
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x98733
+          ),
+          0x987DA - 0x98733
       );
     }
   }

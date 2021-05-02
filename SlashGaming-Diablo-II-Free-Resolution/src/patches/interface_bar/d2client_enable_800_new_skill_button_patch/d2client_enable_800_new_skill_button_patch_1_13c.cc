@@ -228,6 +228,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize01() {
           0xA3534 - 0xA352F
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6E71
+          ),
+          0xA6E76 - 0xA6E71
+      );
+    }
   }
 }
 
@@ -274,6 +284,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize02() {
               0xA35BA
           ),
           0xA35BF - 0xA35BA
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6EF6
+          ),
+          0xA6EFB - 0xA6EF6
       );
     }
   }
@@ -324,6 +344,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize03() {
           0xA3637 - 0xA3632
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6F72
+          ),
+          0xA6F77 - 0xA6F72
+      );
+    }
   }
 }
 
@@ -370,6 +400,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize04() {
               0xA369A
           ),
           0xA369F - 0xA369A
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6FD6
+          ),
+          0xA6FDB - 0xA6FD6
       );
     }
   }
@@ -421,6 +461,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize05() {
           0xA2DA9 - 0xA2D60
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6690
+          ),
+          0xA66D9 - 0xA6690
+      );
+    }
   }
 }
 
@@ -468,6 +518,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize06() {
               0xA2E5F
           ),
           0xA2E64 - 0xA2E5F
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA67A3
+          ),
+          0xA67A8 - 0xA67A3
       );
     }
   }
@@ -519,6 +579,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize07() {
           0xA2E82 - 0xA2E7D
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA67C1
+          ),
+          0xA67C6 - 0xA67C1
+      );
+    }
   }
 }
 
@@ -566,6 +636,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize08() {
               0xA2FDF
           ),
           0xA2FE4 - 0xA2FDF
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6931
+          ),
+          0xA6936 - 0xA6931
       );
     }
   }
@@ -617,6 +697,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize09() {
           0xA3005 - 0xA3000
       );
     }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6951
+          ),
+          0xA6956 - 0xA6951
+      );
+    }
   }
 }
 
@@ -665,6 +755,16 @@ Enable800NewSkillButtonPatch_1_13C::GetPatchAddressAndSize10() {
               0xA3463
           ),
           0xA3468 - 0xA3463
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6DA6
+          ),
+          0xA6DAB - 0xA6DA6
       );
     }
   }

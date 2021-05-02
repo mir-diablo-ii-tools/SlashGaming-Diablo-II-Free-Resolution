@@ -43,46 +43,33 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_skill_button_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_LOD_1_14D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_LOD_1_14D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
-#include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
-namespace d2client {
+namespace d2win {
 
-Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class ResizeWindowOnMaximizePatch_Lod1_14D
+    : public AbstractVersionPatch {
+ public:
+  ResizeWindowOnMaximizePatch_Lod1_14D();
 
-bool Enable800NewSkillButtonPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 2
+  };
 
-AbstractVersionPatch*
-Enable800NewSkillButtonPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static PatchAddressAndSize GetPatchAddressAndSize02();
+};
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return new Enable800NewSkillButtonPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new Enable800NewSkillButtonPatch_1_13C();
-    }
-  }
-}
-
-} // namespace d2client
+} // namespace d2win
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_LOD_1_14D_HPP_

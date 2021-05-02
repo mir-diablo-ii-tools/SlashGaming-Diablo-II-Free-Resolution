@@ -102,6 +102,16 @@ void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
       break;
     }
 
+    case ::d2::GameVersion::kLod1_14D: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x31B1F0
+          ).raw_address()
+      );
+      break;
+    }
+
     default: {
       ::mdc::error::ExitOnConstantMappingError(
           __FILEW__,
