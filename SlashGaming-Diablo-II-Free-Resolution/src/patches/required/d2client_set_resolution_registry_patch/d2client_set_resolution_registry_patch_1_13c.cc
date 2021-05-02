@@ -45,78 +45,42 @@
 
 #include "d2client_set_resolution_registry_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_set_resolution_registry.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2client {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2Client_SetResolutionRegistryPatch_1_13C_InterceptionFunc01();
 
-  ASM_X86(sub esp, 4);
+} // extern "C"
 
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(lea ecx, dword ptr [ebp - 4]);
-  ASM_X86(push ecx);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_SetResolutionRegistry));
-  ASM_X86(add esp, 8);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(mov esi, dword ptr [ebp - 4]);
-
-  ASM_X86(add esp, 4);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2client {
 
 SetResolutionRegistryPatch_1_13C::SetResolutionRegistryPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void SetResolutionRegistryPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetResolutionRegistryPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetResolutionRegistryPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc_01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_SetResolutionRegistryPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-SetResolutionRegistryPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Search for the location of the 7-bit null-terminated ASCII text
+  *    "Resolution". This text should be in a Read Only section.
+  * 2. Search for the locations where "Resolution" is used. There will
+  *    be 5 results. One of those is the setter function.
+  * 3. Choose the patch location with the matching interception shim.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -129,7 +93,18 @@ SetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
           0x662CC - 0x662AA
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xC454A
+          ),
+          0xC456C - 0xC454A
+      );
+    }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

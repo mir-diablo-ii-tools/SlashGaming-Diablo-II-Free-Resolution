@@ -46,37 +46,26 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_
 
-#include <optional>
-#include <vector>
-
-#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 #include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
 #include "glide3x_gr_sst_win_open_patch_sven_1_4_4_21.hpp"
 #include "glide3x_gr_sst_win_open_patch_sven_1_4_8_3.hpp"
 
-namespace sgd2fr::patches::glide3x {
+namespace sgd2fr {
+namespace glide3x {
 
-class GrSstWinOpenPatch {
+class GrSstWinOpenPatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      GrSstWinOpenPatch_NGlide_3_10_0_658,
-      GrSstWinOpenPatch_Sven_1_4_4_21,
-      GrSstWinOpenPatch_Sven_1_4_8_3
-  >;
-
-  using PatchType = std::optional<PatchVariant>;
-
   GrSstWinOpenPatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchType patch_;
-
-  static PatchType MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::glide3x
+} // namespace glide3x
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_

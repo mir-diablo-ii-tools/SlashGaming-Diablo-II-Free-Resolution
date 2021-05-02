@@ -48,8 +48,22 @@
 #include <mdc/error/exit_on_error.hpp>
 #include <mdc/wchar_t/filew.h>
 #include "file_version.hpp"
+#include "glide3x_d2dx.hpp"
 
 namespace sgd2fr::glide3x_version {
+namespace {
+
+static const wchar_t* const kGlide3xPath = L"glide3x.dll";
+
+static Glide3xVersion DetermineGlide3xVersion() {
+  if (d2dx_glide::IsD2dxGlideWrapper(kGlide3xPath)) {
+    return Glide3xVersion::kD2dx;
+  }
+
+  return FileVersion::GuessGlide3xVersion(kGlide3xPath);
+}
+
+} // namespace
 
 ::std::string_view GetName(Glide3xVersion glide3x_version) {
   switch (glide3x_version) {
@@ -83,7 +97,7 @@ namespace sgd2fr::glide3x_version {
 
 Glide3xVersion GetRunning() {
   static Glide3xVersion running_glide3x_version =
-      FileVersion::GuessGlide3xVersion(L"glide3x.dll");
+      DetermineGlide3xVersion();
 
   return running_glide3x_version;
 }

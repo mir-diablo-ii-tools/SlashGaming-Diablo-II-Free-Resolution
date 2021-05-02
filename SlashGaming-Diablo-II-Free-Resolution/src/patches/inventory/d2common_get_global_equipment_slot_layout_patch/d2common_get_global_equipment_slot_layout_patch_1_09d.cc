@@ -45,73 +45,33 @@
 
 #include "d2common_get_global_equipment_slot_layout_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2common_get_global_equipment_slot_layout.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2common {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2Common_GetGlobalEquipmentSlotLayoutPatch_1_09D_InterceptionFunc01();
 
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
+} // extern "C"
 
-  ASM_X86(push dword ptr [ebp + 20]);
-  ASM_X86(push dword ptr [ebp + 16]);
-  ASM_X86(push dword ptr [ebp + 12]);
-  ASM_X86(push dword ptr [ebp + 8]);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout));
-  ASM_X86(add esp, 16);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-  ASM_X86(ret 16);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2common {
 
 GetGlobalEquipmentSlotLayoutPatch_1_09D
 ::GetGlobalEquipmentSlotLayoutPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void GetGlobalEquipmentSlotLayoutPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void GetGlobalEquipmentSlotLayoutPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-GetGlobalEquipmentSlotLayoutPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kJump,
-          &InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kJump,
+      &D2Common_GetGlobalEquipmentSlotLayoutPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-GetGlobalEquipmentSlotLayoutPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 GetGlobalEquipmentSlotLayoutPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -135,7 +95,38 @@ GetGlobalEquipmentSlotLayoutPatch_1_09D::GetPatchAddressAndSize01() {
           5
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOrdinal(
+              ::d2::DefaultLibrary::kD2Common,
+              10441
+          ),
+          5
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Common,
+              0x25E370
+          ),
+          5
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Common,
+              0x25C270
+          ),
+          5
+      );
+    }
   }
 }
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr

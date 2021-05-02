@@ -45,104 +45,54 @@
 
 #include "d2gdi_set_bit_block_width_and_height_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2gdi_set_bit_block_width_and_height.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2gdi {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc01_1_09D() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2GDI_SetBitBlockWidthAndHeightPatch_1_09D_InterceptionFunc01();
 
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
+} // extern "C"
 
-  ASM_X86(push ecx);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GDI_SetBitBlockWidthAndHeight));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc01_1_13C() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(sub esp, 8);
-  ASM_X86(lea esi, dword ptr [ebp - 4]);
-  ASM_X86(lea edx, dword ptr [ebp - 8]);
-
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-
-  ASM_X86(push edx);
-  ASM_X86(push esi);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GDI_GetBitBlockWidthAndHeight));
-  ASM_X86(add esp, 12);
-
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  // Original code
-  ASM_X86(mov esi, dword ptr [ebp - 4]);
-  ASM_X86(mov edx, dword ptr [ebp - 8]);
-
-  ASM_X86(add esp, 8);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2gdi {
 
 SetBitBlockWidthAndHeightPatch_1_09D::SetBitBlockWidthAndHeightPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void SetBitBlockWidthAndHeightPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetBitBlockWidthAndHeightPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetBitBlockWidthAndHeightPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc01_1_09D,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GDI_SetBitBlockWidthAndHeightPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-SetBitBlockWidthAndHeightPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 SetBitBlockWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::GameVersion::k1_07Beta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x115A
+          ),
+          0x11BA - 0x115A
+      );
+    }
+
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2GDI,
@@ -154,4 +104,5 @@ SetBitBlockWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-} // namespace sgd2fr::patches::d2gdi
+} // namespace d2gdi
+} // namespace sgd2fr

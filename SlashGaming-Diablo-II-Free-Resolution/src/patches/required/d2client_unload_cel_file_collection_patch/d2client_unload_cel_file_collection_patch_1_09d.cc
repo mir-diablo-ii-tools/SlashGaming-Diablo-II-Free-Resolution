@@ -45,68 +45,47 @@
 
 #include "d2client_unload_cel_file_collection_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_unload_cel_file_collection.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2client {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2Client_UnloadCelFileCollectionPatch_1_09D_InterceptionFunc01();
 
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
+} // extern "C"
 
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_UnloadCelFileCollection));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2client {
 
 UnloadCelFileCollectionPatch_1_09D::UnloadCelFileCollectionPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void UnloadCelFileCollectionPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void UnloadCelFileCollectionPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-UnloadCelFileCollectionPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kJump,
-          &InterceptionFunc_01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kJump,
+      &D2Client_UnloadCelFileCollectionPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-UnloadCelFileCollectionPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 UnloadCelFileCollectionPatch_1_09D::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character.
+  * 2. Locate the variable for a CelFile that is associated with the
+  *    text "Panel\CtrlPnl7".
+  * 3. Set a write breakpoint on the variable.
+  * 4. Save and Exit the current game. Do not stop/exit/kill the game
+  *    process.
+  * 5. The write breakpoint list should now contain a location in the
+  *    function containing the patch location.
+  * 6. Scroll down to the bottom of the function to find the patch
+  *    location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -119,7 +98,28 @@ UnloadCelFileCollectionPatch_1_09D::GetPatchAddressAndSize01() {
           5
       );
     }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x92F49
+          ),
+          5
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x96B09
+          ),
+          5
+      );
+    }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

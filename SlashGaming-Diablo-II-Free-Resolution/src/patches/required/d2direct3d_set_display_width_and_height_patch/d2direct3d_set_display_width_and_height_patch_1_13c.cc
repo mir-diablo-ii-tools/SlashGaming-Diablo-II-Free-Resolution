@@ -45,121 +45,372 @@
 
 #include "d2direct3d_set_display_width_and_height_patch_1_13c.hpp"
 
-#include <array>
+#include <stddef.h>
 
-#include "../../../asm_x86_macro.h"
-#include "d2direct3d_set_display_width_and_height.hpp"
+#include <mdc/std/stdint.h>
 
-namespace sgd2fr::patches::d2direct3d {
+/*
+* How to find patch locations:
+* 1. Search for the locations where the text
+*    "Failed to create D3D device!" is used.
+* 2. Scroll up until values 640, 480, 800, and 600 are seen.
+*/
+
+extern "C" {
+
+void __cdecl
+D2Direct3D_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
+
+namespace sgd2fr {
+namespace d2direct3d {
 namespace {
 
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-  
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
+static const uint8_t kShortJneByteOpcodes[] = {
+    0x75,
+};
 
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight));
-  ASM_X86(add esp, 4);
+enum {
+  kShortJneByteOpcodesCount = sizeof(kShortJneByteOpcodes)
+      / sizeof(kShortJneByteOpcodes[0])
+};
 
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
+static const uint8_t kShortJmpByteOpcodes[] = {
+    0xEB,
+};
 
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-/**
- * cmp eax, 1
- * je
- */
-constexpr std::array<std::uint8_t, 4> kPatchBuffer02 = {
-    0x83, 0xF8, 0x01, 0x74
+enum {
+  kShortJmpByteOpcodesCount = sizeof(kShortJmpByteOpcodes)
+      / sizeof(kShortJmpByteOpcodes[0])
 };
 
 } // namespace
 
 SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patches_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Direct3D_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patches_01);
 
-  
   PatchAddressAndSize patch_address_and_size_02 =
       GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBufferPatch(
-          patch_address_and_size_02.first,
-          kPatchBuffer02.data(),
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patches_02 = ::mapi::GamePatch::MakeGameBufferPatch(
+      patch_address_and_size_02.first,
+      kShortJneByteOpcodes,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patches_02);
 
-  return patches;
+  PatchAddressAndSize patch_address_and_size_03 =
+      GetPatchAddressAndSize03();
+  ::mapi::GamePatch patches_03 = ::mapi::GamePatch::MakeGameBufferPatch(
+      patch_address_and_size_03.first,
+      kShortJmpByteOpcodes,
+      patch_address_and_size_03.second
+  );
+  this->patches_[2].Swap(patches_03);
 }
 
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x8F14
+          ),
+          0x8F42 - 0x8F14
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x9504
+          ),
+          0x9532 - 0x9504
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xFCD4
+          ),
+          0xFD02 - 0xFCD4
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Direct3D,
               0xB9A4
           ),
-          (0xB9DE - kPatchBuffer02.size()) - 0xB9A4
+          0xB9D2 - 0xB9A4
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xBE64
+          ),
+          0xBE92 - 0xBE64
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x11A6F8
+          ),
+          0x11A726 - 0x11A6F8
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B62C8
+          ),
+          0x2B62F6 - 0x2B62C8
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B5EB8
+          ),
+          0x2B5EE6 - 0x2B5EB8
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B500B
+          ),
+          0x2B5039 - 0x2B500B
       );
     }
   }
 }
 
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x8F42
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x9532
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xFD02
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Direct3D,
-              0xB9DE - kPatchBuffer02.size()
+              0xB9D2
           ),
-          kPatchBuffer02.size()
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xBE92
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x11A726
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B62F6
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B5EE6
+          ),
+          kShortJneByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B5039
+          ),
+          kShortJneByteOpcodesCount
       );
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2direct3d
+PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize03() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x8F4D
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x953D
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xFD0D
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xB9DD
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0xBE9D
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x11A731
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B6301
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B5EF1
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Direct3D,
+              0x2B5044
+          ),
+          kShortJmpByteOpcodesCount
+      );
+    }
+  }
+}
+
+} // namespace d2direct3d
+} // namespace sgd2fr

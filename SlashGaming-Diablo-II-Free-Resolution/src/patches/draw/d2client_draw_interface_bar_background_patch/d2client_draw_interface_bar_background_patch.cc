@@ -45,37 +45,48 @@
 
 #include "d2client_draw_interface_bar_background_patch.hpp"
 
-#include <sgd2mapi.hpp>
-#include "../../../asm_x86_macro.h"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2client {
+#include <sgd2mapi.hpp>
+#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
+#include "d2client_draw_interface_bar_background_patch_lod_1_14c.hpp"
+#include "d2client_draw_interface_bar_background_patch_lod_1_14d.hpp"
+
+namespace sgd2fr {
+namespace d2client {
 
 DrawInterfaceBarBackgroundPatch::DrawInterfaceBarBackgroundPatch()
-    : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void DrawInterfaceBarBackgroundPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool DrawInterfaceBarBackgroundPatch::IsApplicable() {
+  return true;
 }
 
-void DrawInterfaceBarBackgroundPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+DrawInterfaceBarBackgroundPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-DrawInterfaceBarBackgroundPatch::PatchVariant
-DrawInterfaceBarBackgroundPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_13C: {
-      return DrawInterfaceBarBackgroundPatch_1_09D();
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      return new DrawInterfaceBarBackgroundPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return new DrawInterfaceBarBackgroundPatch_Lod1_14C();
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DrawInterfaceBarBackgroundPatch_Lod1_14D();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

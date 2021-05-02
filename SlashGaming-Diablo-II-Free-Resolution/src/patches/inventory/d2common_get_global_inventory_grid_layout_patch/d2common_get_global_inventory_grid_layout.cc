@@ -54,23 +54,23 @@ namespace sgd2fr::patches {
 void __cdecl Sgd2fr_D2Common_GetGlobalInventoryGridLayout(
     std::uint32_t inventory_record_index,
     std::uint32_t inventory_arrange_mode,
-    d2::GridLayout* out_grid_layout
+    ::d2::GridLayout* out_grid_layout
 ) {
   // Original code, copies the values of the specified Global Inventory Grid
   // into the output Inventory Grid.
   unsigned int source_inventory_arrange_mode =
       GetSourceInventoryArrangeMode();
 
-  d2::InventoryRecord_View global_inventory_txt_view(
-      d2::d2common::GetGlobalInventoryTxt()
+  ::d2::InventoryRecord_View global_inventory_txt_view(
+      ::d2::d2common::GetGlobalInventoryTxt()
   );
-  d2::GridLayout_View global_inventory_grid_layout(
+  ::d2::GridLayout_View global_inventory_grid_layout(
       global_inventory_txt_view[
           inventory_record_index + (source_inventory_arrange_mode * 16)
       ].GetGridLayout()
   );
 
-  d2::GridLayout_Wrapper out_grid_layout_wrapper(out_grid_layout);
+  ::d2::GridLayout_Wrapper out_grid_layout_wrapper(out_grid_layout);
   out_grid_layout_wrapper.AssignMembers(global_inventory_grid_layout);
 
   // Do not adjust positions if the entries are empty, which use value 0.

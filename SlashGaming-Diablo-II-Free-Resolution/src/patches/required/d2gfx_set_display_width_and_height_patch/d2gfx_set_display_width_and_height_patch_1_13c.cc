@@ -45,81 +45,84 @@
 
 #include "d2gfx_set_display_width_and_height_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2gfx_set_display_width_and_height.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2gfx {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
 
-  ASM_X86(push ecx);
+} // extern "C"
 
-  ASM_X86(push dword ptr [ebp + 20]);
-  ASM_X86(push dword ptr [ebp + 16]);
-  ASM_X86(push dword ptr [ebp + 12]);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GFX_SetDisplayWidthAndHeight));
-  ASM_X86(add esp, 12);
-
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2gfx {
 
 SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetDisplayWidthAndHeightPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetDisplayWidthAndHeightPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-SetDisplayWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Go to D2GFX's IsNeedResizeWindowPatch patch address.
+  * 2. Scroll down to the very first function call that appears after
+  *    the patch location. That is the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2GFX,
-            0x7FD0
-        ),
-        0x7FF4 - 0x7FD0
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x7FD0
+          ),
+          0x7FF4 - 0x7FD0
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xB0E0
+          ),
+          0xB104 - 0xB0E0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF2B10
+          ),
+          0xF2B34 - 0xF2B10
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF5570
+          ),
+          0xF5595 - 0xF5570
       );
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr

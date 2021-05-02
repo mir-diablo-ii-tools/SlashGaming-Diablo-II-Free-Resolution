@@ -45,89 +45,97 @@
 
 #include "d2gdi_set_cel_display_left_and_right_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2gdi_set_cel_display_left_and_right.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2gdi {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc01_1_13C() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2GDI_SetCelDisplayLeftAndRightPatch_1_13C_InterceptionFunc01();
 
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
+} // extern "C"
 
-  ASM_X86(push esi);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2GDI_SetCelDisplayLeftAndRight));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-
-  // Original code
-  ASM_X86(pop edi);
-  ASM_X86(pop esi);
-
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2gdi {
 
 SetCelDisplayLeftAndRightPatch_1_13C::SetCelDisplayLeftAndRightPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void SetCelDisplayLeftAndRightPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetCelDisplayLeftAndRightPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetCelDisplayLeftAndRightPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kJump,
-          &InterceptionFunc01_1_13C,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kJump,
+      &D2GDI_SetCelDisplayLeftAndRightPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-SetCelDisplayLeftAndRightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetCelDisplayLeftAndRightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x6529
+          ),
+          0x6557 - 0x6529
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x7239
+          ),
+          0x7267 - 0x7239
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x6599
+          ),
+          0x65C7 - 0x6599
+      );
+    }
+
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x65F9
+          ),
+          0x6627 - 0x65F9
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
-        ::mapi::GameAddress::FromOffset(
-            ::d2::DefaultLibrary::kD2GDI,
-            0x7049
-        ),
-        0x7077 - 0x7049
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x7049
+          ),
+          0x7077 - 0x7049
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x7E99
+          ),
+          0x7EC7 - 0x7E99
       );
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2gdi
+} // namespace d2gdi
+} // namespace sgd2fr

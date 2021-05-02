@@ -45,41 +45,44 @@
 
 #include "d2gfx_is_need_resize_window_patch.hpp"
 
-namespace sgd2fr::patches::d2gfx {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2gfx_is_need_resize_window_patch_1_13c.hpp"
+#include "d2gfx_is_need_resize_window_patch_1_13d.hpp"
+
+namespace sgd2fr {
+namespace d2gfx {
 
 IsNeedResizeWindowPatch::IsNeedResizeWindowPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void IsNeedResizeWindowPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
-}
-
-void IsNeedResizeWindowPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
-
-IsNeedResizeWindowPatch::PatchType
-IsNeedResizeWindowPatch::MakePatch() {
+bool IsNeedResizeWindowPatch::IsApplicable() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  return (running_game_version >= ::d2::GameVersion::k1_13C);
+}
 
-  if (running_game_version < ::d2::GameVersion::k1_13C) {
-    return ::std::nullopt;
+AbstractVersionPatch*
+IsNeedResizeWindowPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
-      return IsNeedResizeWindowPatch_1_13C();
+      return new IsNeedResizeWindowPatch_1_13C();
+    }
+
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new IsNeedResizeWindowPatch_1_13D();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2gfx
+} // namespace d2gfx
+} // namespace sgd2fr

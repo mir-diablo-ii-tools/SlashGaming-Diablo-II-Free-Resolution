@@ -43,19 +43,28 @@
  *  work.
  */
 
-#ifndef SGD2FR_WIDE_MACRO_H_
-#define SGD2FR_WIDE_MACRO_H_
+#include <windows.h>
 
-#ifndef MAPI_CAT
-#define MAPI_CAT(a, b) a##b
-#endif /* MAPI_CAT */
+namespace sgd2fr {
+namespace d2dx_glide {
 
-#ifndef MAPI_WIDE_LIT
-#define MAPI_WIDE_LIT(s) MAPI_CAT(a, b)
-#endif /* MAPI_WIDE_LIT */
+bool IsD2dxGlideWrapper(const wchar_t* path);
 
-#ifndef __FILEW__
-#define __FILEW__ MAPI_WIDE_LIT(__FILE__)
-#endif /* __FILEW__ */
+/**
+ * Wrapper for ID2DXConfigurator::SetCustomResolution.
+ */
+HRESULT SetCustomResolution(
+    int width,
+    int height
+);
 
-#endif /* SGD2FR_WIDE_MACRO_H_ */
+/**
+ * Wrapper for ID2DXConfigurator::GetSuggestedCustomResolution.
+ */
+HRESULT GetSuggestedCustomResolution(
+    /* [out] */ int* width,
+    /* [out] */ int* height
+);
+
+} // namespace d2dx
+} // namespace sgd2fr

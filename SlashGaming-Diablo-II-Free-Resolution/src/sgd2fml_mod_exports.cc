@@ -49,6 +49,8 @@
 
 #include <sgd2mapi.hpp>
 #include "config.hpp"
+#include "compile_time_switch.hpp"
+#include "helper/evaluation.h"
 #include "patches/patches.hpp"
 
 namespace {
@@ -68,6 +70,11 @@ long Sgd2fml_Mod_GetMinRequiredApiVersion(void) {
 }
 
 void Sgd2fml_Mod_OnLoadMpqs() {
+  if constexpr (kIsEvaluationSoftware) {
+    ShowEvaluationMessage();
+    EnforceTimeLimit();
+  }
+
   if (is_loaded) {
     return;
   }

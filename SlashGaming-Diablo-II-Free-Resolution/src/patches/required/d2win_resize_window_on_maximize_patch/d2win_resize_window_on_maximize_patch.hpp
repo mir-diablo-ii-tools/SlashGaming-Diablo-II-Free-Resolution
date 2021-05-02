@@ -46,33 +46,23 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_HPP_
 
-#include <optional>
-#include <variant>
+#include "../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
-#include "d2win_resize_window_on_maximize_patch_1_13c.hpp"
+namespace sgd2fr {
+namespace d2win {
 
-namespace sgd2fr::patches::d2win {
-
-class ResizeWindowOnMaximizePatch {
+class ResizeWindowOnMaximizePatch
+    : public AbstractMultiversionPatch {
  public:
-  using PatchVariant = std::variant<
-      ResizeWindowOnMaximizePatch_1_13C
-  >;
-
-  using PatchType = ::std::optional<PatchVariant>;
-
   ResizeWindowOnMaximizePatch();
 
-  void Apply();
-  void Remove();
-
  private:
-  PatchType patch_;
-
-  static PatchType MakePatch();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
-} // namespace sgd2fr::patches::d2win
+} // namespace d2win
+} // namespace sgd2fr
 
 #endif // SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_HPP_

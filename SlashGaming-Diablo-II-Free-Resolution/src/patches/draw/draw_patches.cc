@@ -45,18 +45,16 @@
 
 #include "draw_patches.hpp"
 
-namespace sgd2fr::patches {
-
-DrawPatches::DrawPatches() = default;
+namespace sgd2fr {
 
 void DrawPatches::Apply() {
-  this->draw_interface_bar_background_patch_.Apply();
-  this->draw_screen_background_patch_.Apply();
+  this->d2client_draw_interface_bar_background_patch_.Apply();
+  this->d2client_draw_screen_background_patch_.Apply();
 }
 
 void DrawPatches::Remove() {
-  this->draw_interface_bar_background_patch_.Remove();
-  this->draw_screen_background_patch_.Remove();
+  this->d2client_draw_screen_background_patch_.Remove();
+  this->d2client_draw_interface_bar_background_patch_.Remove();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr

@@ -45,11 +45,7 @@
 
 #include "d2common_get_global_belt_record.hpp"
 
-#include <windows.h>
-
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
-#include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
@@ -57,30 +53,30 @@ namespace sgd2fr::patches {
 void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
     std::uint32_t belt_record_index,
     std::uint32_t inventory_arrange_mode,
-    d2::BeltRecord* out_belt_record
+    ::d2::BeltRecord* out_belt_record
 ) {
   // Original code, copies the values of the specified Global Belt Slot
   // into the output Belt Slot.
   unsigned int source_inventory_arrange_mode =
       GetSourceInventoryArrangeMode();
 
-  d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
-  d2::BeltRecord_View global_belt_record_view(
+  ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
+  ::d2::BeltRecord_View global_belt_record_view(
       global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
   );
 
-  d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
+  ::d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
   out_belt_record_wrapper.AssignMembers(global_belt_record_view);
 
   // Adjustment code to ensure that the objects appear in the correct location.
   for (std::size_t belt_slot_index = 0;
        belt_slot_index < out_belt_record_wrapper.GetNumSlots();
        belt_slot_index += 1) {
-    d2::PositionalRectangle_Wrapper slot_positions(
+    ::d2::PositionalRectangle_Wrapper slot_positions(
         out_belt_record_wrapper.GetSlotPositions()
     );
 
-    d2::d2common::GetGlobalBeltSlotPosition(
+    ::d2::d2common::GetGlobalBeltSlotPosition(
         belt_record_index,
         inventory_arrange_mode,
         slot_positions[belt_slot_index].Get(),

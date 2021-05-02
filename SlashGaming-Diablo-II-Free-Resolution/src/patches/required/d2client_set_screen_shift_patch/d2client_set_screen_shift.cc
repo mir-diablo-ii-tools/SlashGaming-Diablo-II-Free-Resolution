@@ -50,14 +50,14 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Client_SetScreenShift() {
-  int general_display_width = d2::d2client::GetGeneralDisplayWidth();
-  int general_display_height = d2::d2client::GetGeneralDisplayHeight();
+  int general_display_width = ::d2::d2client::GetGeneralDisplayWidth();
+  int general_display_height = ::d2::d2client::GetGeneralDisplayHeight();
 
   int screen_shift_x = (general_display_width / 2) - (640 / 2);
   int screen_shift_y = -((general_display_height / 2) - (480 / 2));
 
-  d2::d2client::SetScreenShiftX(screen_shift_x);
-  d2::d2client::SetScreenShiftY(screen_shift_y);
+  ::d2::d2client::SetScreenShiftX(screen_shift_x);
+  ::d2::d2client::SetScreenShiftY(screen_shift_y);
 }
 
 } // namespace sgd2fr::patches

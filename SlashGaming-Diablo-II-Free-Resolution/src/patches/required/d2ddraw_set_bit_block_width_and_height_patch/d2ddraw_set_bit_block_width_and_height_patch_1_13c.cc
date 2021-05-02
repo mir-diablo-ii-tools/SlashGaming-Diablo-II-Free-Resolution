@@ -45,84 +45,76 @@
 
 #include "d2ddraw_set_bit_block_width_and_height_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2ddraw_set_bit_block_width_and_height.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2ddraw {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc_01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2DDraw_SetBitBlockWidthAndHeightPatch_1_13C_InterceptionFunc01();
 
-  ASM_X86(sub esp, 8);
+} // extern "C"
 
-  ASM_X86(push eax);
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(lea edx, dword ptr [ebp - 8]);
-  ASM_X86(push edx);
-  ASM_X86(lea ecx, dword ptr [ebp - 4]);
-  ASM_X86(push ecx);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight));
-  ASM_X86(add esp, 12);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-  ASM_X86(pop eax);
-
-  ASM_X86(mov ecx, dword ptr [ebp - 4]);
-  ASM_X86(mov edx, dword ptr [ebp - 8]);
-
-  ASM_X86(add esp, 8);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2ddraw {
 
 SetBitBlockWidthAndHeightPatch_1_13C::SetBitBlockWidthAndHeightPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void SetBitBlockWidthAndHeightPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void SetBitBlockWidthAndHeightPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-SetBitBlockWidthAndHeightPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc_01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2DDraw_SetBitBlockWidthAndHeightPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-SetBitBlockWidthAndHeightPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 SetBitBlockWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
+    case ::d2::GameVersion::k1_11: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x85D2
+          ),
+          0x85F6 - 0x85D2
+      );
+    }
+
+    case ::d2::GameVersion::k1_11B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x8082
+          ),
+          0x80A6 - 0x8082
+      );
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x8CE2
+          ),
+          0x8D06 - 0x8CE2
+      );
+    }
+
+    case ::d2::GameVersion::k1_13ABeta: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x75E2
+          ),
+          0x7606 - 0x75E2
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
@@ -132,7 +124,18 @@ SetBitBlockWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
           0x85E6 - 0x85C2
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2DDraw,
+              0x8202
+          ),
+          0x8226 - 0x8202
+      );
+    }
   }
 }
 
-} // namespace sgd2fr::patches::d2ddraw
+} // namespace d2ddraw
+} // namespace sgd2fr

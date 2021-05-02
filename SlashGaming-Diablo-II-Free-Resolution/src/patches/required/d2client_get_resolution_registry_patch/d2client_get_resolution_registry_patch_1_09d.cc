@@ -45,119 +45,53 @@
 
 #include "d2client_get_resolution_registry_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_get_resolution_registry.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2client {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2Client_GetResolutionRegistryPatch_1_09D_InterceptionFunc01();
 
-  ASM_X86(push eax);
-  ASM_X86(push edx);
+void __cdecl
+D2Client_GetResolutionRegistryPatch_1_09D_InterceptionFunc03();
 
-  ASM_X86(sub esp, 4);
-  ASM_X86(lea ecx, [esp]);
+} // extern "C"
 
-  ASM_X86(push ecx);
-  ASM_X86(push esi);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_GetResolutionRegistry));
-  ASM_X86(add esp, 8);
-
-  ASM_X86(pop ecx);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop eax);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc03() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push eax);
-  ASM_X86(push edx);
-
-  ASM_X86(sub esp, 4);
-  ASM_X86(lea ecx, [esp]);
-
-  ASM_X86(push ecx);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_GetResolutionRegistry));
-  ASM_X86(add esp, 8);
-
-  ASM_X86(pop ecx);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop eax);
-
-  ASM_X86(mov eax, [eax]);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2client {
 
 GetResolutionRegistryPatch_1_09D::GetResolutionRegistryPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void GetResolutionRegistryPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void GetResolutionRegistryPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-GetResolutionRegistryPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_GetResolutionRegistryPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   PatchAddressAndSize patch_address_and_size_02 =
       GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_02.first,
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patch_02);
 
   PatchAddressAndSize patch_address_and_size_03 =
       GetPatchAddressAndSize03();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_03.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc03,
-          patch_address_and_size_03.second
-      )
+  ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_03.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_GetResolutionRegistryPatch_1_09D_InterceptionFunc03,
+      patch_address_and_size_03.second
   );
-
-  return patches;
+  this->patches_[2].Swap(patch_03);
 }
 
-GetResolutionRegistryPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -174,7 +108,7 @@ GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-GetResolutionRegistryPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -191,7 +125,7 @@ GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize02() {
   }
 }
 
-GetResolutionRegistryPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -208,4 +142,5 @@ GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize03() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

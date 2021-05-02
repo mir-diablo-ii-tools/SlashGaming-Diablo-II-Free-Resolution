@@ -45,66 +45,48 @@
 
 #include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
 
-#include <array>
+#include <stddef.h>
 
-#include "../../../asm_x86_macro.h"
-#include "glide3x_gr_sst_win_open.hpp"
+#include "../../../helper/glide3x_version.hpp"
 
-namespace sgd2fr::patches::glide3x {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
 
-  ASM_X86(add eax, 258);
+} // extern "C"
 
-  ASM_X86(sub esp, 8);
-  ASM_X86(push eax);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_Glide3x_SetWindowWidthAndHeight));
-  ASM_X86(add esp, 12);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace glide3x {
 
 GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-  : patches_(MakePatches()) {
-}
-
-void GrSstWinOpenPatch_NGlide_3_10_0_658::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void GrSstWinOpenPatch_NGlide_3_10_0_658::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-std::vector<mapi::GamePatch>
-GrSstWinOpenPatch_NGlide_3_10_0_658::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  mapi::GameAddress game_address = mapi::GameAddress::FromOffset(
-      "glide3x.dll",
-      0x5691
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
+}
 
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          std::move(game_address),
-          mapi::BranchType::kCall,
-          &InterceptionFunc,
+PatchAddressAndSize
+GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
+
+  switch (running_glide3x_version) {
+    case Glide3xVersion::kNGlide3_10_0_658: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              L"glide3x.dll",
+              0x5691
+          ),
           0x56A0 - 0x5691
-      )
-  );
-
-  return patches;
+      );
+    }
+  }
 }
 
-} // namespace sgd2fr::patches::glide3x
+} // namespace glide3x
+} // namespace sgd2fr

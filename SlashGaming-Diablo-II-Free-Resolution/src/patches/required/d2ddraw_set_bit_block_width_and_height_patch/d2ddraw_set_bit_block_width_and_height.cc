@@ -61,8 +61,8 @@ void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
   *width = std::get<0>(resolution);
   *height = std::get<1>(resolution);
 
-  d2::d2ddraw::SetBitBlockWidth(*width);
-  d2::d2ddraw::SetBitBlockHeight(*height);
+  ::d2::d2ddraw::SetBitBlockWidth(*width);
+  ::d2::d2ddraw::SetBitBlockHeight(*height);
 }
 
 } // namespace sgd2fr::patches

@@ -45,46 +45,58 @@
 
 #include "d2direct3d_set_display_width_and_height_patch.hpp"
 
-namespace sgd2fr::patches::d2direct3d {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2direct3d_set_display_width_and_height_patch_1_09d.hpp"
+#include "d2direct3d_set_display_width_and_height_patch_1_13c.hpp"
+
+namespace sgd2fr {
+namespace d2direct3d {
 
 SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void SetDisplayWidthAndHeightPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
+bool SetDisplayWidthAndHeightPatch::IsApplicable() {
+  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  return (video_mode == ::d2::VideoMode::kDirect3D);
 }
 
-void SetDisplayWidthAndHeightPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
-
-SetDisplayWidthAndHeightPatch::PatchType
-SetDisplayWidthAndHeightPatch::MakePatch() {
-  d2::VideoMode video_mode = d2::DetermineVideoMode();
-  if (video_mode != d2::VideoMode::kDirect3D) {
-    return std::nullopt;
+AbstractVersionPatch*
+SetDisplayWidthAndHeightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
 
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
-      return SetDisplayWidthAndHeightPatch_1_09D();
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
+      return new SetDisplayWidthAndHeightPatch_1_09D();
     }
 
-    case d2::GameVersion::k1_13C: {
-      return SetDisplayWidthAndHeightPatch_1_13C();
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new SetDisplayWidthAndHeightPatch_1_13C();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2direct3d
+} // namespace d2direct3d
+} // namespace sgd2fr

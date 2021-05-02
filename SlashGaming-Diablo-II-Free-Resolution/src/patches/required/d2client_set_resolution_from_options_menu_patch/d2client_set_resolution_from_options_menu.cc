@@ -45,8 +45,9 @@
 
 #include "d2client_set_resolution_from_options_menu.hpp"
 
+#include <mdc/wchar_t/filew.h>
+#include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
-
 #include "../../../config.hpp"
 #include "../../../helper/game_resolution.hpp"
 
@@ -59,10 +60,11 @@ void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
 ) {
   void* resolution_settings_address;
 
-  switch (::d2::game_version::GetRunning()) {
-    case d2::GameVersion::k1_09D: {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
       resolution_settings_address = reinterpret_cast<void*>(
-          mapi::GameAddress::FromOffset(
+          ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
               0xE6468
           ).raw_address()
@@ -70,9 +72,9 @@ void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
       break;
     }
 
-    case d2::GameVersion::k1_13C: {
+    case ::d2::GameVersion::k1_13C: {
       resolution_settings_address = reinterpret_cast<void*>(
-          mapi::GameAddress::FromOffset(
+          ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
               0xEAAB8
           ).raw_address()
@@ -80,8 +82,44 @@ void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
       break;
     }
 
+    case ::d2::GameVersion::k1_13D: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xE4E20
+          ).raw_address()
+      );
+      break;
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x3197D0
+          ).raw_address()
+      );
+      break;
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x31B1F0
+          ).raw_address()
+      );
+      break;
+    }
+
     default: {
-      std::exit(0);
+      ::mdc::error::ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          static_cast<int>(running_game_version)
+      );
+
+      return;
     }
   }
 

@@ -52,6 +52,12 @@
  */
 
 /**
+ * If true, enables a nag warning message about evaluation software,
+ * and closes the game if the trial period has expired.
+ */
+constexpr bool kIsEvaluationSoftware = false;
+
+/**
  * If true, allow the user to configure the asset paths. Useful for
  * debugging purposes or for customization-centric users.
  */
@@ -67,10 +73,7 @@ constexpr bool kIsLoadCustomMpq = true;
 /**
  * If true, the inventory arrangement sources from 800x600 entries in
  * calculations. Otherwise, sources from 640x480 entries.
- *
- * Warning: Setting this value to true will make inventory slots for
- * heights less than 600 display incorrect.
  */
-constexpr bool kIsSourceInventoryArrange800 = false;
+constexpr bool kIsSourceInventoryArrange800 = true;
 
 #endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_

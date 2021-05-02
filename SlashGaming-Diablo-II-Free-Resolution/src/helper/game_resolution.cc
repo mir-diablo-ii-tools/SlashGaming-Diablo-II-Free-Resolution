@@ -55,6 +55,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
+#include "../compile_time_switch.hpp"
 #include "ddraw_version.hpp"
 
 namespace sgd2fr {
@@ -94,7 +95,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4ResolutionTableEntry,
-      4
+      5
   > kSortedIpv4ResolutionTable = {{
 
       // evnt.slashdiablo.net
@@ -103,6 +104,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           {
               kResolution640x480,
               kResolution800x600,
+              std::make_tuple(856, 480),
               std::make_tuple(1068, 600)
           }
       ),
@@ -113,6 +115,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           {
               kResolution640x480,
               kResolution800x600,
+              std::make_tuple(856, 480),
               std::make_tuple(1068, 600)
           }
       ),
@@ -123,6 +126,19 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           {
               kResolution640x480,
               kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
+      // ip.d2lod.net
+      Ipv4ResolutionTableEntry(
+          "51.222.51.12",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1024, 768),
               std::make_tuple(1068, 600)
           }
       ),
@@ -133,6 +149,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           {
               kResolution640x480,
               kResolution800x600,
+              std::make_tuple(856, 480),
               std::make_tuple(1068, 600)
           }
       ),
@@ -159,7 +176,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
 }
 
 const std::vector<std::tuple<int, int>>& SelectLocalOrOnlineResolutions() {
-  if (d2::d2client::GetGameType() == d2::ClientGameType::kBattleNetJoin) {
+  if (d2::d2client::GetGameType() == ::d2::ClientGameType::kBattleNetJoin) {
     return GetResolutionsFromIpV4(d2::bnclient::GetGatewayIpV4Address());
   } else {
     return config::GetIngameResolutions();
@@ -193,14 +210,14 @@ const std::set<std::tuple<int, int>>& GetStandardResolutions() {
 const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
   static std::mutex check_mutex;
   static std::unique_ptr init_once_flag = std::make_unique<std::once_flag>();
-  static d2::ClientGameType selected_game_type =
-      d2::d2client::GetGameType();
+  static ::d2::ClientGameType selected_game_type =
+      ::d2::d2client::GetGameType();
   static std::vector<std::tuple<int, int>> non_crashing_ingame_resolutions;
   static ::std::string gateway_ipv4_address;
 
   std::lock_guard lock(check_mutex);
 
-  if (selected_game_type != d2::d2client::GetGameType()
+  if (selected_game_type != ::d2::d2client::GetGameType()
       || gateway_ipv4_address != ::d2::bnclient::GetGatewayIpV4Address()) {
     init_once_flag = std::make_unique<std::once_flag>();
   }
@@ -208,14 +225,14 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
   std::call_once(
       *init_once_flag,
       [&] () {
-        d2::VideoMode current_video_mode = d2::d2gfx::GetVideoMode();
+        ::d2::VideoMode current_video_mode = ::d2::d2gfx::GetVideoMode();
         const std::vector<std::tuple<int, int>>& selected_ingame_resolutions =
             SelectLocalOrOnlineResolutions();
 
         non_crashing_ingame_resolutions.clear();
 
-        if (current_video_mode == d2::VideoMode::kDirect3D
-            || (current_video_mode == d2::VideoMode::kDirectDraw
+        if (current_video_mode == ::d2::VideoMode::kDirect3D
+            || (current_video_mode == ::d2::VideoMode::kDirectDraw
                 && ddraw_version::GetRunning() != DDrawVersion::kCnC)) {
           std::copy_if(
               selected_ingame_resolutions.cbegin(),
@@ -227,7 +244,7 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
           non_crashing_ingame_resolutions = selected_ingame_resolutions;
         }
 
-        selected_game_type = d2::d2client::GetGameType();
+        selected_game_type = ::d2::d2client::GetGameType();
         gateway_ipv4_address = ::d2::bnclient::GetGatewayIpV4Address();
       }
   );

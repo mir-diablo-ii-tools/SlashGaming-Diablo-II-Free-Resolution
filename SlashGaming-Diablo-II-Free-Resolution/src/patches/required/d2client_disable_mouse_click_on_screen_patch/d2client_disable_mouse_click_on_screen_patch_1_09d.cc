@@ -45,64 +45,42 @@
 
 #include "d2client_disable_mouse_click_on_screen_patch_1_09d.hpp"
 
-#include "../../../asm_x86_macro.h"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2client {
+namespace sgd2fr {
+namespace d2client {
 
 DisableMouseClickOnScreenPatch_1_09D::DisableMouseClickOnScreenPatch_1_09D()
-  : patches_(MakePatches()) {
-}
-
-void DisableMouseClickOnScreenPatch_1_09D::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void DisableMouseClickOnScreenPatch_1_09D::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-DisableMouseClickOnScreenPatch_1_09D::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Disable left screen click-through.
-  PatchAddressAndSize patch_address_and_size_01 = GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_01.first,
-          patch_address_and_size_01.second
-      )
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_01.first,
+      patch_address_and_size_01.second
   );
+  this->patches_[0].Swap(patch_01);
 
   // Disable left screen click-through while character is moving.
   PatchAddressAndSize patch_address_and_size_02 =
       GetPatchAddressAndSize02();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_02.first,
-          patch_address_and_size_02.second
-      )
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_02.first,
+      patch_address_and_size_02.second
   );
+  this->patches_[1].Swap(patch_02);
 
   // Disable right screen click-through.
-  PatchAddressAndSize patch_address_and_size_03 = GetPatchAddressAndSize03();
-  patches.push_back(
-      mapi::GamePatch::MakeGameNopPatch(
-          patch_address_and_size_03.first,
-          patch_address_and_size_03.second
-      )
+  PatchAddressAndSize patch_address_and_size_03 =
+      GetPatchAddressAndSize03();
+  ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameNopPatch(
+      patch_address_and_size_03.first,
+      patch_address_and_size_03.second
   );
-
-  return patches;
+  this->patches_[2].Swap(patch_03);
 }
 
-DisableMouseClickOnScreenPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -119,7 +97,7 @@ DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize01() {
   }
 }
 
-DisableMouseClickOnScreenPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -136,7 +114,7 @@ DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize02() {
   }
 }
 
-DisableMouseClickOnScreenPatch_1_09D::PatchAddressAndSize
+PatchAddressAndSize
 DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
@@ -153,4 +131,5 @@ DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize03() {
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

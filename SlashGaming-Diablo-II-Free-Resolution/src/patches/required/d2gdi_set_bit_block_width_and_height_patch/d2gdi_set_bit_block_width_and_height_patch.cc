@@ -45,46 +45,63 @@
 
 #include "d2gdi_set_bit_block_width_and_height_patch.hpp"
 
-namespace sgd2fr::patches::d2gdi {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2gdi_set_bit_block_width_and_height_patch_1_09d.hpp"
+#include "d2gdi_set_bit_block_width_and_height_patch_1_13c.hpp"
+#include "d2gdi_set_bit_block_width_and_height_patch_lod_1_14a.hpp"
+
+namespace sgd2fr {
+namespace d2gdi {
 
 SetBitBlockWidthAndHeightPatch::SetBitBlockWidthAndHeightPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void SetBitBlockWidthAndHeightPatch::Apply() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Apply();
-    }, this->patch_.value());
-  }
+bool SetBitBlockWidthAndHeightPatch::IsApplicable() {
+  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  return (video_mode == ::d2::VideoMode::kGdi);
 }
 
-void SetBitBlockWidthAndHeightPatch::Remove() {
-  if (this->patch_.has_value()) {
-    std::visit([](auto& patch) {
-      patch.Remove();
-    }, this->patch_.value());
-  }
-}
-
-SetBitBlockWidthAndHeightPatch::PatchType
-SetBitBlockWidthAndHeightPatch::MakePatch() {
-  d2::VideoMode video_mode = d2::DetermineVideoMode();
-  if (video_mode != d2::VideoMode::kGdi) {
-    return std::nullopt;
+AbstractVersionPatch*
+SetBitBlockWidthAndHeightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
 
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D: {
-      return SetBitBlockWidthAndHeightPatch_1_09D();
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
+      return new SetBitBlockWidthAndHeightPatch_1_09D();
     }
 
-    case d2::GameVersion::k1_13C: {
-      return SetBitBlockWidthAndHeightPatch_1_13C();
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_11B:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      return new SetBitBlockWidthAndHeightPatch_1_13C();
+    }
+
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new SetBitBlockWidthAndHeightPatch_Lod1_14A();
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2gdi
+} // namespace d2gdi
+} // namespace sgd2fr

@@ -45,85 +45,44 @@
 
 #include "d2client_enable_800_interface_bar_patch_1_13c.hpp"
 
-#include "../../../asm_x86_macro.h"
-#include "d2client_enable_800_interface_bar.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches::d2client {
-namespace {
+extern "C" {
 
-__declspec(naked) void __cdecl InterceptionFunc01() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
+void __cdecl
+D2Client_Enable800InterfaceBarPatch_1_13C_InterceptionFunc01();
 
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
+} // extern "C"
 
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Enable800InterfaceBar));
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-__declspec(naked) void __cdecl InterceptionFunc02() {
-  ASM_X86(push ebp);
-  ASM_X86(mov ebp, esp);
-
-  ASM_X86(push ecx);
-  ASM_X86(push edx);
-
-  ASM_X86(push ecx);
-  ASM_X86(call ASM_X86_FUNC(Sgd2fr_D2Client_Draw800InterfaceBar));
-  ASM_X86(add esp, 4);
-
-  ASM_X86(pop edx);
-  ASM_X86(pop ecx);
-
-  ASM_X86(leave);
-  ASM_X86(ret);
-}
-
-} // namespace
+namespace sgd2fr {
+namespace d2client {
 
 Enable800InterfaceBarPatch_1_13C::Enable800InterfaceBarPatch_1_13C()
-  : patches_(MakePatches()) {
-}
-
-void Enable800InterfaceBarPatch_1_13C::Apply() {
-  for (auto& patch : this->patches_) {
-    patch.Apply();
-  }
-}
-
-void Enable800InterfaceBarPatch_1_13C::Remove() {
-  for (auto& patch : this->patches_) {
-    patch.Remove();
-  }
-}
-
-std::vector<mapi::GamePatch>
-Enable800InterfaceBarPatch_1_13C::MakePatches() {
-  std::vector<mapi::GamePatch> patches;
-
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Enable drawing the 800x600 interface bar.
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
-  patches.push_back(
-      mapi::GamePatch::MakeGameBranchPatch(
-          patch_address_and_size_01.first,
-          mapi::BranchType::kCall,
-          &InterceptionFunc01,
-          patch_address_and_size_01.second
-      )
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800InterfaceBarPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
   );
-
-  return patches;
+  this->patches_[0].Swap(patch_01);
 }
 
-Enable800InterfaceBarPatch_1_13C::PatchAddressAndSize
+PatchAddressAndSize
 Enable800InterfaceBarPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Start a game with any character. This is to get D2Client.dll
+  *    loaded.
+  * 2. Search for the locations where the 7-bit null-terminated ASCII
+  *    text "Panel\CtrlPnl7" is used. This text should be in a Read
+  *    Only section.
+  * 3. Scroll up to find the patch location.
+  */
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
@@ -136,7 +95,38 @@ Enable800InterfaceBarPatch_1_13C::GetPatchAddressAndSize01() {
           0x272A7 - 0x272A2
       );
     }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x6D392
+          ),
+          0x6D397 - 0x6D392
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x94876
+          ),
+          0x9487B - 0x94876
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x983E8
+          ),
+          0x983ED - 0x983E8
+      );
+    }
   }
 }
 
-} // namespace sgd2fr::patches::d2client
+} // namespace d2client
+} // namespace sgd2fr

@@ -43,20 +43,9 @@
  *  work.
  */
 
-#ifndef SGD2FR_LICENSE_HPP_
-#define SGD2FR_LICENSE_HPP_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_HPP_
+#define SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_HPP_
 
-#include "dllexport_define.inc"
+#include "game_function/d2client_function.hpp"
 
-#ifdef __cplusplus
-extern "C" {
-#endif // __cplusplus
-
-DLLEXPORT void PrintLicenseNotice(void);
-
-#ifdef __cplusplus
-} // extern "C"
-#endif // __cplusplus
-
-#include "dllexport_undefine.inc"
-#endif  // SGD2FR_LICENSE_HPP_
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_HPP_ */

@@ -48,47 +48,23 @@
 #include <string>
 #include <unordered_map>
 
-#include "../asm_x86_macro.h"
 #include "../compile_time_switch.hpp"
 #include "custom_mpq.hpp"
+
+extern "C" {
+
+bool __cdecl Helper_CelFileCollection_RunChecksum(int* flags);
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace {
 
-std::unordered_map<std::string, d2::CelFile_Api> cel_file_collection;
+static std::unordered_map<std::string, ::d2::CelFile_Api> cel_file_collection;
 
-int checksum = 0;
+static int checksum = 0;
 
-__declspec(naked) bool __cdecl
-RunChecksum(int* flags) {
-  ASM_X86(sub esp, 4);
-  ASM_X86(lea eax, [esp]);
-  ASM_X86(pushad);
-  ASM_X86(push eax);
-  ASM_X86(mov ebp, esp);
-  ASM_X86(sub esp, 0x200 - 0x1);
-  ASM_X86(lea eax, [esp - 0x1]);
-  ASM_X86(mov ecx, eax);
-  ASM_X86(mov esi, eax);
-  ASM_X86(mov ebx, eax);
-  ASM_X86(dec esp);
 #define FLAG_CHECKSUM
-  ASM_X86(imul esp, [ebx + 0x65], 0x6465736e);
-  ASM_X86(mov esp, eax);
-  ASM_X86(and [ecx + 0x47], al);
-  ASM_X86(push eax);
-  ASM_X86(dec esp);
-  ASM_X86(and [esi + 0x33], dh);
-  ASM_X86(sub esp, [eax]);
-  ASM_X86(mov esp, ebp);
-  ASM_X86(pop eax);
-  ASM_X86(mov eax, esp);
-  ASM_X86(popad);
-  ASM_X86(add esp, 4);
-  ASM_X86(mov eax, dword ptr[esp + 0x04]);
-  ASM_X86(or dword ptr[eax], 3840);
-  ASM_X86(ret);
-}
 
 } // namespace
 
@@ -102,24 +78,24 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key, false)
     );
   }
 #if defined(FLAG_CHECKSUM)
-  RunChecksum(&checksum);
+  Helper_CelFileCollection_RunChecksum(&checksum);
 
   if ((checksum | 07400) != checksum) {
 #endif
     UnloadMpqOnce();
     LoadMpqOnce();
 
-    new d2::CelFile_Api(
+    new ::d2::CelFile_Api(
         std::move(cel_file_collection.at(cel_file_path_key))
     );
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key, false)
     );
 #if defined(FLAG_CHECKSUM)
   }
@@ -130,7 +106,7 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
 void ClearCelFiles() {
 #if defined(FLAG_CHECKSUM)
-  RunChecksum(&checksum);
+  Helper_CelFileCollection_RunChecksum(&checksum);
 
   if ((checksum | 07400) == checksum) {
     if constexpr (kIsLoadCustomMpq) {
@@ -142,7 +118,7 @@ void ClearCelFiles() {
   }
 
   new std::unordered_map(std::move(cel_file_collection));
-  cel_file_collection = std::unordered_map<std::string, d2::CelFile_Api>();
+  cel_file_collection = std::unordered_map<std::string, ::d2::CelFile_Api>();
 #endif
 }
 

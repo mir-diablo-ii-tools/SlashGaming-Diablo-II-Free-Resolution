@@ -45,34 +45,41 @@
 
 #include "d2common_get_global_belt_record_patch.hpp"
 
-namespace sgd2fr::patches::d2common {
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "d2common_get_global_belt_record_patch_1_09d.hpp"
+
+namespace sgd2fr {
+namespace d2common {
 
 GetGlobalBeltRecordPatch::GetGlobalBeltRecordPatch()
-  : patch_(MakePatch()) {
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-void GetGlobalBeltRecordPatch::Apply() {
-  std::visit([](auto& patch) {
-    patch.Apply();
-  }, this->patch_);
+bool GetGlobalBeltRecordPatch::IsApplicable() {
+  return true;
 }
 
-void GetGlobalBeltRecordPatch::Remove() {
-  std::visit([](auto& patch) {
-    patch.Remove();
-  }, this->patch_);
-}
+AbstractVersionPatch*
+GetGlobalBeltRecordPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-GetGlobalBeltRecordPatch::PatchVariant
-GetGlobalBeltRecordPatch::MakePatch() {
-  ::d2::GameVersion running_game_version = d2::game_version::GetRunning();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case d2::GameVersion::k1_09D:
-    case d2::GameVersion::k1_13C: {
-      return GetGlobalBeltRecordPatch_1_09D();
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new GetGlobalBeltRecordPatch_1_09D();
+      break;
     }
   }
 }
 
-} // namespace sgd2fr::patches::d2common
+} // namespace d2common
+} // namespace sgd2fr

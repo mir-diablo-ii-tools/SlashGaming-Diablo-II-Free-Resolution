@@ -45,20 +45,18 @@
 
 #include "interface_bar_patches.hpp"
 
-namespace sgd2fr::patches {
-
-InterfaceBarPatches::InterfaceBarPatches() = default;
+namespace sgd2fr {
 
 void InterfaceBarPatches::Apply() {
-  this->enable_800_interface_bar_patch_.Apply();
-  this->enable_800_new_skill_button_patch_.Apply();
-  this->enable_800_new_stats_button_patch_.Apply();
+  this->d2client_enable_800_interface_bar_patch_.Apply();
+  this->d2client_enable_800_new_skill_button_patch_.Apply();
+  this->d2client_enable_800_new_stats_button_patch_.Apply();
 }
 
 void InterfaceBarPatches::Remove() {
-  this->enable_800_interface_bar_patch_.Remove();
-  this->enable_800_new_skill_button_patch_.Remove();
-  this->enable_800_new_stats_button_patch_.Remove();
+  this->d2client_enable_800_new_stats_button_patch_.Remove();
+  this->d2client_enable_800_new_skill_button_patch_.Remove();
+  this->d2client_enable_800_interface_bar_patch_.Remove();
 }
 
-} // namespace sgd2fr::patches
+} // namespace sgd2fr
