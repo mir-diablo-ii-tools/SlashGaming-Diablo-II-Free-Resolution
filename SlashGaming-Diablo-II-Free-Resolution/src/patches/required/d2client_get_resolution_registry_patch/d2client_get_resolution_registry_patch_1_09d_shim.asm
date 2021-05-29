@@ -83,9 +83,6 @@ _D2Client_GetResolutionRegistryPatch_1_09D_InterceptionFunc01:
     ret
 
 _D2Client_GetResolutionRegistryPatch_1_09D_InterceptionFunc03:
-    ; Original code
-    mov eax, [eax]
-
     push ebp
     mov ebp, esp
 
