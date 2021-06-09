@@ -55,6 +55,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <mjsoni/rapid_json_config_reader.hpp>
 #include "compile_time_switch.hpp"
+#include "helper/game_resolution.hpp"
 
 namespace sgd2fr::config {
 namespace {
@@ -714,8 +715,8 @@ unsigned int GetIngameResolutionMode() {
                 kIngameResolutionModeKey
             );
 
-        if (ingame_resolution_mode > GetIngameResolutions().size()) {
-          ingame_resolution_mode = kDefaultIngameResolutionMode;
+        if (ingame_resolution_mode > GetMaxConfigResolutionId()) {
+          ingame_resolution_mode = GetMinConfigResolutionId();
         }
       }
   );
