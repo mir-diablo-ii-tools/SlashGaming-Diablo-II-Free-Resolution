@@ -42,7 +42,7 @@ When you submit a pull request, you certify that the code in the pull request is
 ## Thanks
 - [/r/SlashDiablo](https://www.reddit.com/r/slashdiablo/): The community that got me started. The whole reason the project took off.
 - [PhrozenKeep](https://d2mods.info/): Community with plenty of information on Diablo II, modding, and resources.
-- [balrog](https://github.com/bolrog): For providing an extended API to enable interfacing with the D2DX Glide wrapper.
+- [bolrog](https://github.com/bolrog): For providing an extended API to enable interfacing with the D2DX Glide wrapper.
 
 ## Legal
 The project is licensed under the terms of the Affero General Public License, version 3 or higher, with exceptions. Components may be licensed under other terms, so check LICENSE for more details. If you wish to apply for a proprietary license exception, please contact Mir Drualga on the SlashDiablo Discord channel.
