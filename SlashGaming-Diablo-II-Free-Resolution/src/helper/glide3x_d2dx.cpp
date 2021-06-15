@@ -67,7 +67,8 @@
 
 #include "glide3x_d2dx.hpp"
 
-#include <filesystem>
+#include <windows.h>
+#include <shlwapi.h>
 
 #include <mdc/wchar_t/filew.h>
 #include <mdc/error/exit_on_error.hpp>
@@ -176,7 +177,7 @@ static ID2DXConfigurator* D2DXGetConfigurator() {
 } // namespace
 
 bool IsD2dxGlideWrapper(const wchar_t* path) {
-  if (!::std::filesystem::exists(path)) {
+  if (!::PathFileExistsW(path)) {
     return false;
   }
 

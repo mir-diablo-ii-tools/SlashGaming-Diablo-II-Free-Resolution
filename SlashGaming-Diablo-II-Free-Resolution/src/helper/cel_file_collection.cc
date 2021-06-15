@@ -69,7 +69,10 @@ static int checksum = 0;
 } // namespace
 
 d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
-  const std::string cel_file_path_key = cel_file_path.data();
+  const std::string cel_file_path_key(
+      cel_file_path.cbegin(),
+      cel_file_path.cend()
+  );
 
   if (!cel_file_collection.contains(cel_file_path_key)) {
     if constexpr (kIsLoadCustomMpq) {
@@ -78,7 +81,7 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
     );
   }
 #if defined(FLAG_CHECKSUM)
@@ -95,7 +98,7 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
     );
 #if defined(FLAG_CHECKSUM)
   }
