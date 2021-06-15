@@ -52,7 +52,7 @@
 
 namespace sgd2fr::patches {
 
-constexpr const wchar_t* kGlide3xPath = L"glide3x.dll";
+static constexpr const wchar_t* kGlide3xPath = L"glide3x.dll";
 
 void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     std::uint32_t glide_resolution_mode,
