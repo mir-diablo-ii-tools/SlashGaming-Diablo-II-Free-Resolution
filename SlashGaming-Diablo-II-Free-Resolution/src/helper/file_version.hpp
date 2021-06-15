@@ -50,7 +50,6 @@
 #include <windows.h>
 
 #include <compare>
-#include <filesystem>
 
 #include "glide3x_version.hpp"
 

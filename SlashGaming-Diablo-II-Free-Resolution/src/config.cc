@@ -736,7 +736,7 @@ void SetIngameResolutionMode(unsigned int resolution_mode) {
   WriteConfig();
 }
 
-::std::string_view GetCustomMpqPath() {
+const ::std::string& GetCustomMpqPath() {
   static std::string custom_mpq_path;
 
   std::call_once(
