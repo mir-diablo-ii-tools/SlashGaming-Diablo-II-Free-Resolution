@@ -46,8 +46,6 @@
 #ifndef SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
 #define SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
 
-#include <string_view>
-
 namespace sgd2fr {
 
 enum class Glide3xVersion {
@@ -60,13 +58,34 @@ enum class Glide3xVersion {
 
 namespace glide3x_version {
 
-::std::string_view GetName(
-    Glide3xVersion glide3x_version
-);
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the specified glide3x.dll file.
+ */
+const char* GetName(Glide3xVersion glide3x_version);
 
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the specified glide3x.dll file.
+ */
+const char8_t* GetNameUtf8(Glide3xVersion glide3x_version);
+
+/**
+ * Returns the identifier of the running glide3x.dll file.
+ */
 Glide3xVersion GetRunning();
 
-::std::string_view GetRunningName();
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the running glide3x.dll file.
+ */
+const char* GetRunningName();
+
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the running glide3x.dll file.
+ */
+const char8_t* GetRunningNameUtf8();
 
 } // namespace glide3x_version
 
