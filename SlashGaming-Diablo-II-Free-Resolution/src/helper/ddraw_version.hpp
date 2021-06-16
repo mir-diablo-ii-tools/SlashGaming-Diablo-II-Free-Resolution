@@ -46,8 +46,6 @@
 #ifndef SGD2FR_HELPER_DDRAW_VERSION_HPP_
 #define SGD2FR_HELPER_DDRAW_VERSION_HPP_
 
-#include <string_view>
-
 namespace sgd2fr {
 
 enum class DDrawVersion {
@@ -57,13 +55,34 @@ enum class DDrawVersion {
 
 namespace ddraw_version {
 
-::std::string_view GetName(
-    DDrawVersion ddraw_version
-);
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the specified DDraw.dll file.
+ */
+const char* GetName(DDrawVersion ddraw_version);
 
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the specified DDraw.dll file.
+ */
+const char8_t* GetNameUtf8(DDrawVersion ddraw_version);
+
+/**
+ * Returns the identifier of the running DDraw.dll file.
+ */
 DDrawVersion GetRunning();
 
-::std::string_view GetRunningName();
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the running DDraw.dll file.
+ */
+const char* GetRunningName();
+
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the running DDraw.dll file.
+ */
+const char8_t* GetRunningNameUtf8();
 
 } // namespace ddraw_version
 

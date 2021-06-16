@@ -51,14 +51,18 @@
 
 namespace sgd2fr::ddraw_version {
 
-::std::string_view GetName(DDrawVersion ddraw_version) {
+const char* GetName(DDrawVersion ddraw_version) {
+  return reinterpret_cast<const char*>(GetNameUtf8(ddraw_version));
+}
+
+const char8_t* GetNameUtf8(DDrawVersion ddraw_version) {
   switch (ddraw_version) {
     case DDrawVersion::kWindowsDefault: {
-      return "Windows Default";
+      return u8"Windows Default";
     }
 
     case DDrawVersion::kCnC: {
-      return "CnC-DDraw";
+      return u8"CnC-DDraw";
     }
 
     default: {
@@ -68,7 +72,7 @@ namespace sgd2fr::ddraw_version {
           static_cast<int>(ddraw_version)
       );
 
-      return "";
+      return u8"";
     }
   }
 }
@@ -80,8 +84,12 @@ DDrawVersion GetRunning() {
   return running_ddraw_version;
 }
 
-::std::string_view GetRunningName() {
-  static ::std::string_view running_ddraw_version_name = GetName(
+const char* GetRunningName() {
+  return reinterpret_cast<const char*>(GetRunningNameUtf8());
+}
+
+const char8_t* GetRunningNameUtf8() {
+  static const char8_t* running_ddraw_version_name = GetNameUtf8(
       GetRunning()
   );
 
