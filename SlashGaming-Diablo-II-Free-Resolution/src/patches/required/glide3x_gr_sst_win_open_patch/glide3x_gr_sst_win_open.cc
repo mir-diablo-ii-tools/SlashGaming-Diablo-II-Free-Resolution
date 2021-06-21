@@ -46,13 +46,15 @@
 #include "glide3x_gr_sst_win_open.hpp"
 
 #include <sgd2mapi.hpp>
-
 #include "../../../helper/game_resolution.hpp"
 #include "../../../helper/glide3x_version.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-constexpr const wchar_t* kGlide3xPath = L"glide3x.dll";
+static constexpr const wchar_t* kGlide3xPath = L"glide3x.dll";
+
+} // namespace
 
 void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     std::uint32_t glide_resolution_mode,

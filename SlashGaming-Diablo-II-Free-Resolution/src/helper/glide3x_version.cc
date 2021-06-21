@@ -53,7 +53,9 @@
 namespace sgd2fr::glide3x_version {
 namespace {
 
-static const wchar_t* const kGlide3xPath = L"glide3x.dll";
+#define GLIDE3X_PATH L"glide3x.dll"
+
+static const wchar_t* const kGlide3xPath = GLIDE3X_PATH;
 
 static Glide3xVersion DetermineGlide3xVersion() {
   if (d2dx_glide::IsD2dxGlideWrapper(kGlide3xPath)) {
@@ -65,22 +67,26 @@ static Glide3xVersion DetermineGlide3xVersion() {
 
 } // namespace
 
-::std::string_view GetName(Glide3xVersion glide3x_version) {
+const char* GetName(Glide3xVersion glide3x_version) {
+  return reinterpret_cast<const char*>(GetNameUtf8(glide3x_version));
+}
+
+const char8_t* GetNameUtf8(Glide3xVersion glide3x_version) {
   switch (glide3x_version) {
     case Glide3xVersion::kSven1_4_4_21: {
-      return "Sven 1.4.4.21";
+      return u8"Sven 1.4.4.21";
     }
 
     case Glide3xVersion::kSven1_4_6_1: {
-      return "Sven 1.4.6.1";
+      return u8"Sven 1.4.6.1";
     }
 
     case Glide3xVersion::kSven1_4_8_3: {
-      return "Sven 1.4.8.3";
+      return u8"Sven 1.4.8.3";
     }
 
     case Glide3xVersion::kNGlide3_10_0_658: {
-      return "nGlide 3.10.0.658";
+      return u8"nGlide 3.10.0.658";
     }
 
     default: {
@@ -90,7 +96,7 @@ static Glide3xVersion DetermineGlide3xVersion() {
           static_cast<int>(glide3x_version)
       );
 
-      return "";
+      return u8"";
     }
   }
 }
@@ -102,8 +108,12 @@ Glide3xVersion GetRunning() {
   return running_glide3x_version;
 }
 
-::std::string_view GetRunningName() {
-  static ::std::string_view running_glide3x_version_name = GetName(
+const char* GetRunningName() {
+  return reinterpret_cast<const char*>(GetRunningNameUtf8());
+}
+
+const char8_t* GetRunningNameUtf8() {
+  static const char8_t* running_glide3x_version_name = GetNameUtf8(
       GetRunning()
   );
 
