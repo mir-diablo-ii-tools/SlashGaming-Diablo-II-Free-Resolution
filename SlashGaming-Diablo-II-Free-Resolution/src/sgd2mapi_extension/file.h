@@ -43,10 +43,10 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
-#define SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_FILE_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_FILE_H_
 
-#include "file.h"
-#include "game_function.hpp"
+#include "file/file_version_info.h"
+#include "file/fixed_file_version.h"
 
-#endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_ */
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_FILE_H_ */
