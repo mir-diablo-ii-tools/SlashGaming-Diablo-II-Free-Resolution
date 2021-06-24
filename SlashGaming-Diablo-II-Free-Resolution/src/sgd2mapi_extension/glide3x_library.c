@@ -79,7 +79,7 @@ static void InitStatic(void) {
  * External
  */
 
-const wchar_t* Glide3xLibrary_QueryFileVersionInfoString(
+const wchar_t* D2_Glide3xLibrary_QueryFileVersionInfoString(
     const wchar_t* sub_block
 ) {
   InitStatic();
@@ -87,7 +87,7 @@ const wchar_t* Glide3xLibrary_QueryFileVersionInfoString(
   return Mapi_FileVersionInfo_QueryString(&file_version_info, sub_block);
 }
 
-const DWORD* Glide3xLibrary_QueryFileVersionInfoVar(
+const DWORD* D2_Glide3xLibrary_QueryFileVersionInfoVar(
     const wchar_t* sub_block,
     size_t* count
 ) {
@@ -96,7 +96,7 @@ const DWORD* Glide3xLibrary_QueryFileVersionInfoVar(
   return Mapi_FileVersionInfo_QueryVar(&file_version_info, sub_block, count);
 }
 
-const VS_FIXEDFILEINFO* Glide3xLibrary_QueryFixedFileInfo(void) {
+const VS_FIXEDFILEINFO* D2_Glide3xLibrary_QueryFixedFileInfo(void) {
   InitStatic();
 
   return Mapi_FileVersionInfo_QueryFixedFileInfo(&file_version_info);

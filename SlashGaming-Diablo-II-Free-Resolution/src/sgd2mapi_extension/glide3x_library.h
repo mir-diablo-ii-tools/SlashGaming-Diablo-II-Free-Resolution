@@ -56,16 +56,16 @@
 extern "C" {
 #endif /* __cplusplus */
 
-const wchar_t* Glide3xLibrary_QueryFileVersionInfoString(
+const wchar_t* D2_Glide3xLibrary_QueryFileVersionInfoString(
     const wchar_t* sub_block
 );
 
-const DWORD* Glide3xLibrary_QueryFileVersionInfoVar(
+const DWORD* D2_Glide3xLibrary_QueryFileVersionInfoVar(
     const wchar_t* sub_block,
     size_t* count
 );
 
-const VS_FIXEDFILEINFO* Glide3xLibrary_QueryFixedFileInfo(void);
+const VS_FIXEDFILEINFO* D2_Glide3xLibrary_QueryFixedFileInfo(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
