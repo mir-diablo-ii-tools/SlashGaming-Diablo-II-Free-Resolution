@@ -44,15 +44,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_GLIDE3X_LIBRARY_VERSION_ENUM_H_
-#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_GLIDE3X_LIBRARY_VERSION_ENUM_H_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_GLIDE3X_LIBRARY_VERSION_ENUM_HPP_
+#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_GLIDE3X_LIBRARY_VERSION_ENUM_HPP_
 
-enum D2_Glide3xLibraryVersion {
-  D2_Glide3xLibraryVersion_kSven1_4_4_21,
-  D2_Glide3xLibraryVersion_kSven1_4_6_1,
-  D2_Glide3xLibraryVersion_kSven1_4_8_3,
-  D2_Glide3xLibraryVersion_kNGlide3_10_0_658,
-  D2_Glide3xLibraryVersion_kD2dx,
+#include "glide3x_library_version_enum.h"
+
+namespace d2 {
+namespace glide3x_library_version {
+
+enum Glide3xLibraryVersion {
+  kSven1_4_4_21 = ::D2_Glide3xLibraryVersion_kSven1_4_4_21,
+  kSven1_4_6_1 = ::D2_Glide3xLibraryVersion_kSven1_4_6_1,
+  kSven1_4_8_3 = ::D2_Glide3xLibraryVersion_kSven1_4_8_3,
+  kNGlide3_10_0_658 = ::D2_Glide3xLibraryVersion_kNGlide3_10_0_658,
+  kD2dx = ::D2_Glide3xLibraryVersion_kD2dx,
 };
 
-#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_GLIDE3X_LIBRARY_VERSION_ENUM_H_ */
+} // namespace glide3x_library_version
+
+typedef glide3x_library_version::Glide3xLibraryVersion Glide3xLibraryVersion;
+
+} // namespace d2
+
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_GLIDE3X_LIBRARY_VERSION_ENUM_HPP_ */
