@@ -48,5 +48,7 @@
 
 #include "file.h"
 #include "game_function.hpp"
+#include "glide3x_library.hpp"
+#include "glide3x_library_version.hpp"
 
 #endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_ */
