@@ -43,86 +43,31 @@
  *  work.
  */
 
-#include "glide3x_library_version.h"
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_H_
 
-#include <stddef.h>
-#include <stdlib.h>
+#include <windows.h>
 
-#include <mdc/error/exit_on_error.h>
-#include <mdc/malloc/malloc.h>
-#include <mdc/wchar_t/filew.h>
-#include "glide3x_d2dx/glide3x_d2dx.h"
-#include "glide3x_library_version/glide3x_library_version_file_version.h"
+#include <mdc/std/wchar.h>
 
-static enum D2_Glide3xLibraryVersion running_glide3x_library_version;
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-static void InitRunningGlide3xLibraryVersion(void) {
-  static int is_init = 0;
-
-  if (is_init) {
-    return;
-  }
-
-  if (IsD2dxGlideWrapper()) {
-    // TODO
-  }
-
-  running_glide3x_library_version = GuessGlide3xLibraryVersion();
-  is_init = 1;
-}
-
-static void InitStatic(void) {
-  InitRunningGlide3xLibraryVersion();
-}
+int IsD2dxGlideWrapper(void);
 
 /**
- * External
+ * Wrapper for ID2DXConfigurator::SetCustomResolution.
  */
+HRESULT SetCustomResolution(int width, int height);
 
-const char* D2_Glide3xLibraryVersion_GetName(
-    enum Glide3xLibraryVersion glide3x_version
-) {
-  InitStatic();
+/**
+ * Wrapper for ID2DXConfigurator::GetSuggestedCustomResolution.
+ */
+HRESULT GetSuggestedCustomResolution(int* width, int* height);
 
-  switch (glide3x_version) {
-    case D2_Glide3xLibraryVersion_kSven1_4_4_21: {
-      return "Sven 1.4.4.21";
-    }
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-    case D2_Glide3xLibraryVersion_kSven1_4_6_1: {
-      return "Sven 1.4.6.1";
-    }
-
-    case D2_Glide3xLibraryVersion_kSven1_4_8_3: {
-      return "Sven 1.4.8.3";
-    }
-
-    case D2_Glide3xLibraryVersion_kNGlide3_10_0_658: {
-      return "nGlide 3.10.0.658";
-    }
-
-    default: {
-      Mdc_Error_ExitOnConstantMappingError(
-          __FILEW__,
-          __LINE__,
-          glide3x_version
-      );
-
-      return "";
-    }
-  }
-}
-
-enum D2_Glide3xLibraryVersion D2_Glide3xLibraryVersion_GetRunning() {
-  InitStatic();
-
-  return running_glide3x_library_version;
-}
-
-const char* D2_Glide3xLibraryVersion_GetRunningName() {
-  InitStatic();
-
-  return D2_Glide3xLibraryVersion_GetName(
-      D2_Glide3xLibraryVersion_GetRunning()
-  );
-}
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_H_ */

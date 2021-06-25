@@ -43,12 +43,15 @@
  *  work.
  */
 
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_HPP_
+#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_HPP_
+
 #include <windows.h>
 
 namespace sgd2fr {
 namespace d2dx_glide {
 
-bool IsD2dxGlideWrapper(const wchar_t* path);
+bool IsD2dxGlideWrapper();
 
 /**
  * Wrapper for ID2DXConfigurator::SetCustomResolution.
@@ -68,3 +71,5 @@ HRESULT GetSuggestedCustomResolution(
 
 } // namespace d2dx
 } // namespace sgd2fr
+
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_HPP_ */
