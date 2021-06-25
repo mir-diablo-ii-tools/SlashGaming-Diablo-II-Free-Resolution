@@ -51,7 +51,7 @@ namespace d2 {
 namespace glide3x_library_version {
 
 const char* GetName(Glide3xLibraryVersion glide3x_library_version) {
-  ::D2_Glide3xLibraryVersion_GetName(
+  return ::D2_Glide3xLibraryVersion_GetName(
       static_cast<::D2_Glide3xLibraryVersion>(glide3x_library_version)
   );
 }
