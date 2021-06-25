@@ -49,7 +49,7 @@
 
 #include "../../../helper/game_resolution.hpp"
 #include "../../../helper/glide3x_d2dx.hpp"
-#include "../../../helper/glide3x_version.hpp"
+#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr::patches {
 
@@ -85,7 +85,8 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
     }
   }
 
-  if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
+  if (::d2::glide3x_library_version::GetRunning()
+      == ::d2::glide3x_library_version::kD2dx) {
     d2dx_glide::SetCustomResolution(*width, *height);
   }
 }

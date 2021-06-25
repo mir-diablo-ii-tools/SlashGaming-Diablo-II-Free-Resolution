@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../../../helper/game_resolution.hpp"
-#include "../../../helper/glide3x_version.hpp"
+#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr::patches {
 namespace {
@@ -65,9 +65,8 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
       glide_resolution_mode - (0x1000 - 3)
   );
 
-  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
-  switch (running_glide3x_version) {
-    case Glide3xVersion::kSven1_4_4_21: {
+  switch (::d2::glide3x_library_version::GetRunning()) {
+    case ::d2::glide3x_library_version::kSven1_4_4_21: {
       width = *reinterpret_cast<std::int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1C9A0).raw_address()
       );
@@ -78,7 +77,7 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
       break;
     }
 
-    case Glide3xVersion::kSven1_4_6_1: {
+    case ::d2::glide3x_library_version::kSven1_4_6_1: {
       width = *reinterpret_cast<std::int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1C870).raw_address()
       );
@@ -89,7 +88,7 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
       break;
     }
 
-    case Glide3xVersion::kSven1_4_8_3: {
+    case ::d2::glide3x_library_version::kSven1_4_8_3: {
       width = *reinterpret_cast<std::int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1D870).raw_address()
       );
@@ -100,7 +99,7 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
       break;
     }
 
-    case Glide3xVersion::kNGlide3_10_0_658: {
+    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
       width = reinterpret_cast<std::int32_t*>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x169DA4).raw_address()
       );
