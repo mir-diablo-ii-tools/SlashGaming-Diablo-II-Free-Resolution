@@ -51,6 +51,10 @@
 namespace d2 {
 namespace glide3x_library {
 
+const wchar_t* GetPath() {
+  return ::D2_Glide3xLibrary_GetPath();
+}
+
 const wchar_t* QueryFileVersionInfoString(
     const wchar_t* sub_block
 ) {

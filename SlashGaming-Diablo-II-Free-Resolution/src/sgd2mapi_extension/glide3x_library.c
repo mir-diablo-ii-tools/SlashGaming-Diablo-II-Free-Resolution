@@ -79,6 +79,10 @@ static void InitStatic(void) {
  * External
  */
 
+const wchar_t* D2_Glide3xLibrary_GetPath(void) {
+  return kGlide3xLibraryPath;
+}
+
 const wchar_t* D2_Glide3xLibrary_QueryFileVersionInfoString(
     const wchar_t* sub_block
 ) {

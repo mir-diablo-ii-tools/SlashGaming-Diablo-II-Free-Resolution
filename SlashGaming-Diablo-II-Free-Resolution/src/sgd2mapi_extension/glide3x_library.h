@@ -56,6 +56,8 @@
 extern "C" {
 #endif /* __cplusplus */
 
+const wchar_t* D2_Glide3xLibrary_GetPath(void);
+
 const wchar_t* D2_Glide3xLibrary_QueryFileVersionInfoString(
     const wchar_t* sub_block
 );
