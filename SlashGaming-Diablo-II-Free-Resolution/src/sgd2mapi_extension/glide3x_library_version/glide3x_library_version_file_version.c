@@ -55,7 +55,7 @@
 #include "../file/fixed_file_version.h"
 #include "../glide3x_library.h"
 
-static enum Glide3xLibraryVersion SearchGlide3xLibraryVersionTable(
+static enum D2_Glide3xLibraryVersion SearchGlide3xLibraryVersionTable(
     const struct Mapi_FixedFileVersion* file_version
 ) {
   uint_least64_t file_version_as_value;
@@ -99,8 +99,8 @@ static enum Glide3xLibraryVersion SearchGlide3xLibraryVersionTable(
  * External
  */
 
-enum Glide3xLibraryVersion GuessGlide3xLibraryVersion(void) {
-  enum Glide3xLibraryVersion glide3x_library_version;
+enum D2_Glide3xLibraryVersion GuessGlide3xLibraryVersion(void) {
+  enum D2_Glide3xLibraryVersion glide3x_library_version;
 
   const VS_FIXEDFILEINFO* fixed_file_info;
   struct Mapi_FixedFileVersion file_version;

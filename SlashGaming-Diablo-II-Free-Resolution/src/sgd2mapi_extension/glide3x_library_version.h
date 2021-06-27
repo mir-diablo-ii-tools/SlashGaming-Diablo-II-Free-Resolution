@@ -46,11 +46,17 @@
 #ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_VERSION_H_
 #define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_VERSION_H_
 
-#include "glide3x_library_version/glide3x_library_version_enum.h"
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+enum D2_Glide3xLibraryVersion {
+  D2_Glide3xLibraryVersion_kSven1_4_4_21,
+  D2_Glide3xLibraryVersion_kSven1_4_6_1,
+  D2_Glide3xLibraryVersion_kSven1_4_8_3,
+  D2_Glide3xLibraryVersion_kNGlide3_10_0_658,
+  D2_Glide3xLibraryVersion_kD2dx,
+};
 
 /**
  * Returns the UTF-8 encoded null-terminated string associated with

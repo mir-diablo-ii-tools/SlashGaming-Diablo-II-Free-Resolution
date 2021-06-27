@@ -44,19 +44,19 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_GLIDE3X_VERSION_FILE_VERSION_H_
-#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_GLIDE3X_VERSION_FILE_VERSION_H_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_VERSION_GLIDE3X_LIBRARY_VERSION_FILE_VERSION_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_VERSION_GLIDE3X_LIBRARY_VERSION_FILE_VERSION_H_
 
-#include "glide3x_library_version_enum.h"
+#include "../glide3x_library_version.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-enum Glide3xLibraryVersion GuessGlide3xLibraryVersion(void);
+enum D2_Glide3xLibraryVersion GuessGlide3xLibraryVersion(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
 
-#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_GLIDE3X_VERSION_FILE_VERSION_H_ */
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_VERSION_GLIDE3X_LIBRARY_VERSION_FILE_VERSION_H_ */

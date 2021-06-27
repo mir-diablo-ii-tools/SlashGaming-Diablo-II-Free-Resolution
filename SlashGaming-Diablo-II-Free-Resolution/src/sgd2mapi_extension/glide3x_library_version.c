@@ -79,7 +79,7 @@ static void InitStatic(void) {
  */
 
 const char* D2_Glide3xLibraryVersion_GetName(
-    enum Glide3xLibraryVersion glide3x_version
+    enum D2_Glide3xLibraryVersion glide3x_version
 ) {
   InitStatic();
 
