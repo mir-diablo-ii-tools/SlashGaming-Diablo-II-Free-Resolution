@@ -43,33 +43,70 @@
  *  work.
  */
 
-#include "glide3x_library_version.hpp"
+#include "ddraw_library_version.h"
 
-namespace d2 {
-namespace glide3x_library_version {
+#include <mdc/error/exit_on_error.h>
+#include <mdc/wchar_t/filew.h>
+#include "ddraw_library_version/ddraw_library_version_product_name.h"
 
-const char* GetName(Glide3xLibraryVersion glide3x_library_version) {
-  return ::D2_Glide3xLibraryVersion_GetName(
-      static_cast<::D2_Glide3xLibraryVersion>(glide3x_library_version)
-  );
+static enum D2_DDrawLibraryVersion running_ddraw_library_version;
+
+static void InitRunningDDrawLibraryVersion(void) {
+  static int is_init = 0;
+
+  if (is_init) {
+    return;
+  }
+
+  running_ddraw_library_version = GuessDDrawLibraryVersion();
+
+  is_init = 1;
+}
+
+static void InitStatic(void) {
+  InitRunningDDrawLibraryVersion();
 }
 
 /**
- * Returns the identifier of the running glide3x.dll file.
+ * External
  */
-Glide3xLibraryVersion GetRunning() {
-  return static_cast<Glide3xLibraryVersion>(
-      ::D2_Glide3xLibraryVersion_GetRunning()
+
+const char* D2_DDrawLibraryVersion_GetName(
+    enum D2_DDrawLibraryVersion ddraw_library_version
+) {
+  InitStatic();
+
+  switch (ddraw_library_version) {
+    case D2_DDrawLibraryVersion_kWindowsDefault: {
+      return "Windows Default";
+    }
+
+    case D2_DDrawLibraryVersion_kCnC: {
+      return "CnC-DDraw";
+    }
+
+    default: {
+      Mdc_Error_ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          ddraw_library_version
+      );
+
+      return "";
+    }
+  }
+}
+
+enum D2_DDrawLibraryVersion D2_DDrawLibraryVersion_GetRunning(void) {
+  InitStatic();
+
+  return running_ddraw_library_version;
+}
+
+const char* D2_DDrawLibraryVersion_GetRunningName(void) {
+  InitStatic();
+
+  return D2_DDrawLibraryVersion_GetName(
+      D2_DDrawLibraryVersion_GetRunning()
   );
 }
-
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running glide3x.dll file.
- */
-const char* GetRunningName() {
-  return ::D2_Glide3xLibraryVersion_GetRunningName();
-}
-
-} // namespace glide3x_library_version
-} // namespace d2

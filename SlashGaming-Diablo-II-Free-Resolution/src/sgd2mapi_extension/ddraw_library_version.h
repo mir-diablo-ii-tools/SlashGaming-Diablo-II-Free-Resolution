@@ -43,57 +43,39 @@
  *  work.
  */
 
-#include "ddraw_version.hpp"
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_H_
 
-#include <mdc/error/exit_on_error.hpp>
-#include <mdc/wchar_t/filew.h>
-#include "file_string.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-namespace sgd2fr::ddraw_version {
+enum D2_DDrawLibraryVersion {
+  D2_DDrawLibraryVersion_kWindowsDefault,
+  D2_DDrawLibraryVersion_kCnC,
+};
 
-const char* GetName(DDrawVersion ddraw_version) {
-  return reinterpret_cast<const char*>(GetNameUtf8(ddraw_version));
-}
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the specified DDraw.dll file.
+ */
+const char* D2_DDrawLibraryVersion_GetName(
+    enum D2_DDrawLibraryVersion ddraw_library_version
+);
 
-const char8_t* GetNameUtf8(DDrawVersion ddraw_version) {
-  switch (ddraw_version) {
-    case DDrawVersion::kWindowsDefault: {
-      return u8"Windows Default";
-    }
+/**
+ * Returns the identifier of the running DDraw.dll file.
+ */
+enum D2_DDrawLibraryVersion D2_DDrawLibraryVersion_GetRunning(void);
 
-    case DDrawVersion::kCnC: {
-      return u8"CnC-DDraw";
-    }
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the running DDraw.dll file.
+ */
+const char* D2_DDrawLibraryVersion_GetRunningName(void);
 
-    default: {
-      ::mdc::error::ExitOnConstantMappingError(
-          __FILEW__,
-          __LINE__,
-          static_cast<int>(ddraw_version)
-      );
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-      return u8"";
-    }
-  }
-}
-
-DDrawVersion GetRunning() {
-  static DDrawVersion running_ddraw_version =
-      FileString::GuessDDrawVersion(L"ddraw.dll");
-
-  return running_ddraw_version;
-}
-
-const char* GetRunningName() {
-  return reinterpret_cast<const char*>(GetRunningNameUtf8());
-}
-
-const char8_t* GetRunningNameUtf8() {
-  static const char8_t* running_ddraw_version_name = GetNameUtf8(
-      GetRunning()
-  );
-
-  return running_ddraw_version_name;
-}
-
-} // namespace sgd2fr::ddraw_version
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_H_ */

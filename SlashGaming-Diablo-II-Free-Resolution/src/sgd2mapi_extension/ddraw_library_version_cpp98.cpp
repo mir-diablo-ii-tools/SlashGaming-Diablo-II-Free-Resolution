@@ -43,33 +43,26 @@
  *  work.
  */
 
-#include "glide3x_library_version.hpp"
+#include "ddraw_library_version.hpp"
 
 namespace d2 {
-namespace glide3x_library_version {
+namespace ddraw_library_version {
 
-const char* GetName(Glide3xLibraryVersion glide3x_library_version) {
-  return ::D2_Glide3xLibraryVersion_GetName(
-      static_cast<::D2_Glide3xLibraryVersion>(glide3x_library_version)
+const char* GetName(DDrawLibraryVersion ddraw_library_version) {
+  return ::D2_DDrawLibraryVersion_GetName(
+      static_cast<D2_DDrawLibraryVersion>(ddraw_library_version)
   );
 }
 
-/**
- * Returns the identifier of the running glide3x.dll file.
- */
-Glide3xLibraryVersion GetRunning() {
-  return static_cast<Glide3xLibraryVersion>(
-      ::D2_Glide3xLibraryVersion_GetRunning()
+DDrawLibraryVersion GetRunning() {
+  return static_cast<DDrawLibraryVersion>(
+      ::D2_DDrawLibraryVersion_GetRunning()
   );
 }
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running glide3x.dll file.
- */
 const char* GetRunningName() {
-  return ::D2_Glide3xLibraryVersion_GetRunningName();
+  return ::D2_DDrawLibraryVersion_GetRunningName();
 }
 
-} // namespace glide3x_library_version
+} // namespace ddraw_library_version
 } // namespace d2

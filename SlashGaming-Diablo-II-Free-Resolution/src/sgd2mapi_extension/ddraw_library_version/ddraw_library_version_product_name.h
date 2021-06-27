@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,34 +44,19 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_FILE_STRING_HPP_
-#define SGD2FR_HELPER_FILE_STRING_HPP_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_DDRAW_LIBRARY_VERSION_PRODUCT_NAME_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_DDRAW_LIBRARY_VERSION_PRODUCT_NAME_H_
 
-#include <string_view>
+#include "../ddraw_library_version.h"
 
-#include "ddraw_version.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-namespace sgd2fr {
+enum D2_DDrawLibraryVersion GuessDDrawLibraryVersion(void);
 
-class FileString {
- public:
-  static DDrawVersion GuessDDrawVersion(
-      std::wstring_view raw_path
-  );
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
- private:
-  static ::std::wstring ReadFileString(
-      ::std::wstring_view raw_path,
-      ::std::wstring_view string_name,
-    ::std::wstring_view language_charset
-  );
-
- private:
-  static DDrawVersion SearchDDrawTable(
-      ::std::wstring_view file_string
-  );
-};
-
-} // namespace sgd2fr
-
-#endif // SGD2FR_HELPER_FILE_STRING_HPP_
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_DDRAW_LIBRARY_VERSION_PRODUCT_NAME_H_ */

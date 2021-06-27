@@ -43,34 +43,29 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_DDRAW_VERSION_HPP_
-#define SGD2FR_HELPER_DDRAW_VERSION_HPP_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_HPP_
+#define SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_HPP_
 
-namespace sgd2fr {
+#include "ddraw_library_version.h"
 
-enum class DDrawVersion {
-  kWindowsDefault,
-  kCnC,
+namespace d2 {
+namespace ddraw_library_version {
+
+enum DDrawLibraryVersion {
+  kWindowsDefault = ::D2_DDrawLibraryVersion_kWindowsDefault,
+  kCnC = ::D2_DDrawLibraryVersion_kCnC,
 };
 
-namespace ddraw_version {
-
 /**
  * Returns the UTF-8 encoded null-terminated string associated with
  * the specified DDraw.dll file.
  */
-const char* GetName(DDrawVersion ddraw_version);
-
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the specified DDraw.dll file.
- */
-const char8_t* GetNameUtf8(DDrawVersion ddraw_version);
+const char* GetName(DDrawLibraryVersion ddraw_library_version);
 
 /**
  * Returns the identifier of the running DDraw.dll file.
  */
-DDrawVersion GetRunning();
+DDrawLibraryVersion GetRunning();
 
 /**
  * Returns the UTF-8 encoded null-terminated string associated with
@@ -78,14 +73,10 @@ DDrawVersion GetRunning();
  */
 const char* GetRunningName();
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running DDraw.dll file.
- */
-const char8_t* GetRunningNameUtf8();
+} // namespace ddraw_library_version
 
-} // namespace ddraw_version
+typedef ddraw_library_version::DDrawLibraryVersion DDrawLibraryVersion;
 
-} // namespace sgd2fr
+} // namespace d2
 
-#endif // SGD2FR_HELPER_DDRAW_VERSION_HPP_
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_HPP_ */

@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,33 +44,84 @@
  *  work.
  */
 
-#include "glide3x_library_version.hpp"
+#include "ddraw_library_version_product_name.h"
 
-namespace d2 {
-namespace glide3x_library_version {
+#include <stdlib.h>
+#include <windows.h>
 
-const char* GetName(Glide3xLibraryVersion glide3x_library_version) {
-  return ::D2_Glide3xLibraryVersion_GetName(
-      static_cast<::D2_Glide3xLibraryVersion>(glide3x_library_version)
+#include <mdc/error/exit_on_error.h>
+#include <mdc/std/wchar.h>
+#include <mdc/wchar_t/filew.h>
+#include "../glide3x_library.h"
+
+struct VersionTableEntry {
+  const wchar_t* key;
+  enum D2_DDrawLibraryVersion value;
+};
+
+static const struct VersionTableEntry kVersionSortedTable[] = {
+  { L"cnc-ddraw", D2_DDrawLibraryVersion_kCnC },
+};
+
+enum {
+  kVersionSortedTableCount = sizeof(kVersionSortedTable)
+      / sizeof(kVersionSortedTable[0])
+};
+
+static int VersionTableEntry_CompareKey(
+    const struct VersionTableEntry* entry1,
+    const struct VersionTableEntry* entry2
+) {
+  return wcscmp(entry1->key, entry2->key);
+}
+
+static int VersionTableEntry_CompareKeyAsVoid(
+    const void* entry1,
+    const void* entry2
+) {
+  return VersionTableEntry_CompareKey(entry1, entry2);
+}
+
+static enum D2_DDrawLibraryVersion SearchVersionTable(
+    const wchar_t* product_name
+) {
+  struct VersionTableEntry search_key = { product_name };
+  const struct VersionTableEntry* search_result;
+
+  search_result = bsearch(
+      &search_key,
+      kVersionSortedTable,
+      kVersionSortedTableCount,
+      sizeof(kVersionSortedTable[0]),
+      &VersionTableEntry_CompareKeyAsVoid
   );
+
+  /*
+  * The product name is only useful enough to locate CnC-DDraw. This
+  * does not necessarily confirm the library version to be the Windows
+  * Default.
+  */
+  if (search_result == NULL) {
+    return D2_DDrawLibraryVersion_kWindowsDefault;
+  }
+
+  return search_result->value;
 }
 
 /**
- * Returns the identifier of the running glide3x.dll file.
+ * External
  */
-Glide3xLibraryVersion GetRunning() {
-  return static_cast<Glide3xLibraryVersion>(
-      ::D2_Glide3xLibraryVersion_GetRunning()
+
+enum D2_DDrawLibraryVersion GuessDDrawLibraryVersion(void) {
+  enum D2_DDrawLibraryVersion ddraw_library_version;
+
+  const wchar_t* product_name;
+
+  product_name = D2_Glide3xLibrary_QueryFileVersionInfoString(
+      L"\\StringFileInfo\\040904B0\\ProductName"
   );
-}
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running glide3x.dll file.
- */
-const char* GetRunningName() {
-  return ::D2_Glide3xLibraryVersion_GetRunningName();
-}
+  ddraw_library_version = SearchVersionTable(product_name);
 
-} // namespace glide3x_library_version
-} // namespace d2
+  return ddraw_library_version;
+}
