@@ -43,14 +43,33 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
-#define SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_H_
 
-#include "ddraw_library.hpp"
-#include "file.h"
-#include "game_function.hpp"
-#include "glide3x_library.hpp"
-#include "glide3x_library_version.hpp"
-#include "glide3x_library_d2dx/glide3x_library_d2dx.h"
+#include <stddef.h>
+#include <windows.h>
 
-#endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_ */
+#include <mdc/std/wchar.h>
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+const wchar_t* D2_DDrawLibrary_GetPath(void);
+
+const wchar_t* D2_DDrawLibrary_QueryFileVersionInfoString(
+    const wchar_t* sub_block
+);
+
+const DWORD* D2_DDrawLibrary_QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+);
+
+const VS_FIXEDFILEINFO* D2_DDrawLibrary_QueryFixedFileInfo(void);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_H_ */

@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,14 +44,33 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
-#define SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
-
 #include "ddraw_library.hpp"
-#include "file.h"
-#include "game_function.hpp"
-#include "glide3x_library.hpp"
-#include "glide3x_library_version.hpp"
-#include "glide3x_library_d2dx/glide3x_library_d2dx.h"
 
-#endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_ */
+#include "ddraw_library.h"
+
+namespace d2 {
+namespace ddraw_library {
+
+const wchar_t* GetPath() {
+  return ::D2_DDrawLibrary_GetPath();
+}
+
+const wchar_t* QueryFileVersionInfoString(
+    const wchar_t* sub_block
+) {
+  return ::D2_DDrawLibrary_QueryFileVersionInfoString(sub_block);
+}
+
+const DWORD* QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+) {
+  return ::D2_DDrawLibrary_QueryFileVersionInfoVar(sub_block, count);
+}
+
+const VS_FIXEDFILEINFO* QueryFixedFileInfo() {
+  return ::D2_DDrawLibrary_QueryFixedFileInfo();
+}
+
+} // namespace glide3x_library
+} // namespace d2

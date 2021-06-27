@@ -43,14 +43,64 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
-#define SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
+#include "ddraw_library.h"
 
-#include "ddraw_library.hpp"
-#include "file.h"
-#include "game_function.hpp"
-#include "glide3x_library.hpp"
-#include "glide3x_library_version.hpp"
-#include "glide3x_library_d2dx/glide3x_library_d2dx.h"
+#include "file/file_version_info.h"
 
-#endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_ */
+#define DDRAW_LIBRARY_PATH L"ddraw.dll"
+
+static const wchar_t* const kDDrawLibraryPath = DDRAW_LIBRARY_PATH;
+
+enum {
+  kDDrawLibraryPathLength = (sizeof(DDRAW_LIBRARY_PATH)
+      / sizeof(DDRAW_LIBRARY_PATH[0])) - 1
+};
+
+static struct Mapi_FileVersionInfo file_version_info;
+
+static void InitFileVersionInfo(void) {
+  static int is_init = 0;
+
+  if (is_init) {
+    return;
+  }
+
+  file_version_info = Mapi_FileVersionInfo_InitFromPath(kDDrawLibraryPath);
+
+  is_init = 1;
+}
+
+static void InitStatic(void) {
+  InitFileVersionInfo();
+}
+
+/**
+ * External
+ */
+
+const wchar_t* D2_DDrawLibrary_GetPath(void) {
+  return kDDrawLibraryPath;
+}
+
+const wchar_t* D2_DDrawLibrary_QueryFileVersionInfoString(
+    const wchar_t* sub_block
+) {
+  InitStatic();
+
+  return Mapi_FileVersionInfo_QueryString(&file_version_info, sub_block);
+}
+
+const DWORD* D2_DDrawLibrary_QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+) {
+  InitStatic();
+
+  return Mapi_FileVersionInfo_QueryVar(&file_version_info, sub_block, count);
+}
+
+const VS_FIXEDFILEINFO* D2_DDrawLibrary_QueryFixedFileInfo(void) {
+  InitStatic();
+
+  return Mapi_FileVersionInfo_QueryFixedFileInfo(&file_version_info);
+}
