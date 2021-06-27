@@ -63,11 +63,10 @@ static void InitRunningGlide3xLibraryVersion(void) {
     return;
   }
 
-  if (IsD2dxGlideWrapper()) {
-    // TODO
-  }
+  running_glide3x_library_version = (IsD2dxGlideWrapper())
+      ? D2_Glide3xLibraryVersion_kD2dx
+      : GuessGlide3xLibraryVersion();
 
-  running_glide3x_library_version = GuessGlide3xLibraryVersion();
   is_init = 1;
 }
 
