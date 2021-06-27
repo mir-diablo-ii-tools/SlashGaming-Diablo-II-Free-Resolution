@@ -43,33 +43,79 @@
  *  work.
  */
 
-#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_HPP_
-#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_HPP_
+#include "glide3x_library_d2dx.h"
 
 #include <windows.h>
+#include <shlwapi.h>
 
-namespace sgd2fr {
-namespace d2dx_glide {
+#include <mdc/error/exit_on_error.h>
+#include <mdc/wchar_t/filew.h>
 
-bool IsD2dxGlideWrapper();
+#define GET_CONFIGURATOR_FUNCTION_NAME "_D2DXGetConfigurator@0"
+
+static const char* const kGetConfiguratorFunctionName =
+    GET_CONFIGURATOR_FUNCTION_NAME;
+
+enum {
+  kGetConfiguratorFuncNameLength = (sizeof(GET_CONFIGURATOR_FUNCTION_NAME)
+      / sizeof(GET_CONFIGURATOR_FUNCTION_NAME[0])) - 1,
+};
 
 /**
- * Wrapper for ID2DXConfigurator::SetCustomResolution.
+ * External
  */
-HRESULT SetCustomResolution(
-    int width,
-    int height
-);
 
-/**
- * Wrapper for ID2DXConfigurator::GetSuggestedCustomResolution.
- */
-HRESULT GetSuggestedCustomResolution(
-    /* [out] */ int* width,
-    /* [out] */ int* height
-);
+int IsD2dxGlideWrapper(void) {
+  const wchar_t* path;
+  HMODULE glide3x_handle;
+  int is_library_already_loaded;
+  FARPROC get_configurator_function;
+  int is_free_library_success;
 
-} // namespace d2dx
-} // namespace sgd2fr
+  path = D2_Glide3xLibrary_GetPath();
 
-#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_D2DX_GLIDE3X_D2DX_HPP_ */
+  if (!PathFileExistsW(path)) {
+    return 0;
+  }
+
+  glide3x_handle = GetModuleHandleW(path);
+  is_library_already_loaded = (glide3x_handle != NULL);
+
+  if (!is_library_already_loaded) {
+    glide3x_handle = LoadLibraryW(path);
+  }
+
+  if (glide3x_handle == NULL) {
+    Mdc_Error_ExitOnWindowsFunctionError(
+        __FILEW__,
+        __LINE__,
+        is_library_already_loaded
+            ? L"GetModuleHandleW"
+            : L"LoadLibraryW",
+        GetLastError()
+    );
+
+    return 0;
+  }
+
+  get_configurator_function = GetProcAddress(
+      glide3x_handle,
+      kGetConfiguratorFunctionName
+  );
+
+  if (!is_library_already_loaded) {
+    is_free_library_success = FreeLibrary(glide3x_handle);
+    if (!is_free_library_success) {
+      Mdc_Error_ExitOnWindowsFunctionError(
+          __FILEW__,
+          __LINE__,
+          L"FreeLibrary",
+          GetLastError()
+      );
+
+      return 0;
+    }
+  }
+
+  return (get_configurator_function != NULL);
+}

@@ -51,7 +51,7 @@
 #include <mdc/error/exit_on_error.h>
 #include <mdc/malloc/malloc.h>
 #include <mdc/wchar_t/filew.h>
-#include "glide3x_d2dx/glide3x_d2dx.h"
+#include "glide3x_library_d2dx/glide3x_library_d2dx.h"
 #include "glide3x_library_version/glide3x_library_version_file_version.h"
 
 static enum D2_Glide3xLibraryVersion running_glide3x_library_version;

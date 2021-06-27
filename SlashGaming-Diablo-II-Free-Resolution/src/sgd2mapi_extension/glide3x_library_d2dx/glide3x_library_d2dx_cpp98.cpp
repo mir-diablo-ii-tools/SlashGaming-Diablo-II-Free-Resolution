@@ -65,12 +65,10 @@
   along with D2DX.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "glide3x_d2dx.h"
-#include "glide3x_d2dx.hpp"
+#include "glide3x_library_d2dx.h"
 
 #include <stddef.h>
 #include <windows.h>
-#include <shlwapi.h>
 
 #include <mdc/error/exit_on_error.h>
 #include <mdc/wchar_t/filew.h>
@@ -151,97 +149,6 @@ static void InitStatic(void) {
 }
 
 /**
- * C89 External
- *
- * These need to be implemented in the .cpp file, since the type
- * returned by the D2DX API is only compatible with C++.
- */
-
-int IsD2dxGlideWrapper(void) {
-  const wchar_t* path;
-  HMODULE glide3x_handle;
-  int is_library_already_loaded;
-  FARPROC get_configurator_function;
-  int is_free_library_success;
-
-  InitStatic();
-
-  path = D2_Glide3xLibrary_GetPath();
-
-  if (!PathFileExistsW(path)) {
-    return 0;
-  }
-
-  glide3x_handle = GetModuleHandleW(path);
-  is_library_already_loaded = (glide3x_handle != NULL);
-
-  if (!is_library_already_loaded) {
-    glide3x_handle = LoadLibraryW(path);
-  }
-
-  if (glide3x_handle == NULL) {
-    Mdc_Error_ExitOnWindowsFunctionError(
-        __FILEW__,
-        __LINE__,
-        is_library_already_loaded
-            ? L"GetModuleHandleW"
-            : L"LoadLibraryW",
-        GetLastError()
-    );
-
-    return 0;
-  }
-
-  get_configurator_function = GetProcAddress(
-      glide3x_handle,
-      kGetConfiguratorFunctionName
-  );
-
-  if (!is_library_already_loaded) {
-    is_free_library_success = FreeLibrary(glide3x_handle);
-    if (!is_free_library_success) {
-      Mdc_Error_ExitOnWindowsFunctionError(
-          __FILEW__,
-          __LINE__,
-          L"FreeLibrary",
-          GetLastError()
-      );
-
-      return 0;
-    }
-  }
-
-  return (get_configurator_function != NULL);
-}
-
-/**
- * C89 External Wrapper
- *
- * These need to be implemented in the .cpp file, since the type
- * returned by the D2DX API is only compatible with C++.
- */
-
-/**
- * Wrapper for ID2DXConfigurator::SetCustomResolution.
- */
-HRESULT SetCustomResolution(
-    int width,
-    int height
-) {
-  return ::sgd2fr::d2dx_glide::SetCustomResolution(width, height);
-}
-
-/**
- * Wrapper for ID2DXConfigurator::GetSuggestedCustomResolution.
- */
-HRESULT GetSuggestedCustomResolution(
-    /* [out] */ int* width,
-    /* [out] */ int* height
-) {
-  return ::sgd2fr::d2dx_glide::GetSuggestedCustomResolution(width, height);
-}
-
-/**
  * C++98 Implementation
  */
 
@@ -299,24 +206,21 @@ D2DX_EXPORTED ID2DXConfigurator* __stdcall D2DXGetConfigurator();
 
 #endif // 0
 
-namespace sgd2fr {
-namespace d2dx_glide {
-
-bool IsD2dxGlideWrapper() {
-  return !!::IsD2dxGlideWrapper();
-}
+/**
+ * C89 External Wrapper
+ *
+ * These need to be implemented in the .cpp file, since the type
+ * returned by the D2DX API is only compatible with C++.
+ */
 
 HRESULT SetCustomResolution(int width, int height) {
-  ::InitStatic();
+  InitStatic();
 
   return configurator->SetCustomResolution(width, height);
 }
 
 HRESULT GetSuggestedCustomResolution(int* width, int* height) {
-  ::InitStatic();
+  InitStatic();
 
   return configurator->GetSuggestedCustomResolution(width, height);
 }
-
-} // namespace d2dx_glide
-} // namespace sgd2fr

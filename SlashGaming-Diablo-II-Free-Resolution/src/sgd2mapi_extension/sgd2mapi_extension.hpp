@@ -50,5 +50,6 @@
 #include "game_function.hpp"
 #include "glide3x_library.hpp"
 #include "glide3x_library_version.hpp"
+#include "glide3x_library_d2dx/glide3x_library_d2dx.h"
 
 #endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_ */
