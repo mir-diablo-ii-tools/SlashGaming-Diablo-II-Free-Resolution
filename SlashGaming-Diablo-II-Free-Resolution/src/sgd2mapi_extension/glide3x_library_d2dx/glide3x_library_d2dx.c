@@ -50,6 +50,7 @@
 
 #include <mdc/error/exit_on_error.h>
 #include <mdc/wchar_t/filew.h>
+#include "../glide3x_library.h"
 
 #define GET_CONFIGURATOR_FUNCTION_NAME "_D2DXGetConfigurator@0"
 
