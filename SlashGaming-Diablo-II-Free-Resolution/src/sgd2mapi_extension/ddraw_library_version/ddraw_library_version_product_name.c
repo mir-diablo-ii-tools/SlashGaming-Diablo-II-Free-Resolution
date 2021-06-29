@@ -52,7 +52,7 @@
 #include <mdc/error/exit_on_error.h>
 #include <mdc/std/wchar.h>
 #include <mdc/wchar_t/filew.h>
-#include "../glide3x_library.h"
+#include "../ddraw_library.h"
 
 struct VersionTableEntry {
   const wchar_t* key;
@@ -117,7 +117,7 @@ enum D2_DDrawLibraryVersion GuessDDrawLibraryVersion(void) {
 
   const wchar_t* product_name;
 
-  product_name = D2_Glide3xLibrary_QueryFileVersionInfoString(
+  product_name = D2_DDrawLibrary_QueryFileVersionInfoString(
       L"\\StringFileInfo\\040904B0\\ProductName"
   );
 
