@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,81 +44,19 @@
  *  work.
  */
 
-#include "glide3x_version.hpp"
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_VERSION_GLIDE3X_LIBRARY_VERSION_FILE_VERSION_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_VERSION_GLIDE3X_LIBRARY_VERSION_FILE_VERSION_H_
 
-#include <mdc/error/exit_on_error.hpp>
-#include <mdc/wchar_t/filew.h>
-#include "file_version.hpp"
-#include "glide3x_d2dx.hpp"
+#include "../glide3x_library_version.h"
 
-namespace sgd2fr::glide3x_version {
-namespace {
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-#define GLIDE3X_PATH L"glide3x.dll"
+enum D2_Glide3xLibraryVersion GuessGlide3xLibraryVersion(void);
 
-static const wchar_t* const kGlide3xPath = GLIDE3X_PATH;
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-static Glide3xVersion DetermineGlide3xVersion() {
-  if (d2dx_glide::IsD2dxGlideWrapper(kGlide3xPath)) {
-    return Glide3xVersion::kD2dx;
-  }
-
-  return FileVersion::GuessGlide3xVersion(kGlide3xPath);
-}
-
-} // namespace
-
-const char* GetName(Glide3xVersion glide3x_version) {
-  return reinterpret_cast<const char*>(GetNameUtf8(glide3x_version));
-}
-
-const char8_t* GetNameUtf8(Glide3xVersion glide3x_version) {
-  switch (glide3x_version) {
-    case Glide3xVersion::kSven1_4_4_21: {
-      return u8"Sven 1.4.4.21";
-    }
-
-    case Glide3xVersion::kSven1_4_6_1: {
-      return u8"Sven 1.4.6.1";
-    }
-
-    case Glide3xVersion::kSven1_4_8_3: {
-      return u8"Sven 1.4.8.3";
-    }
-
-    case Glide3xVersion::kNGlide3_10_0_658: {
-      return u8"nGlide 3.10.0.658";
-    }
-
-    default: {
-      ::mdc::error::ExitOnConstantMappingError(
-          __FILEW__,
-          __LINE__,
-          static_cast<int>(glide3x_version)
-      );
-
-      return u8"";
-    }
-  }
-}
-
-Glide3xVersion GetRunning() {
-  static Glide3xVersion running_glide3x_version =
-      DetermineGlide3xVersion();
-
-  return running_glide3x_version;
-}
-
-const char* GetRunningName() {
-  return reinterpret_cast<const char*>(GetRunningNameUtf8());
-}
-
-const char8_t* GetRunningNameUtf8() {
-  static const char8_t* running_glide3x_version_name = GetNameUtf8(
-      GetRunning()
-  );
-
-  return running_glide3x_version_name;
-}
-
-} // namespace sgd2fr::glide3x_version
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_VERSION_GLIDE3X_LIBRARY_VERSION_FILE_VERSION_H_ */

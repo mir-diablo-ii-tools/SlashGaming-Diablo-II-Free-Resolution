@@ -43,57 +43,33 @@
  *  work.
  */
 
-#include "ddraw_version.hpp"
+#include "glide3x_library_version.hpp"
 
-#include <mdc/error/exit_on_error.hpp>
-#include <mdc/wchar_t/filew.h>
-#include "file_string.hpp"
+namespace d2 {
+namespace glide3x_library_version {
 
-namespace sgd2fr::ddraw_version {
-
-const char* GetName(DDrawVersion ddraw_version) {
-  return reinterpret_cast<const char*>(GetNameUtf8(ddraw_version));
-}
-
-const char8_t* GetNameUtf8(DDrawVersion ddraw_version) {
-  switch (ddraw_version) {
-    case DDrawVersion::kWindowsDefault: {
-      return u8"Windows Default";
-    }
-
-    case DDrawVersion::kCnC: {
-      return u8"CnC-DDraw";
-    }
-
-    default: {
-      ::mdc::error::ExitOnConstantMappingError(
-          __FILEW__,
-          __LINE__,
-          static_cast<int>(ddraw_version)
-      );
-
-      return u8"";
-    }
-  }
-}
-
-DDrawVersion GetRunning() {
-  static DDrawVersion running_ddraw_version =
-      FileString::GuessDDrawVersion(L"ddraw.dll");
-
-  return running_ddraw_version;
-}
-
-const char* GetRunningName() {
-  return reinterpret_cast<const char*>(GetRunningNameUtf8());
-}
-
-const char8_t* GetRunningNameUtf8() {
-  static const char8_t* running_ddraw_version_name = GetNameUtf8(
-      GetRunning()
+const char* GetName(Glide3xLibraryVersion glide3x_library_version) {
+  return ::D2_Glide3xLibraryVersion_GetName(
+      static_cast<::D2_Glide3xLibraryVersion>(glide3x_library_version)
   );
-
-  return running_ddraw_version_name;
 }
 
-} // namespace sgd2fr::ddraw_version
+/**
+ * Returns the identifier of the running glide3x.dll file.
+ */
+Glide3xLibraryVersion GetRunning() {
+  return static_cast<Glide3xLibraryVersion>(
+      ::D2_Glide3xLibraryVersion_GetRunning()
+  );
+}
+
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the running glide3x.dll file.
+ */
+const char* GetRunningName() {
+  return ::D2_Glide3xLibraryVersion_GetRunningName();
+}
+
+} // namespace glide3x_library_version
+} // namespace d2

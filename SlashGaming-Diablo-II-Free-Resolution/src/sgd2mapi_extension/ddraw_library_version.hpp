@@ -43,51 +43,40 @@
  *  work.
  */
 
-#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_HPP_
+#define SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_HPP_
 
-#include <stddef.h>
+#include "ddraw_library_version.h"
 
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+namespace d2 {
+namespace ddraw_library_version {
 
-extern "C" {
+enum DDrawLibraryVersion {
+  kWindowsDefault = ::D2_DDrawLibraryVersion_kWindowsDefault,
+  kCnC = ::D2_DDrawLibraryVersion_kCnC,
+};
 
-void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the specified DDraw.dll file.
+ */
+const char* GetName(DDrawLibraryVersion ddraw_library_version);
 
-} // extern "C"
+/**
+ * Returns the identifier of the running DDraw.dll file.
+ */
+DDrawLibraryVersion GetRunning();
 
-namespace sgd2fr {
-namespace glide3x {
+/**
+ * Returns the UTF-8 encoded null-terminated string associated with
+ * the running DDraw.dll file.
+ */
+const char* GetRunningName();
 
-GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
+} // namespace ddraw_library_version
 
-PatchAddressAndSize
-GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
-  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
-      ::d2::glide3x_library_version::GetRunning();
+typedef ddraw_library_version::DDrawLibraryVersion DDrawLibraryVersion;
 
-  switch (running_glide3x_library_version) {
-    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              L"glide3x.dll",
-              0x5691
-          ),
-          0x56A0 - 0x5691
-      );
-    }
-  }
-}
+} // namespace d2
 
-} // namespace glide3x
-} // namespace sgd2fr
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_DDRAW_LIBRARY_VERSION_HPP_ */

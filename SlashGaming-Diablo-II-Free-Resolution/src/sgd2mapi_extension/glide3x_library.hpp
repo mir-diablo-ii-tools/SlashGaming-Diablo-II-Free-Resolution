@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,52 +44,31 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
-#define SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_HPP_
+#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_HPP_
 
-namespace sgd2fr {
+#include <stddef.h>
+#include <windows.h>
 
-enum class Glide3xVersion {
-  kSven1_4_4_21,
-  kSven1_4_6_1,
-  kSven1_4_8_3,
-  kNGlide3_10_0_658,
-  kD2dx,
-};
+#include <mdc/std/wchar.h>
 
-namespace glide3x_version {
+namespace d2 {
+namespace glide3x_library {
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the specified glide3x.dll file.
- */
-const char* GetName(Glide3xVersion glide3x_version);
+const wchar_t* GetPath();
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the specified glide3x.dll file.
- */
-const char8_t* GetNameUtf8(Glide3xVersion glide3x_version);
+const wchar_t* QueryFileVersionInfoString(
+    const wchar_t* sub_block
+);
 
-/**
- * Returns the identifier of the running glide3x.dll file.
- */
-Glide3xVersion GetRunning();
+const DWORD* QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+);
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running glide3x.dll file.
- */
-const char* GetRunningName();
+const VS_FIXEDFILEINFO* QueryFixedFileInfo();
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running glide3x.dll file.
- */
-const char8_t* GetRunningNameUtf8();
+} // namespace glide3x_library
+} // namespace d2
 
-} // namespace glide3x_version
-
-} // namespace sgd2fr
-
-#endif // SGD2FR_HELPER_GLIDE3X_VERSION_HPP_
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_HPP_ */

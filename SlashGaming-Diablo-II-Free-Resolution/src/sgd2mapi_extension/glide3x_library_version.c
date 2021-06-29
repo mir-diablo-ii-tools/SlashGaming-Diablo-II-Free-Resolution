@@ -43,51 +43,85 @@
  *  work.
  */
 
-#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
+#include "glide3x_library_version.h"
 
 #include <stddef.h>
+#include <stdlib.h>
 
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include <mdc/error/exit_on_error.h>
+#include <mdc/malloc/malloc.h>
+#include <mdc/wchar_t/filew.h>
+#include "glide3x_library_d2dx/glide3x_library_d2dx.h"
+#include "glide3x_library_version/glide3x_library_version_file_version.h"
 
-extern "C" {
+static enum D2_Glide3xLibraryVersion running_glide3x_library_version;
 
-void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
+static void InitRunningGlide3xLibraryVersion(void) {
+  static int is_init = 0;
 
-} // extern "C"
+  if (is_init) {
+    return;
+  }
 
-namespace sgd2fr {
-namespace glide3x {
+  running_glide3x_library_version = (IsD2dxGlideWrapper())
+      ? D2_Glide3xLibraryVersion_kD2dx
+      : GuessGlide3xLibraryVersion();
 
-GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
+  is_init = 1;
 }
 
-PatchAddressAndSize
-GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
-  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
-      ::d2::glide3x_library_version::GetRunning();
+static void InitStatic(void) {
+  InitRunningGlide3xLibraryVersion();
+}
 
-  switch (running_glide3x_library_version) {
-    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              L"glide3x.dll",
-              0x5691
-          ),
-          0x56A0 - 0x5691
+/**
+ * External
+ */
+
+const char* D2_Glide3xLibraryVersion_GetName(
+    enum D2_Glide3xLibraryVersion glide3x_version
+) {
+  InitStatic();
+
+  switch (glide3x_version) {
+    case D2_Glide3xLibraryVersion_kSven1_4_4_21: {
+      return "Sven 1.4.4.21";
+    }
+
+    case D2_Glide3xLibraryVersion_kSven1_4_6_1: {
+      return "Sven 1.4.6.1";
+    }
+
+    case D2_Glide3xLibraryVersion_kSven1_4_8_3: {
+      return "Sven 1.4.8.3";
+    }
+
+    case D2_Glide3xLibraryVersion_kNGlide3_10_0_658: {
+      return "nGlide 3.10.0.658";
+    }
+
+    default: {
+      Mdc_Error_ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          glide3x_version
       );
+
+      return "";
     }
   }
 }
 
-} // namespace glide3x
-} // namespace sgd2fr
+enum D2_Glide3xLibraryVersion D2_Glide3xLibraryVersion_GetRunning() {
+  InitStatic();
+
+  return running_glide3x_library_version;
+}
+
+const char* D2_Glide3xLibraryVersion_GetRunningName() {
+  InitStatic();
+
+  return D2_Glide3xLibraryVersion_GetName(
+      D2_Glide3xLibraryVersion_GetRunning()
+  );
+}

@@ -43,49 +43,64 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_DDRAW_VERSION_HPP_
-#define SGD2FR_HELPER_DDRAW_VERSION_HPP_
+#include "ddraw_library.h"
 
-namespace sgd2fr {
+#include "file/file_version_info.h"
 
-enum class DDrawVersion {
-  kWindowsDefault,
-  kCnC,
+#define DDRAW_LIBRARY_PATH L"ddraw.dll"
+
+static const wchar_t* const kDDrawLibraryPath = DDRAW_LIBRARY_PATH;
+
+enum {
+  kDDrawLibraryPathLength = (sizeof(DDRAW_LIBRARY_PATH)
+      / sizeof(DDRAW_LIBRARY_PATH[0])) - 1
 };
 
-namespace ddraw_version {
+static struct Mapi_FileVersionInfo file_version_info;
+
+static void InitFileVersionInfo(void) {
+  static int is_init = 0;
+
+  if (is_init) {
+    return;
+  }
+
+  file_version_info = Mapi_FileVersionInfo_InitFromPath(kDDrawLibraryPath);
+
+  is_init = 1;
+}
+
+static void InitStatic(void) {
+  InitFileVersionInfo();
+}
 
 /**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the specified DDraw.dll file.
+ * External
  */
-const char* GetName(DDrawVersion ddraw_version);
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the specified DDraw.dll file.
- */
-const char8_t* GetNameUtf8(DDrawVersion ddraw_version);
+const wchar_t* D2_DDrawLibrary_GetPath(void) {
+  return kDDrawLibraryPath;
+}
 
-/**
- * Returns the identifier of the running DDraw.dll file.
- */
-DDrawVersion GetRunning();
+const wchar_t* D2_DDrawLibrary_QueryFileVersionInfoString(
+    const wchar_t* sub_block
+) {
+  InitStatic();
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running DDraw.dll file.
- */
-const char* GetRunningName();
+  return Mapi_FileVersionInfo_QueryString(&file_version_info, sub_block);
+}
 
-/**
- * Returns the UTF-8 encoded null-terminated string associated with
- * the running DDraw.dll file.
- */
-const char8_t* GetRunningNameUtf8();
+const DWORD* D2_DDrawLibrary_QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+) {
+  InitStatic();
 
-} // namespace ddraw_version
+  return Mapi_FileVersionInfo_QueryVar(&file_version_info, sub_block, count);
+}
 
-} // namespace sgd2fr
+const VS_FIXEDFILEINFO* D2_DDrawLibrary_QueryFixedFileInfo(void) {
+  InitStatic();
 
-#endif // SGD2FR_HELPER_DDRAW_VERSION_HPP_
+  return Mapi_FileVersionInfo_QueryFixedFileInfo(&file_version_info);
+}

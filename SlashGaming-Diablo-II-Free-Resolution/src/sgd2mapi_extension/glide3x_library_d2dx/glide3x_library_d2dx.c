@@ -43,51 +43,80 @@
  *  work.
  */
 
-#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
+#include "glide3x_library_d2dx.h"
 
-#include <stddef.h>
+#include <windows.h>
+#include <shlwapi.h>
 
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include <mdc/error/exit_on_error.h>
+#include <mdc/wchar_t/filew.h>
+#include "../glide3x_library.h"
 
-extern "C" {
+#define GET_CONFIGURATOR_FUNCTION_NAME "_D2DXGetConfigurator@0"
 
-void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
+static const char* const kGetConfiguratorFunctionName =
+    GET_CONFIGURATOR_FUNCTION_NAME;
 
-} // extern "C"
+enum {
+  kGetConfiguratorFuncNameLength = (sizeof(GET_CONFIGURATOR_FUNCTION_NAME)
+      / sizeof(GET_CONFIGURATOR_FUNCTION_NAME[0])) - 1,
+};
 
-namespace sgd2fr {
-namespace glide3x {
+/**
+ * External
+ */
 
-GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-      patch_address_and_size_01.second
+int IsD2dxGlideWrapper(void) {
+  const wchar_t* path;
+  HMODULE glide3x_handle;
+  int is_library_already_loaded;
+  FARPROC get_configurator_function;
+  int is_free_library_success;
+
+  path = D2_Glide3xLibrary_GetPath();
+
+  if (!PathFileExistsW(path)) {
+    return 0;
+  }
+
+  glide3x_handle = GetModuleHandleW(path);
+  is_library_already_loaded = (glide3x_handle != NULL);
+
+  if (!is_library_already_loaded) {
+    glide3x_handle = LoadLibraryW(path);
+  }
+
+  if (glide3x_handle == NULL) {
+    Mdc_Error_ExitOnWindowsFunctionError(
+        __FILEW__,
+        __LINE__,
+        is_library_already_loaded
+            ? L"GetModuleHandleW"
+            : L"LoadLibraryW",
+        GetLastError()
+    );
+
+    return 0;
+  }
+
+  get_configurator_function = GetProcAddress(
+      glide3x_handle,
+      kGetConfiguratorFunctionName
   );
-  this->patches_[0].Swap(patch_01);
-}
 
-PatchAddressAndSize
-GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
-  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
-      ::d2::glide3x_library_version::GetRunning();
-
-  switch (running_glide3x_library_version) {
-    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              L"glide3x.dll",
-              0x5691
-          ),
-          0x56A0 - 0x5691
+  if (!is_library_already_loaded) {
+    is_free_library_success = FreeLibrary(glide3x_handle);
+    if (!is_free_library_success) {
+      Mdc_Error_ExitOnWindowsFunctionError(
+          __FILEW__,
+          __LINE__,
+          L"FreeLibrary",
+          GetLastError()
       );
+
+      return 0;
     }
   }
-}
 
-} // namespace glide3x
-} // namespace sgd2fr
+  return (get_configurator_function != NULL);
+}

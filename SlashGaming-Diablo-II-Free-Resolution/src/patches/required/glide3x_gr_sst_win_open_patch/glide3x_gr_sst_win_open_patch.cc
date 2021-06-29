@@ -48,7 +48,7 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/glide3x_version.hpp"
+#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr {
 namespace glide3x {
@@ -64,8 +64,10 @@ bool GrSstWinOpenPatch::IsApplicable() {
   }
 
   // The D2DX API extensions are used instead.
-  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
-  return (running_glide3x_version != Glide3xVersion::kD2dx);
+  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
+      ::d2::glide3x_library_version::GetRunning();
+  return (running_glide3x_library_version
+      != ::d2::glide3x_library_version::kD2dx);
 }
 
 AbstractVersionPatch*
@@ -74,23 +76,21 @@ GrSstWinOpenPatch::InitPatch() {
     return NULL;
   }
 
-  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
-
-  switch (running_glide3x_version) {
-    case Glide3xVersion::kSven1_4_4_21:
-    case Glide3xVersion::kSven1_4_6_1: {
+  switch (::d2::glide3x_library_version::GetRunning()) {
+    case ::d2::glide3x_library_version::kSven1_4_4_21:
+    case ::d2::glide3x_library_version::kSven1_4_6_1: {
       return new GrSstWinOpenPatch_Sven_1_4_4_21();
     }
 
-    case Glide3xVersion::kSven1_4_8_3: {
+    case ::d2::glide3x_library_version::kSven1_4_8_3: {
       return new GrSstWinOpenPatch_Sven_1_4_8_3();
     }
 
-    case Glide3xVersion::kNGlide3_10_0_658: {
+    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
       return new GrSstWinOpenPatch_NGlide_3_10_0_658();
     }
 
-    case Glide3xVersion::kD2dx: {
+    case ::d2::glide3x_library_version::kD2dx: {
       return NULL;
     }
   }

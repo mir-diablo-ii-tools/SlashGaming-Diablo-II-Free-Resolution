@@ -44,95 +44,64 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_FILE_VERSION_HPP_
-#define SGD2FR_HELPER_FILE_VERSION_HPP_
+#include "glide3x_library.h"
 
-#include <windows.h>
+#include "file/file_version_info.h"
 
-#include <compare>
+#define GLIDE3X_LIBRARY_PATH L"glide3x.dll"
 
-#include "glide3x_version.hpp"
+static const wchar_t* const kGlide3xLibraryPath = GLIDE3X_LIBRARY_PATH;
 
-namespace sgd2fr {
-
-class FileVersion {
- public:
-  using VersionType = std::tuple<DWORD, DWORD, DWORD, DWORD>;
-
-  FileVersion() = delete;
-
-  explicit constexpr FileVersion(
-      const VersionType& version
-  ) noexcept
-      : version_(version) {
-  }
-
-  explicit constexpr FileVersion(
-      VersionType&& version
-  ) noexcept
-      : version_(std::move(version)) {
-  }
-
-  constexpr FileVersion(
-      DWORD major_version_left,
-      DWORD major_version_right,
-      DWORD minor_version_left,
-      DWORD minor_version_right
-  ) noexcept
-      : version_(
-            VersionType(
-                major_version_left,
-                major_version_right,
-                minor_version_left,
-                minor_version_right
-            )
-        ) {
-  }
-
-  constexpr FileVersion(const FileVersion& file_version) noexcept = default;
-
-  constexpr FileVersion(FileVersion&& file_version) noexcept = default;
-
-  ~FileVersion() noexcept = default;
-
-  constexpr FileVersion& operator=(
-      const FileVersion& file_version
-  ) noexcept = default;
-
-  constexpr FileVersion& operator=(
-      FileVersion&& file_version
-  ) noexcept = default;
-
-  constexpr friend bool operator==(
-      const FileVersion& lhs,
-      const FileVersion& rhs
-  ) = default;
-
-  constexpr friend std::strong_ordering operator<=>(
-      const FileVersion& lhs,
-      const FileVersion& rhs
-  ) = default;
-
-  static Glide3xVersion GuessGlide3xVersion(
-      std::wstring_view raw_path
-  );
-
-  constexpr const VersionType& version() const noexcept {
-    return this->version_;
-  }
-
- private:
-  VersionType version_;
-
-  static FileVersion ReadFileVersion(
-      std::wstring_view raw_path
-  );
-
-  static Glide3xVersion SearchGlide3xTable(
-      const FileVersion& file_version
-  );
+enum {
+  kGlide3xPathLength = (sizeof(GLIDE3X_LIBRARY_PATH)
+      / sizeof(GLIDE3X_LIBRARY_PATH[0])) - 1
 };
 
-} // namespace sgd2fr
+static struct Mapi_FileVersionInfo file_version_info;
 
-#endif // SGD2FR_HELPER_FILE_VERSION_HPP_
+static void InitFileVersionInfo(void) {
+  static int is_init = 0;
+
+  if (is_init) {
+    return;
+  }
+
+  file_version_info = Mapi_FileVersionInfo_InitFromPath(kGlide3xLibraryPath);
+
+  is_init = 1;
+}
+
+static void InitStatic(void) {
+  InitFileVersionInfo();
+}
+
+/**
+ * External
+ */
+
+const wchar_t* D2_Glide3xLibrary_GetPath(void) {
+  return kGlide3xLibraryPath;
+}
+
+const wchar_t* D2_Glide3xLibrary_QueryFileVersionInfoString(
+    const wchar_t* sub_block
+) {
+  InitStatic();
+
+  return Mapi_FileVersionInfo_QueryString(&file_version_info, sub_block);
+}
+
+const DWORD* D2_Glide3xLibrary_QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+) {
+  InitStatic();
+
+  return Mapi_FileVersionInfo_QueryVar(&file_version_info, sub_block, count);
+}
+
+const VS_FIXEDFILEINFO* D2_Glide3xLibrary_QueryFixedFileInfo(void) {
+  InitStatic();
+
+  return Mapi_FileVersionInfo_QueryFixedFileInfo(&file_version_info);
+}

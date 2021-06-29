@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,51 +44,33 @@
  *  work.
  */
 
-#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_H_
 
 #include <stddef.h>
+#include <windows.h>
 
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include <mdc/std/wchar.h>
 
+#ifdef __cplusplus
 extern "C" {
+#endif /* __cplusplus */
 
-void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
+const wchar_t* D2_Glide3xLibrary_GetPath(void);
 
-} // extern "C"
+const wchar_t* D2_Glide3xLibrary_QueryFileVersionInfoString(
+    const wchar_t* sub_block
+);
 
-namespace sgd2fr {
-namespace glide3x {
+const DWORD* D2_Glide3xLibrary_QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+);
 
-GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
+const VS_FIXEDFILEINFO* D2_Glide3xLibrary_QueryFixedFileInfo(void);
 
-PatchAddressAndSize
-GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
-  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
-      ::d2::glide3x_library_version::GetRunning();
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-  switch (running_glide3x_library_version) {
-    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              L"glide3x.dll",
-              0x5691
-          ),
-          0x56A0 - 0x5691
-      );
-    }
-  }
-}
-
-} // namespace glide3x
-} // namespace sgd2fr
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GLIDE3X_LIBRARY_H_ */

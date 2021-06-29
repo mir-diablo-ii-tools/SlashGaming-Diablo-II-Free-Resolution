@@ -43,28 +43,10 @@
  *  work.
  */
 
-#include <windows.h>
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_FILE_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_FILE_H_
 
-namespace sgd2fr {
-namespace d2dx_glide {
+#include "file/file_version_info.h"
+#include "file/fixed_file_version.h"
 
-bool IsD2dxGlideWrapper(const wchar_t* path);
-
-/**
- * Wrapper for ID2DXConfigurator::SetCustomResolution.
- */
-HRESULT SetCustomResolution(
-    int width,
-    int height
-);
-
-/**
- * Wrapper for ID2DXConfigurator::GetSuggestedCustomResolution.
- */
-HRESULT GetSuggestedCustomResolution(
-    /* [out] */ int* width,
-    /* [out] */ int* height
-);
-
-} // namespace d2dx
-} // namespace sgd2fr
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_FILE_H_ */

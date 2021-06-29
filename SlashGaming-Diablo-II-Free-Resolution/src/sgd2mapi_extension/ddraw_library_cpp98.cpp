@@ -2,7 +2,8 @@
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Free Resolution.
+ * This file is part of SlashGaming Diablo II Modding API for C++. It
+ * has been copied and retooled for reading glide3x.dll.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
@@ -43,51 +44,33 @@
  *  work.
  */
 
-#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
+#include "ddraw_library.hpp"
 
-#include <stddef.h>
+#include "ddraw_library.h"
 
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+namespace d2 {
+namespace ddraw_library {
 
-extern "C" {
-
-void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
-
-} // extern "C"
-
-namespace sgd2fr {
-namespace glide3x {
-
-GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
+const wchar_t* GetPath() {
+  return ::D2_DDrawLibrary_GetPath();
 }
 
-PatchAddressAndSize
-GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
-  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
-      ::d2::glide3x_library_version::GetRunning();
-
-  switch (running_glide3x_library_version) {
-    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              L"glide3x.dll",
-              0x5691
-          ),
-          0x56A0 - 0x5691
-      );
-    }
-  }
+const wchar_t* QueryFileVersionInfoString(
+    const wchar_t* sub_block
+) {
+  return ::D2_DDrawLibrary_QueryFileVersionInfoString(sub_block);
 }
 
-} // namespace glide3x
-} // namespace sgd2fr
+const DWORD* QueryFileVersionInfoVar(
+    const wchar_t* sub_block,
+    size_t* count
+) {
+  return ::D2_DDrawLibrary_QueryFileVersionInfoVar(sub_block, count);
+}
+
+const VS_FIXEDFILEINFO* QueryFixedFileInfo() {
+  return ::D2_DDrawLibrary_QueryFixedFileInfo();
+}
+
+} // namespace glide3x_library
+} // namespace d2

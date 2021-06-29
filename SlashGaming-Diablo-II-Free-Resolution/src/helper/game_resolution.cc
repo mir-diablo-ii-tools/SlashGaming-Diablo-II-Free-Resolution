@@ -56,7 +56,7 @@
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
 #include "../compile_time_switch.hpp"
-#include "ddraw_version.hpp"
+#include "../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -233,7 +233,8 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
 
         if (current_video_mode == ::d2::VideoMode::kDirect3D
             || (current_video_mode == ::d2::VideoMode::kDirectDraw
-                && ddraw_version::GetRunning() != DDrawVersion::kCnC)) {
+                && ::d2::ddraw_library_version::GetRunning()
+                    != ::d2::ddraw_library_version::kCnC)) {
           std::copy_if(
               selected_ingame_resolutions.cbegin(),
               selected_ingame_resolutions.cend(),

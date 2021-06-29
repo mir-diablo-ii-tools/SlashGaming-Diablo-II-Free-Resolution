@@ -43,51 +43,70 @@
  *  work.
  */
 
-#include "glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
+#include "ddraw_library_version.h"
 
-#include <stddef.h>
+#include <mdc/error/exit_on_error.h>
+#include <mdc/wchar_t/filew.h>
+#include "ddraw_library_version/ddraw_library_version_product_name.h"
 
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+static enum D2_DDrawLibraryVersion running_ddraw_library_version;
 
-extern "C" {
+static void InitRunningDDrawLibraryVersion(void) {
+  static int is_init = 0;
 
-void __cdecl Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01();
+  if (is_init) {
+    return;
+  }
 
-} // extern "C"
+  running_ddraw_library_version = GuessDDrawLibraryVersion();
 
-namespace sgd2fr {
-namespace glide3x {
-
-GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &Glide3x_GrSstWinOpenPatch_NGlide_3_10_0_658_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
+  is_init = 1;
 }
 
-PatchAddressAndSize
-GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
-  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
-      ::d2::glide3x_library_version::GetRunning();
+static void InitStatic(void) {
+  InitRunningDDrawLibraryVersion();
+}
 
-  switch (running_glide3x_library_version) {
-    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              L"glide3x.dll",
-              0x5691
-          ),
-          0x56A0 - 0x5691
+/**
+ * External
+ */
+
+const char* D2_DDrawLibraryVersion_GetName(
+    enum D2_DDrawLibraryVersion ddraw_library_version
+) {
+  InitStatic();
+
+  switch (ddraw_library_version) {
+    case D2_DDrawLibraryVersion_kWindowsDefault: {
+      return "Windows Default";
+    }
+
+    case D2_DDrawLibraryVersion_kCnC: {
+      return "CnC-DDraw";
+    }
+
+    default: {
+      Mdc_Error_ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          ddraw_library_version
       );
+
+      return "";
     }
   }
 }
 
-} // namespace glide3x
-} // namespace sgd2fr
+enum D2_DDrawLibraryVersion D2_DDrawLibraryVersion_GetRunning(void) {
+  InitStatic();
+
+  return running_ddraw_library_version;
+}
+
+const char* D2_DDrawLibraryVersion_GetRunningName(void) {
+  InitStatic();
+
+  return D2_DDrawLibraryVersion_GetName(
+      D2_DDrawLibraryVersion_GetRunning()
+  );
+}

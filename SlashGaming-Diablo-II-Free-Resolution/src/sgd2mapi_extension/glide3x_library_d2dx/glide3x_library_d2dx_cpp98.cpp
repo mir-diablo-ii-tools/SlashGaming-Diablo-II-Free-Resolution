@@ -65,13 +65,92 @@
   along with D2DX.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-#include "glide3x_d2dx.hpp"
+#include "glide3x_library_d2dx.h"
 
+#include <stddef.h>
 #include <windows.h>
-#include <shlwapi.h>
 
+#include <mdc/error/exit_on_error.h>
 #include <mdc/wchar_t/filew.h>
 #include <mdc/error/exit_on_error.hpp>
+#include "../glide3x_library.h"
+
+/**
+ * C89 Static
+ *
+ * These need to be implemented in the .cpp file, since the type
+ * returned by the D2DX API is only compatible with C++.
+ */
+
+struct ID2DXConfigurator;
+
+typedef ID2DXConfigurator* (__stdcall *GetConfiguratorFuncType)(void);
+
+#define GET_CONFIGURATOR_FUNCTION_NAME "_D2DXGetConfigurator@0"
+
+static const char* const kGetConfiguratorFunctionName =
+    GET_CONFIGURATOR_FUNCTION_NAME;
+
+enum {
+  kGetConfiguratorFuncNameLength = (sizeof(GET_CONFIGURATOR_FUNCTION_NAME)
+      / sizeof(GET_CONFIGURATOR_FUNCTION_NAME[0])) - 1,
+};
+
+static ID2DXConfigurator* configurator;
+
+static GetConfiguratorFuncType GetConfiguratorFunc() {
+  HMODULE glide3x_handle;
+  FARPROC raw_func_ptr;
+
+  glide3x_handle = GetModuleHandleW(L"glide3x.dll");
+  if (glide3x_handle == NULL) {
+    Mdc_Error_ExitOnWindowsFunctionError(
+        __FILEW__,
+        __LINE__,
+        L"GetModuleHandleW",
+        GetLastError()
+    );
+
+    return NULL;
+  }
+
+  raw_func_ptr = GetProcAddress(
+      glide3x_handle,
+      kGetConfiguratorFunctionName
+  );
+
+  if (raw_func_ptr == NULL) {
+    Mdc_Error_ExitOnWindowsFunctionError(
+        __FILEW__,
+        __LINE__,
+        L"GetProcAddress",
+        GetLastError()
+    );
+
+    return NULL;
+  }
+
+  return (GetConfiguratorFuncType) raw_func_ptr;
+}
+
+static void InitConfigurator() {
+  static int is_init = 0;
+
+  if (is_init) {
+    return;
+  }
+
+  configurator = GetConfiguratorFunc()();
+  is_init = 1;
+}
+
+static void InitStatic(void) {
+  InitConfigurator();
+}
+
+/**
+ * C++98 Implementation
+ */
 
 /*
   ID2DXConfigurator is a pseudo-COM interface that can be used to integrate with D2DX.
@@ -127,105 +206,21 @@ D2DX_EXPORTED ID2DXConfigurator* __stdcall D2DXGetConfigurator();
 
 #endif // 0
 
-namespace sgd2fr {
-namespace d2dx_glide {
-namespace {
+/**
+ * C89 External Wrapper
+ *
+ * These need to be implemented in the .cpp file, since the type
+ * returned by the D2DX API is only compatible with C++.
+ */
 
-typedef ID2DXConfigurator* (__stdcall *GetConfiguratorFuncType)(void);
+HRESULT SetCustomResolution(int width, int height) {
+  InitStatic();
 
-static const char* const kGetConfiguratorFuncName =
-    "_D2DXGetConfigurator@0";
-
-static GetConfiguratorFuncType GetConfiguratorFunc() {
-  HMODULE glide3x_handle = GetModuleHandleW(L"glide3x.dll");
-  if (glide3x_handle == nullptr) {
-    ::mdc::error::ExitOnWindowsFunctionError(
-        __FILEW__,
-        __LINE__,
-        L"GetModuleHandleW",
-        GetLastError()
-    );
-
-    return nullptr;
-  }
-
-  FARPROC raw_func_ptr = GetProcAddress(
-      glide3x_handle,
-      kGetConfiguratorFuncName
-  );
-
-  if (raw_func_ptr == nullptr) {
-    ::mdc::error::ExitOnWindowsFunctionError(
-        __FILEW__,
-        __LINE__,
-        L"GetProcAddress",
-        GetLastError()
-    );
-
-    return nullptr;
-  }
-
-  return reinterpret_cast<GetConfiguratorFuncType>(raw_func_ptr);
+  return configurator->SetCustomResolution(width, height);
 }
 
-static ID2DXConfigurator* D2DXGetConfigurator() {
-  static ID2DXConfigurator* configurator = GetConfiguratorFunc()();
+HRESULT GetSuggestedCustomResolution(int* width, int* height) {
+  InitStatic();
 
-  return configurator;
+  return configurator->GetSuggestedCustomResolution(width, height);
 }
-
-} // namespace
-
-bool IsD2dxGlideWrapper(const wchar_t* path) {
-  if (!::PathFileExistsW(path)) {
-    return false;
-  }
-
-  HMODULE glide3x_handle = GetModuleHandleW(path);
-  bool is_library_already_loaded = (glide3x_handle != nullptr);
-
-  if (!is_library_already_loaded) {
-    glide3x_handle = LoadLibraryW(path);
-  }
-
-  if (glide3x_handle == nullptr) {
-    ::mdc::error::ExitOnWindowsFunctionError(
-        __FILEW__,
-        __LINE__,
-        is_library_already_loaded
-            ? L"GetModuleHandleW"
-            : L"LoadLibraryW",
-        GetLastError()
-    );
-
-    return false;
-  }
-
-  FARPROC get_configurator_func = GetProcAddress(
-      glide3x_handle,
-      kGetConfiguratorFuncName
-  );
-
-  if (!is_library_already_loaded) {
-    FreeLibrary(glide3x_handle);
-  }
-
-  return (get_configurator_func != nullptr);
-}
-
-HRESULT SetCustomResolution(
-    int width,
-    int height
-) {
-  return D2DXGetConfigurator()->SetCustomResolution(width, height);
-}
-
-HRESULT GetSuggestedCustomResolution(
-    /* [out] */ int* width,
-    /* [out] */ int* height
-) {
-  return D2DXGetConfigurator()->GetSuggestedCustomResolution(width, height);
-}
-
-} // namespace d2dx_glide
-} // namespace sgd2fr
