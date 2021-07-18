@@ -1,0 +1,6 @@
+[submodule "third_party/MirD-Common-C"]
+	path = third_party/MirD-Common-C
+	url = https://github.com/IAmTrial/MirD-Common-C
+[submodule "third_party/SlashGaming-Diablo-II-API-1998"]
+	path = third_party/SlashGaming-Diablo-II-API-1998
+	url = https://github.com/mir-diablo-ii-tools/SlashGaming-Diablo-II-API-1998
