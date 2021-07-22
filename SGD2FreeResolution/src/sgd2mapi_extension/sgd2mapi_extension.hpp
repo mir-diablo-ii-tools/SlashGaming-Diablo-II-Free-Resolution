@@ -48,7 +48,6 @@
 
 #include "ddraw_library.hpp"
 #include "ddraw_library_version.hpp"
-#include "file.h"
 #include "game_function.hpp"
 #include "glide3x_library.hpp"
 #include "glide3x_library_version.hpp"

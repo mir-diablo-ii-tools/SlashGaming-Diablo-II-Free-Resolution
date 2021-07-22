@@ -45,7 +45,7 @@
 
 #include "ddraw_library.h"
 
-#include "file/file_version_info.h"
+#include <sgd2mapi.h>
 
 #define DDRAW_LIBRARY_PATH L"ddraw.dll"
 
