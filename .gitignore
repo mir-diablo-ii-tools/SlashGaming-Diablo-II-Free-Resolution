@@ -1,46 +1,66 @@
+# Visual C++ 6.0 Data Files
+*.ncb
+*.opt
+*.positions
+*.wwdb
+
+# Binaries
 *.a
 *.dll
 *.exe
+*.lib
 *.o
 *.obj
-*.lib
-*.def
-*.dep
-*.bin
+*.so
 
-*.cfg
-*.json
+# CMake
+out/
+CMakeSettings.json
 
-*.log
-*.tlog
+# Debug / Intermediate Files
+*.ipch
+*.idb
+*.ilk
+*.iobj
+*.ipdb
+*.exp
+*.pch
+*.pdb
+*.recipe
 *.vcxproj.FileListAbsolute.txt
 
-*.cbp
-*.layout
-*.depend
-*.mk
-*.project
-*.workspace
-Makefile
+# Resource Files
+*.aps
+*.res
+
+# Logs
+*.log
+*.plg
+*.tlog
+
+# Thumbnails
+*.DS_STORE
+*.db
+
+# Visual Studio 2005 Solution / Project Files
+*.vcproj
+
+# Visual Studio 2010 Solution / Project Files
+.vs
 
 *.sln
 *.vcxproj
 *.vcxproj.filters
 *.vcxproj.user
 
-*.vcxproj
-*.filters
-*.sdf
-*.sln
-*.suo
+# Visual Studio Code Analysis
+CodeAnalysisResultManifest.txt
+*.lastcodeanalysissucceeded
+*.nativecodeanalysis.all.xml
+*.nativecodeanalysis.sarif
+*.nativecodeanalysis.xml
 
-*/CMakeFiles/*
-CMakeCache.txt
-*.cmake
-
-.build-debug/*
-.codelite/*
-
-.vs/
-Debug/
-Release/
+# Compression Formats
+*.7z
+*.rar
+*.zip
