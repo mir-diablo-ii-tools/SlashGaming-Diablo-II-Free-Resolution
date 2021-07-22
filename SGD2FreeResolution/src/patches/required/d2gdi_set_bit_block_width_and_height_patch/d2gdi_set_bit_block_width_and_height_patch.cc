@@ -60,7 +60,7 @@ SetBitBlockWidthAndHeightPatch::SetBitBlockWidthAndHeightPatch()
 }
 
 bool SetBitBlockWidthAndHeightPatch::IsApplicable() {
-  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  ::d2::VideoMode video_mode = ::d2::helper::DetermineVideoMode();
   return (video_mode == ::d2::VideoMode::kGdi);
 }
 
