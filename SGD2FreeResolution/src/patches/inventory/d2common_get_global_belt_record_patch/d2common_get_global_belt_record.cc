@@ -51,8 +51,8 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
-    std::uint32_t belt_record_index,
-    std::uint32_t inventory_arrange_mode,
+    uint32_t belt_record_index,
+    uint32_t inventory_arrange_mode,
     ::d2::BeltRecord* out_belt_record
 ) {
   // Original code, copies the values of the specified Global Belt Slot

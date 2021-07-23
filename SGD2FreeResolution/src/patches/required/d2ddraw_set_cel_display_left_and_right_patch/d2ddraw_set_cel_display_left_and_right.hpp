@@ -46,12 +46,12 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_HPP_
 
-#include <cstdint>
+#include <mdc/std/stdint.h>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2DDraw_SetCelDisplayLeftAndRight(
-    std::uint32_t resolution_mode
+    uint32_t resolution_mode
 );
 
 } // namespace sgd2fr::patches

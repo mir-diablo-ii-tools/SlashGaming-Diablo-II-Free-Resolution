@@ -46,12 +46,12 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_HPP_
 
-#include <cstdint>
+#include <mdc/std/stdint.h>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight(
-    std::uint32_t resolution_mode
+    uint32_t resolution_mode
 );
 
 } // namespace sgd2fr::patches

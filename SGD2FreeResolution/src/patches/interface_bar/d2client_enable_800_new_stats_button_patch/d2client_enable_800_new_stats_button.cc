@@ -50,11 +50,11 @@
 
 namespace sgd2fr::patches {
 
-std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton() {
+uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton() {
   return Get800InterfaceBarEnabledValue();
 }
 
-std::uint32_t __cdecl Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue() {
+uint32_t __cdecl Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue() {
   return Get800InterfaceBarEnabledValue();
 }
 

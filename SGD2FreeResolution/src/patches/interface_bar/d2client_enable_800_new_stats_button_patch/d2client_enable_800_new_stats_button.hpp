@@ -46,18 +46,17 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_
 
-#include <cstdint>
-
+#include <mdc/std/stdint.h>
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
-extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton();
+extern "C" uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton();
 
 /**
  * Returns 0 if using 640x480 style, or 2 if 800x600 style.
  */
-extern "C" std::uint32_t __cdecl
+extern "C" uint32_t __cdecl
 Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue();
 
 extern "C" ::mapi::bool32 __cdecl

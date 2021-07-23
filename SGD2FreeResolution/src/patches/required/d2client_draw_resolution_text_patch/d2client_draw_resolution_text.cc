@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SlashGaming Diablo II Free Resolution
  * Copyright (C) 2019-2021  Mir Drualga
  *
@@ -59,9 +59,9 @@ namespace sgd2fr::patches {
 
 mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
     const ::d2::CelFile* cel_file_base_address,
-    std::int32_t offset_value,
-    std::int32_t right,
-    std::int32_t top
+    int32_t offset_value,
+    int32_t right,
+    int32_t top
 ) {
   const ::d2::CelFile* comparing_cel_file_base_address;
 

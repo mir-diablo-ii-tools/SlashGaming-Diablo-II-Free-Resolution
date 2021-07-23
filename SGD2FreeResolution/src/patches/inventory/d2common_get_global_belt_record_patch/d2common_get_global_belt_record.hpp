@@ -46,13 +46,14 @@
 #ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_RECORD_D2COMMON_GET_GLOBAL_BELT_RECORD_HPP_
 #define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_RECORD_D2COMMON_GET_GLOBAL_BELT_RECORD_HPP_
 
+#include <mdc/std/stdint.h>
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
-    std::uint32_t belt_record_index,
-    std::uint32_t inventory_arrange_mode,
+    uint32_t belt_record_index,
+    uint32_t inventory_arrange_mode,
     ::d2::BeltRecord* out_belt_record
 );
 

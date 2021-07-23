@@ -52,8 +52,8 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Common_GetGlobalInventoryPosition(
-    std::uint32_t inventory_record_index,
-    std::uint32_t inventory_arrange_mode,
+    uint32_t inventory_record_index,
+    uint32_t inventory_arrange_mode,
     ::d2::PositionalRectangle* out_position
 ) {
   // Original code, copies the values of the specified Global Inventory

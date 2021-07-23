@@ -46,14 +46,14 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_HPP_
 
-#include <cstdint>
+#include <mdc/std/stdint.h>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
     void* settings,
-    std::uint32_t reg_resolution_mode,
-    std::uint32_t* reg_resolution_mode_out
+    uint32_t reg_resolution_mode,
+    uint32_t* reg_resolution_mode_out
 );
 
 } // namespace sgd2fr::patches

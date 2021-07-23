@@ -51,7 +51,7 @@
 
 namespace sgd2fr::patches {
 
-std::uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar() {
+uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar() {
   return Get800InterfaceBarEnabledValue();
 }
 

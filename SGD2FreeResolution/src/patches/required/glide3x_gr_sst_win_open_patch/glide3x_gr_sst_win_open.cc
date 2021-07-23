@@ -57,9 +57,9 @@ static constexpr const wchar_t* kGlide3xPath = L"glide3x.dll";
 } // namespace
 
 void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
-    std::uint32_t glide_resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height
+    uint32_t glide_resolution_mode,
+    int32_t* width,
+    int32_t* height
 ) {
   std::tuple<int, int> resolution = GetIngameResolutionFromId(
       glide_resolution_mode - (0x1000 - 3)
@@ -67,10 +67,10 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
 
   switch (::d2::glide3x_library_version::GetRunning()) {
     case ::d2::glide3x_library_version::kSven1_4_4_21: {
-      width = *reinterpret_cast<std::int32_t**>(
+      width = *reinterpret_cast<int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1C9A0).raw_address()
       );
-      height = *reinterpret_cast<std::int32_t**>(
+      height = *reinterpret_cast<int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1C82C).raw_address()
       );
 
@@ -78,10 +78,10 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     }
 
     case ::d2::glide3x_library_version::kSven1_4_6_1: {
-      width = *reinterpret_cast<std::int32_t**>(
+      width = *reinterpret_cast<int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1C870).raw_address()
       );
-      height = *reinterpret_cast<std::int32_t**>(
+      height = *reinterpret_cast<int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1C830).raw_address()
       );
 
@@ -89,10 +89,10 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     }
 
     case ::d2::glide3x_library_version::kSven1_4_8_3: {
-      width = *reinterpret_cast<std::int32_t**>(
+      width = *reinterpret_cast<int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1D870).raw_address()
       );
-      height = *reinterpret_cast<std::int32_t**>(
+      height = *reinterpret_cast<int32_t**>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x1D830).raw_address()
       );
 
@@ -100,10 +100,10 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     }
 
     case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
-      width = reinterpret_cast<std::int32_t*>(
+      width = reinterpret_cast<int32_t*>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x169DA4).raw_address()
       );
-      height = reinterpret_cast<std::int32_t*>(
+      height = reinterpret_cast<int32_t*>(
           ::mapi::GameAddress::FromOffset(kGlide3xPath, 0x169F04).raw_address()
       );
 
