@@ -56,7 +56,7 @@ namespace d2 {
 namespace d2client {
 namespace {
 
-static ::std::intptr_t GetGameAddress() {
+static intptr_t GetGameAddress() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
