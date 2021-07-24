@@ -64,17 +64,15 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
 
   // Determine the width and height of the interface bar. Note that only
   // frames 1 - 4 should be drawn.
-  unsigned int interface_bar_width = 0;
+  int interface_bar_width = 0;
 
-  for (unsigned int frame = 1; frame <= 4; frame += 1) {
-    ::d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
+  for (size_t frame_index = 1; frame_index <= 4; frame_index += 1) {
+    ::d2::Cel_Wrapper cel(cel_file_wrapper.GetCel(0, frame_index));
 
-    interface_bar_width += cel_view.GetWidth();
+    interface_bar_width += cel.GetWidth();
   }
 
-  unsigned int interface_bar_height = ::d2::Cel_View(
-      cel_file_wrapper.GetCel(0, 0)
-  ).GetHeight();
+  int interface_bar_height = cel_file_wrapper.GetCel(0, 0).GetHeight();
 
   // Determine the start draw positions of the interface bar.
   const std::tuple display_width_and_height = GetIngameResolutionFromId(
@@ -85,25 +83,19 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
       (std::get<0>(display_width_and_height) - interface_bar_width) / 2;
 
   // Draw the interface bar. Note that only frames 1 - 4 should be drawn.
-  ::d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = ::mapi::Rgba32BitColor();
-  frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
   ::mapi::bool32 total_result = true;
-  for (unsigned int frame = 1; frame <= 4; frame += 1) {
+
+  for (size_t frame_index = 1; frame_index <= 4; frame_index += 1) {
+    ::d2::Cel_Wrapper cel(cel_file_wrapper.GetCel(0, frame_index));
+
     bool result = cel_file_wrapper.DrawFrame(
         draw_position_x,
         std::get<1>(display_width_and_height),
         0,
-        frame,
-        frame_options
+        frame_index
     );
 
-    ::d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
-    draw_position_x += cel_view.GetWidth();
-
+    draw_position_x += cel.GetWidth();
     total_result = total_result && result;
   }
 
