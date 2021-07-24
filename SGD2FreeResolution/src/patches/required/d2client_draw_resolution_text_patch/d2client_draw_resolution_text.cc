@@ -161,7 +161,7 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
 
   _snwprintf(
       resolution_str,
-      sizeof(resolution_str),
+      sizeof(resolution_str) / sizeof(resolution_str[0]),
       L"%dx%d",
       std::get<0>(resolution),
       std::get<1>(resolution)
