@@ -75,60 +75,60 @@ SetBitBlockWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_11: {
+    case ::d2::game_version::k1_11: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x6214
           ),
           0x623F - 0x6214
       );
     }
 
-    case ::d2::GameVersion::k1_11B: {
+    case ::d2::game_version::k1_11B: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x6F24
           ),
           0x6F4F - 0x6F24
       );
     }
 
-    case ::d2::GameVersion::k1_12A: {
+    case ::d2::game_version::k1_12A: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x6284
           ),
           0x62AF - 0x6284
       );
     }
 
-    case ::d2::GameVersion::k1_13ABeta: {
+    case ::d2::game_version::k1_13ABeta: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x62E4
           ),
           0x630F - 0x62E4
       );
     }
 
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x6D34
           ),
           0x6D5F - 0x6D34
       );
     }
 
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x7B84
           ),
           0x7BAF - 0x7B84

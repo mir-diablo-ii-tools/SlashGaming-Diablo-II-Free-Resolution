@@ -46,7 +46,7 @@
 
 #include "glide3x_library.h"
 
-#include "file/file_version_info.h"
+#include <sgd2mapi.h>
 
 #define GLIDE3X_LIBRARY_PATH L"glide3x.dll"
 

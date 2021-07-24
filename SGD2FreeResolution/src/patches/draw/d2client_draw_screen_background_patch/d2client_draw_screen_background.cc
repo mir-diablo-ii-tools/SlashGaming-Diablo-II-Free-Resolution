@@ -45,6 +45,7 @@
 
 #include "d2client_draw_screen_background.hpp"
 
+#include <stddef.h>
 #include <windows.h>
 
 #include <mdc/error/exit_on_error.hpp>
@@ -76,42 +77,38 @@ void DrawLeftScreenBackground() {
       ::d2::DrawEffect::kNone
   );
 
-  // Set up the frame options.
-  ::d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = ::mapi::Rgba32BitColor();
-  frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  // Store an array of Cel_Views to determine Cel Width and Heights.
-  std::vector<d2::Cel_View> cels;
-  for (unsigned int i = 0; i < screen_background.GetNumFrames(); i += 1) {
-    cels.push_back(d2::Cel_View(screen_background.GetCel(0, i)));
-  }
 
   // Draw the background.
-  const unsigned int half_num_frames = screen_background.GetNumFrames() / 2;
+  const size_t half_num_frames = screen_background.GetNumFrames() / 2;
 
   int height_covered = 0;
-  for (unsigned int row = 0; height_covered < std::get<0>(width_and_height); row += 1) {
-    int width_covered = 0;
-    unsigned int row_start_frame = (row % 2) * half_num_frames;
+  int width_covered = 0;
+  size_t column = 0;
+  size_t row = 0;
 
-    for (unsigned int col = 0; width_covered < ((std::get<0>(width_and_height) / 2) - 1); col += 1) {
-      unsigned int current_frame = row_start_frame + ((half_num_frames - 1) - (col % half_num_frames));
+  while (height_covered < std::get<1>(width_and_height)) {
+    const size_t frame = ((row % 2) * half_num_frames)
+        + (column % half_num_frames);
 
-      screen_background.DrawFrame(
-          (std::get<0>(width_and_height) / 2) - width_covered + cels.at(current_frame).GetOffsetX(),
-          height_covered + cels.at(current_frame).GetOffsetY(),
-          0,
-          current_frame,
-          frame_options
-      );
+    ::d2::Cel_Wrapper cel = screen_background.GetCel(0, frame);
 
-      width_covered += cels.at(current_frame).GetWidth();
+    screen_background.DrawFrame(
+        (std::get<0>(width_and_height) / 2) - width_covered - cel.GetWidth(),
+        height_covered + cel.GetHeight(),
+        0,
+        frame
+    );
+
+    width_covered += cel.GetWidth();
+    if (width_covered < std::get<0>(width_and_height)) {
+      column += 1;
+    } else {
+      width_covered = 0;
+      column = 0;
+
+      height_covered += cel.GetHeight();
+      row += 1;
     }
-
-    height_covered += cels.at(row_start_frame).GetHeight();
   }
 }
 
@@ -130,42 +127,37 @@ void DrawRightScreenBackground() {
       ::d2::DrawEffect::kNone
   );
 
-  // Set up the frame options.
-  ::d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = ::mapi::Rgba32BitColor();
-  frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  // Store an array of Cel_Views to determine Cel Width and Heights.
-  std::vector<d2::Cel_View> cels;
-  for (unsigned int i = 0; i < screen_background.GetNumFrames(); i += 1) {
-    cels.push_back(d2::Cel_View(screen_background.GetCel(0, i)));
-  }
-
   // Draw the background.
-  const unsigned int half_num_frames = screen_background.GetNumFrames() / 2;
+  const size_t half_num_frames = screen_background.GetNumFrames() / 2;
 
   int height_covered = 0;
-  for (unsigned int row = 0; height_covered < std::get<0>(width_and_height); row += 1) {
-    int width_covered = 0;
-    unsigned int row_start_frame = (row % 2) * half_num_frames;
+  int width_covered = 0;
+  size_t column = 0;
+  size_t row = 0;
 
-    for (unsigned int col = 0; width_covered < ((std::get<0>(width_and_height) / 2) - 1); col += 1) {
-      unsigned int current_frame = row_start_frame + (col % half_num_frames);
+  while (height_covered < std::get<1>(width_and_height)) {
+    const size_t frame = ((row % 2) * half_num_frames)
+        + (column % half_num_frames);
 
-      screen_background.DrawFrame(
-          (std::get<0>(width_and_height) / 2) + width_covered + cels.at(current_frame).GetOffsetX(),
-          height_covered + cels.at(current_frame).GetOffsetY(),
-          0,
-          current_frame,
-          frame_options
-      );
+    ::d2::Cel_Wrapper cel = screen_background.GetCel(0, frame);
 
-      width_covered += cels.at(current_frame).GetWidth();
+    screen_background.DrawFrame(
+        width_covered,
+        height_covered + cel.GetHeight(),
+        0,
+        frame
+    );
+
+    width_covered += cel.GetWidth();
+    if (width_covered < std::get<0>(width_and_height)) {
+      column += 1;
+    } else {
+      width_covered = 0;
+      column = 0;
+
+      height_covered += cel.GetHeight();
+      row += 1;
     }
-
-    height_covered += cels.at(row_start_frame).GetHeight();
   }
 }
 
@@ -174,110 +166,128 @@ void DrawRightScreenBackground() {
  * different code due to its abnormal structure.
  */
 void DrawOriginalLeftScreenBorderFrame() {
-  ::d2::CelFile_Api& screen_border_frame = GetCelFile(kOriginalScreenBorderFrameImagePath);
+  enum {
+    kNumFramesOnLeft = 5,
+    kNumFramesOnRight = 4,
+  };
 
-  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  ::d2::CelFile_Api& screen_border_frame = GetCelFile(
+      kOriginalScreenBorderFrameImagePath
+  );
+
+  std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
 
   const int left = (std::get<0>(width_and_height) - 640 - (800 - 640)) / 2;
   const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
 
-  std::vector<d2::Cel_View> cels;
-  for (unsigned int i = 0; i < screen_border_frame.GetNumFrames(); i += 1) {
-    cels.push_back(screen_border_frame.GetCel(0, i));
-  }
-
-  ::d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = ::mapi::Rgba32BitColor();
-  frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  screen_border_frame.DrawFrame(left, top, 0, 0, frame_options);
+  ::d2::Cel_Wrapper cels[kNumFramesOnLeft] = {
+      screen_border_frame.GetCel(0, 0),
+      screen_border_frame.GetCel(0, 1),
+      screen_border_frame.GetCel(0, 2),
+      screen_border_frame.GetCel(0, 3),
+      screen_border_frame.GetCel(0, 4),
+  };
 
   screen_border_frame.DrawFrame(
-      left + cels.at(0).GetWidth(),
-      top,
+      left,
+      top + cels[0].GetHeight(),
       0,
-      1,
-      frame_options
+      0
+  );
+
+  screen_border_frame.DrawFrame(
+      left + cels[0].GetWidth(),
+      top + cels[1].GetHeight(),
+      0,
+      1
   );
 
   screen_border_frame.DrawFrame(
       left,
-      top + cels.at(0).GetHeight(),
+      top + cels[0].GetHeight() + cels[2].GetHeight(),
       0,
-      2,
-      frame_options
+      2
   );
 
   screen_border_frame.DrawFrame(
       left,
-      top + cels.at(0).GetHeight() + cels.at(2).GetHeight(),
+      top + cels[0].GetHeight() + cels[2].GetHeight() + cels[3].GetHeight(),
       0,
-      3,
-      frame_options
+      3
   );
 
   screen_border_frame.DrawFrame(
-      left + cels.at(3).GetWidth(),
-      top + cels.at(0).GetHeight() + cels.at(2).GetHeight(),
+      left + cels[3].GetWidth(),
+      top + cels[0].GetHeight() + cels[2].GetHeight() + cels[4].GetHeight(),
       0,
-      4,
-      frame_options
+      4
   );
 }
 
 void DrawOriginalRightScreenBorderFrame() {
-  ::d2::CelFile_Api& screen_border_frame = GetCelFile(kOriginalScreenBorderFrameImagePath);
+  enum {
+    kNumFramesOnLeft = 5,
+    kNumFramesOnRight = 5,
+  };
+
+  ::d2::CelFile_Api& screen_border_frame = GetCelFile(
+      kOriginalScreenBorderFrameImagePath
+  );
 
   std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   const int right = (std::get<0>(width_and_height) + 640 + (800 - 640)) / 2;
   const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
 
-  std::vector<d2::Cel_View> cels;
-  for (unsigned int i = 0; i < screen_border_frame.GetNumFrames(); i += 1) {
-    cels.push_back(screen_border_frame.GetCel(0, i));
-  }
-
-  ::d2::DrawCelFileFrameOptions frame_options;
-  frame_options.color = ::mapi::Rgba32BitColor();
-  frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  screen_border_frame.DrawFrame(right, top, 0, 6, frame_options);
+  ::d2::Cel_Wrapper cels[kNumFramesOnRight] = {
+      screen_border_frame.GetCel(0, kNumFramesOnLeft),
+      screen_border_frame.GetCel(0, kNumFramesOnLeft + 1),
+      screen_border_frame.GetCel(0, kNumFramesOnLeft + 2),
+      screen_border_frame.GetCel(0, kNumFramesOnLeft + 3),
+      screen_border_frame.GetCel(0, kNumFramesOnLeft + 4),
+  };
 
   screen_border_frame.DrawFrame(
-      right - cels.at(6).GetWidth(),
-      top,
+      right - cels[6 - kNumFramesOnLeft].GetWidth(),
+      top + cels[6 - kNumFramesOnLeft].GetHeight(),
       0,
-      5,
-      frame_options
+      6
   );
 
   screen_border_frame.DrawFrame(
-      right,
-      top + cels.at(6).GetHeight(),
+      right - cels[6 - kNumFramesOnLeft].GetWidth()
+          - cels[5 - kNumFramesOnLeft].GetWidth(),
+      top + cels[5 - kNumFramesOnLeft].GetHeight(),
       0,
-      7,
-      frame_options
+      5
   );
 
   screen_border_frame.DrawFrame(
-      right,
-      top + cels.at(6).GetHeight() + cels.at(7).GetHeight(),
+      right - cels[6 - kNumFramesOnLeft].GetWidth(),
+      top + cels[6 - kNumFramesOnLeft].GetHeight()
+          + cels[7 - kNumFramesOnLeft].GetHeight(),
       0,
-      8,
-      frame_options
+      7
   );
 
   screen_border_frame.DrawFrame(
-      right - cels.at(8).GetWidth(),
-      top + cels.at(6).GetHeight() + cels.at(7).GetHeight(),
+      right - cels[8 - kNumFramesOnLeft].GetWidth(),
+      top + cels[6 - kNumFramesOnLeft].GetHeight()
+          + cels[7 - kNumFramesOnLeft].GetHeight()
+          + cels[8 - kNumFramesOnLeft].GetHeight(),
       0,
-      9,
-      frame_options
+      8
+  );
+
+  screen_border_frame.DrawFrame(
+      right - cels[8 - kNumFramesOnLeft].GetWidth(),
+      top + cels[6 - kNumFramesOnLeft].GetHeight()
+          + cels[7 - kNumFramesOnLeft].GetHeight()
+          + cels[9 - kNumFramesOnLeft].GetHeight(),
+      0,
+      9
   );
 }
 
@@ -296,9 +306,12 @@ void DrawCustomLeftScreenBorderFrame() {
 
   int screen_left_border_height = 0;
 
-  for (unsigned int frame = 0; frame < screen_left_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_left_border.GetCel(0, frame);
-    screen_left_border_height += cel_view.GetHeight();
+  for (size_t frame_index = 0;
+      frame_index < screen_left_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_View cel = screen_left_border.GetCel(0, frame_index);
+    screen_left_border_height += cel.GetHeight();
   }
 
   const int border_top = screen_top + (((256 + 176) - screen_left_border_height) / 2);
@@ -307,110 +320,108 @@ void DrawCustomLeftScreenBorderFrame() {
   // Draw the left screen's top right border.
   int screen_top_right_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_top_right_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_top_right_border.GetCel(0, frame);
-    screen_top_right_border_width += cel_view.GetWidth();
+  for (size_t frame_index = screen_top_right_border.GetNumFrames() - 1;
+      (frame_index + 1) > 0;
+      frame_index -= 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_top_right_border.GetCel(
+        0,
+        frame_index
+    );
+
+    screen_top_right_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2)
+            - screen_top_right_border_width
+            - cel.GetWidth(),
+        border_top + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_top_right_border_width += cel.GetWidth();
   }
-
-  ::d2::DrawAllCelFileFramesOptions screen_top_right_all_frame_options;
-  screen_top_right_all_frame_options.cel_file_direction = 0;
-  screen_top_right_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_right_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_right_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_top_right_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  screen_top_right_border.DrawAllFrames(
-      std::get<0>(width_and_height) / 2,
-      border_top,
-      screen_top_right_border.GetNumFrames(),
-      1,
-      screen_top_right_all_frame_options
-  );
 
   // Draw the left screen's top border.
   int screen_top_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_top_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_top_border.GetCel(0, frame);
-    screen_top_border_width += cel_view.GetWidth();
+  for (size_t frame_index = screen_top_border.GetNumFrames() - 1;
+      (frame_index + 1) > 0;
+      frame_index -= 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_top_border.GetCel(0, frame_index);
+
+    screen_top_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2)
+            - screen_top_right_border_width
+            - cel.GetWidth(),
+        border_top + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_top_border_width += cel.GetWidth();
   }
-
-  ::d2::DrawAllCelFileFramesOptions screen_top_all_frame_options;
-  screen_top_all_frame_options.cel_file_direction = 0;
-  screen_top_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_top_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  screen_top_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) - screen_top_right_border_width,
-      border_top,
-      screen_top_border.GetNumFrames(),
-      1,
-      screen_top_all_frame_options
-  );
 
   // Draw the left screen's bottom right border.
   int screen_bottom_right_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_bottom_right_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_bottom_right_border.GetCel(0, frame);
-    screen_bottom_right_border_width += cel_view.GetWidth();
+  for (size_t frame_index = screen_bottom_right_border.GetNumFrames() - 1;
+      (frame_index + 1) > 0;
+      frame_index -= 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_bottom_right_border.GetCel(0, frame_index);
+
+    screen_bottom_right_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2)
+            - screen_bottom_right_border_width
+            - cel.GetWidth(),
+        border_bottom,
+        0,
+        frame_index
+    );
+
+    screen_bottom_right_border_width += cel.GetWidth();
   }
-
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_right_all_frame_options;
-  screen_bottom_right_all_frame_options.cel_file_direction = 0;
-  screen_bottom_right_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_right_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_right_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_bottom_right_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  screen_bottom_right_border.DrawAllFrames(
-      std::get<0>(width_and_height) / 2,
-      border_bottom,
-      screen_bottom_right_border.GetNumFrames(),
-      1,
-      screen_bottom_right_all_frame_options
-  );
 
   // Draw the left screen's bottom border.
   int screen_bottom_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_bottom_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_bottom_border.GetCel(0, frame);
-    screen_bottom_border_width += cel_view.GetWidth();
+  for (size_t frame_index = screen_bottom_border.GetNumFrames() - 1;
+      (frame_index + 1) > 0;
+      frame_index -= 1) {
+    ::d2::Cel_Wrapper cel = screen_bottom_border.GetCel(0, frame_index);
+
+    screen_bottom_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2)
+            - screen_bottom_right_border_width
+            - cel.GetWidth(),
+        border_bottom,
+        0,
+        frame_index
+    );
+
+    screen_bottom_border_width += cel.GetWidth();
   }
 
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_all_frame_options;
-  screen_bottom_all_frame_options.cel_file_direction = 0;
-  screen_bottom_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_bottom_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  screen_bottom_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) - screen_bottom_right_border_width,
-      border_bottom,
-      screen_bottom_border.GetNumFrames(),
-      1,
-      screen_bottom_all_frame_options
-  );
-
   // Draw the left screen's left border.
-  ::d2::DrawAllCelFileFramesOptions screen_left_all_frame_options;
-  screen_left_all_frame_options.cel_file_direction = 0;
-  screen_left_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_left_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_left_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_left_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
+  // TODO (Mir Drualga): Definition disabled to suppress error.
+  /*int*/ screen_left_border_height = 0;
 
-  screen_left_border.DrawAllFrames(
-      (std::get<0>(width_and_height) - 640) / 2,
-      border_top,
-      1,
-      screen_left_border.GetNumFrames(),
-      screen_left_all_frame_options
-  );
+  for (size_t frame_index = 0;
+      frame_index < screen_left_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_left_border.GetCel(0, frame_index);
+
+    screen_left_border.DrawFrame(
+        ((std::get<0>(width_and_height) - 640) / 2) - cel.GetWidth(),
+        border_top + screen_left_border_height + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_left_border_height += cel.GetHeight();
+  }
 }
 
 void DrawCustomRightScreenBorderFrame() {
@@ -439,113 +450,105 @@ void DrawCustomRightScreenBorderFrame() {
   // Draw the right screen's top left border.
   int screen_top_left_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_top_left_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_top_left_border.GetCel(0, frame);
-    screen_top_left_border_width += cel_view.GetWidth();
+  for (size_t frame_index = 0;
+      frame_index < screen_top_left_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_top_left_border.GetCel(0, frame_index);
+
+    screen_top_left_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2) + screen_top_left_border_width,
+        border_top + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_top_left_border_width += cel.GetWidth();
   }
-
-  ::d2::DrawAllCelFileFramesOptions screen_top_left_all_frame_options;
-  screen_top_left_all_frame_options.cel_file_direction = 0;
-  screen_top_left_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_left_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_left_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_top_left_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  screen_top_left_border.DrawAllFrames(
-      std::get<0>(width_and_height) / 2,
-      border_top,
-      screen_top_left_border.GetNumFrames(),
-      1,
-      screen_top_left_all_frame_options
-  );
 
   // Draw the right screen's top border.
   int screen_top_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_top_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_top_border.GetCel(0, frame);
-    screen_top_border_width += cel_view.GetWidth();
+  for (size_t frame_index = 0;
+      frame_index < screen_top_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_top_border.GetCel(0, frame_index);
+
+    screen_top_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2)
+            + screen_top_left_border_width
+            + screen_top_border_width,
+        border_top + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_top_border_width += cel.GetWidth();
   }
-
-  ::d2::DrawAllCelFileFramesOptions screen_top_all_frame_options;
-  screen_top_all_frame_options.cel_file_direction = 0;
-  screen_top_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_top_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  screen_top_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) + screen_top_left_border_width,
-      border_top,
-      screen_top_border.GetNumFrames(),
-      1,
-      screen_top_all_frame_options
-  );
 
   // Draw the right screen's bottom left border.
   int screen_bottom_left_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_bottom_left_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_bottom_left_border.GetCel(0, frame);
-    screen_bottom_left_border_width += cel_view.GetWidth();
+  for (size_t frame_index = 0;
+      frame_index < screen_bottom_left_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_bottom_left_border.GetCel(0, frame_index);
+
+    screen_bottom_left_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2) + screen_bottom_left_border_width,
+        border_bottom,
+        0,
+        frame_index
+    );
+
+    screen_bottom_left_border_width += cel.GetWidth();
   }
-
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_left_all_frame_options;
-  screen_bottom_left_all_frame_options.cel_file_direction = 0;
-  screen_bottom_left_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_left_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_left_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_left_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  screen_bottom_left_border.DrawAllFrames(
-      std::get<0>(width_and_height) / 2,
-      border_bottom,
-      screen_bottom_left_border.GetNumFrames(),
-      1,
-      screen_bottom_left_all_frame_options
-  );
 
   // Draw the right screen's bottom border.
   int screen_bottom_border_width = 0;
 
-  for (unsigned int frame = 0; frame < screen_bottom_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_bottom_border.GetCel(0, frame);
-    screen_bottom_border_width += cel_view.GetWidth();
+  for (size_t frame_index = 0;
+      frame_index < screen_bottom_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_bottom_border.GetCel(0, frame_index);
+
+    screen_bottom_border.DrawFrame(
+        (std::get<0>(width_and_height) / 2)
+            + screen_bottom_left_border_width
+            + screen_bottom_border_width,
+        border_bottom,
+        0,
+        frame_index
+    );
+
+    screen_bottom_border_width += cel.GetWidth();
   }
 
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_all_frame_options;
-  screen_bottom_all_frame_options.cel_file_direction = 0;
-  screen_bottom_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  screen_bottom_border.DrawAllFrames(
-      (std::get<0>(width_and_height) / 2) + screen_bottom_left_border_width,
-      border_bottom,
-      screen_bottom_border.GetNumFrames(),
-      1,
-      screen_bottom_all_frame_options
-  );
-
   // Draw the right screen's right border.
-  ::d2::DrawAllCelFileFramesOptions screen_right_all_frame_options;
-  screen_right_all_frame_options.cel_file_direction = 0;
-  screen_right_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_right_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_right_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_right_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
+  // TODO (Mir Drualga): Definition disabled to suppress error.
+  /*int*/ screen_right_border_height = 0;
 
-  screen_right_border.DrawAllFrames(
-      screen_right,
-      border_top,
-      1,
-      screen_right_border.GetNumFrames(),
-      screen_right_all_frame_options
-  );
+  for (size_t frame_index = 0;
+      frame_index < screen_right_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_right_border.GetCel(0, frame_index);
+
+    screen_right_border.DrawFrame(
+        screen_right,
+        border_top + screen_right_border_height + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_right_border_height += cel.GetHeight();
+  }
 }
 
-void DrawLeftScreenBorderFrame() {
+static void DrawLeftScreenBorderFrame() {
   if (!config::IsScreenBorderFrameEnabled()) {
     return;
   }
@@ -557,7 +560,7 @@ void DrawLeftScreenBorderFrame() {
   }
 }
 
-void DrawRightScreenBorderFrame() {
+static void DrawRightScreenBorderFrame() {
   if (!config::IsScreenBorderFrameEnabled()) {
     return;
   }
@@ -569,14 +572,19 @@ void DrawRightScreenBorderFrame() {
   }
 }
 
-void DrawLeftScreenBackgroundRibbon() {
-  ::d2::CelFile_Api& screen_border_horizontal_ribbon = GetCelFile(config::GetScreenBorderHorizontalRibbonImagePath());
-  ::d2::CelFile_Api& screen_border_vertical_ribbon = GetCelFile(config::GetScreenBorderVerticalRibbonImagePath());
+static void DrawLeftScreenBackgroundHorizontalRibbons() {
+  ::d2::CelFile_Api& screen_border_horizontal_ribbon = GetCelFile(
+      config::GetScreenBorderHorizontalRibbonImagePath()
+  );
 
-  ::d2::CelFile_Api& screen_left_border = GetCelFile(config::GetCustomLeftScreenBorderLeftImagePath());
+  ::d2::CelFile_Api& screen_left_border = GetCelFile(
+      config::GetCustomLeftScreenBorderLeftImagePath()
+  );
 
   // Determine border starting positions.
-  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
 
   const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
   const int screen_right = std::get<0>(width_and_height) / 2;
@@ -584,149 +592,163 @@ void DrawLeftScreenBackgroundRibbon() {
 
   int screen_left_border_height = 0;
 
-  for (unsigned int frame = 0; frame < screen_left_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_left_border.GetCel(0, frame);
-    screen_left_border_height += cel_view.GetHeight();
+  for (size_t frame_index = 0;
+      frame_index < screen_left_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_View cel = screen_left_border.GetCel(0, frame_index);
+    screen_left_border_height += cel.GetHeight();
   }
 
   const int border_top = screen_top + (((256 + 176) - screen_left_border_height) / 2);
-  const int border_left = screen_left - ::d2::Cel_View(screen_left_border.GetCel(0, 0)).GetWidth();
+  const int border_left = screen_left - screen_left_border.GetCel(0, 0).GetWidth();
   const int border_bottom = screen_top + (((256 + 176) + screen_left_border_height) / 2);
 
   // Draw horizontal bars.
-  ::d2::DrawAllCelFileFramesOptions screen_top_horizontal_ribbon_all_frame_options;
-  screen_top_horizontal_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_top_horizontal_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_horizontal_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_horizontal_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_top_horizontal_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_horizontal_ribbon_all_frame_options;
-  screen_bottom_horizontal_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_bottom_horizontal_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_horizontal_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_horizontal_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_bottom_horizontal_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  int screen_border_horizontal_ribbon_width = 0;
-  for (unsigned int frame = 0; frame < screen_border_horizontal_ribbon.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_border_horizontal_ribbon.GetCel(0, frame);
-
-    screen_border_horizontal_ribbon_width += cel_view.GetWidth();
-  }
-
   int width_covered = 0;
 
-  while (width_covered < border_left) {
-    screen_border_horizontal_ribbon.DrawAllFrames(
-        border_left - width_covered,
-        border_top,
-        screen_border_horizontal_ribbon.GetNumFrames(),
-        1,
-        screen_top_horizontal_ribbon_all_frame_options
+  for (size_t frame_index = 0;
+      width_covered < border_left;
+      frame_index += 1
+  ) {
+    frame_index %= screen_border_horizontal_ribbon.GetNumFrames();
+
+    ::d2::Cel_Wrapper cel = screen_border_horizontal_ribbon.GetCel(
+        0,
+        frame_index
     );
 
-    screen_border_horizontal_ribbon.DrawAllFrames(
-        border_left - width_covered,
+    screen_border_horizontal_ribbon.DrawFrame(
+        border_left - width_covered - cel.GetWidth(),
+        border_top + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_border_horizontal_ribbon.DrawFrame(
+        border_left - width_covered - cel.GetWidth(),
         border_bottom,
-        screen_border_horizontal_ribbon.GetNumFrames(),
-        1,
-        screen_bottom_horizontal_ribbon_all_frame_options
+        0,
+        frame_index
     );
 
-    width_covered += screen_border_horizontal_ribbon_width;
-  }
-
-  // Draw top vertical bars.
-  ::d2::DrawAllCelFileFramesOptions screen_top_left_vertical_ribbon_all_frame_options;
-  screen_top_left_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_top_left_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_left_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_left_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_top_left_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  ::d2::DrawAllCelFileFramesOptions screen_top_right_vertical_ribbon_all_frame_options;
-  screen_top_right_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_top_right_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_right_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_right_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_top_right_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  int screen_border_vertical_ribbon_height = 0;
-  for (unsigned int frame = 0; frame < screen_border_vertical_ribbon.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_border_vertical_ribbon.GetCel(0, frame);
-
-    screen_border_vertical_ribbon_height += cel_view.GetHeight();
-  }
-
-  int top_height_covered = 0;
-
-  while (top_height_covered < border_top) {
-    screen_border_vertical_ribbon.DrawAllFrames(
-        border_left,
-        border_top - top_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_top_left_vertical_ribbon_all_frame_options
-    );
-
-    screen_border_vertical_ribbon.DrawAllFrames(
-        screen_right,
-        border_top - top_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_top_right_vertical_ribbon_all_frame_options
-    );
-
-    top_height_covered += screen_border_vertical_ribbon_height;
-  }
-
-  // Draw bottom vertical bars.
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_left_vertical_ribbon_all_frame_options;
-  screen_bottom_left_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_bottom_left_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_left_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_left_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_left_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_right_vertical_ribbon_all_frame_options;
-  screen_bottom_right_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_bottom_right_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_right_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_right_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_bottom_right_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  int bottom_height_covered = 0;
-
-  while (bottom_height_covered < border_top) {
-    screen_border_vertical_ribbon.DrawAllFrames(
-        border_left,
-        border_bottom + bottom_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_bottom_left_vertical_ribbon_all_frame_options
-    );
-
-    screen_border_vertical_ribbon.DrawAllFrames(
-        screen_right,
-        border_bottom + bottom_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_bottom_right_vertical_ribbon_all_frame_options
-    );
-
-    bottom_height_covered += screen_border_vertical_ribbon_height;
+    width_covered += cel.GetWidth();
   }
 }
 
-void DrawRightScreenBackgroundRibbon() {
-  ::d2::CelFile_Api& screen_border_horizontal_ribbon = GetCelFile(config::GetScreenBorderHorizontalRibbonImagePath());
-  ::d2::CelFile_Api& screen_border_vertical_ribbon = GetCelFile(config::GetScreenBorderVerticalRibbonImagePath());
+static void DrawLeftScreenBackgroundVerticalRibbons() {
+  ::d2::CelFile_Api& screen_border_vertical_ribbon = GetCelFile(
+      config::GetScreenBorderVerticalRibbonImagePath()
+  );
 
-  ::d2::CelFile_Api& screen_right_border = GetCelFile(config::GetCustomRightScreenBorderRightImagePath());
+  ::d2::CelFile_Api& screen_left_border = GetCelFile(
+      config::GetCustomLeftScreenBorderLeftImagePath()
+  );
 
   // Determine border starting positions.
-  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
+
+  const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
+  const int screen_right = std::get<0>(width_and_height) / 2;
+  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+
+  int screen_left_border_height = 0;
+
+  for (size_t frame_index = 0;
+      frame_index < screen_left_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_View cel = screen_left_border.GetCel(0, frame_index);
+    screen_left_border_height += cel.GetHeight();
+  }
+
+  const int border_top = screen_top + (((256 + 176) - screen_left_border_height) / 2);
+  const int border_left = screen_left - screen_left_border.GetCel(0, 0).GetWidth();
+  const int border_bottom = screen_top + (((256 + 176) + screen_left_border_height) / 2);
+
+  // Draw top vertical bars.
+  int top_height_covered = 0;
+
+  for (size_t frame_index = 0;
+      top_height_covered < border_top;
+      frame_index += 1
+  ) {
+    frame_index %= screen_border_vertical_ribbon.GetNumFrames();
+
+    ::d2::Cel_Wrapper cel = screen_border_vertical_ribbon.GetCel(
+        0,
+        frame_index
+    );
+
+    screen_border_vertical_ribbon.DrawFrame(
+        border_left,
+        border_top - top_height_covered,
+        0,
+        frame_index
+    );
+
+    screen_border_vertical_ribbon.DrawFrame(
+        screen_right - cel.GetWidth(),
+        border_top - top_height_covered,
+        0,
+        frame_index
+    );
+
+    top_height_covered += cel.GetHeight();
+  }
+
+  // Draw bottom vertical bars.
+  int bottom_height_covered = 0;
+
+  for (size_t frame_index = 0;
+      bottom_height_covered < border_top;
+      frame_index += 1
+  ) {
+    frame_index %= screen_border_vertical_ribbon.GetNumFrames();
+
+    ::d2::Cel_Wrapper cel = screen_border_vertical_ribbon.GetCel(
+        0,
+        frame_index
+    );
+
+    screen_border_vertical_ribbon.DrawFrame(
+        border_left,
+        border_bottom + bottom_height_covered + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_border_vertical_ribbon.DrawFrame(
+        screen_right - cel.GetWidth(),
+        border_bottom + bottom_height_covered + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    bottom_height_covered += cel.GetWidth();
+  }
+}
+
+void DrawLeftScreenBackgroundRibbon() {
+  DrawLeftScreenBackgroundHorizontalRibbons();
+  DrawLeftScreenBackgroundVerticalRibbons();
+}
+
+static void DrawRightScreenBackgroundHorizontalRibbon() {
+  ::d2::CelFile_Api& screen_border_horizontal_ribbon = GetCelFile(
+      config::GetScreenBorderHorizontalRibbonImagePath()
+  );
+
+  ::d2::CelFile_Api& screen_right_border = GetCelFile(
+      config::GetCustomRightScreenBorderRightImagePath()
+  );
+
+  // Determine border starting positions.
+  const ::std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
 
   const int screen_left = std::get<0>(width_and_height) / 2;
   const int screen_right = (std::get<0>(width_and_height) + 640) / 2;
@@ -734,139 +756,149 @@ void DrawRightScreenBackgroundRibbon() {
 
   int screen_right_border_height = 0;
 
-  for (unsigned int frame = 0; frame < screen_right_border.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_right_border.GetCel(0, frame);
-    screen_right_border_height += cel_view.GetHeight();
+  for (size_t frame_index = 0;
+      frame_index < screen_right_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_Wrapper cel = screen_right_border.GetCel(0, frame_index);
+    screen_right_border_height += cel.GetHeight();
   }
 
   const int border_top = screen_top + (((256 + 176) - screen_right_border_height) / 2);
-  const int border_right = screen_right + ::d2::Cel_View(screen_right_border.GetCel(0, 0)).GetWidth();
+  const int border_right = screen_right + screen_right_border.GetCel(0, 0).GetWidth();
   const int border_bottom = border_top + screen_right_border_height;
 
   // Draw horizontal bars.
-  ::d2::DrawAllCelFileFramesOptions screen_top_horizontal_ribbon_all_frame_options;
-  screen_top_horizontal_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_top_horizontal_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_horizontal_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_horizontal_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_top_horizontal_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_horizontal_ribbon_all_frame_options;
-  screen_bottom_horizontal_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_bottom_horizontal_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_horizontal_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_horizontal_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_horizontal_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  int screen_border_horizontal_ribbon_width = 0;
-  for (unsigned int frame = 0; frame < screen_border_horizontal_ribbon.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_border_horizontal_ribbon.GetCel(0, frame);
-
-    screen_border_horizontal_ribbon_width += cel_view.GetWidth();
-  }
-
+  size_t frame_index = 0;
   int width_covered = 0;
 
-  while (width_covered < (std::get<0>(width_and_height) - border_right)) {
-    screen_border_horizontal_ribbon.DrawAllFrames(
-        border_right + width_covered,
-        border_top,
-        screen_border_horizontal_ribbon.GetNumFrames(),
-        1,
-        screen_top_horizontal_ribbon_all_frame_options
+  for (size_t frame_index = 0;
+      width_covered < (std::get<0>(width_and_height) - border_right);
+      frame_index += 1
+  ) {
+    frame_index %= screen_border_horizontal_ribbon.GetNumFrames();
+
+    ::d2::Cel_Wrapper cel = screen_border_horizontal_ribbon.GetCel(
+        0,
+        frame_index
     );
 
-    screen_border_horizontal_ribbon.DrawAllFrames(
+    screen_border_horizontal_ribbon.DrawFrame(
+        border_right + width_covered,
+        border_top + cel.GetHeight(),
+        0,
+        frame_index
+    );
+
+    screen_border_horizontal_ribbon.DrawFrame(
         border_right + width_covered,
         border_bottom,
-        screen_border_horizontal_ribbon.GetNumFrames(),
-        1,
-        screen_bottom_horizontal_ribbon_all_frame_options
+        0,
+        frame_index
     );
 
-    width_covered += screen_border_horizontal_ribbon_width;
+    width_covered += cel.GetWidth();
   }
+}
+
+static void DrawRightScreenBackgroundVerticalRibbons() {
+  ::d2::CelFile_Api& screen_border_vertical_ribbon = GetCelFile(
+      config::GetScreenBorderVerticalRibbonImagePath()
+  );
+
+  ::d2::CelFile_Api& screen_right_border = GetCelFile(
+      config::GetCustomRightScreenBorderRightImagePath()
+  );
+
+  // Determine border starting positions.
+  const std::tuple width_and_height = GetIngameResolutionFromId(
+      d2::d2gfx::GetResolutionMode()
+  );
+
+  const int screen_left = std::get<0>(width_and_height) / 2;
+  const int screen_right = (std::get<0>(width_and_height) + 640) / 2;
+  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+
+  int screen_right_border_height = 0;
+
+  for (size_t frame_index = 0;
+      frame_index < screen_right_border.GetNumFrames();
+      frame_index += 1
+  ) {
+    ::d2::Cel_View cel = screen_right_border.GetCel(0, frame_index);
+    screen_right_border_height += cel.GetHeight();
+  }
+
+  const int border_top = screen_top + (((256 + 176) - screen_right_border_height) / 2);
+  const int border_right = screen_right + screen_right_border.GetCel(0, 0).GetWidth();
+  const int border_bottom = border_top + screen_right_border_height;
 
   // Draw top vertical bars.
-  ::d2::DrawAllCelFileFramesOptions screen_top_left_vertical_ribbon_all_frame_options;
-  screen_top_left_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_top_left_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_left_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_left_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_top_left_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  ::d2::DrawAllCelFileFramesOptions screen_top_right_vertical_ribbon_all_frame_options;
-  screen_top_right_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_top_right_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_top_right_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_top_right_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_top_right_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
-
-  int screen_border_vertical_ribbon_height = 0;
-  for (unsigned int frame = 0; frame < screen_border_vertical_ribbon.GetNumFrames(); frame += 1) {
-    ::d2::Cel_View cel_view = screen_border_vertical_ribbon.GetCel(0, frame);
-
-    screen_border_vertical_ribbon_height += cel_view.GetHeight();
-  }
-
   int top_height_covered = 0;
 
-  while (top_height_covered < border_top) {
-    screen_border_vertical_ribbon.DrawAllFrames(
+  for (size_t frame_index = 0;
+      top_height_covered < border_top;
+      frame_index += 1
+  ) {
+    frame_index %= screen_border_vertical_ribbon.GetNumFrames();
+
+    ::d2::Cel_Wrapper cel = screen_border_vertical_ribbon.GetCel(
+        0,
+        frame_index
+    );
+
+    screen_border_vertical_ribbon.DrawFrame(
         screen_left,
         border_top - top_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_top_left_vertical_ribbon_all_frame_options
+        0,
+        frame_index
     );
 
-    screen_border_vertical_ribbon.DrawAllFrames(
-        border_right,
+    screen_border_vertical_ribbon.DrawFrame(
+        border_right - cel.GetWidth(),
         border_top - top_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_top_right_vertical_ribbon_all_frame_options
+        0,
+        frame_index
     );
 
-    top_height_covered += screen_border_vertical_ribbon_height;
+    top_height_covered += cel.GetHeight();
   }
 
   // Draw bottom vertical bars.
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_left_vertical_ribbon_all_frame_options;
-  screen_bottom_left_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_bottom_left_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_left_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_left_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
-  screen_bottom_left_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
-  ::d2::DrawAllCelFileFramesOptions screen_bottom_right_vertical_ribbon_all_frame_options;
-  screen_bottom_right_vertical_ribbon_all_frame_options.cel_file_direction = 0;
-  screen_bottom_right_vertical_ribbon_all_frame_options.color = ::mapi::Rgba32BitColor();
-  screen_bottom_right_vertical_ribbon_all_frame_options.draw_effect = ::d2::DrawEffect::kNone;
-  screen_bottom_right_vertical_ribbon_all_frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  screen_bottom_right_vertical_ribbon_all_frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kTop;
-
   int bottom_height_covered = 0;
 
-  while (bottom_height_covered < border_top) {
-    screen_border_vertical_ribbon.DrawAllFrames(
+  for (size_t frame_index = 0;
+      bottom_height_covered < border_top;
+      frame_index += 1
+  ) {
+    frame_index %= screen_border_vertical_ribbon.GetNumDirections();
+
+    ::d2::Cel_Wrapper cel = screen_border_vertical_ribbon.GetCel(
+        0,
+        frame_index
+    );
+
+    screen_border_vertical_ribbon.DrawFrame(
         screen_left,
-        border_bottom + bottom_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_bottom_left_vertical_ribbon_all_frame_options
+        border_bottom + bottom_height_covered + cel.GetHeight(),
+        0,
+        frame_index
     );
 
-    screen_border_vertical_ribbon.DrawAllFrames(
-        border_right,
-        border_bottom + bottom_height_covered,
-        1,
-        screen_border_vertical_ribbon.GetNumFrames(),
-        screen_bottom_right_vertical_ribbon_all_frame_options
+    screen_border_vertical_ribbon.DrawFrame(
+        border_right - cel.GetWidth(),
+        border_bottom + bottom_height_covered + cel.GetHeight(),
+        0,
+        frame_index
     );
 
-    bottom_height_covered += screen_border_vertical_ribbon_height;
+    bottom_height_covered += cel.GetWidth();
   }
+}
+
+void DrawRightScreenBackgroundRibbon() {
+  DrawRightScreenBackgroundHorizontalRibbon();
+  DrawRightScreenBackgroundVerticalRibbons();
 }
 
 } // namespace

@@ -59,18 +59,18 @@ namespace sgd2fr::patches {
 
 mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
     const ::d2::CelFile* cel_file_base_address,
-    std::int32_t offset_value,
-    std::int32_t right,
-    std::int32_t top
+    int32_t offset_value,
+    int32_t right,
+    int32_t top
 ) {
   const ::d2::CelFile* comparing_cel_file_base_address;
 
   // Get the address of the cel file base.
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0xE5F18
       ).raw_address();
 
@@ -81,9 +81,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0xEA568
       ).raw_address();
 
@@ -94,9 +94,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0xE48D0
       ).raw_address();
 
@@ -107,9 +107,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x319280
       ).raw_address();
 
@@ -120,9 +120,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x31ACA0
       ).raw_address();
 
@@ -154,33 +154,30 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
   }
 
   // Draw text based on the resolution mode.
-  ::std::array<char8_t, 256> resolution_text_u8;
+  wchar_t resolution_str[32];
 
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
   std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
 
-  ::std::snprintf(
-      // Acceptable cast. Numbers are in the ASCII range.
-      reinterpret_cast<char*>(resolution_text_u8.data()),
-      resolution_text_u8.size(),
-      "%dx%d",
+  _snwprintf(
+      resolution_str,
+      sizeof(resolution_str) / sizeof(resolution_str[0]),
+      L"%dx%d",
       std::get<0>(resolution),
       std::get<1>(resolution)
-  );
-
-  ::d2::UnicodeString_Api text_unicode = ::d2::UnicodeString_Api::FromUtf8String(
-      resolution_text_u8.data()
   );
 
   ::d2::TextFont old_text_font = ::d2::d2win::SetUnicodeTextFont(
       ::d2::TextFont::kDiabloMenu_30
   );
 
-  ::d2::DrawTextOptions options;
-  options.position_x_behavior = ::d2::DrawPositionXBehavior::kRight;
-  options.text_color = ::d2::TextColor::kWhite;
-
-  text_unicode.Draw(right, top, options);
+  ::d2::d2win::DrawUnicodeText(
+      resolution_str,
+      right - ::d2::d2win::GetUnicodeTextDrawWidth(resolution_str),
+      top,
+      ::d2::TextColor::kWhite,
+      false
+  );
 
   ::d2::d2win::SetUnicodeTextFont(old_text_font);
 

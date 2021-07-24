@@ -46,19 +46,20 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
 
-#include <cstddef>
-#include <cstdint>
+#include <stddef.h>
+
+#include <mdc/std/stdint.h>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
-    ::std::size_t resolution_mode,
-    ::std::int32_t* width,
-    ::std::int32_t* height
+    size_t resolution_mode,
+    int32_t* width,
+    int32_t* height
 );
 
 extern "C" void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
-    ::std::size_t resolution_mode
+    size_t resolution_mode
 );
 
 } // namespace sgd2fr::patches

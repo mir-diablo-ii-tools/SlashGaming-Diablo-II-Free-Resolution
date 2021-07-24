@@ -46,15 +46,14 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_HPP_
 #define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_HPP_
 
-#include <cstddef>
-#include <cstdint>
+#include <mdc/std/stdint.h>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
-    std::uint32_t glide_resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height
+    uint32_t glide_resolution_mode,
+    int32_t* width,
+    int32_t* height
 );
 
 } // namespace sgd2fr::patches

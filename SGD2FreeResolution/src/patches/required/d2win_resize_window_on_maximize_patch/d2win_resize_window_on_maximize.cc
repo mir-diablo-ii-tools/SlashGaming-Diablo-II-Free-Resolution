@@ -55,10 +55,10 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Win_ResizeWindowOnMaximize(
-    ::std::int32_t desktop_width,
-    ::std::int32_t desktop_height,
-    ::std::int32_t* window_width,
-    ::std::int32_t* window_height
+    int32_t desktop_width,
+    int32_t desktop_height,
+    int32_t* window_width,
+    int32_t* window_height
 ) {
   int window_resolution_gcd = ::std::gcd(*window_width, *window_height);
 

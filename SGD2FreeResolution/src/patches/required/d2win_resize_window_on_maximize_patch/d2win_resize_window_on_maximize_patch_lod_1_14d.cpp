@@ -94,10 +94,10 @@ ResizeWindowOnMaximizePatch_Lod1_14D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Win,
+              ::d2::default_library::kD2Win,
               0xF9E35
           ),
           0xF9E47 - 0xF9E35
@@ -111,10 +111,10 @@ ResizeWindowOnMaximizePatch_Lod1_14D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Win,
+              ::d2::default_library::kD2Win,
               0xF9E51
           ),
           0xF9E54 - 0xF9E51

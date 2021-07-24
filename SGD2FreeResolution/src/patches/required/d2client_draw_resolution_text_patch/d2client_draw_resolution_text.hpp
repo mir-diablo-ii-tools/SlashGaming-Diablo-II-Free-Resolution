@@ -46,15 +46,16 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_HPP_
 
+#include <mdc/std/stdint.h>
 #include <sgd2mapi.hpp>
 
 namespace sgd2fr::patches {
 
 extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
     const ::d2::CelFile* cel_file_base_address,
-    std::int32_t offset_value,
-    std::int32_t right,
-    std::int32_t top
+    int32_t offset_value,
+    int32_t right,
+    int32_t top
 );
 
 } // namespace sgd2fr::patches

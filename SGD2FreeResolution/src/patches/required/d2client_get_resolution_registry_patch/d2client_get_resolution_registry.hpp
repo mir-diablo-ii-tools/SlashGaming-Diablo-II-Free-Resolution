@@ -46,13 +46,14 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_HPP_
 
+#include <mdc/std/stdint.h>
 #include <cstdint>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2Client_GetResolutionRegistry(
-    std::uint32_t* reg_resolution_mode,
-    std::uint32_t* ingame_resolution_mode
+    uint32_t* reg_resolution_mode,
+    uint32_t* ingame_resolution_mode
 );
 
 } // namespace sgd2fr::patches

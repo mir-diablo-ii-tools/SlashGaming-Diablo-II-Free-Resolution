@@ -60,7 +60,7 @@ IsNeedResizeWindowPatch::IsNeedResizeWindowPatch()
 
 bool IsNeedResizeWindowPatch::IsApplicable() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-  return (running_game_version >= ::d2::GameVersion::k1_13C);
+  return (running_game_version >= ::d2::game_version::k1_13C);
 }
 
 AbstractVersionPatch*
@@ -72,13 +72,13 @@ IsNeedResizeWindowPatch::InitPatch() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       return new IsNeedResizeWindowPatch_1_13C();
     }
 
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::k1_13D:
+    case ::d2::game_version::kLod1_14C:
+    case ::d2::game_version::kLod1_14D: {
       return new IsNeedResizeWindowPatch_1_13D();
     }
   }

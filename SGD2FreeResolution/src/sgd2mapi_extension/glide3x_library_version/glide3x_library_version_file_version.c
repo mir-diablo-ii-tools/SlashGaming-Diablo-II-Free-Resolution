@@ -52,7 +52,7 @@
 #include <mdc/error/exit_on_error.h>
 #include <mdc/std/stdint.h>
 #include <mdc/wchar_t/filew.h>
-#include "../file/fixed_file_version.h"
+#include <sgd2mapi.h>
 #include "../glide3x_library.h"
 
 static enum D2_Glide3xLibraryVersion SearchGlide3xLibraryVersionTable(

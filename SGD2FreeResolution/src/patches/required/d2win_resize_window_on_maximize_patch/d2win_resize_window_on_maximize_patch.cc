@@ -61,7 +61,7 @@ ResizeWindowOnMaximizePatch::ResizeWindowOnMaximizePatch()
 
 bool ResizeWindowOnMaximizePatch::IsApplicable() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-  return (running_game_version >= ::d2::GameVersion::k1_13C);
+  return (running_game_version >= ::d2::game_version::k1_13C);
 }
 
 AbstractVersionPatch*
@@ -73,16 +73,16 @@ ResizeWindowOnMaximizePatch::InitPatch() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13C:
+    case ::d2::game_version::k1_13D: {
       return new ResizeWindowOnMaximizePatch_1_13C();
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       return new ResizeWindowOnMaximizePatch_Lod1_14C();
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return new ResizeWindowOnMaximizePatch_Lod1_14D();
     }
   }

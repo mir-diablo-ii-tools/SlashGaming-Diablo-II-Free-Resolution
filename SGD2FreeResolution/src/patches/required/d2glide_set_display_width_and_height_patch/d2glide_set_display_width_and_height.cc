@@ -53,10 +53,10 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
-    std::uint32_t resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height,
-    std::uint32_t* glide_res_id
+    uint32_t resolution_mode,
+    int32_t* width,
+    int32_t* height,
+    uint32_t* glide_res_id
 ) {
   std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
 

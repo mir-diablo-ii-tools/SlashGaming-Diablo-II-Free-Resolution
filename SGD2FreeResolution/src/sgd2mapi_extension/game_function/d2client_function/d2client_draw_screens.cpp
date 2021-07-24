@@ -56,43 +56,43 @@ namespace d2 {
 namespace d2client {
 namespace {
 
-static ::std::intptr_t GetGameAddress() {
+static intptr_t GetGameAddress() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x35750
       ).raw_address();
 
       break;
     }
 
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       return ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x5C5C0
       ).raw_address();
     }
 
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       return ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x8A970
       ).raw_address();
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       return ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x8F800
       ).raw_address();
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x93340
       ).raw_address();
     }

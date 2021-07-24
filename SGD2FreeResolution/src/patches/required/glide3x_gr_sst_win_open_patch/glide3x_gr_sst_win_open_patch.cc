@@ -58,7 +58,7 @@ GrSstWinOpenPatch::GrSstWinOpenPatch()
 }
 
 bool GrSstWinOpenPatch::IsApplicable() {
-  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  ::d2::VideoMode video_mode = ::d2::helper::DetermineVideoMode();
   if (video_mode != ::d2::VideoMode::kGlide) {
     return false;
   }

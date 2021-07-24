@@ -50,11 +50,11 @@
 
 namespace sgd2fr::patches {
 
-std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton() {
+uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton() {
   return Get800InterfaceBarEnabledValue();
 }
 
-std::uint32_t __cdecl Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue() {
+uint32_t __cdecl Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue() {
   return Get800InterfaceBarEnabledValue();
 }
 
@@ -63,7 +63,7 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton() {
 }
 
 void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText() {
-  const ::d2::UnicodeChar* new_stats_text = ::d2::d2lang::GetStringByIndex(3987);
+  const wchar_t* new_stats_text = ::d2::d2lang::GetStringByIndex(3987);
   const std::tuple popup_text_position = GetNewSkillPopupTextPosition();
 
   ::d2::d2win::SetPopUpUnicodeText(

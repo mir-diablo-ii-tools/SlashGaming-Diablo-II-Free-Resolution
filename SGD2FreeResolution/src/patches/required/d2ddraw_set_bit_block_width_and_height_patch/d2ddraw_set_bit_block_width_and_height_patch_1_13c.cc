@@ -75,60 +75,60 @@ SetBitBlockWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_11: {
+    case ::d2::game_version::k1_11: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2DDraw,
+              ::d2::default_library::kD2DDraw,
               0x85D2
           ),
           0x85F6 - 0x85D2
       );
     }
 
-    case ::d2::GameVersion::k1_11B: {
+    case ::d2::game_version::k1_11B: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2DDraw,
+              ::d2::default_library::kD2DDraw,
               0x8082
           ),
           0x80A6 - 0x8082
       );
     }
 
-    case ::d2::GameVersion::k1_12A: {
+    case ::d2::game_version::k1_12A: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2DDraw,
+              ::d2::default_library::kD2DDraw,
               0x8CE2
           ),
           0x8D06 - 0x8CE2
       );
     }
 
-    case ::d2::GameVersion::k1_13ABeta: {
+    case ::d2::game_version::k1_13ABeta: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2DDraw,
+              ::d2::default_library::kD2DDraw,
               0x75E2
           ),
           0x7606 - 0x75E2
       );
     }
 
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2DDraw,
+              ::d2::default_library::kD2DDraw,
               0x85C2
           ),
           0x85E6 - 0x85C2
       );
     }
 
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2DDraw,
+              ::d2::default_library::kD2DDraw,
               0x8202
           ),
           0x8226 - 0x8202

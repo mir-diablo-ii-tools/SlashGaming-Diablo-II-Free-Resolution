@@ -46,15 +46,15 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_HPP_
 #define SGD2FR_PATCHES_REQUIRED_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_PATCH_D2WIN_RESIZE_WINDOW_ON_MAXIMIZE_HPP_
 
-#include <cstdint>
+#include <mdc/std/stdint.h>
 
 namespace sgd2fr::patches {
 
 extern "C" void __cdecl Sgd2fr_D2Win_ResizeWindowOnMaximize(
-    ::std::int32_t desktop_width,
-    ::std::int32_t desktop_height,
-    ::std::int32_t* window_width,
-    ::std::int32_t* window_height
+    int32_t desktop_width,
+    int32_t desktop_height,
+    int32_t* window_width,
+    int32_t* window_height
 );
 
 } // namespace sgd2fr::patches

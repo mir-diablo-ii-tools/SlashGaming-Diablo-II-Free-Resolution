@@ -337,10 +337,6 @@ set(SRC_C
     ## DDraw library version
     "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.c"
 
-    ## File
-    "src/sgd2mapi_extension/file/file_version_info.c"
-    "src/sgd2mapi_extension/file/fixed_file_version.c"
-
     ## Game function
     "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
 
@@ -544,10 +540,6 @@ set(SRC_HEADERS
     ## DDraw library version
     "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.h"
 
-    ## File
-    "src/sgd2mapi_extension/file/file_version_info.h"
-    "src/sgd2mapi_extension/file/fixed_file_version.h"
-
     ## Game function
     "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.hpp"
 
@@ -563,7 +555,6 @@ set(SRC_HEADERS
     "src/sgd2mapi_extension/ddraw_library.hpp"
     "src/sgd2mapi_extension/ddraw_library_version.h"
     "src/sgd2mapi_extension/ddraw_library_version.hpp"
-    "src/sgd2mapi_extension/file.h"
     "src/sgd2mapi_extension/game_function.hpp"
     "src/sgd2mapi_extension/glide3x_library.h"
     "src/sgd2mapi_extension/glide3x_library.hpp"

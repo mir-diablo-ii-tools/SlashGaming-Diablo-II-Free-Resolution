@@ -188,7 +188,7 @@ Enable800NewSkillButtonPatch_1_09D::Enable800NewSkillButtonPatch_1_09D()
       patch_address_and_size_11.second
   );
   ::mapi::GameAddress game_address_11 = ::mapi::GameAddress::FromOffset(
-      ::d2::DefaultLibrary::kD2Client,
+      ::d2::default_library::kD2Client,
       0x48E69
   );
   this->patches_[10].Swap(patch_11);
@@ -276,10 +276,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x483B4
           ),
           0x483B9 - 0x483B4
@@ -293,10 +293,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x483D3
           ),
           0x483D8 - 0x483D3
@@ -310,10 +310,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x4847D
           ),
           0x484B5 - 0x4847D
@@ -327,10 +327,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize04() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48694
           ),
           0x48699 - 0x48694
@@ -344,10 +344,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize05() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x486B2
           ),
           0x486B7 - 0x486B2
@@ -361,10 +361,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize06() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x4878C
           ),
           0x487C4 - 0x4878C
@@ -378,10 +378,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize07() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48DE5
           ),
           0x48DEA - 0x48DE5
@@ -395,10 +395,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize08() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48EF1
           ),
           0x48F29 - 0x48EF1
@@ -412,10 +412,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize09() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48CAD
           ),
           0x48CB2 - 0x48CAD
@@ -429,10 +429,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize10() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48D6D
           ),
           0x48D72 - 0x48D6D
@@ -446,10 +446,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize11() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48E69
           ),
           0x48E6E - 0x48E69
@@ -463,10 +463,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize12() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48F3E
           ),
           0x48F6A - 0x48F3E
@@ -480,10 +480,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize13() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48F7C
           ),
           0x48F9A - 0x48F7C
@@ -497,10 +497,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize14() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48F9A
           ),
           0x48FB8 - 0x48F9A
@@ -514,10 +514,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize15() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48BE3
           ),
           0x48BE8 - 0x48BE3
@@ -531,10 +531,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize16() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48C15
           ),
           0x48C41 - 0x48C15
@@ -548,10 +548,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize17() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48C53
           ),
           0x48C71 - 0x48C53
@@ -565,10 +565,10 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize18() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x48C71
           ),
           0x48C8F - 0x48C71
