@@ -76,40 +76,40 @@ SetBitBlockWidthAndHeightPatch_Lod1_14A::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14A: {
+    case ::d2::game_version::kLod1_14A: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x106D6F
           ),
           0x106D98 - 0x106D6F
       );
     }
 
-    case ::d2::GameVersion::kLod1_14B: {
+    case ::d2::game_version::kLod1_14B: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x2C8F8F
           ),
           0x2C8FB8 - 0x2C8F8F
       );
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x2C8B6F
           ),
           0x2C8B98 - 0x2C8B6F
       );
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x2C7B32
           ),
           0x2C7B5B - 0x2C7B32

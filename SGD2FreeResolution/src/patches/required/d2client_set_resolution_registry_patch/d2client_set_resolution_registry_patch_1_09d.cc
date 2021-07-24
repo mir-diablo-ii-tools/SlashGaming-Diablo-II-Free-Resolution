@@ -83,10 +83,10 @@ SetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x61059
           ),
           0x61074 - 0x61059
@@ -100,10 +100,10 @@ SetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x61075
           ),
           0x6107C - 0x61075

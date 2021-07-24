@@ -75,76 +75,76 @@ SetCelDisplayLeftAndRightPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta: {
+    case ::d2::game_version::k1_07Beta: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x25B0
           ),
           0x25E5 - 0x25B0
       );
     }
 
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_07:
+    case ::d2::game_version::k1_08:
+    case ::d2::game_version::k1_09:
+    case ::d2::game_version::k1_09B:
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x25A0
           ),
           0x25D5 - 0x25A0
       );
     }
 
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10: {
+    case ::d2::game_version::k1_10Beta:
+    case ::d2::game_version::k1_10SBeta:
+    case ::d2::game_version::k1_10: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x25C0
           ),
           0x25F0 - 0x25C0
       );
     }
 
-    case ::d2::GameVersion::kLod1_14A: {
+    case ::d2::game_version::kLod1_14A: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x1074F0
           ),
           0x107520 - 0x1074F0
       );
     }
 
-    case ::d2::GameVersion::kLod1_14B: {
+    case ::d2::game_version::kLod1_14B: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x2C9710
           ),
           0x2C9740 - 0x2C9710
       );
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x2C92F0
           ),
           0x2C9320 - 0x2C92F0
       );
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GDI,
+              ::d2::default_library::kD2GDI,
               0x2C82D0
           ),
           0x2C8300 - 0x2C82D0

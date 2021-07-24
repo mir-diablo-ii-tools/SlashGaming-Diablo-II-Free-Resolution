@@ -85,10 +85,10 @@ DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x2AB1A
           ),
           0x2AB24 - 0x2AB1A
@@ -102,10 +102,10 @@ DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x2AD1A
           ),
           0x2AD24 - 0x2AD1A
@@ -119,10 +119,10 @@ DisableMouseClickOnScreenPatch_1_09D::GetPatchAddressAndSize03() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x40873
           ),
           0x40881 - 0x40873

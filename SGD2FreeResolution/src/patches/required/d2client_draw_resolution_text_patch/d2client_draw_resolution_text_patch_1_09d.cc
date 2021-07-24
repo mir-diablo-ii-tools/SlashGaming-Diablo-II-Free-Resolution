@@ -75,10 +75,10 @@ DrawResolutionTextPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x62627
           ),
           0x6262D - 0x62627

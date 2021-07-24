@@ -90,10 +90,10 @@ Enable800InterfaceBarPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x590A9
           ),
           0x590AE - 0x590A9
@@ -107,10 +107,10 @@ Enable800InterfaceBarPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x59228
           ),
           0x592A5 - 0x59228

@@ -85,10 +85,10 @@ DrawInterfaceBarBackgroundPatch_Lod1_14D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
+              ::d2::default_library::kD2Client,
               0x983D9
           ),
           0x983DE - 0x983D9

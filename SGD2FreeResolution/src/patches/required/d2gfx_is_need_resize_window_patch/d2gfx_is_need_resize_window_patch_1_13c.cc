@@ -93,10 +93,10 @@ IsNeedResizeWindowPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0x83CE
           ),
           0x8409 - 0x83CE
@@ -110,10 +110,10 @@ IsNeedResizeWindowPatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0x8409
           ),
           sizeof(kJeOpcodes)

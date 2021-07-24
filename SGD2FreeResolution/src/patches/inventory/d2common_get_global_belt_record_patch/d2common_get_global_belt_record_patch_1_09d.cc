@@ -75,50 +75,50 @@ GetGlobalBeltRecordPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
+              ::d2::default_library::kD2Common,
               10638
           ),
           5
       );
     }
 
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
+              ::d2::default_library::kD2Common,
               10991
           ),
           5
       );
     }
 
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
+              ::d2::default_library::kD2Common,
               10370
           ),
           5
       );
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Common,
+              ::d2::default_library::kD2Common,
               0x262F70
           ),
           5
       );
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Common,
+              ::d2::default_library::kD2Common,
               0x260CB0
           ),
           5

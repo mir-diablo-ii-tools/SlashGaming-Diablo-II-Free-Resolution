@@ -68,9 +68,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
   // Get the address of the cel file base.
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::game_version::k1_09D: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0xE5F18
       ).raw_address();
 
@@ -81,9 +81,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::game_version::k1_13C: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0xEA568
       ).raw_address();
 
@@ -94,9 +94,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0xE48D0
       ).raw_address();
 
@@ -107,9 +107,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x319280
       ).raw_address();
 
@@ -120,9 +120,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
-          ::d2::DefaultLibrary::kD2Client,
+          ::d2::default_library::kD2Client,
           0x31ACA0
       ).raw_address();
 

@@ -110,30 +110,30 @@ IsNeedResizeWindowPatch_1_13D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0xB405
           ),
           0xB444 - 0xB405
       );
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0xF30B4
           ),
           0xF30F3 - 0xF30B4
       );
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0xF5B05
           ),
           0xF5B3B - 0xF5B05
@@ -158,30 +158,30 @@ IsNeedResizeWindowPatch_1_13D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13D: {
+    case ::d2::game_version::k1_13D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0xB444
           ),
           kJeOpcodesCount
       );
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::game_version::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0xF30F3
           ),
           kJeOpcodesCount
       );
     }
 
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::game_version::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
+              ::d2::default_library::kD2GFX,
               0xF5B3B
           ),
           kJeOpcodesCount
