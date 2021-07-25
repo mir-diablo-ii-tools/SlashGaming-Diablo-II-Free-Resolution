@@ -566,8 +566,20 @@ set(SRC_HEADERS
     "src/config.hpp"
 )
 
+# frozen doesn't have CMakeLists, so this has to be done manually.
+set(FROZEN_FILES
+    "../third_party/frozen/frozen.h"
+    "../third_party/frozen/frozen.c"
+)
+
 # Output DLL
-add_library(SGD2FreeRes SHARED ${SRC_ASM} ${SRC_C} ${SRC_HEADERS} ${INCLUDE_HEADERS})
+add_library(SGD2FreeRes SHARED
+    ${SRC_ASM}
+    ${SRC_C}
+    ${SRC_HEADERS}
+    ${INCLUDE_HEADERS}
+    ${FROZEN_FILES}
+)
 
 target_compile_definitions(SGD2FreeRes PRIVATE SGD2FR_DLLEXPORT)
 target_compile_definitions(SGD2FreeRes INTERFACE SGD2FR_DLLIMPORT)
