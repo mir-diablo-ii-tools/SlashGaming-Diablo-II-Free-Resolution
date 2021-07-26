@@ -158,6 +158,10 @@ set(SRC_ASM
 )
 
 set(SRC_C
+    # Config
+    "src/config/config_ini_read.cpp"
+    "src/config/config_ini_write.c"
+
     # Helpers
     "src/helper/800_interface_bar.cc"
     "src/helper/abstract_multiversion_patch.cpp"
@@ -363,6 +367,10 @@ set(SRC_C
 )
 
 set(SRC_HEADERS
+    # Config
+    "src/config/config_ini.h"
+    "src/config/config_struct.h"
+
     # Helpers
     "src/helper/800_interface_bar.hpp"
     "src/helper/abstract_multiversion_patch.hpp"

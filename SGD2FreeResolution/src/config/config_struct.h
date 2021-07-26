@@ -68,7 +68,8 @@
 #define CONFIG_INGAME_RESOLUTIONS "Ingame Resolutions"
 
 #define CONFIG_MAIN_MENU_RESOLUTION "Main Menu Resolution"
-#define CONFIG_MAIN_MENU_RESOLUTION_DEFAULT { 800, 600 }
+#define CONFIG_MAIN_MENU_RESOLUTION_WIDTH_DEFAULT 800
+#define CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT 600
 
 #define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME "Enable Screen Border Frame?"
 #define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME_DEFAULT 0
@@ -105,7 +106,7 @@ struct Config {
   size_t ingame_resolution_mode;
 
   size_t ingame_resolutions_count;
-  const GameResolution* ingame_resolutions;
+  const struct GameResolution* ingame_resolutions;
 
   int is_enable_screen_border_frame;
   int is_use_original_screen_border_frame;

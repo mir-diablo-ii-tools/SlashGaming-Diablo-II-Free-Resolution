@@ -43,27 +43,24 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_STRUCT_HPP_
-#define SGD2FR_CONFIG_CONFIG_STRUCT_HPP_
+#ifndef SGD2FR_CONFIG_CONFIG_INI_H_
+#define SGD2FR_CONFIG_CONFIG_INI_H_
 
+#include <mdc/std/wchar.h>
 #include "config_struct.h"
 
-#include <string>
-#include <vector>
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-struct Config_Implmentation {
-  ::std::vector<GameResolution> ingame_resolutions;
-  ::std::wstring custom_mpq_path;
-};
+void ConfigIni_Read(struct Config* config, const wchar_t* path);
 
-inline bool operator==(const GameResolution& lhs, const GameResolution& rhs) {
-  return lhs.width == rhs.width
-      && lhs.height == rhs.height;
-}
+void ConfigIni_Write(const struct Config* config, const wchar_t* path);
 
-inline bool operator<(const GameResolution& lhs, const GameResolution& rhs) {
-  return lhs.width < rhs.width
-      && lhs.height < rhs.height;
-}
+void ConfigIni_WriteDefault(const wchar_t* path);
 
-#endif /* SGD2FR_CONFIG_CONFIG_STRUCT_HPP_ */
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* SGD2FR_CONFIG_CONFIG_INI_H_ */
