@@ -161,6 +161,7 @@ set(SRC_C
     # Config
     "src/config/config_ini_read.cpp"
     "src/config/config_ini_write.c"
+    "src/config/config_json_frozen_write.c"
     "src/config/config_struct.c"
 
     # Helpers
@@ -371,6 +372,7 @@ set(SRC_HEADERS
     # Config
     "src/config/config_ini.h"
     "src/config/config_struct.h"
+    "src/config/config_json_frozen.h"
 
     # Helpers
     "src/helper/800_interface_bar.hpp"
