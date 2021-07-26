@@ -54,7 +54,7 @@
 #define TO_WIDE_IMPL(str_lit) L##str_lit
 #define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
 
-#define CONFIG_MAIN_SECTION L"SGD2FreeRes"
+#define CONFIG_MAIN_SECTION TO_WIDE(CONFIG_MAIN)
 
 #define CONFIG_INGAME_RESOLUTIONS_SECTION \
     CONFIG_MAIN_SECTION L"." TO_WIDE(CONFIG_INGAME_RESOLUTIONS)
@@ -68,6 +68,74 @@
 enum {
   kInt32StrCapacity = 10 + 1,
 };
+
+static void WriteMetadata(
+    const struct Config* config,
+    const wchar_t* path
+) {
+  BOOL is_write_success;
+  wchar_t str[kInt32StrCapacity];
+
+  _snwprintf(
+      str,
+      kInt32StrCapacity,
+      L"%d",
+      config->metadata.version.major_high
+  );
+  str[kInt32StrCapacity - 1] = L'\0';
+
+  is_write_success = WritePrivateProfileStringW(
+      CONFIG_METADATA_VERSION_SECTION,
+      TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_HIGH),
+      str,
+      path
+  );
+
+  _snwprintf(
+      str,
+      kInt32StrCapacity,
+      L"%d",
+      config->metadata.version.major_low
+  );
+  str[kInt32StrCapacity - 1] = L'\0';
+
+  is_write_success = WritePrivateProfileStringW(
+      CONFIG_METADATA_VERSION_SECTION,
+      TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_LOW),
+      str,
+      path
+  );
+
+  _snwprintf(
+      str,
+      kInt32StrCapacity,
+      L"%d",
+      config->metadata.version.minor_high
+  );
+  str[kInt32StrCapacity - 1] = L'\0';
+
+  is_write_success = WritePrivateProfileStringW(
+      CONFIG_METADATA_VERSION_SECTION,
+      TO_WIDE(CONFIG_METADATA_VERSION_MINOR_HIGH),
+      str,
+      path
+  );
+
+  _snwprintf(
+      str,
+      kInt32StrCapacity,
+      L"%d",
+      config->metadata.version.minor_low
+  );
+  str[kInt32StrCapacity - 1] = L'\0';
+
+  is_write_success = WritePrivateProfileStringW(
+      CONFIG_METADATA_VERSION_SECTION,
+      TO_WIDE(CONFIG_METADATA_VERSION_MINOR_LOW),
+      str,
+      path
+  );
+}
 
 static void WriteCustomMpqPath(
     const struct Config* config,
@@ -255,6 +323,7 @@ static void WriteMainMenuResolution(
  */
 
 void ConfigIni_Write(const struct Config* config, const wchar_t* path) {
+  WriteMetadata(config, path);
   WriteCustomMpqPath(config, path);
   WriteIngameResolutionMode(config, path);
   WriteIngameResolutions(config, path);

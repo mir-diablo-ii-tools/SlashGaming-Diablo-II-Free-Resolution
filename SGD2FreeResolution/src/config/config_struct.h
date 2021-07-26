@@ -50,7 +50,9 @@
 
 #include <mdc/std/wchar.h>
 
-#define CONFIG_METADATA "Metadata"
+#define CONFIG_MAIN "Slash Gaming Diablo II Free Resolution"
+
+#define CONFIG_METADATA "!!!Metadata (Do not modify)!!!"
 
 #define CONFIG_METADATA_VERSION "Version"
 
