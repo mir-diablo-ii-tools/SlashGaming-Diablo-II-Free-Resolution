@@ -161,6 +161,7 @@ set(SRC_C
     # Config
     "src/config/config_ini_read.cpp"
     "src/config/config_ini_write.c"
+    "src/config/config_struct.c"
 
     # Helpers
     "src/helper/800_interface_bar.cc"

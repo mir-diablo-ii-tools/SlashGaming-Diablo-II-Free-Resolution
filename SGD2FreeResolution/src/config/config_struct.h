@@ -115,4 +115,14 @@ struct Config {
   struct GameResolution main_menu_resolution;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+const struct Config kDefaultConfig;
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
 #endif /* SGD2FR_CONFIG_CONFIG_STRUCT_H_ */
