@@ -218,10 +218,14 @@ void ConfigJsonFrozen_Write(
 ) {
   int fclose_result;
 
-  FILE* file;
-  struct json_out out;
+  /*
+   * In order to initialize the json_out with JSON_OUT_FILE,
+   * initialization needs to be done during declaration.
+   */
 
-  file = _wfopen(path, L"w");
+  FILE* file = _wfopen(path, L"w");
+  struct json_out out = JSON_OUT_FILE(file);
+
   if (file == NULL) {
     goto return_bad;
   }
