@@ -161,6 +161,7 @@ set(SRC_C
     # Config
     "src/config/config_ini_read.cpp"
     "src/config/config_ini_write.c"
+    "src/config/config_json_frozen_read.cpp"
     "src/config/config_json_frozen_write.c"
     "src/config/config_struct.c"
 
