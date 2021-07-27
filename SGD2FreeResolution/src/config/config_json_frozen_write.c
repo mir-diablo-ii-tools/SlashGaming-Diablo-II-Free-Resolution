@@ -67,10 +67,10 @@ static int WriteMetadataVersion(struct json_out *out, va_list *ap) {
   bytes_printed = json_printf(
       out,
       "{"
-          "\""CONFIG_METADATA_VERSION_MINOR_HIGH"\": %u,"
-          "\""CONFIG_METADATA_VERSION_MAJOR_LOW"\": %u,"
-          "\""CONFIG_METADATA_VERSION_MINOR_HIGH"\": %u,"
-          "\""CONFIG_METADATA_VERSION_MINOR_LOW"\": %u"
+          CONFIG_METADATA_VERSION_MINOR_HIGH ": %u,"
+          CONFIG_METADATA_VERSION_MAJOR_LOW ": %u,"
+          CONFIG_METADATA_VERSION_MINOR_HIGH ": %u,"
+          CONFIG_METADATA_VERSION_MINOR_LOW ": %u"
       "}",
       version->major_high,
       version->major_low,
@@ -90,9 +90,7 @@ static int WriteMetadata(struct json_out *out, va_list *ap) {
   bytes_printed = 0;
   bytes_printed += json_printf(
       out,
-      "{"
-          "\""CONFIG_METADATA_VERSION"\": %M"
-      "}",
+      "{" CONFIG_METADATA_VERSION ": %M }",
       &WriteMetadataVersion,
       &metadata->version
   );
@@ -125,9 +123,7 @@ static int WriteCustomMpqPath(struct json_out *out, va_list *ap) {
   /* Output string to file. */
   bytes_printed = json_printf(
       out,
-      "{"
-          "\""CONFIG_CUSTOM_MPQ_PATH"\": %Q"
-      "}",
+      "{" CONFIG_CUSTOM_MPQ_PATH ": %Q }",
       custom_mpq_path_utf8
   );
 
@@ -148,7 +144,7 @@ static int WriteResolution(struct json_out *out, va_list *ap) {
   bytes_printed = 0;
   bytes_printed += json_printf(
       out,
-      "{ \"Width\": %d, \"Height\": %d }",
+      "{ Width: %d, Height: %d }",
       resolution->width,
       resolution->height
   );
@@ -186,14 +182,14 @@ static int WriteConfig(struct json_out *out, va_list *ap) {
   bytes_printed += json_printf(
       out,
       "{"
-          "\""CONFIG_METADATA"\": %M,"
-          "\""CONFIG_CUSTOM_MPQ_PATH"\": %M,"
-          "\""CONFIG_INGAME_RESOLUTION_MODE"\": %u,"
-          "\""CONFIG_INGAME_RESOLUTIONS"\": %M,"
-          "\""CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME"\": %B,"
-          "\""CONFIG_IS_USE_800_INTERFACE_BAR"\": %B,"
-          "\""CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME"\": %B,"
-          "\""CONFIG_MAIN_MENU_RESOLUTION"\": %M"
+          CONFIG_METADATA ": %M,"
+          CONFIG_CUSTOM_MPQ_PATH ": %M,"
+          CONFIG_INGAME_RESOLUTION_MODE ": %u,"
+          CONFIG_INGAME_RESOLUTIONS ": %M,"
+          CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME ": %B,"
+          CONFIG_IS_USE_800_INTERFACE_BAR ": %B,"
+          CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME ": %B,"
+          CONFIG_MAIN_MENU_RESOLUTION ": %M"
       "}",
       &WriteMetadataVersion,
       &config->metadata,
@@ -230,7 +226,7 @@ void ConfigJsonFrozen_Write(
     goto return_bad;
   }
 
-  json_printf(&out, "{"CONFIG_MAIN": %M }", &WriteConfig, config);
+  json_printf(&out, "{" CONFIG_MAIN ": %M }", &WriteConfig, config);
 
   fclose_result = fclose(file);
   if (fclose_result == EOF) {
