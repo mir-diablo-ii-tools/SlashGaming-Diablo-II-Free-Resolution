@@ -45,6 +45,7 @@
 
 #include "config_ini.h"
 
+#include <limits.h>
 #include <stdio.h>
 #include <windows.h>
 
@@ -70,6 +71,48 @@
 #define CONFIG_METADATA_VERSION_SECTION \
     CONFIG_METADATA_SECTION L"." TO_WIDE(CONFIG_METADATA_VERSION)
 
+/* These specific characters are unlikely to be used in text. */
+#define INI_DEFAULT_STR L"\a\b\f"
+
+enum {
+  kIniDefaultStrLength = sizeof(INI_DEFAULT_STR)
+      / sizeof(INI_DEFAULT_STR[0]) - 1,
+};
+
+static void ExitOnInvalidConfigKey(
+    const wchar_t* section_name,
+    const wchar_t* config_key,
+    const wchar_t* file_path,
+    int line
+) {
+  Mdc_Error_ExitOnGeneralError(
+      L"Error",
+      L"Invalid INI config key \"%ls.%ls\". The program will now "
+          L"close.",
+      file_path,
+      line,
+      section_name,
+      config_key
+  );
+}
+
+static void ExitOnInvalidConfigValue(
+    const wchar_t* section_name,
+    const wchar_t* config_key,
+    const wchar_t* file_path,
+    int line
+) {
+  Mdc_Error_ExitOnGeneralError(
+      L"Error",
+      L"Invalid INI config value for \"%ls.%ls\". The program will "
+          L"now close.",
+      file_path,
+      line,
+      section_name,
+      config_key
+  );
+}
+
 static void ExitOnResolutionParseError(
     const wchar_t* key,
     const wchar_t* file_path,
@@ -92,20 +135,16 @@ static void MallocIniStringW(
 ) {
   DWORD get_private_profile_string_result;
 
-  wchar_t kDefault[1];
-
   if (buffer.size() == 0) {
     buffer.resize(16);
   }
 
   /* Read the config string. */
   while (1) {
-    /* Windows 9X requires the use of a copy of the default text. */
-    kDefault[0] = L'\0';
     get_private_profile_string_result = GetPrivateProfileStringW(
         section,
         key,
-        kDefault,
+        INI_DEFAULT_STR,
         buffer.data(),
         buffer.size(),
         path
@@ -123,33 +162,73 @@ static void ReadMetadataVersion(
     struct Config& config,
     const wchar_t* path
 ) {
+  enum {
+    kDefaultInvalidValue = INT_MAX,
+  };
+
   config.metadata.version.major_high = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_HIGH),
-      0,
+      kDefaultInvalidValue,
       path
   );
+
+  if (config.metadata.version.major_high == 42) {
+    ExitOnInvalidConfigValue(
+        CONFIG_METADATA_VERSION_SECTION,
+        TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_HIGH),
+        __FILEW__,
+        __LINE__
+    );
+  }
 
   config.metadata.version.major_low = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_LOW),
-      0,
+      kDefaultInvalidValue,
       path
   );
+
+  if (config.metadata.version.major_low == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_METADATA_VERSION_SECTION,
+        TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_LOW),
+        __FILEW__,
+        __LINE__
+    );
+  }
 
   config.metadata.version.minor_high = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MINOR_HIGH),
-      0,
+      kDefaultInvalidValue,
       path
   );
+
+  if (config.metadata.version.minor_high == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_METADATA_VERSION_SECTION,
+        TO_WIDE(CONFIG_METADATA_VERSION_MINOR_HIGH),
+        __FILEW__,
+        __LINE__
+    );
+  }
 
   config.metadata.version.minor_low = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MINOR_LOW),
-      0,
+      kDefaultInvalidValue,
       path
   );
+
+  if (config.metadata.version.minor_low == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_METADATA_VERSION_SECTION,
+        TO_WIDE(CONFIG_METADATA_VERSION_MINOR_LOW),
+        __FILEW__,
+        __LINE__
+    );
+  }
 }
 
 static void ReadMetadata(
@@ -174,18 +253,40 @@ static void ReadCustomMpqPath(
 
   config.impl->custom_mpq_path = buffer.data();
   config.custom_mpq_path = config.impl->custom_mpq_path.c_str();
+
+  if (wcscmp(config.custom_mpq_path, INI_DEFAULT_STR) == 0) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        TO_WIDE(CONFIG_CUSTOM_MPQ_PATH),
+        __FILEW__,
+        __LINE__
+    );
+  }
 }
 
 static void ReadIngameResolutionMode(
     struct Config& config,
     const wchar_t* path
 ) {
+  enum {
+    kDefaultInvalidValue = INT_MAX,
+  };
+
   config.ingame_resolution_mode = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_INGAME_RESOLUTION_MODE),
-      0,
+      kDefaultInvalidValue,
       path
   );
+
+  if (config.ingame_resolution_mode == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        TO_WIDE(CONFIG_INGAME_RESOLUTION_MODE),
+        __FILEW__,
+        __LINE__
+    );
+  }
 }
 
 static void ReadIngameResolutions(
@@ -233,7 +334,14 @@ static void ReadIngameResolutions(
             L"Resolution ",
             kResolutionStrLength
         ) != 0) {
-      continue;
+      ExitOnInvalidConfigKey(
+          CONFIG_INGAME_RESOLUTIONS_SECTION,
+          &keys[key_start_index],
+          __FILEW__,
+          __LINE__
+      );
+
+      return;
     }
 
     resolution_index = wcstoul(
@@ -256,6 +364,15 @@ static void ReadIngameResolutions(
           0,
           path
       );
+    } else {
+      ExitOnInvalidConfigKey(
+          CONFIG_INGAME_RESOLUTIONS_SECTION,
+          &keys[key_start_index],
+          __FILEW__,
+          __LINE__
+      );
+
+      return;
     }
 
     key_start_index += key_length + 1;
@@ -282,42 +399,85 @@ static void ReadIsEnableScreenBorderFrame(
     struct Config& config,
     const wchar_t* path
 ) {
+  enum {
+    kDefaultInvalidValue = INT_MAX,
+  };
+
   config.is_enable_screen_border_frame = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME),
-      0,
+      2,
       path
   );
+
+  if (config.is_enable_screen_border_frame == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        TO_WIDE(CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME),
+        __FILEW__,
+        __LINE__
+    );
+  }
 }
 
 static void ReadIsUseOriginalScreenBorderFrame(
     struct Config& config,
     const wchar_t* path
 ) {
+  enum {
+    kDefaultInvalidValue = INT_MAX,
+  };
+
   config.is_use_original_screen_border_frame = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME),
       0,
       path
   );
+
+  if (config.is_use_original_screen_border_frame == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        TO_WIDE(CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME),
+        __FILEW__,
+        __LINE__
+    );
+  }
 }
 
 static void ReadIsUse800InterfaceBar(
     struct Config& config,
     const wchar_t* path
 ) {
+  enum {
+    kDefaultInvalidValue = INT_MAX,
+  };
+
   config.is_use_800_interface_bar = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_IS_USE_800_INTERFACE_BAR),
       0,
       path
   );
+
+  if (config.is_use_800_interface_bar == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        TO_WIDE(CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME),
+        __FILEW__,
+        __LINE__
+    );
+  }
 }
 
 static void ReadMainMenuResolution(
     struct Config& config,
     const wchar_t* path
 ) {
+  enum {
+    kDefaultInvalidValue = INT_MAX,
+  };
+
   config.main_menu_resolution.width = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Width",
@@ -325,12 +485,30 @@ static void ReadMainMenuResolution(
       path
   );
 
+  if (config.main_menu_resolution.width == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Width",
+        __FILEW__,
+        __LINE__
+    );
+  }
+
   config.main_menu_resolution.height = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Height",
       CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT,
       path
   );
+
+  if (config.main_menu_resolution.height == kDefaultInvalidValue) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Height",
+        __FILEW__,
+        __LINE__
+    );
+  }
 }
 
 /**
