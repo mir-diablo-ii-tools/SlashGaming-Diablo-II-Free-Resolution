@@ -74,31 +74,6 @@ const struct IngameResolutions* SelectLocalOrOnlineResolutions(void) {
   }
 }
 
-const std::set<GameResolution>& GetStandardResolutions() {
-  static int is_init = 0;
-  static std::set<GameResolution> standard_resolutions;
-
-  if (is_init) {
-    return standard_resolutions;
-  }
-
-  DEVMODEW dev_mode;
-  dev_mode.dmSize = sizeof(dev_mode);
-
-  for (DWORD i = 0; EnumDisplaySettingsW(nullptr, i, &dev_mode); i += 1) {
-    standard_resolutions.insert(
-        {
-            static_cast<int>(dev_mode.dmPelsWidth),
-            static_cast<int>(dev_mode.dmPelsHeight)
-        }
-    );
-  }
-
-  is_init = 1;
-
-  return standard_resolutions;
-}
-
 const IngameResolutions& GetNonCrashingIngameResolutions(void) {
   static int is_init = 0;
   static ::d2::ClientGameType selected_game_type =
@@ -134,7 +109,7 @@ const IngameResolutions& GetNonCrashingIngameResolutions(void) {
     for (size_t i = 0; i < selected_ingame_resolutions->count; i += 1) {
       const GameResolution* resolution =
           &selected_ingame_resolutions->resolutions[i];
-      if (IsStandardResolution(*resolution)) {
+      if (GameResolution_IsStandardResolution(resolution)) {
         non_crashing_ingame_resolutions.resolutions[
             non_crashing_ingame_resolutions.count
         ] = *resolution;
@@ -205,10 +180,6 @@ GameResolution GetIngameResolutionFromId(std::size_t id) {
       : id - 2;
 
   return ingame_resolutions.resolutions[ingame_resolution_index];
-}
-
-bool IsStandardResolution(const GameResolution& width_and_height) {
-  return GetStandardResolutions().contains(width_and_height);
 }
 
 GameResolution GetVideoModeDisplayResolution() {
