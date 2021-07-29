@@ -48,15 +48,16 @@
 
 #include <windows.h>
 #include <string_view>
-#include <tuple>
 #include <vector>
+
+#include "game_resolution/game_resolution.h"
 
 #include "dllexport_define.inc"
 
 namespace sgd2fr::config {
 
-const std::vector<std::tuple<int, int>>& GetIngameResolutions();
-std::tuple<int, int> GetMainMenuResolution();
+const IngameResolutions* GetIngameResolutions();
+GameResolution GetMainMenuResolution();
 
 unsigned int GetIngameResolutionMode();
 void SetIngameResolutionMode(unsigned int resolution_mode);

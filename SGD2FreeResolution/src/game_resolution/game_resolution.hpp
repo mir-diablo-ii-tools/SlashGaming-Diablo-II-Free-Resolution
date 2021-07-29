@@ -43,26 +43,52 @@
  *  work.
  */
 
-#include "d2ddraw_set_bit_block_width_and_height.hpp"
+#ifndef SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_HPP_
+#define SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_HPP_
 
-#include <sgd2mapi.hpp>
+#include "game_resolution.h"
 
-#include "../../../game_resolution/game_resolution.hpp"
-
-namespace sgd2fr::patches {
-
-void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height
+inline bool operator==(
+    const GameResolution& lhs,
+    const GameResolution& rhs
 ) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
-
-  *width = resolution.width;
-  *height = resolution.height;
-
-  ::d2::d2ddraw::SetBitBlockWidth(*width);
-  ::d2::d2ddraw::SetBitBlockHeight(*height);
+  return GameResolution_Compare(&lhs, &rhs) == 0;
 }
 
-} // namespace sgd2fr::patches
+inline bool operator<(
+    const GameResolution& lhs,
+    const GameResolution& rhs
+) {
+  return GameResolution_Compare(&lhs, &rhs) < 0;
+}
+
+#include <cstddef>
+
+namespace sgd2fr {
+
+size_t GetIngameResolutionMode();
+void SetIngameResolutionMode(size_t resolution_mode);
+
+std::size_t GetMinConfigResolutionId();
+std::size_t GetMaxConfigResolutionId();
+
+std::size_t GetMinIngameResolutionId();
+std::size_t GetMaxIngameResolutionId();
+
+std::size_t GetNumIngameResolutions();
+GameResolution GetIngameResolutionFromId(std::size_t id);
+bool IsStandardResolution(const GameResolution& width_and_height);
+
+/**
+ * Returns the display resolution using the global variables
+ * corresponding to the current video mode.
+ */
+GameResolution GetVideoModeDisplayResolution();
+
+unsigned int GetSourceInventoryArrangeMode();
+
+const GameResolution& GetSourceInventoryArrangeResolution();
+
+} // namespace sgd2fr
+
+#endif // SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_HPP_

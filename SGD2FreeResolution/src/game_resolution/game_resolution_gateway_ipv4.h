@@ -43,26 +43,23 @@
  *  work.
  */
 
-#include "d2ddraw_set_bit_block_width_and_height.hpp"
+#ifndef SGD2FR_GAME_RESOLUTION_GATEWAY_GAME_RESOLUTION_GATEWAY_IPV4_H_
+#define SGD2FR_GAME_RESOLUTION_GATEWAY_GAME_RESOLUTION_GATEWAY_IPV4_H_
 
-#include <sgd2mapi.hpp>
+#include <stddef.h>
 
-#include "../../../game_resolution/game_resolution.hpp"
+#include "game_resolution.h"
 
-namespace sgd2fr::patches {
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height
-) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+const struct IngameResolutions* GatewayIpv4_GetIngameResolutions(
+    const char* gateway_ipv4
+);
 
-  *width = resolution.width;
-  *height = resolution.height;
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-  ::d2::d2ddraw::SetBitBlockWidth(*width);
-  ::d2::d2ddraw::SetBitBlockHeight(*height);
-}
-
-} // namespace sgd2fr::patches
+#endif /* SGD2FR_GAME_RESOLUTION_GATEWAY_GAME_RESOLUTION_GATEWAY_IPV4_H_ */

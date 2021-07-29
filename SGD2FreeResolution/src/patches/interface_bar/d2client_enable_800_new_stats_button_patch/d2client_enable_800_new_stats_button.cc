@@ -64,12 +64,12 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewStatsButton() {
 
 void __cdecl Sgd2fr_D2Client_Set800NewStatsPopupText() {
   const wchar_t* new_stats_text = ::d2::d2lang::GetStringByIndex(3986);
-  const std::tuple popup_text_position = GetNewStatsPopupTextPosition();
+  const GameResolution popup_text_position = GetNewStatsPopupTextPosition();
 
   ::d2::d2win::SetPopUpUnicodeText(
       new_stats_text,
-      std::get<0>(popup_text_position),
-      std::get<1>(popup_text_position),
+      popup_text_position.width,
+      popup_text_position.height,
       ::d2::TextColor::kWhite,
       true
   );

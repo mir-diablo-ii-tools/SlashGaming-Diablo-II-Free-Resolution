@@ -43,37 +43,40 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_GAME_RESOLUTION_HPP_
-#define SGD2FR_HELPER_GAME_RESOLUTION_HPP_
+#include "game_resolution.h"
 
-#include <cstddef>
-#include <tuple>
+const struct GameResolution GameResolution_k640x480 =
+    GAME_RESOLUTION_640X480;
+const struct GameResolution GameResolution_k800x600 =
+    GAME_RESOLUTION_800X600;
+const struct GameResolution GameResolution_k856x480 =
+    GAME_RESOLUTION_856X480;
+const struct GameResolution GameResolution_k1024x768 =
+    GAME_RESOLUTION_1024X768;
+const struct GameResolution GameResolution_k1068x600 =
+    GAME_RESOLUTION_1068X600;
 
-namespace sgd2fr {
+const struct GameResolution GameResolution_kDefault[] =
+    GAME_RESOLUTION_DEFAULT;
 
-constexpr const ::std::tuple<int, int> kResolution640x480(640, 480);
-constexpr const ::std::tuple<int, int> kResolution800x600(800, 600);
+const struct IngameResolutions IngameResolution_kDefault =
+    INGAME_RESOLUTIONS_DEFAULT;
 
-std::size_t GetMinConfigResolutionId();
-std::size_t GetMaxConfigResolutionId();
+int GameResolution_Compare(
+    const struct GameResolution* resolution1,
+    const struct GameResolution* resolution2
+) {
+  if (resolution1->width < resolution2->width) {
+    return -1;
+  } else if (resolution1->width > resolution2->width) {
+    return 1;
+  }
 
-std::size_t GetMinIngameResolutionId();
-std::size_t GetMaxIngameResolutionId();
+  if (resolution1->height < resolution2->height) {
+    return -1;
+  } else if (resolution1->height > resolution2->height) {
+    return 1;
+  }
 
-std::size_t GetNumIngameResolutions();
-std::tuple<int, int> GetIngameResolutionFromId(std::size_t id);
-bool IsStandardResolution(const std::tuple<int, int>& width_and_height);
-
-/**
- * Returns the display resolution using the global variables
- * corresponding to the current video mode.
- */
-::std::tuple<int, int> GetVideoModeDisplayResolution();
-
-unsigned int GetSourceInventoryArrangeMode();
-
-const ::std::tuple<int, int>& GetSourceInventoryArrangeResolution();
-
-} // namespace sgd2fr
-
-#endif // SGD2FR_HELPER_GAME_RESOLUTION_HPP_
+  return 0;
+}

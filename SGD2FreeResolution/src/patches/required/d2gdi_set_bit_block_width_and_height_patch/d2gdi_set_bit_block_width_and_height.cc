@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
@@ -56,23 +56,23 @@ void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
     int32_t* width,
     int32_t* height
 ) {
-  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
+  GameResolution resolution = GetIngameResolutionFromId(
       resolution_mode
   );
 
-  *width = ::std::get<0>(resolution);
-  *height = ::std::get<1>(resolution);
+  *width = resolution.width;
+  *height = resolution.height;
 }
 
 void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
     ::std::size_t resolution_mode
 ) {
-  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
+  GameResolution resolution = GetIngameResolutionFromId(
       resolution_mode
   );
 
-  int bit_block_width = ::std::get<0>(resolution);
-  int bit_block_height = ::std::get<1>(resolution);
+  int bit_block_width = resolution.width;
+  int bit_block_height = resolution.height;
 
   ::d2::d2gdi::SetBitBlockWidth(bit_block_width);
   ::d2::d2gdi::SetBitBlockHeight(bit_block_height);

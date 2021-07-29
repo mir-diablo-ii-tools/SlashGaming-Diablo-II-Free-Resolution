@@ -49,6 +49,8 @@
 #include <mdc/std/stdint.h>
 #include <sgd2mapi.hpp>
 
+#include "../../../game_resolution/game_resolution.hpp"
+
 namespace sgd2fr::patches {
 
 extern "C" uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton();

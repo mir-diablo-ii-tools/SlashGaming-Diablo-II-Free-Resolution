@@ -49,7 +49,7 @@
 #include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 

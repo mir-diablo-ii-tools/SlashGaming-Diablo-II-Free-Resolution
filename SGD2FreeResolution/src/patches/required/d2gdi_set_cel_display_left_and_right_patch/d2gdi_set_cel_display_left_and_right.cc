@@ -47,16 +47,16 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2GDI_SetCelDisplayLeftAndRight(
     std::size_t resolution_mode
 ) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  int width = std::get<0>(resolution);
+  int width = resolution.width;
 
   ::d2::d2gdi::SetCelDisplayLeft(0);
   ::d2::d2gdi::SetCelDisplayRight(width);

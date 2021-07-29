@@ -46,9 +46,9 @@
 #ifndef SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
 #define SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
 
-#include <tuple>
-
 #include <sgd2mapi.hpp>
+
+#include "../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr {
 
@@ -57,8 +57,8 @@ unsigned int Get800InterfaceBarEnabledValue();
 d2::PositionalRectangle_Api GetNewStatsButtonPosition();
 d2::PositionalRectangle_Api GetNewSkillButtonPosition();
 
-std::tuple<int, int> GetNewStatsPopupTextPosition();
-std::tuple<int, int> GetNewSkillPopupTextPosition();
+GameResolution GetNewStatsPopupTextPosition();
+GameResolution GetNewSkillPopupTextPosition();
 
 bool IsMouseOverNewStatsButton();
 bool IsMouseOverNewSkillButton();

@@ -43,26 +43,16 @@
  *  work.
  */
 
-#include "d2ddraw_set_bit_block_width_and_height.hpp"
+#include "game_resolution_d2lod_net.h"
 
-#include <sgd2mapi.hpp>
+/**
+ * External
+ */
 
-#include "../../../game_resolution/game_resolution.hpp"
-
-namespace sgd2fr::patches {
-
-void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height
-) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
-
-  *width = resolution.width;
-  *height = resolution.height;
-
-  ::d2::d2ddraw::SetBitBlockWidth(*width);
-  ::d2::d2ddraw::SetBitBlockHeight(*height);
-}
-
-} // namespace sgd2fr::patches
+const struct GameResolution D2LodNet_kIngameResolutions[] = {
+    GAME_RESOLUTION_640X480,
+    GAME_RESOLUTION_800X600,
+    GAME_RESOLUTION_856X480,
+    GAME_RESOLUTION_1024X768,
+    GAME_RESOLUTION_1068X600,
+};

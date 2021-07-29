@@ -43,26 +43,59 @@
  *  work.
  */
 
-#include "d2ddraw_set_bit_block_width_and_height.hpp"
+#ifndef SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_H_
+#define SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_H_
 
-#include <sgd2mapi.hpp>
+#include <stddef.h>
 
-#include "../../../game_resolution/game_resolution.hpp"
+struct GameResolution {
+  int width;
+  int height;
+};
 
-namespace sgd2fr::patches {
+struct IngameResolutions {
+  size_t count;
+  struct GameResolution* resolutions;
+};
 
-void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height
-) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+#define GAME_RESOLUTION_640X480 { 640, 480 }
+#define GAME_RESOLUTION_800X600 { 800, 600 }
+#define GAME_RESOLUTION_856X480 { 856, 480 }
+#define GAME_RESOLUTION_1024X768 { 1024, 768 }
+#define GAME_RESOLUTION_1068X600 { 1068, 600 }
 
-  *width = resolution.width;
-  *height = resolution.height;
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-  ::d2::d2ddraw::SetBitBlockWidth(*width);
-  ::d2::d2ddraw::SetBitBlockHeight(*height);
-}
+const struct GameResolution GameResolution_k640x480;
+const struct GameResolution GameResolution_k800x600;
+const struct GameResolution GameResolution_k856x480;
+const struct GameResolution GameResolution_k1024x768;
+const struct GameResolution GameResolution_k1068x600;
 
-} // namespace sgd2fr::patches
+enum {
+  GameResolution_kDefaultCount = 2,
+};
+
+#define GAME_RESOLUTION_DEFAULT \
+    { GAME_RESOLUTION_640X480, GAME_RESOLUTION_800X600 }
+
+const struct GameResolution
+GameResolution_kDefault[GameResolution_kDefaultCount];
+
+#define INGAME_RESOLUTIONS_DEFAULT \
+    { GameResolution_kDefaultCount, GameResolution_kDefault }
+
+const struct IngameResolutions IngameResolution_kDefault;
+
+int GameResolution_Compare(
+    const struct GameResolution* resolution1,
+    const struct GameResolution* resolution2
+);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_H_ */

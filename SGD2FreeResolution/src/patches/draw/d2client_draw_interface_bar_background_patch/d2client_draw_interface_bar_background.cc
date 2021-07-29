@@ -48,7 +48,7 @@
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -56,23 +56,23 @@ namespace {
 static void DrawAntiCheatBlackRectangle() {
   static constexpr int interface_bar_height = 47;
 
-  ::std::tuple width_and_height = GetIngameResolutionFromId(
+  GameResolution width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   ::d2::d2gfx::DrawRectangle(
       0,
-      std::get<1>(width_and_height) - interface_bar_height,
-      std::get<0>(width_and_height),
-      std::get<1>(width_and_height),
+      width_and_height.height - interface_bar_height,
+      width_and_height.width,
+      width_and_height.height,
       0,
       ::d2::DrawEffect::kNone
   );
 }
 
 static void DrawLeftInterfaceBarBackground() {
-  ::std::tuple width_and_height = GetIngameResolutionFromId(
+  GameResolution width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
@@ -88,7 +88,7 @@ static void DrawLeftInterfaceBarBackground() {
       frame_index < interface_bar_background_left.GetNumFrames();
       frame_index += 1
   ) {
-    if ((left_start + width_covered) < (std::get<0>(width_and_height) / 2)) {
+    if ((left_start + width_covered) < (width_and_height.width / 2)) {
       continue;
     }
 
@@ -99,7 +99,7 @@ static void DrawLeftInterfaceBarBackground() {
 
     interface_bar_background_left.DrawFrame(
         left_start + width_covered,
-        std::get<1>(width_and_height),
+        width_and_height.height,
         0,
         frame_index
     );
@@ -113,7 +113,7 @@ static void DrawLeftInterfaceBarBackground() {
   );
 
   for (size_t frame_index = 0;
-      width_covered < (std::get<0>(width_and_height) / 2);
+      width_covered < (width_and_height.width / 2);
       frame_index += 1) {
     frame_index %= interface_bar_background_center.GetNumFrames();
 
@@ -124,7 +124,7 @@ static void DrawLeftInterfaceBarBackground() {
 
     interface_bar_background_center.DrawFrame(
         left_start + width_covered,
-        std::get<1>(width_and_height),
+        width_and_height.height,
         0,
         frame_index
     );
@@ -134,11 +134,11 @@ static void DrawLeftInterfaceBarBackground() {
 }
 
 static void DrawRightInterfaceBarBackground() {
-  ::std::tuple width_and_height = GetIngameResolutionFromId(
+  GameResolution width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const int right_start = std::get<0>(width_and_height) - 117 + 48;
+  const int right_start = width_and_height.width - 117 + 48;
   int width_covered = 0;
 
   // Draw the left part of the interface bar background.
@@ -149,7 +149,7 @@ static void DrawRightInterfaceBarBackground() {
   for (size_t frame_index = 0;
       frame_index < interface_bar_background_right.GetNumFrames();
       frame_index += 1) {
-    if ((right_start - width_covered) < (std::get<0>(width_and_height) / 2)) {
+    if ((right_start - width_covered) < (width_and_height.width / 2)) {
       continue;
     }
 
@@ -160,7 +160,7 @@ static void DrawRightInterfaceBarBackground() {
 
     interface_bar_background_right.DrawFrame(
         right_start - width_covered - cel.GetWidth(),
-        std::get<1>(width_and_height),
+        width_and_height.height,
         0,
         frame_index
     );
@@ -174,7 +174,7 @@ static void DrawRightInterfaceBarBackground() {
   );
 
   for (size_t frame_index = 0;
-      (right_start - width_covered) < (std::get<0>(width_and_height) / 2);
+      (right_start - width_covered) < (width_and_height.width / 2);
       frame_index += 1
   ) {
     frame_index %= interface_bar_background_center.GetNumFrames();
@@ -186,7 +186,7 @@ static void DrawRightInterfaceBarBackground() {
 
     interface_bar_background_center.DrawFrame(
         right_start - width_covered - cel.GetWidth(),
-        std::get<1>(width_and_height),
+        width_and_height.height,
         0,
         frame_index
     );
