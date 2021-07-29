@@ -94,6 +94,10 @@ int GameResolution_Compare(
     const struct GameResolution* resolution2
 );
 
+int GameResolution_IsStandardResolution(
+    const struct GameResolution* resolution
+);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
