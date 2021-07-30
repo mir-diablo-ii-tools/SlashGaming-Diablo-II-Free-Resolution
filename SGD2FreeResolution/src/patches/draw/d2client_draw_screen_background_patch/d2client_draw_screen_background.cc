@@ -142,7 +142,7 @@ void DrawRightScreenBackground() {
     ::d2::Cel_Wrapper cel = screen_background.GetCel(0, frame);
 
     screen_background.DrawFrame(
-        width_covered,
+        (width_and_height.width / 2) + width_covered,
         height_covered + cel.GetHeight(),
         0,
         frame
@@ -353,6 +353,7 @@ void DrawCustomLeftScreenBorderFrame() {
     screen_top_border.DrawFrame(
         (width_and_height.width / 2)
             - screen_top_right_border_width
+            - screen_top_border_width
             - cel.GetWidth(),
         border_top + cel.GetHeight(),
         0,
@@ -394,6 +395,7 @@ void DrawCustomLeftScreenBorderFrame() {
     screen_bottom_border.DrawFrame(
         (width_and_height.width / 2)
             - screen_bottom_right_border_width
+            - screen_bottom_border_width
             - cel.GetWidth(),
         border_bottom,
         0,

@@ -88,8 +88,8 @@ static void DrawLeftInterfaceBarBackground() {
       frame_index < interface_bar_background_left.GetNumFrames();
       frame_index += 1
   ) {
-    if ((left_start + width_covered) < (width_and_height.width / 2)) {
-      continue;
+    if ((left_start + width_covered) > (width_and_height.width / 2)) {
+      break;
     }
 
     ::d2::Cel_Wrapper cel = interface_bar_background_left.GetCel(
@@ -113,7 +113,7 @@ static void DrawLeftInterfaceBarBackground() {
   );
 
   for (size_t frame_index = 0;
-      width_covered < (width_and_height.width / 2);
+      (left_start + width_covered) < (width_and_height.width / 2);
       frame_index += 1) {
     frame_index %= interface_bar_background_center.GetNumFrames();
 
@@ -138,7 +138,7 @@ static void DrawRightInterfaceBarBackground() {
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const int right_start = width_and_height.width - 117 + 48;
+  const int right_start = width_and_height.width - (117 + 48);
   int width_covered = 0;
 
   // Draw the left part of the interface bar background.
@@ -150,7 +150,7 @@ static void DrawRightInterfaceBarBackground() {
       frame_index < interface_bar_background_right.GetNumFrames();
       frame_index += 1) {
     if ((right_start - width_covered) < (width_and_height.width / 2)) {
-      continue;
+      break;
     }
 
     ::d2::Cel_Wrapper cel = interface_bar_background_right.GetCel(
@@ -174,7 +174,7 @@ static void DrawRightInterfaceBarBackground() {
   );
 
   for (size_t frame_index = 0;
-      (right_start - width_covered) < (width_and_height.width / 2);
+      (right_start - width_covered) > (width_and_height.width / 2);
       frame_index += 1
   ) {
     frame_index %= interface_bar_background_center.GetNumFrames();
