@@ -68,11 +68,11 @@ struct IngameResolutions {
 extern "C" {
 #endif /* __cplusplus */
 
-const struct GameResolution GameResolution_k640x480;
-const struct GameResolution GameResolution_k800x600;
-const struct GameResolution GameResolution_k856x480;
-const struct GameResolution GameResolution_k1024x768;
-const struct GameResolution GameResolution_k1068x600;
+extern const struct GameResolution GameResolution_k640x480;
+extern const struct GameResolution GameResolution_k800x600;
+extern const struct GameResolution GameResolution_k856x480;
+extern const struct GameResolution GameResolution_k1024x768;
+extern const struct GameResolution GameResolution_k1068x600;
 
 enum {
   GameResolution_kDefaultCount = 2,
@@ -81,13 +81,13 @@ enum {
 #define GAME_RESOLUTION_DEFAULT \
     { GAME_RESOLUTION_640X480, GAME_RESOLUTION_800X600 }
 
-const struct GameResolution
+extern const struct GameResolution
 GameResolution_kDefault[GameResolution_kDefaultCount];
 
 #define INGAME_RESOLUTIONS_DEFAULT \
     { GameResolution_kDefaultCount, GameResolution_kDefault }
 
-const struct IngameResolutions IngameResolution_kDefault;
+extern const struct IngameResolutions IngameResolution_kDefault;
 
 int GameResolution_Compare(
     const struct GameResolution* resolution1,
