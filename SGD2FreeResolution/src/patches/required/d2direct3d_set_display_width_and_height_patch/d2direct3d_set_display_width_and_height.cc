@@ -47,17 +47,17 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight(
     uint32_t resolution_mode
 ) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  int width = std::get<0>(resolution);
-  int height = std::get<1>(resolution);
+  int width = resolution.width;
+  int height = resolution.height;
 
   ::d2::d2direct3d::SetDisplayWidth(width);
   ::d2::d2direct3d::SetDisplayHeight(height);

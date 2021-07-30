@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 #include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr::patches {
@@ -58,10 +58,10 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
     int32_t* height,
     uint32_t* glide_res_id
 ) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
+  *width = resolution.width;
+  *height = resolution.height;
 
   ::d2::d2glide::SetDisplayWidth(*width);
   ::d2::d2glide::SetDisplayHeight(*height);

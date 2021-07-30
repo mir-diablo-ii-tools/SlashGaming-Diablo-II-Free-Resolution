@@ -46,7 +46,7 @@
 #include "d2common_get_global_belt_record.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 

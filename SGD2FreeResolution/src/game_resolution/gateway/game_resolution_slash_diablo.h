@@ -43,26 +43,24 @@
  *  work.
  */
 
-#include "d2ddraw_set_bit_block_width_and_height.hpp"
+#ifndef SGD2FR_GAME_RESOLUTION_IPV4_GAME_RESOLUTION_SLASH_DIABLO_H_
+#define SGD2FR_GAME_RESOLUTION_IPV4_GAME_RESOLUTION_SLASH_DIABLO_H_
 
-#include <sgd2mapi.hpp>
+#include "../game_resolution.h"
 
-#include "../../../game_resolution/game_resolution.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-namespace sgd2fr::patches {
+enum {
+  SlashDiablo_kIngameResolutionsCount = 4,
+};
 
-void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height
-) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+extern const struct GameResolution
+SlashDiablo_kIngameResolutions[SlashDiablo_kIngameResolutionsCount];
 
-  *width = resolution.width;
-  *height = resolution.height;
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-  ::d2::d2ddraw::SetBitBlockWidth(*width);
-  ::d2::d2ddraw::SetBitBlockHeight(*height);
-}
-
-} // namespace sgd2fr::patches
+#endif /* SGD2FR_GAME_RESOLUTION_IPV4_GAME_RESOLUTION_SLASH_DIABLO_H_ */

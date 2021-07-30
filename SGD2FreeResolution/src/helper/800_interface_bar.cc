@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
-#include "game_resolution.hpp"
+#include "../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr {
 namespace {
@@ -115,9 +115,9 @@ enum {
 unsigned int Get800InterfaceBarEnabledValue() {
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
 
-  ::std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
+  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  if (::std::get<0>(resolution) < 800
+  if (resolution.width < 800
       || !config::Is800InterfaceBarEnabled()) {
     return 0;
   } else {
@@ -137,12 +137,12 @@ d2::PositionalRectangle_Api GetNewStatsButtonPosition() {
         - kSourceNewStatsButtonBottom,
   };
 
-  const std::tuple display_width_and_height = GetIngameResolutionFromId(
+  const GameResolution display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const int display_half_width = (std::get<0>(display_width_and_height) / 2);
-  const int display_height = std::get<1>(display_width_and_height);
+  const int display_half_width = display_width_and_height.width / 2;
+  const int display_height = display_width_and_height.height;
 
   ::d2::PositionalRectangle_Api button_position(
       display_half_width - kDistanceFromLeftToDisplayCenter,
@@ -166,12 +166,12 @@ d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
         - kSourceNewSkillButtonBottom,
   };
 
-  const std::tuple display_width_and_height = GetIngameResolutionFromId(
+  const GameResolution display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const int display_half_width = (std::get<0>(display_width_and_height) / 2);
-  const int display_height = std::get<1>(display_width_and_height);
+  const int display_half_width = display_width_and_height.width / 2;
+  const int display_height = display_width_and_height.height;
 
   ::d2::PositionalRectangle_Api button_position(
       display_half_width - kDistanceFromLeftToDisplayCenter,
@@ -183,7 +183,7 @@ d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
   return button_position;
 }
 
-std::tuple<int, int> GetNewStatsPopupTextPosition() {
+GameResolution GetNewStatsPopupTextPosition() {
   enum {
     kDistanceFromPositionXToDisplayCenter = (kSourceDisplayWidth / 2)
         - kSourceNewStatsTextPositionX,
@@ -191,20 +191,20 @@ std::tuple<int, int> GetNewStatsPopupTextPosition() {
         - kSourceNewStatsTextPositionY,
   };
 
-  const std::tuple display_width_and_height = GetIngameResolutionFromId(
+  const GameResolution display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const int display_half_width = (std::get<0>(display_width_and_height) / 2);
-  const int display_height = std::get<1>(display_width_and_height);
+  const int display_half_width = display_width_and_height.width / 2;
+  const int display_height = display_width_and_height.height;
 
-  return std::make_tuple(
+  return {
       display_half_width - kDistanceFromPositionXToDisplayCenter,
       display_height - kDistanceFromPositionYToDisplayBottom
-  );
+  };
 }
 
-std::tuple<int, int> GetNewSkillPopupTextPosition() {
+GameResolution GetNewSkillPopupTextPosition() {
   enum {
     kDistanceFromPositionXToDisplayCenter = (kSourceDisplayWidth / 2)
         - kSourceNewSkillTextPositionX,
@@ -212,17 +212,17 @@ std::tuple<int, int> GetNewSkillPopupTextPosition() {
         - kSourceNewSkillTextPositionY,
   };
 
-  const std::tuple display_width_and_height = GetIngameResolutionFromId(
+  const GameResolution display_width_and_height = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const int display_half_width = (std::get<0>(display_width_and_height) / 2);
-  const int display_height = std::get<1>(display_width_and_height);
+  const int display_half_width = display_width_and_height.width / 2;
+  const int display_height = display_width_and_height.height;
 
-  return std::make_tuple(
+  return {
       display_half_width - kDistanceFromPositionXToDisplayCenter,
       display_height - kDistanceFromPositionYToDisplayBottom
-  );
+  };
 }
 
 bool IsMouseOverNewStatsButton() {

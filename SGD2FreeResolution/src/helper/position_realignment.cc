@@ -45,22 +45,22 @@
 
 #include "position_realignment.hpp"
 
-#include "game_resolution.hpp"
+#include "../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr {
 
 void RealignPositionFromCenter(
     ::d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
-  std::tuple current_resolution = GetIngameResolutionFromId(
+  GameResolution current_resolution = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const std::tuple<int, int>& source_resolution =
+  const GameResolution& source_resolution =
       GetSourceInventoryArrangeResolution();
 
-  int source_width = std::get<0>(source_resolution);
-  int source_height = std::get<1>(source_resolution);
+  int source_width = source_resolution.width;
+  int source_height = source_resolution.height;
 
   // Set left and right values.
   int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()
@@ -70,7 +70,7 @@ void RealignPositionFromCenter(
       - out_position_wrapper.GetLeft();
 
   out_position_wrapper.SetLeft(
-      (std::get<0>(current_resolution) / 2)
+      (current_resolution.width / 2)
           + dist_from_rect_left_to_display_center
   );
 
@@ -86,7 +86,7 @@ void RealignPositionFromCenter(
       - out_position_wrapper.GetTop();
 
   out_position_wrapper.SetTop(
-      (std::get<1>(current_resolution) / 2)
+      (current_resolution.height / 2)
           + dist_from_rect_top_to_display_center
   );
 
@@ -98,15 +98,15 @@ void RealignPositionFromCenter(
 void RealignPositionFromBottomCenter(
     ::d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
-  std::tuple current_resolution = GetIngameResolutionFromId(
+  GameResolution current_resolution = GetIngameResolutionFromId(
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const std::tuple<int, int>& source_resolution =
+  const GameResolution& source_resolution =
       GetSourceInventoryArrangeResolution();
 
-  int source_width = std::get<0>(source_resolution);
-  int source_height = std::get<1>(source_resolution);
+  int source_width = source_resolution.width;
+  int source_height = source_resolution.height;
 
   // Set left and right values.
   int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()
@@ -116,7 +116,7 @@ void RealignPositionFromBottomCenter(
       - out_position_wrapper.GetLeft();
 
   out_position_wrapper.SetLeft(
-      (std::get<0>(current_resolution) / 2)
+      (current_resolution.width / 2)
           + dist_from_rect_left_to_display_center
   );
 
@@ -132,7 +132,7 @@ void RealignPositionFromBottomCenter(
       - out_position_wrapper.GetTop();
 
   out_position_wrapper.SetTop(
-      std::get<1>(current_resolution)
+      current_resolution.height
           - dist_from_rect_top_to_display_bottom
   );
 

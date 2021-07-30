@@ -53,7 +53,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
@@ -157,14 +157,14 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
   wchar_t resolution_str[32];
 
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
-  std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
+  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
 
   _snwprintf(
       resolution_str,
       sizeof(resolution_str) / sizeof(resolution_str[0]),
       L"%dx%d",
-      std::get<0>(resolution),
-      std::get<1>(resolution)
+      resolution.width,
+      resolution.height
   );
 
   ::d2::TextFont old_text_font = ::d2::d2win::SetUnicodeTextFont(

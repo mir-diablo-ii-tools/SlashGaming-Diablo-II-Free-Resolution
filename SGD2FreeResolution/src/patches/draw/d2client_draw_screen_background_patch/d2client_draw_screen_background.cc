@@ -53,7 +53,7 @@
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../helper/cel_file_collection.hpp"
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 #include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr {
@@ -65,14 +65,14 @@ constexpr std::string_view kOriginalScreenBorderFrameImagePath =
 void DrawLeftScreenBackground() {
   ::d2::CelFile_Api& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
 
-  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   ::d2::d2gfx::DrawRectangle(
       0,
       0,
-      std::get<0>(width_and_height) / 2,
-      std::get<1>(width_and_height),
+      width_and_height.width / 2,
+      width_and_height.height,
       0,
       ::d2::DrawEffect::kNone
   );
@@ -86,21 +86,21 @@ void DrawLeftScreenBackground() {
   size_t column = 0;
   size_t row = 0;
 
-  while (height_covered < std::get<1>(width_and_height)) {
+  while (height_covered < width_and_height.height) {
     const size_t frame = ((row % 2) * half_num_frames)
         + (column % half_num_frames);
 
     ::d2::Cel_Wrapper cel = screen_background.GetCel(0, frame);
 
     screen_background.DrawFrame(
-        (std::get<0>(width_and_height) / 2) - width_covered - cel.GetWidth(),
+        (width_and_height.width / 2) - width_covered - cel.GetWidth(),
         height_covered + cel.GetHeight(),
         0,
         frame
     );
 
     width_covered += cel.GetWidth();
-    if (width_covered < std::get<0>(width_and_height)) {
+    if (width_covered < width_and_height.width) {
       column += 1;
     } else {
       width_covered = 0;
@@ -115,14 +115,14 @@ void DrawLeftScreenBackground() {
 void DrawRightScreenBackground() {
   ::d2::CelFile_Api& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
 
-  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   ::d2::d2gfx::DrawRectangle(
-      std::get<0>(width_and_height) / 2,
+      width_and_height.width / 2,
       0,
-      std::get<0>(width_and_height),
-      std::get<1>(width_and_height),
+      width_and_height.width,
+      width_and_height.height,
       0,
       ::d2::DrawEffect::kNone
   );
@@ -135,21 +135,21 @@ void DrawRightScreenBackground() {
   size_t column = 0;
   size_t row = 0;
 
-  while (height_covered < std::get<1>(width_and_height)) {
+  while (height_covered < width_and_height.height) {
     const size_t frame = ((row % 2) * half_num_frames)
         + (column % half_num_frames);
 
     ::d2::Cel_Wrapper cel = screen_background.GetCel(0, frame);
 
     screen_background.DrawFrame(
-        width_covered,
+        (width_and_height.width / 2) + width_covered,
         height_covered + cel.GetHeight(),
         0,
         frame
     );
 
     width_covered += cel.GetWidth();
-    if (width_covered < std::get<0>(width_and_height)) {
+    if (width_covered < width_and_height.width) {
       column += 1;
     } else {
       width_covered = 0;
@@ -175,12 +175,12 @@ void DrawOriginalLeftScreenBorderFrame() {
       kOriginalScreenBorderFrameImagePath
   );
 
-  std::tuple width_and_height = GetIngameResolutionFromId(
+  GameResolution width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
-  const int left = (std::get<0>(width_and_height) - 640 - (800 - 640)) / 2;
-  const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
+  const int left = (width_and_height.width - 640 - (800 - 640)) / 2;
+  const int top = ((width_and_height.height - 480 - (600 - 480)) / 2) - 3;
 
   ::d2::Cel_Wrapper cels[kNumFramesOnLeft] = {
       screen_border_frame.GetCel(0, 0),
@@ -236,10 +236,10 @@ void DrawOriginalRightScreenBorderFrame() {
       kOriginalScreenBorderFrameImagePath
   );
 
-  std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  const int right = (std::get<0>(width_and_height) + 640 + (800 - 640)) / 2;
-  const int top = ((std::get<1>(width_and_height) - 480 - (600 - 480)) / 2) - 3;
+  const int right = (width_and_height.width + 640 + (800 - 640)) / 2;
+  const int top = ((width_and_height.height - 480 - (600 - 480)) / 2) - 3;
 
   ::d2::Cel_Wrapper cels[kNumFramesOnRight] = {
       screen_border_frame.GetCel(0, kNumFramesOnLeft),
@@ -298,11 +298,11 @@ void DrawCustomLeftScreenBorderFrame() {
   ::d2::CelFile_Api& screen_bottom_border = GetCelFile(config::GetCustomLeftScreenBorderBottomImagePath());
   ::d2::CelFile_Api& screen_bottom_right_border = GetCelFile(config::GetCustomLeftScreenBorderBottomRightImagePath());
 
-  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // Determine border starting positions.
-  const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
-  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+  const int screen_left = (width_and_height.width - 640) / 2;
+  const int screen_top = (width_and_height.height - 480) / 2;
 
   int screen_left_border_height = 0;
 
@@ -330,7 +330,7 @@ void DrawCustomLeftScreenBorderFrame() {
     );
 
     screen_top_right_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2)
+        (width_and_height.width / 2)
             - screen_top_right_border_width
             - cel.GetWidth(),
         border_top + cel.GetHeight(),
@@ -351,8 +351,9 @@ void DrawCustomLeftScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_top_border.GetCel(0, frame_index);
 
     screen_top_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2)
+        (width_and_height.width / 2)
             - screen_top_right_border_width
+            - screen_top_border_width
             - cel.GetWidth(),
         border_top + cel.GetHeight(),
         0,
@@ -372,7 +373,7 @@ void DrawCustomLeftScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_bottom_right_border.GetCel(0, frame_index);
 
     screen_bottom_right_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2)
+        (width_and_height.width / 2)
             - screen_bottom_right_border_width
             - cel.GetWidth(),
         border_bottom,
@@ -392,8 +393,9 @@ void DrawCustomLeftScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_bottom_border.GetCel(0, frame_index);
 
     screen_bottom_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2)
+        (width_and_height.width / 2)
             - screen_bottom_right_border_width
+            - screen_bottom_border_width
             - cel.GetWidth(),
         border_bottom,
         0,
@@ -414,7 +416,7 @@ void DrawCustomLeftScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_left_border.GetCel(0, frame_index);
 
     screen_left_border.DrawFrame(
-        ((std::get<0>(width_and_height) - 640) / 2) - cel.GetWidth(),
+        ((width_and_height.width - 640) / 2) - cel.GetWidth(),
         border_top + screen_left_border_height + cel.GetHeight(),
         0,
         frame_index
@@ -431,11 +433,11 @@ void DrawCustomRightScreenBorderFrame() {
   ::d2::CelFile_Api& screen_bottom_border = GetCelFile(config::GetCustomRightScreenBorderBottomImagePath());
   ::d2::CelFile_Api& screen_bottom_left_border = GetCelFile(config::GetCustomRightScreenBorderBottomLeftImagePath());
 
-  const std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  const GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
   // Determine border starting positions.
-  const int screen_right = (std::get<0>(width_and_height) + 640) / 2;
-  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+  const int screen_right = (width_and_height.width + 640) / 2;
+  const int screen_top = (width_and_height.height - 480) / 2;
 
   int screen_right_border_height = 0;
 
@@ -457,7 +459,7 @@ void DrawCustomRightScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_top_left_border.GetCel(0, frame_index);
 
     screen_top_left_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2) + screen_top_left_border_width,
+        (width_and_height.width / 2) + screen_top_left_border_width,
         border_top + cel.GetHeight(),
         0,
         frame_index
@@ -476,7 +478,7 @@ void DrawCustomRightScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_top_border.GetCel(0, frame_index);
 
     screen_top_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2)
+        (width_and_height.width / 2)
             + screen_top_left_border_width
             + screen_top_border_width,
         border_top + cel.GetHeight(),
@@ -497,7 +499,7 @@ void DrawCustomRightScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_bottom_left_border.GetCel(0, frame_index);
 
     screen_bottom_left_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2) + screen_bottom_left_border_width,
+        (width_and_height.width / 2) + screen_bottom_left_border_width,
         border_bottom,
         0,
         frame_index
@@ -516,7 +518,7 @@ void DrawCustomRightScreenBorderFrame() {
     ::d2::Cel_Wrapper cel = screen_bottom_border.GetCel(0, frame_index);
 
     screen_bottom_border.DrawFrame(
-        (std::get<0>(width_and_height) / 2)
+        (width_and_height.width / 2)
             + screen_bottom_left_border_width
             + screen_bottom_border_width,
         border_bottom,
@@ -582,13 +584,13 @@ static void DrawLeftScreenBackgroundHorizontalRibbons() {
   );
 
   // Determine border starting positions.
-  const std::tuple width_and_height = GetIngameResolutionFromId(
+  const GameResolution width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
-  const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
-  const int screen_right = std::get<0>(width_and_height) / 2;
-  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+  const int screen_left = (width_and_height.width - 640) / 2;
+  const int screen_right = width_and_height.width / 2;
+  const int screen_top = (width_and_height.height - 480) / 2;
 
   int screen_left_border_height = 0;
 
@@ -646,13 +648,13 @@ static void DrawLeftScreenBackgroundVerticalRibbons() {
   );
 
   // Determine border starting positions.
-  const std::tuple width_and_height = GetIngameResolutionFromId(
+  const GameResolution width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
-  const int screen_left = (std::get<0>(width_and_height) - 640) / 2;
-  const int screen_right = std::get<0>(width_and_height) / 2;
-  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+  const int screen_left = (width_and_height.width - 640) / 2;
+  const int screen_right = width_and_height.width / 2;
+  const int screen_top = (width_and_height.height - 480) / 2;
 
   int screen_left_border_height = 0;
 
@@ -746,13 +748,13 @@ static void DrawRightScreenBackgroundHorizontalRibbon() {
   );
 
   // Determine border starting positions.
-  const ::std::tuple width_and_height = GetIngameResolutionFromId(
+  const GameResolution width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
-  const int screen_left = std::get<0>(width_and_height) / 2;
-  const int screen_right = (std::get<0>(width_and_height) + 640) / 2;
-  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+  const int screen_left = width_and_height.width / 2;
+  const int screen_right = (width_and_height.width + 640) / 2;
+  const int screen_top = (width_and_height.height - 480) / 2;
 
   int screen_right_border_height = 0;
 
@@ -773,7 +775,7 @@ static void DrawRightScreenBackgroundHorizontalRibbon() {
   int width_covered = 0;
 
   for (size_t frame_index = 0;
-      width_covered < (std::get<0>(width_and_height) - border_right);
+      width_covered < (width_and_height.width - border_right);
       frame_index += 1
   ) {
     frame_index %= screen_border_horizontal_ribbon.GetNumFrames();
@@ -811,13 +813,13 @@ static void DrawRightScreenBackgroundVerticalRibbons() {
   );
 
   // Determine border starting positions.
-  const std::tuple width_and_height = GetIngameResolutionFromId(
+  const GameResolution width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
   );
 
-  const int screen_left = std::get<0>(width_and_height) / 2;
-  const int screen_right = (std::get<0>(width_and_height) + 640) / 2;
-  const int screen_top = (std::get<1>(width_and_height) - 480) / 2;
+  const int screen_left = width_and_height.width / 2;
+  const int screen_right = (width_and_height.width + 640) / 2;
+  const int screen_top = (width_and_height.height - 480) / 2;
 
   int screen_right_border_height = 0;
 

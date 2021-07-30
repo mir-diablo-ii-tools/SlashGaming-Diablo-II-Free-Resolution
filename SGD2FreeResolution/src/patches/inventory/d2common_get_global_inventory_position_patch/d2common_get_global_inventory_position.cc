@@ -46,7 +46,7 @@
 #include "d2common_get_global_inventory_position.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 #include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {

@@ -55,7 +55,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <mjsoni/rapid_json_config_reader.hpp>
 #include "compile_time_switch.hpp"
-#include "helper/game_resolution.hpp"
+#include "game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::config {
 namespace {
@@ -628,26 +628,23 @@ mjsoni::RapidJsonConfigReader& GetConfigReader() {
   return config_reader;
 }
 
-std::tuple<int, int> GetResolutionFromString(
+GameResolution GetResolutionFromString(
     std::string_view resolution_str
 ) {
   std::string::size_type split_index = resolution_str.find('x');
 
-  int resolution_width = std::atoi(
-      resolution_str.substr(0, split_index).data()
-  );
+  GameResolution game_resolution = {
+      std::atoi(resolution_str.substr(0, split_index).data()),
+      std::atoi(resolution_str.substr(split_index + 1).data())
+  };
 
-  int resolution_height = std::atoi(
-      resolution_str.substr(split_index + 1).data()
-  );
-
-  return std::make_tuple(resolution_width, resolution_height);
+  return game_resolution;
 }
 
 } // namespace
 
-const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
-  static std::vector<std::tuple<int, int>> ingame_resolutions;
+const IngameResolutions* GetIngameResolutions() {
+  static IngameResolutions ingame_resolutions = { 0 };
   static const std::vector<std::string> default_ingame_resolutions_str(
       kDefaultIngameResolutions.cbegin(),
       kDefaultIngameResolutions.cend()
@@ -663,7 +660,7 @@ const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
                 kIngameResolutionsKey
             );
 
-        std::set<std::tuple<int, int>> sorted_distinct_ingame_resolutions;
+        std::set<GameResolution> sorted_distinct_ingame_resolutions;
 
         for (const std::string& resolution_str : ingame_resolutions_str) {
           sorted_distinct_ingame_resolutions.insert(
@@ -671,18 +668,28 @@ const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
           );
         }
 
-        ingame_resolutions = std::vector(
-            std::make_move_iterator(sorted_distinct_ingame_resolutions.begin()),
-            std::make_move_iterator(sorted_distinct_ingame_resolutions.end())
+        if (ingame_resolutions.resolutions != NULL) {
+          delete[] ingame_resolutions.resolutions;
+        }
+
+        ingame_resolutions.count = sorted_distinct_ingame_resolutions.size();
+        ingame_resolutions.resolutions = new GameResolution[
+            ingame_resolutions.count
+        ];
+
+        std::copy(
+            sorted_distinct_ingame_resolutions.begin(),
+            sorted_distinct_ingame_resolutions.end(),
+            ingame_resolutions.resolutions
         );
       }
   );
 
-  return ingame_resolutions;
+  return &ingame_resolutions;
 }
 
-std::tuple<int, int> GetMainMenuResolution() {
-  static std::tuple<int, int> main_menu_resolution;
+GameResolution GetMainMenuResolution() {
+  static GameResolution main_menu_resolution;
 
   std::call_once(
       GetOnceFlag(kMainEntryKey, kMainMenuResolutionKey),
