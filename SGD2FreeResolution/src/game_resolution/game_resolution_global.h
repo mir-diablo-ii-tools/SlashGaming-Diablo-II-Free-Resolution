@@ -43,8 +43,8 @@
  *  work.
  */
 
-#ifndef SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_SETTING_H_
-#define SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_SETTING_H_
+#ifndef SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_GLOBAL_H_
+#define SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_GLOBAL_H_
 
 #include <stddef.h>
 
@@ -86,4 +86,4 @@ Global_GetSourceInventoryArrangeResolution(void);
 } /* extern "C" */
 #endif /* __cplusplus */
 
-#endif /* SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_SETTING_H_ */
+#endif /* SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_GLOBAL_H_ */
