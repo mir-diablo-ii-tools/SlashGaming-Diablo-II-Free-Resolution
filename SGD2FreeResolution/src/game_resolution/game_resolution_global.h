@@ -79,7 +79,8 @@ void Global_GetVideoModeDisplayResolution(
 
 unsigned int Global_GetSourceInventoryArrangeMode(void);
 
-const GameResolution& Global_GetSourceInventoryArrangeResolution(void);
+const struct GameResolution*
+Global_GetSourceInventoryArrangeResolution(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
