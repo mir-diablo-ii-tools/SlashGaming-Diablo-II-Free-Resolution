@@ -52,18 +52,19 @@
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
-#include "../../../helper/cel_file_collection.hpp"
+#include "../../../cel_file/cel_file_legacy.h"
+#include "../../../cel_file/cel_file_screen_background.h"
+#include "../../../cel_file/cel_file_screen_background_border.h"
+#include "../../../cel_file/cel_file_screen_border.h"
 #include "../../../game_resolution/game_resolution.hpp"
 #include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr {
 namespace {
 
-constexpr std::string_view kOriginalScreenBorderFrameImagePath =
-    "data\\global\\UI\\Panel\\800BorderFrame";
-
 void DrawLeftScreenBackground() {
-  ::d2::CelFile_Api& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
+  ::d2::CelFile_Wrapper screen_background =
+      CelFile_LeftScreenBackground_Get();
 
   GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -113,7 +114,8 @@ void DrawLeftScreenBackground() {
 }
 
 void DrawRightScreenBackground() {
-  ::d2::CelFile_Api& screen_background = GetCelFile(config::GetScreenBackgroundImagePath());
+  ::d2::CelFile_Wrapper screen_background =
+      CelFile_RightScreenBackground_Get();
 
   GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -171,9 +173,8 @@ void DrawOriginalLeftScreenBorderFrame() {
     kNumFramesOnRight = 4,
   };
 
-  ::d2::CelFile_Api& screen_border_frame = GetCelFile(
-      kOriginalScreenBorderFrameImagePath
-  );
+  ::d2::CelFile_Wrapper screen_border_frame =
+      CelFile_VanillaScreenBorder_Get();
 
   GameResolution width_and_height = GetIngameResolutionFromId(
       d2::d2gfx::GetResolutionMode()
@@ -232,9 +233,8 @@ void DrawOriginalRightScreenBorderFrame() {
     kNumFramesOnRight = 5,
   };
 
-  ::d2::CelFile_Api& screen_border_frame = GetCelFile(
-      kOriginalScreenBorderFrameImagePath
-  );
+  ::d2::CelFile_Wrapper screen_border_frame =
+      CelFile_VanillaScreenBorder_Get();
 
   GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -292,11 +292,16 @@ void DrawOriginalRightScreenBorderFrame() {
 }
 
 void DrawCustomLeftScreenBorderFrame() {
-  ::d2::CelFile_Api& screen_left_border = GetCelFile(config::GetCustomLeftScreenBorderLeftImagePath());
-  ::d2::CelFile_Api& screen_top_border = GetCelFile(config::GetCustomLeftScreenBorderTopImagePath());
-  ::d2::CelFile_Api& screen_top_right_border = GetCelFile(config::GetCustomLeftScreenBorderTopRightImagePath());
-  ::d2::CelFile_Api& screen_bottom_border = GetCelFile(config::GetCustomLeftScreenBorderBottomImagePath());
-  ::d2::CelFile_Api& screen_bottom_right_border = GetCelFile(config::GetCustomLeftScreenBorderBottomRightImagePath());
+  ::d2::CelFile_Wrapper screen_left_border =
+      CelFile_LeftScreenBorder_GetLeft();
+  ::d2::CelFile_Wrapper screen_top_border =
+      CelFile_LeftScreenBorder_GetTop();
+  ::d2::CelFile_Wrapper screen_top_right_border =
+      CelFile_LeftScreenBorder_GetTopRight();
+  ::d2::CelFile_Wrapper screen_bottom_border =
+      CelFile_LeftScreenBorder_GetBottom();
+  ::d2::CelFile_Wrapper screen_bottom_right_border =
+      CelFile_LeftScreenBorder_GetBottomRight();
 
   const GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -427,11 +432,16 @@ void DrawCustomLeftScreenBorderFrame() {
 }
 
 void DrawCustomRightScreenBorderFrame() {
-  ::d2::CelFile_Api& screen_right_border = GetCelFile(config::GetCustomRightScreenBorderRightImagePath());
-  ::d2::CelFile_Api& screen_top_border = GetCelFile(config::GetCustomRightScreenBorderTopImagePath());
-  ::d2::CelFile_Api& screen_top_left_border = GetCelFile(config::GetCustomRightScreenBorderTopLeftImagePath());
-  ::d2::CelFile_Api& screen_bottom_border = GetCelFile(config::GetCustomRightScreenBorderBottomImagePath());
-  ::d2::CelFile_Api& screen_bottom_left_border = GetCelFile(config::GetCustomRightScreenBorderBottomLeftImagePath());
+  ::d2::CelFile_Wrapper screen_right_border =
+      CelFile_RightScreenBorder_GetRight();
+  ::d2::CelFile_Wrapper screen_top_border =
+      CelFile_RightScreenBorder_GetTop();
+  ::d2::CelFile_Wrapper screen_top_left_border =
+      CelFile_RightScreenBorder_GetTopLeft();
+  ::d2::CelFile_Wrapper screen_bottom_border =
+      CelFile_RightScreenBorder_GetBottom();
+  ::d2::CelFile_Wrapper screen_bottom_left_border =
+      CelFile_RightScreenBorder_GetBottomLeft();
 
   const GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
@@ -575,13 +585,11 @@ static void DrawRightScreenBorderFrame() {
 }
 
 static void DrawLeftScreenBackgroundHorizontalRibbons() {
-  ::d2::CelFile_Api& screen_border_horizontal_ribbon = GetCelFile(
-      config::GetScreenBorderHorizontalRibbonImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_border_horizontal_ribbon =
+      CelFile_ScreenBorderRibbon_GetHorizontal();
 
-  ::d2::CelFile_Api& screen_left_border = GetCelFile(
-      config::GetCustomLeftScreenBorderLeftImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_left_border =
+      CelFile_LeftScreenBorder_GetLeft();
 
   // Determine border starting positions.
   const GameResolution width_and_height = GetIngameResolutionFromId(
@@ -639,13 +647,11 @@ static void DrawLeftScreenBackgroundHorizontalRibbons() {
 }
 
 static void DrawLeftScreenBackgroundVerticalRibbons() {
-  ::d2::CelFile_Api& screen_border_vertical_ribbon = GetCelFile(
-      config::GetScreenBorderVerticalRibbonImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_border_vertical_ribbon =
+      CelFile_ScreenBorderRibbon_GetVertical();
 
-  ::d2::CelFile_Api& screen_left_border = GetCelFile(
-      config::GetCustomLeftScreenBorderLeftImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_left_border =
+      CelFile_LeftScreenBorder_GetLeft();
 
   // Determine border starting positions.
   const GameResolution width_and_height = GetIngameResolutionFromId(
@@ -739,13 +745,11 @@ void DrawLeftScreenBackgroundRibbon() {
 }
 
 static void DrawRightScreenBackgroundHorizontalRibbon() {
-  ::d2::CelFile_Api& screen_border_horizontal_ribbon = GetCelFile(
-      config::GetScreenBorderHorizontalRibbonImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_border_horizontal_ribbon =
+      CelFile_ScreenBorderRibbon_GetHorizontal();
 
-  ::d2::CelFile_Api& screen_right_border = GetCelFile(
-      config::GetCustomRightScreenBorderRightImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_right_border =
+      CelFile_RightScreenBorder_GetRight();
 
   // Determine border starting positions.
   const GameResolution width_and_height = GetIngameResolutionFromId(
@@ -804,13 +808,11 @@ static void DrawRightScreenBackgroundHorizontalRibbon() {
 }
 
 static void DrawRightScreenBackgroundVerticalRibbons() {
-  ::d2::CelFile_Api& screen_border_vertical_ribbon = GetCelFile(
-      config::GetScreenBorderVerticalRibbonImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_border_vertical_ribbon =
+      CelFile_ScreenBorderRibbon_GetVertical();
 
-  ::d2::CelFile_Api& screen_right_border = GetCelFile(
-      config::GetCustomRightScreenBorderRightImagePath()
-  );
+  ::d2::CelFile_Wrapper screen_right_border =
+      CelFile_RightScreenBorder_GetRight();
 
   // Determine border starting positions.
   const GameResolution width_and_height = GetIngameResolutionFromId(

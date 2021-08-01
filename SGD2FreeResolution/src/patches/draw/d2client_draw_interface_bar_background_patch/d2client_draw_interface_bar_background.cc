@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
-#include "../../../helper/cel_file_collection.hpp"
+#include "../../../cel_file/cel_file_interface_bar_background.h"
 #include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr {
@@ -80,9 +80,8 @@ static void DrawLeftInterfaceBarBackground() {
   int width_covered = 0;
 
   // Draw the left part of the interface bar background.
-  ::d2::CelFile_Api& interface_bar_background_left = GetCelFile(
-      config::GetInterfaceBarBackgroundLeftImagePath()
-  );
+  ::d2::CelFile_Wrapper interface_bar_background_left =
+      CelFile_InterfaceBarBackground_GetLeft();
 
   for (size_t frame_index = 0;
       frame_index < interface_bar_background_left.GetNumFrames();
@@ -108,9 +107,8 @@ static void DrawLeftInterfaceBarBackground() {
   }
 
   // Draw the center part of the interface bar background.
-  ::d2::CelFile_Api& interface_bar_background_center = GetCelFile(
-      config::GetInterfaceBarBackgroundCenterImagePath()
-  );
+  ::d2::CelFile_Wrapper interface_bar_background_center =
+      CelFile_InterfaceBarBackground_GetCenter();
 
   for (size_t frame_index = 0;
       (left_start + width_covered) < (width_and_height.width / 2);
@@ -142,9 +140,8 @@ static void DrawRightInterfaceBarBackground() {
   int width_covered = 0;
 
   // Draw the left part of the interface bar background.
-  ::d2::CelFile_Api& interface_bar_background_right = GetCelFile(
-      config::GetInterfaceBarBackgroundRightImagePath()
-  );
+  ::d2::CelFile_Wrapper interface_bar_background_right =
+      CelFile_InterfaceBarBackground_GetRight();
 
   for (size_t frame_index = 0;
       frame_index < interface_bar_background_right.GetNumFrames();
@@ -169,9 +166,8 @@ static void DrawRightInterfaceBarBackground() {
   }
 
   // Draw the center part of the interface bar background.
-  ::d2::CelFile_Api& interface_bar_background_center = GetCelFile(
-      config::GetInterfaceBarBackgroundCenterImagePath()
-  );
+  ::d2::CelFile_Wrapper interface_bar_background_center =
+      CelFile_InterfaceBarBackground_GetCenter();
 
   for (size_t frame_index = 0;
       (right_start - width_covered) > (width_and_height.width / 2);
