@@ -43,18 +43,77 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_CEL_FILE_COLLECTION_HPP_
-#define SGD2FR_HELPER_CEL_FILE_COLLECTION_HPP_
+#include "cel_file_screen_border.h"
 
-#include <string_view>
+#include <stddef.h>
 
-#include <sgd2mapi.hpp>
+#define DEFAULT_LEFT_SCREEN_BORDER_PATH \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\LeftScreenBorder"
+#define DEFAULT_RIGHT_SCREEN_BORDER_PATH \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\RightScreenBorder"
 
-namespace sgd2fr {
+static const char* const kDefaultLeftBorderPath =
+    DEFAULT_LEFT_SCREEN_BORDER_PATH;
+static const char* const kDefaultRightBorderPath =
+    DEFAULT_RIGHT_SCREEN_BORDER_PATH;
 
-d2::CelFile_Api& GetCelFile(std::string_view cel_file_path);
-void ClearCelFiles();
+enum {
+  kDefaultLeftScreenBorderPathLength = sizeof(DEFAULT_LEFT_SCREEN_BORDER_PATH)
+      / sizeof(DEFAULT_LEFT_SCREEN_BORDER_PATH[0]) - 1,
+  kDefaultRightScreenBorderPathLength =
+      sizeof(DEFAULT_RIGHT_SCREEN_BORDER_PATH)
+          / sizeof(DEFAULT_RIGHT_SCREEN_BORDER_PATH[0]) - 1,
+};
 
-} // namespace sgd2fr
+static struct D2_CelFile* left_screen_border = NULL;
+static struct D2_CelFile* right_screen_border = NULL;
 
-#endif // SGD2FR_HELPER_CEL_FILE_COLLECTION_HPP_
+static void InitLeftScreenBorder(void) {
+  if (left_screen_border != NULL) {
+    return;
+  }
+
+  left_screen_border = D2_D2Win_LoadCelFile(kDefaultLeftBorderPath, 0);
+}
+
+static void InitRightScreenBorder(void) {
+  if (right_screen_border != NULL) {
+    return;
+  }
+
+  right_screen_border = D2_D2Win_LoadCelFile(kDefaultRightBorderPath, 0);
+}
+
+/**
+ * External
+ */
+
+struct D2_CelFile* CelFile_LeftScreenBorder_Get(void) {
+  InitLeftScreenBorder();
+
+  return left_screen_border;
+}
+
+void CelFile_LeftScreenBorder_Unload(void) {
+  D2_D2Win_UnloadCelFile(left_screen_border);
+  left_screen_border = NULL;
+}
+
+const char* CelFile_LeftScreenBorder_GetPath(void) {
+  return kDefaultLeftBorderPath;
+}
+
+struct D2_CelFile* CelFile_RightScreenBorder_Get(void) {
+  InitRightScreenBorder();
+
+  return right_screen_border;
+}
+
+void CelFile_RightScreenBorder_Unload(void) {
+  D2_D2Win_UnloadCelFile(right_screen_border);
+  right_screen_border = NULL;
+}
+
+const char* CelFile_RightScreenBorder_GetPath(void) {
+  return kDefaultRightBorderPath;
+}

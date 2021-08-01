@@ -43,87 +43,29 @@
  *  work.
  */
 
-#include "cel_file_collection.hpp"
+#ifndef SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BACKGROUND_H_
+#define SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BACKGROUND_H_
 
-#include <string>
-#include <unordered_map>
+#include <sgd2mapi.h>
 
-#include "../compile_time_switch.hpp"
-#include "custom_mpq.hpp"
-
+#ifdef __cplusplus
 extern "C" {
+#endif /* __cplusplus */
 
-bool __cdecl Helper_CelFileCollection_RunChecksum(int* flags);
+struct D2_CelFile* CelFile_LeftScreenBackground_Get(void);
 
-} // extern "C"
+void CelFile_LeftScreenBackground_Unload(void);
 
-namespace sgd2fr {
-namespace {
+const char* CelFile_LeftScreenBackground_GetPath(void);
 
-static std::unordered_map<std::string, ::d2::CelFile_Api> cel_file_collection;
+struct D2_CelFile* CelFile_RightScreenBackground_Get(void);
 
-static int checksum = 0;
+void CelFile_RightScreenBackground_Unload(void);
 
-#define FLAG_CHECKSUM
+const char* CelFile_RightScreenBackground_GetPath(void);
 
-} // namespace
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
-  const std::string cel_file_path_key(
-      cel_file_path.cbegin(),
-      cel_file_path.cend()
-  );
-
-  if (!cel_file_collection.contains(cel_file_path_key)) {
-    if constexpr (kIsLoadCustomMpq) {
-      LoadMpqOnce();
-    }
-
-    cel_file_collection.insert_or_assign(
-        cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
-    );
-  }
-#if defined(FLAG_CHECKSUM)
-  Helper_CelFileCollection_RunChecksum(&checksum);
-
-  if ((checksum | 07400) != checksum) {
-#endif
-    UnloadMpqOnce();
-    LoadMpqOnce();
-
-    new ::d2::CelFile_Api(
-        std::move(cel_file_collection.at(cel_file_path_key))
-    );
-
-    cel_file_collection.insert_or_assign(
-        cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
-    );
-#if defined(FLAG_CHECKSUM)
-  }
-#endif
-
-  return cel_file_collection.at(cel_file_path_key);
-}
-
-void ClearCelFiles() {
-#if defined(FLAG_CHECKSUM)
-  Helper_CelFileCollection_RunChecksum(&checksum);
-
-  if ((checksum | 07400) == checksum) {
-    if constexpr (kIsLoadCustomMpq) {
-      UnloadMpqOnce();
-    }
-
-    cel_file_collection.clear();
-    return;
-  }
-
-  new std::unordered_map(std::move(cel_file_collection));
-  cel_file_collection = std::unordered_map<std::string, ::d2::CelFile_Api>();
-#endif
-}
-
-} // namespace sgd2fr
-
+#endif /* SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BACKGROUND_H_ */
