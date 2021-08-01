@@ -52,6 +52,10 @@
 #include "../../../cel_file/cel_file_screen_border.h"
 #include "../../../compile_time_switch.h"
 
+#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
+#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
 void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
   CelFile_InterfaceBarBackground_UnloadLeft();
   CelFile_InterfaceBarBackground_UnloadCenter();

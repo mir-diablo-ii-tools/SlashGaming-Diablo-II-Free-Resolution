@@ -49,6 +49,10 @@
 
 #include "../compile_time_switch.h"
 
+#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
+#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
 #if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
 
 #define DEFAULT_LEFT_SCREEN_BACKGROUND_PATH \

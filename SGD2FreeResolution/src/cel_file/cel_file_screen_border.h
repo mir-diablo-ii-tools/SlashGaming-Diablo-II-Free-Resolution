@@ -53,6 +53,10 @@
 extern "C" {
 #endif /* __cplusplus */
 
+#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
+#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
 #if COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
 
 /**
