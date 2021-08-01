@@ -43,14 +43,17 @@
  *  work.
  */
 
-#include "d2client_unload_cel_file_collection.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_H_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_H_
 
-#include "../../../helper/cel_file_collection.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-namespace sgd2fr::patches {
+void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection();
 
-void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
-  ClearCelFiles();
-}
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-} // namespace sgd2fr::patches
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_H_
