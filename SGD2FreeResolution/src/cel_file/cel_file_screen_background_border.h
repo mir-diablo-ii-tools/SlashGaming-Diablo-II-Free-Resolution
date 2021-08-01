@@ -43,39 +43,46 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#ifndef SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BACKGROUND_BORDER_H_
+#define SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BACKGROUND_BORDER_H_
 
-#include "compile_time_switch.h"
+#include <sgd2mapi.h>
+#include "../compile_time_switch.h"
 
-/**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
- */
+#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
+#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
-/**
- * If true, enables a nag warning message about evaluation software,
- * and closes the game if the trial period has expired.
- */
-constexpr bool kIsEvaluationSoftware = false;
+#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
 
-/**
- * If true, allow the user to configure the asset paths. Useful for
- * debugging purposes or for customization-centric users.
- */
-constexpr bool kIsAssetsPathCustomizable = false;
+#define CEL_FILE_LEFT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar"
+#define CEL_FILE_RIGHT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar"
 
-/**
- * If true, a custom MPQ will be used to store the additional assets
- * required. Set to false if running a mod where it will be stored in
- * Patch_D2.mpq instead.
- */
-constexpr bool kIsLoadCustomMpq = true;
+#elif COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
 
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
+#define CEL_FILE_LEFT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackgroundBorder\\LeftScreen"
+#define CEL_FILE_RIGHT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackgroundBorder\\RightScreen"
 
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+struct D2_CelFile* CelFile_LeftScreenBackgroundBorder_Get(void);
+
+void CelFile_LeftScreenBackgroundBorder_Unload(void);
+
+struct D2_CelFile* CelFile_RightScreenBackgroundBorder_Get(void);
+
+void CelFile_RightScreenBackgroundBorder_Unload(void);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BACKGROUND_BORDER_H_ */

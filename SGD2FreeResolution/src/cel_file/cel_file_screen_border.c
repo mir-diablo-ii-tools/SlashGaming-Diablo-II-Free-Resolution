@@ -43,39 +43,100 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#include "cel_file_screen_border.h"
 
-#include "compile_time_switch.h"
+#include <stddef.h>
+
+static struct D2_CelFile* left_screen_border = NULL;
+static struct D2_CelFile* right_screen_border = NULL;
+static struct D2_CelFile* vanilla_screen_border = NULL;
+
+static void InitLeftScreenBorder(void) {
+  if (left_screen_border != NULL) {
+    return;
+  }
+
+  left_screen_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_LEFT_SCREEN_BORDER_PATH_DEFAULT,
+      0
+  );
+}
+
+static void InitRightScreenBorder(void) {
+  if (right_screen_border != NULL) {
+    return;
+  }
+
+  right_screen_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_RIGHT_SCREEN_BORDER_PATH_DEFAULT,
+      0
+  );
+}
+
+static void InitVanillaScreenBorder(void) {
+  if (vanilla_screen_border != NULL) {
+    return;
+  }
+
+  vanilla_screen_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_VANILLA_SCREEN_BORDER_PATH_DEFAULT,
+      0
+  );
+}
 
 /**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
+ * External
  */
 
 /**
- * If true, enables a nag warning message about evaluation software,
- * and closes the game if the trial period has expired.
+ * SGD2FreeRes Screen Borders
  */
-constexpr bool kIsEvaluationSoftware = false;
+
+struct D2_CelFile* CelFile_LeftScreenBorder_Get(void) {
+  InitLeftScreenBorder();
+
+  return left_screen_border;
+}
+
+void CelFile_LeftScreenBorder_Unload(void) {
+  if (left_screen_border == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(left_screen_border);
+  left_screen_border = NULL;
+}
+
+struct D2_CelFile* CelFile_RightScreenBorder_Get(void) {
+  InitRightScreenBorder();
+
+  return right_screen_border;
+}
+
+void CelFile_RightScreenBorder_Unload(void) {
+  if (right_screen_border == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(right_screen_border);
+  right_screen_border = NULL;
+}
 
 /**
- * If true, allow the user to configure the asset paths. Useful for
- * debugging purposes or for customization-centric users.
+ * Vanilla D2 border
  */
-constexpr bool kIsAssetsPathCustomizable = false;
 
-/**
- * If true, a custom MPQ will be used to store the additional assets
- * required. Set to false if running a mod where it will be stored in
- * Patch_D2.mpq instead.
- */
-constexpr bool kIsLoadCustomMpq = true;
+struct D2_CelFile* CelFile_VanillaScreenBorder_Get(void) {
+  InitVanillaScreenBorder();
 
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
+  return vanilla_screen_border;
+}
 
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+void CelFile_VanillaScreenBorder_Unload(void) {
+  if (vanilla_screen_border == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(vanilla_screen_border);
+  vanilla_screen_border = NULL;
+}

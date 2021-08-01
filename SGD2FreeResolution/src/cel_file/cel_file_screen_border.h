@@ -43,18 +43,59 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_CEL_FILE_COLLECTION_HPP_
-#define SGD2FR_HELPER_CEL_FILE_COLLECTION_HPP_
+#ifndef SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BORDER_H_
+#define SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BORDER_H_
 
-#include <string_view>
+#include <sgd2mapi.h>
+#include "../compile_time_switch.h"
 
-#include <sgd2mapi.hpp>
+#define CEL_FILE_LEFT_SCREEN_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\LeftScreenBorder"
+#define CEL_FILE_RIGHT_SCREEN_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\RightScreenBorder"
+#define CEL_FILE_VANILLA_SCREEN_BORDER_PATH_DEFAULT \
+    "data\\global\\UI\\Panel\\800BorderFrame"
 
-namespace sgd2fr {
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-d2::CelFile_Api& GetCelFile(std::string_view cel_file_path);
-void ClearCelFiles();
+#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
+#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
-} // namespace sgd2fr
+#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
 
-#endif // SGD2FR_HELPER_CEL_FILE_COLLECTION_HPP_
+/**
+ * SGD2FreeRes Screen Borders
+ */
+
+struct D2_CelFile* CelFile_LeftScreenBorder_Get(void);
+
+void CelFile_LeftScreenBorder_Unload(void);
+
+const char* CelFile_LeftScreenBorder_GetPath(void);
+
+struct D2_CelFile* CelFile_RightScreenBorder_Get(void);
+
+void CelFile_RightScreenBorder_Unload(void);
+
+const char* CelFile_RightScreenBorder_GetPath(void);
+
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
+/**
+ * Vanilla D2 border
+ */
+
+struct D2_CelFile* CelFile_VanillaScreenBorder_Get(void);
+
+void CelFile_VanillaScreenBorder_Unload(void);
+
+const char* CelFile_VanillaScreenBorder_GetPath(void);
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BORDER_H_ */

@@ -43,39 +43,21 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
-
-#include "compile_time_switch.h"
+#ifndef SGD2FR_COMPILE_TIME_SWITCH_H_
+#define SGD2FR_COMPILE_TIME_SWITCH_H_
 
 /**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
+ * Strictly a place where compile-time switches can be easily changed
+ * to alter software behavior.
  */
 
 /**
- * If true, enables a nag warning message about evaluation software,
- * and closes the game if the trial period has expired.
+ * This is a temporary option to aid in the port to Visual C++ 6.0.
+ * This sets the cel file path version to use.
+ *
+ * 2 = Paths prior to 3.0.2.1 and below
+ * 3 = Paths for 3.1.0.0 and beyond
  */
-constexpr bool kIsEvaluationSoftware = false;
+#define COMPILE_TIME_CEL_FILE_PATH_VERSION 2
 
-/**
- * If true, allow the user to configure the asset paths. Useful for
- * debugging purposes or for customization-centric users.
- */
-constexpr bool kIsAssetsPathCustomizable = false;
-
-/**
- * If true, a custom MPQ will be used to store the additional assets
- * required. Set to false if running a mod where it will be stored in
- * Patch_D2.mpq instead.
- */
-constexpr bool kIsLoadCustomMpq = true;
-
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
-
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#endif // SGD2FR_COMPILE_TIME_SWITCH_H_

@@ -43,39 +43,92 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#include "cel_file_interface_bar_background.h"
 
-#include "compile_time_switch.h"
+#include <stddef.h>
+
+static struct D2_CelFile* background_left = NULL;
+static struct D2_CelFile* background_center = NULL;
+static struct D2_CelFile* background_right = NULL;
+
+static void InitBackgroundLeft(void) {
+  if (background_left != NULL) {
+    return;
+  }
+
+  background_left = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
+      0
+  );
+}
+
+static void InitBackgroundCenter(void) {
+  if (background_center != NULL) {
+    return;
+  }
+
+  background_center = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
+      0
+  );
+}
+
+static void InitBackgroundRight(void) {
+  if (background_right != NULL) {
+    return;
+  }
+
+  background_right = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
+      0
+  );
+}
 
 /**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
+ * External
  */
 
-/**
- * If true, enables a nag warning message about evaluation software,
- * and closes the game if the trial period has expired.
- */
-constexpr bool kIsEvaluationSoftware = false;
+struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeft(void) {
+  InitBackgroundLeft();
 
-/**
- * If true, allow the user to configure the asset paths. Useful for
- * debugging purposes or for customization-centric users.
- */
-constexpr bool kIsAssetsPathCustomizable = false;
+  return background_left;
+}
 
-/**
- * If true, a custom MPQ will be used to store the additional assets
- * required. Set to false if running a mod where it will be stored in
- * Patch_D2.mpq instead.
- */
-constexpr bool kIsLoadCustomMpq = true;
+void CelFile_InterfaceBarBackground_UnloadLeft(void) {
+  if (background_left == NULL) {
+    return;
+  }
 
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
+  D2_D2Win_UnloadCelFile(background_left);
+  background_left = NULL;
+}
 
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void) {
+  InitBackgroundCenter();
+
+  return background_center;
+}
+
+void CelFile_InterfaceBarBackground_UnloadCenter(void) {
+  if (background_center == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(background_center);
+  background_center = NULL;
+}
+
+struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
+  InitBackgroundRight();
+
+  return background_right;
+}
+
+void CelFile_InterfaceBarBackground_UnloadRight(void) {
+  if (background_center == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(background_center);
+  background_center = NULL;
+}

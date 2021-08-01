@@ -43,39 +43,17 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMPILE_TIME_SWITCH_HPP_
-#define SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_H_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_H_
 
-#include "compile_time_switch.h"
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-/**
- * Strictly a place where compile-time switch can be easily changed to
- * alter software behavior.
- */
+void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection();
 
-/**
- * If true, enables a nag warning message about evaluation software,
- * and closes the game if the trial period has expired.
- */
-constexpr bool kIsEvaluationSoftware = false;
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-/**
- * If true, allow the user to configure the asset paths. Useful for
- * debugging purposes or for customization-centric users.
- */
-constexpr bool kIsAssetsPathCustomizable = false;
-
-/**
- * If true, a custom MPQ will be used to store the additional assets
- * required. Set to false if running a mod where it will be stored in
- * Patch_D2.mpq instead.
- */
-constexpr bool kIsLoadCustomMpq = true;
-
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
-
-#endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_H_

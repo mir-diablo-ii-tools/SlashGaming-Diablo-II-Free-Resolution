@@ -43,14 +43,65 @@
  *  work.
  */
 
-#include "d2client_unload_cel_file_collection.hpp"
+#include "cel_file_screen_background.h"
 
-#include "../../../helper/cel_file_collection.hpp"
+#include <stddef.h>
 
-namespace sgd2fr::patches {
+static struct D2_CelFile* left_screen_background = NULL;
+static struct D2_CelFile* right_screen_background = NULL;
 
-void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
-  ClearCelFiles();
+static void InitLeftScreenBackground(void) {
+  if (left_screen_background != NULL) {
+    return;
+  }
+
+  left_screen_background = D2_D2Win_LoadCelFile(
+      CEL_FILE_LEFT_SCREEN_BACKGROUND_PATH_DEFAULT,
+      0
+  );
 }
 
-} // namespace sgd2fr::patches
+static void InitRightScreenBackground(void) {
+  if (right_screen_background != NULL) {
+    return;
+  }
+
+  right_screen_background = D2_D2Win_LoadCelFile(
+      CEL_FILE_RIGHT_SCREEN_BACKGROUND_PATH_DEFAULT,
+      0
+  );
+}
+
+/**
+ * External
+ */
+
+struct D2_CelFile* CelFile_LeftScreenBackground_Get(void) {
+  InitLeftScreenBackground();
+
+  return left_screen_background;
+}
+
+void CelFile_LeftScreenBackground_Unload(void) {
+  if (left_screen_background == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(left_screen_background);
+  left_screen_background = NULL;
+}
+
+struct D2_CelFile* CelFile_RightScreenBackground_Get(void) {
+  InitRightScreenBackground();
+
+  return right_screen_background;
+}
+
+void CelFile_RightScreenBackground_Unload(void) {
+  if (right_screen_background == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(right_screen_background);
+  right_screen_background = NULL;
+}

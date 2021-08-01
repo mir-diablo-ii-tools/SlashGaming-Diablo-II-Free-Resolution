@@ -43,15 +43,55 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_HPP_
+#include "d2client_unload_cel_file_collection.h"
 
-#include <sgd2mapi.hpp>
+#include "../../../cel_file/cel_file_interface_bar_background.h"
+#include "../../../cel_file/cel_file_legacy.h"
+#include "../../../cel_file/cel_file_screen_background.h"
+#include "../../../cel_file/cel_file_screen_background_border.h"
+#include "../../../cel_file/cel_file_screen_border.h"
+#include "../../../compile_time_switch.h"
 
-namespace sgd2fr::patches {
+#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
+#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
-extern "C" void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection();
+void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
+  CelFile_InterfaceBarBackground_UnloadLeft();
+  CelFile_InterfaceBarBackground_UnloadCenter();
+  CelFile_InterfaceBarBackground_UnloadRight();
 
-} // namespace sgd2fr::patches
+#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_HPP_
+  CelFile_LeftScreenBorder_UnloadLeft();
+  CelFile_LeftScreenBorder_UnloadTop();
+  CelFile_LeftScreenBorder_UnloadTopRight();
+  CelFile_LeftScreenBorder_UnloadBottom();
+  CelFile_LeftScreenBorder_UnloadBottomRight();
+
+  CelFile_RightScreenBorder_UnloadRight();
+  CelFile_RightScreenBorder_UnloadTop();
+  CelFile_RightScreenBorder_UnloadTopLeft();
+  CelFile_RightScreenBorder_UnloadBottom();
+  CelFile_RightScreenBorder_UnloadBottomLeft();
+
+  CelFile_ScreenBorderRibbon_UnloadHorizontal();
+  CelFile_ScreenBorderRibbon_UnloadVertical();
+
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
+  CelFile_LeftScreenBackground_Unload();
+  CelFile_RightScreenBackground_Unload();
+
+  CelFile_LeftScreenBackgroundBorder_Unload();
+  CelFile_RightScreenBackgroundBorder_Unload();
+
+#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
+
+  CelFile_LeftScreenBorder_Unload();
+  CelFile_RightScreenBorder_Unload();
+
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
+  CelFile_VanillaScreenBorder_Unload();
+}

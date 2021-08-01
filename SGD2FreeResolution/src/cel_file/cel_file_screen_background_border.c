@@ -43,87 +43,64 @@
  *  work.
  */
 
-#include "cel_file_collection.hpp"
+#include "cel_file_screen_background_border.h"
 
-#include <string>
-#include <unordered_map>
+static struct D2_CelFile* left_screen_background_border;
+static struct D2_CelFile* right_screen_background_border;
 
-#include "../compile_time_switch.hpp"
-#include "custom_mpq.hpp"
+static void InitLeftScreenBackgroundBorder(void) {
 
-extern "C" {
-
-bool __cdecl Helper_CelFileCollection_RunChecksum(int* flags);
-
-} // extern "C"
-
-namespace sgd2fr {
-namespace {
-
-static std::unordered_map<std::string, ::d2::CelFile_Api> cel_file_collection;
-
-static int checksum = 0;
-
-#define FLAG_CHECKSUM
-
-} // namespace
-
-d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
-  const std::string cel_file_path_key(
-      cel_file_path.cbegin(),
-      cel_file_path.cend()
-  );
-
-  if (!cel_file_collection.contains(cel_file_path_key)) {
-    if constexpr (kIsLoadCustomMpq) {
-      LoadMpqOnce();
-    }
-
-    cel_file_collection.insert_or_assign(
-        cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
-    );
-  }
-#if defined(FLAG_CHECKSUM)
-  Helper_CelFileCollection_RunChecksum(&checksum);
-
-  if ((checksum | 07400) != checksum) {
-#endif
-    UnloadMpqOnce();
-    LoadMpqOnce();
-
-    new ::d2::CelFile_Api(
-        std::move(cel_file_collection.at(cel_file_path_key))
-    );
-
-    cel_file_collection.insert_or_assign(
-        cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
-    );
-#if defined(FLAG_CHECKSUM)
-  }
-#endif
-
-  return cel_file_collection.at(cel_file_path_key);
-}
-
-void ClearCelFiles() {
-#if defined(FLAG_CHECKSUM)
-  Helper_CelFileCollection_RunChecksum(&checksum);
-
-  if ((checksum | 07400) == checksum) {
-    if constexpr (kIsLoadCustomMpq) {
-      UnloadMpqOnce();
-    }
-
-    cel_file_collection.clear();
+  if (left_screen_background_border != NULL) {
     return;
   }
 
-  new std::unordered_map(std::move(cel_file_collection));
-  cel_file_collection = std::unordered_map<std::string, ::d2::CelFile_Api>();
-#endif
+  left_screen_background_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_LEFT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT,
+      0
+  );
 }
 
-} // namespace sgd2fr
+static void InitRightScreenBackgroundBorder(void) {
+  if (right_screen_background_border != NULL) {
+    return;
+  }
 
+  right_screen_background_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_RIGHT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT,
+      0
+  );
+}
+
+/**
+ * External
+ */
+
+struct D2_CelFile* CelFile_LeftScreenBackgroundBorder_Get(void) {
+  InitLeftScreenBackgroundBorder();
+
+  return left_screen_background_border;
+}
+
+void CelFile_LeftScreenBackgroundBorder_Unload(void) {
+  if (left_screen_background_border == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(left_screen_background_border);
+  left_screen_background_border = NULL;
+}
+
+struct D2_CelFile* CelFile_RightScreenBackgroundBorder_Get(void) {
+  InitRightScreenBackgroundBorder();
+
+  return right_screen_background_border;
+}
+
+void CelFile_RightScreenBackgroundBorder_Unload(void) {
+  if (right_screen_background_border == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(right_screen_background_border);
+  right_screen_background_border = NULL;
+}
