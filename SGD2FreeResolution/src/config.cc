@@ -54,6 +54,9 @@
 #include <mdc/error/exit_on_error.hpp>
 #include <mdc/wchar_t/filew.h>
 #include <mjsoni/rapid_json_config_reader.hpp>
+#include "cel_file/cel_file_interface_bar_background.h"
+#include "cel_file/cel_file_legacy.h"
+#include "cel_file/cel_file_screen_background.h"
 #include "compile_time_switch.hpp"
 #include "game_resolution/game_resolution.hpp"
 
@@ -104,86 +107,54 @@ constexpr ::std::string_view kDefaultCustomMpqPath =
 // Draw variables.
 constexpr std::string_view kScreenBackgroundImagePathKey =
     "Screen Background Image Path";
-constexpr std::string_view kDefaultScreenBackgroundImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRStoneBack";
 
 // Left screen border images
 constexpr std::string_view kCustomLeftScreenBorderLeftImagePathKey =
     "Left Screen Border Left Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderLeftImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderTopImagePathKey =
     "Left Screen Border Top Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderTopImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderTopRightImagePathKey =
     "Left Screen Border Top Right Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderTopRightImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderBottomImagePathKey =
     "Left Screen Border Bottom Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderBottomImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomLeft";
 
 constexpr std::string_view kCustomLeftScreenBorderBottomRightImagePathKey =
     "Left Screen Border Bottom Right Image Path";
-constexpr std::string_view kDefaultCustomLeftScreenBorderBottomRightImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomLeft";
 
 // Right screen border images
 constexpr std::string_view kCustomRightScreenBorderRightImagePathKey =
     "Right Screen Border Right Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderRightImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceRight";
 
 constexpr std::string_view kCustomRightScreenBorderTopImagePathKey =
     "Right Screen Border Top Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderTopImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopRight";
 
 constexpr std::string_view kCustomRightScreenBorderTopLeftImagePathKey =
     "Right Screen Border Top Left Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderTopLeftImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopRight";
 
 constexpr std::string_view kCustomRightScreenBorderBottomImagePathKey =
     "Right Screen Border Bottom Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderBottomImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomRight";
 
 constexpr std::string_view kCustomRightScreenBorderBottomLeftImagePathKey =
     "Right Screen Border Bottom Left Image Path";
-constexpr std::string_view kDefaultCustomRightScreenBorderBottomLeftImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomRight";
 
 constexpr std::string_view kScreenBorderHorizontalRibbonImagePathKey =
     "Screen Border Horizontal Ribbon";
-constexpr std::string_view kDefaultScreenBorderHorizontalRibbonImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyHorizontalBar";
 
 constexpr std::string_view kScreenBorderVerticalRibbonImagePathKey =
     "Screen Border Vertical Ribbon";
-constexpr std::string_view kDefaultScreenBorderVerticalRibbonImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar";
 
 // Interface Bar Background
 constexpr std::string_view kInterfaceBarBackgroundCenterImagePathKey =
     "Interface Bar Background Center Image Path";
-constexpr std::string_view kDefaultInterfaceBarBackgroundCenterImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertHorizontalBar";
 
 constexpr std::string_view kInterfaceBarBackgroundLeftImagePathKey =
     "Interface Bar Background Left Image Path";
-constexpr std::string_view kDefaultInterfaceBarBackgroundLeftImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertLeft";
 
 constexpr std::string_view kInterfaceBarBackgroundRightImagePathKey =
     "Interface Bar Background Right Image Path";
-constexpr std::string_view kDefaultInterfaceBarBackgroundRightImagePath =
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertRight";
 
 constexpr std::string_view kIsScreenBorderFrameEnabledKey =
     "Enable Screen Border Frame?";
@@ -424,7 +395,7 @@ bool AddMissingConfigEntries(
   if constexpr (kIsAssetsPathCustomizable) {
     if (!config_reader.HasString(kMainEntryKey, kScreenBackgroundImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultScreenBackgroundImagePath.data(),
+          CelFile_LeftScreenBackground_GetPath(),
           kMainEntryKey,
           kScreenBackgroundImagePathKey
       );
@@ -432,7 +403,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderLeftImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomLeftScreenBorderLeftImagePath.data(),
+          CelFile_LeftScreenBorder_GetLeftPath(),
           kMainEntryKey,
           kCustomLeftScreenBorderLeftImagePathKey
       );
@@ -440,7 +411,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomLeftScreenBorderTopImagePath.data(),
+          CelFile_LeftScreenBorder_GetTopPath(),
           kMainEntryKey,
           kCustomLeftScreenBorderTopImagePathKey
       );
@@ -448,7 +419,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopRightImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomLeftScreenBorderTopRightImagePath.data(),
+          CelFile_LeftScreenBorder_GetTopRightPath(),
           kMainEntryKey,
           kCustomLeftScreenBorderTopRightImagePathKey
       );
@@ -456,7 +427,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomLeftScreenBorderBottomImagePath.data(),
+          CelFile_LeftScreenBorder_GetBottomPath(),
           kMainEntryKey,
           kCustomLeftScreenBorderBottomImagePathKey
       );
@@ -464,7 +435,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomRightImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomLeftScreenBorderBottomRightImagePath.data(),
+          CelFile_LeftScreenBorder_GetBottomRightPath(),
           kMainEntryKey,
           kCustomLeftScreenBorderBottomRightImagePathKey
       );
@@ -472,7 +443,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderRightImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomRightScreenBorderRightImagePath.data(),
+          CelFile_RightScreenBorder_GetRightPath(),
           kMainEntryKey,
           kCustomRightScreenBorderRightImagePathKey
       );
@@ -480,7 +451,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomRightScreenBorderTopImagePath.data(),
+          CelFile_RightScreenBorder_GetTopPath(),
           kMainEntryKey,
           kCustomRightScreenBorderTopImagePathKey
       );
@@ -488,7 +459,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopLeftImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomRightScreenBorderTopLeftImagePath.data(),
+          CelFile_RightScreenBorder_GetTopLeftPath(),
           kMainEntryKey,
           kCustomRightScreenBorderTopLeftImagePathKey
       );
@@ -496,7 +467,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomRightScreenBorderBottomImagePath.data(),
+          CelFile_RightScreenBorder_GetBottomPath(),
           kMainEntryKey,
           kCustomRightScreenBorderBottomImagePathKey
       );
@@ -504,7 +475,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomLeftImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultCustomRightScreenBorderBottomLeftImagePath.data(),
+          CelFile_RightScreenBorder_GetBottomLeftPath(),
           kMainEntryKey,
           kCustomRightScreenBorderBottomLeftImagePathKey
       );
@@ -512,7 +483,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kScreenBorderHorizontalRibbonImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultScreenBorderHorizontalRibbonImagePath.data(),
+          CelFile_ScreenBorderRibbon_GetHorizontalPath(),
           kMainEntryKey,
           kScreenBorderHorizontalRibbonImagePathKey
       );
@@ -520,7 +491,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kScreenBorderVerticalRibbonImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultScreenBorderVerticalRibbonImagePath.data(),
+          CelFile_ScreenBorderRibbon_GetVerticalPath(),
           kMainEntryKey,
           kScreenBorderVerticalRibbonImagePathKey
       );
@@ -528,7 +499,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundCenterImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultInterfaceBarBackgroundCenterImagePath.data(),
+          CelFile_InterfaceBarBackground_GetCenterPath(),
           kMainEntryKey,
           kInterfaceBarBackgroundCenterImagePathKey
       );
@@ -536,7 +507,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundLeftImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultInterfaceBarBackgroundLeftImagePath.data(),
+          CelFile_InterfaceBarBackground_GetLeftPath(),
           kMainEntryKey,
           kInterfaceBarBackgroundLeftImagePathKey
       );
@@ -544,7 +515,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundRightImagePathKey)) {
       config_reader.SetDeepString(
-          kDefaultInterfaceBarBackgroundRightImagePath.data(),
+          CelFile_InterfaceBarBackground_GetRightPath(),
           kMainEntryKey,
           kInterfaceBarBackgroundRightImagePathKey
       );
@@ -762,7 +733,7 @@ const ::std::string& GetCustomMpqPath() {
 
 std::string_view GetScreenBackgroundImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultScreenBackgroundImagePath;
+    return CelFile_LeftScreenBackground_GetPath();
   }
 
   static std::string screen_background_image_path;
@@ -783,7 +754,7 @@ std::string_view GetScreenBackgroundImagePath() {
 
 std::string_view GetCustomLeftScreenBorderLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomLeftScreenBorderLeftImagePath;
+    return CelFile_LeftScreenBorder_GetLeftPath();
   }
 
   static std::string screen_border_image_path;
@@ -804,7 +775,7 @@ std::string_view GetCustomLeftScreenBorderLeftImagePath() {
 
 std::string_view GetCustomLeftScreenBorderTopImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomLeftScreenBorderTopImagePath;
+    return CelFile_LeftScreenBorder_GetTopPath();
   }
 
   static std::string screen_border_image_path;
@@ -825,7 +796,7 @@ std::string_view GetCustomLeftScreenBorderTopImagePath() {
 
 std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomLeftScreenBorderTopRightImagePath;
+    return CelFile_LeftScreenBorder_GetTopRightPath();
   }
 
   static std::string screen_border_image_path;
@@ -846,7 +817,7 @@ std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
 
 std::string_view GetCustomLeftScreenBorderBottomImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomLeftScreenBorderBottomImagePath;
+    return CelFile_LeftScreenBorder_GetBottomPath();
   }
 
   static std::string screen_border_image_path;
@@ -867,7 +838,7 @@ std::string_view GetCustomLeftScreenBorderBottomImagePath() {
 
 std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomLeftScreenBorderBottomRightImagePath;
+    return CelFile_LeftScreenBorder_GetBottomRightPath();
   }
 
   static std::string screen_border_image_path;
@@ -888,7 +859,7 @@ std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
 
 std::string_view GetCustomRightScreenBorderRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomRightScreenBorderRightImagePath;
+    return CelFile_RightScreenBorder_GetRightPath();
   }
 
   static std::string screen_border_image_path;
@@ -909,7 +880,7 @@ std::string_view GetCustomRightScreenBorderRightImagePath() {
 
 std::string_view GetCustomRightScreenBorderTopImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomRightScreenBorderTopImagePath;
+    return CelFile_RightScreenBorder_GetTopPath();
   }
 
   static std::string screen_border_image_path;
@@ -930,7 +901,7 @@ std::string_view GetCustomRightScreenBorderTopImagePath() {
 
 std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomRightScreenBorderTopLeftImagePath;
+    return CelFile_RightScreenBorder_GetTopLeftPath();
   }
 
   static std::string screen_border_image_path;
@@ -951,7 +922,7 @@ std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
 
 std::string_view GetCustomRightScreenBorderBottomImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomRightScreenBorderBottomImagePath;
+    return CelFile_RightScreenBorder_GetBottomPath();
   }
 
   static std::string screen_border_image_path;
@@ -972,7 +943,7 @@ std::string_view GetCustomRightScreenBorderBottomImagePath() {
 
 std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultCustomRightScreenBorderBottomLeftImagePath;
+    return CelFile_RightScreenBorder_GetBottomLeftPath();
   }
 
   static std::string screen_border_image_path;
@@ -993,7 +964,7 @@ std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
 
 std::string_view GetScreenBorderHorizontalRibbonImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultScreenBorderHorizontalRibbonImagePath;
+    return CelFile_ScreenBorderRibbon_GetHorizontalPath();
   }
 
   static std::string screen_border_ribbon_image_path;
@@ -1014,7 +985,7 @@ std::string_view GetScreenBorderHorizontalRibbonImagePath() {
 
 std::string_view GetScreenBorderVerticalRibbonImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultScreenBorderVerticalRibbonImagePath;
+    return CelFile_ScreenBorderRibbon_GetVerticalPath();
   }
 
   static std::string screen_border_ribbon_image_path;
@@ -1035,7 +1006,7 @@ std::string_view GetScreenBorderVerticalRibbonImagePath() {
 
 std::string_view GetInterfaceBarBackgroundCenterImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultInterfaceBarBackgroundCenterImagePath;
+    return CelFile_InterfaceBarBackground_GetCenterPath();
   }
 
   static std::string interface_bar_background_image_path;
@@ -1056,7 +1027,7 @@ std::string_view GetInterfaceBarBackgroundCenterImagePath() {
 
 std::string_view GetInterfaceBarBackgroundLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultInterfaceBarBackgroundLeftImagePath;
+    return CelFile_InterfaceBarBackground_GetLeftPath();
   }
 
   static std::string interface_bar_background_image_path;
@@ -1077,7 +1048,7 @@ std::string_view GetInterfaceBarBackgroundLeftImagePath() {
 
 std::string_view GetInterfaceBarBackgroundRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return kDefaultInterfaceBarBackgroundRightImagePath;
+    return CelFile_InterfaceBarBackground_GetRightPath();
   }
 
   static std::string interface_bar_background_image_path;
