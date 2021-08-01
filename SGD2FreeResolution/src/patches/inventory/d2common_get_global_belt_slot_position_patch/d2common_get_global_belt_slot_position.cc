@@ -50,7 +50,6 @@
 #include <sgd2mapi.hpp>
 #include "../../../config.hpp"
 #include "../../../game_resolution/game_resolution.hpp"
-#include "../../../helper/cel_file_collection.hpp"
 #include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
