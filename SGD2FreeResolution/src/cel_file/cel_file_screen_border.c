@@ -51,11 +51,15 @@
     "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\LeftScreenBorder"
 #define DEFAULT_RIGHT_SCREEN_BORDER_PATH \
     "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\RightScreenBorder"
+#define DEFAULT_VANILLA_SCREEN_BORDER_PATH \
+    "data\\global\\UI\\Panel\\800BorderFrame"
 
 static const char* const kDefaultLeftBorderPath =
     DEFAULT_LEFT_SCREEN_BORDER_PATH;
 static const char* const kDefaultRightBorderPath =
     DEFAULT_RIGHT_SCREEN_BORDER_PATH;
+static const char* const kDefaultVanillaBorderPath =
+    DEFAULT_VANILLA_SCREEN_BORDER_PATH;
 
 enum {
   kDefaultLeftScreenBorderPathLength = sizeof(DEFAULT_LEFT_SCREEN_BORDER_PATH)
@@ -63,10 +67,14 @@ enum {
   kDefaultRightScreenBorderPathLength =
       sizeof(DEFAULT_RIGHT_SCREEN_BORDER_PATH)
           / sizeof(DEFAULT_RIGHT_SCREEN_BORDER_PATH[0]) - 1,
+  kDefaultVanillaScreenBorderPathLength =
+      sizeof(DEFAULT_VANILLA_SCREEN_BORDER_PATH)
+          / sizeof(DEFAULT_VANILLA_SCREEN_BORDER_PATH[0]) - 1,
 };
 
 static struct D2_CelFile* left_screen_border = NULL;
 static struct D2_CelFile* right_screen_border = NULL;
+static struct D2_CelFile* vanilla_screen_border = NULL;
 
 static void InitLeftScreenBorder(void) {
   if (left_screen_border != NULL) {
@@ -84,8 +92,20 @@ static void InitRightScreenBorder(void) {
   right_screen_border = D2_D2Win_LoadCelFile(kDefaultRightBorderPath, 0);
 }
 
+static void InitVanillaScreenBorder(void) {
+  if (vanilla_screen_border != NULL) {
+    return;
+  }
+
+  vanilla_screen_border = D2_D2Win_LoadCelFile(kDefaultVanillaBorderPath, 0);
+}
+
 /**
  * External
+ */
+
+/**
+ * SGD2FreeRes Screen Borders
  */
 
 struct D2_CelFile* CelFile_LeftScreenBorder_Get(void) {
@@ -95,6 +115,10 @@ struct D2_CelFile* CelFile_LeftScreenBorder_Get(void) {
 }
 
 void CelFile_LeftScreenBorder_Unload(void) {
+  if (left_screen_border == NULL) {
+    return;
+  }
+
   D2_D2Win_UnloadCelFile(left_screen_border);
   left_screen_border = NULL;
 }
@@ -110,10 +134,37 @@ struct D2_CelFile* CelFile_RightScreenBorder_Get(void) {
 }
 
 void CelFile_RightScreenBorder_Unload(void) {
+  if (right_screen_border == NULL) {
+    return;
+  }
+
   D2_D2Win_UnloadCelFile(right_screen_border);
   right_screen_border = NULL;
 }
 
 const char* CelFile_RightScreenBorder_GetPath(void) {
   return kDefaultRightBorderPath;
+}
+
+/**
+ * Vanilla D2 border
+ */
+
+struct D2_CelFile* CelFile_VanillaScreenBorder_Get(void) {
+  InitVanillaScreenBorder();
+
+  return vanilla_screen_border;
+}
+
+void CelFile_VanillaScreenBorder_Unload(void) {
+  if (vanilla_screen_border == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(vanilla_screen_border);
+  vanilla_screen_border = NULL;
+}
+
+const char* CelFile_VanillaScreenBorder_GetPath(void) {
+  return kDefaultVanillaBorderPath;
 }

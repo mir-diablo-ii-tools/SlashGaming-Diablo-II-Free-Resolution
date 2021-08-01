@@ -47,10 +47,17 @@
 #define SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BORDER_H_
 
 #include <sgd2mapi.h>
+#include "../compile_time_switch.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
+
+/**
+ * SGD2FreeRes Screen Borders
+ */
 
 struct D2_CelFile* CelFile_LeftScreenBorder_Get(void);
 
@@ -63,6 +70,18 @@ struct D2_CelFile* CelFile_RightScreenBorder_Get(void);
 void CelFile_RightScreenBorder_Unload(void);
 
 const char* CelFile_RightScreenBorder_GetPath(void);
+
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
+/**
+ * Vanilla D2 border
+ */
+
+struct D2_CelFile* CelFile_VanillaScreenBorder_Get(void);
+
+void CelFile_VanillaScreenBorder_Unload(void);
+
+const char* CelFile_VanillaScreenBorder_GetPath(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
