@@ -395,7 +395,7 @@ bool AddMissingConfigEntries(
   if constexpr (kIsAssetsPathCustomizable) {
     if (!config_reader.HasString(kMainEntryKey, kScreenBackgroundImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_LeftScreenBackground_GetPath(),
+          CEL_FILE_LEFT_SCREEN_BACKGROUND_PATH_DEFAULT,
           kMainEntryKey,
           kScreenBackgroundImagePathKey
       );
@@ -403,7 +403,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderLeftImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_LeftScreenBorder_GetLeftPath(),
+          CEL_FILE_LEFT_SCREEN_BORDER_LEFT_PATH_DEFAULT,
           kMainEntryKey,
           kCustomLeftScreenBorderLeftImagePathKey
       );
@@ -411,7 +411,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_LeftScreenBorder_GetTopPath(),
+          CEL_FILE_LEFT_SCREEN_BORDER_TOP_PATH_DEFAULT,
           kMainEntryKey,
           kCustomLeftScreenBorderTopImagePathKey
       );
@@ -419,7 +419,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderTopRightImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_LeftScreenBorder_GetTopRightPath(),
+          CEL_FILE_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH_DEFAULT,
           kMainEntryKey,
           kCustomLeftScreenBorderTopRightImagePathKey
       );
@@ -427,7 +427,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_LeftScreenBorder_GetBottomPath(),
+          CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT,
           kMainEntryKey,
           kCustomLeftScreenBorderBottomImagePathKey
       );
@@ -435,7 +435,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomLeftScreenBorderBottomRightImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_LeftScreenBorder_GetBottomRightPath(),
+          CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH_DEFAULT,
           kMainEntryKey,
           kCustomLeftScreenBorderBottomRightImagePathKey
       );
@@ -443,7 +443,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderRightImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_RightScreenBorder_GetRightPath(),
+          CEL_FILE_RIGHT_SCREEN_BORDER_RIGHT_PATH_DEFAULT,
           kMainEntryKey,
           kCustomRightScreenBorderRightImagePathKey
       );
@@ -451,7 +451,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_RightScreenBorder_GetTopPath(),
+          CEL_FILE_RIGHT_SCREEN_BORDER_TOP_PATH_DEFAULT,
           kMainEntryKey,
           kCustomRightScreenBorderTopImagePathKey
       );
@@ -459,7 +459,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderTopLeftImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_RightScreenBorder_GetTopLeftPath(),
+          CEL_FILE_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH_DEFAULT,
           kMainEntryKey,
           kCustomRightScreenBorderTopLeftImagePathKey
       );
@@ -467,7 +467,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_RightScreenBorder_GetBottomPath(),
+          CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT,
           kMainEntryKey,
           kCustomRightScreenBorderBottomImagePathKey
       );
@@ -475,7 +475,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kCustomRightScreenBorderBottomLeftImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_RightScreenBorder_GetBottomLeftPath(),
+          CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH_DEFAULT,
           kMainEntryKey,
           kCustomRightScreenBorderBottomLeftImagePathKey
       );
@@ -483,7 +483,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kScreenBorderHorizontalRibbonImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_ScreenBorderRibbon_GetHorizontalPath(),
+          CEL_FILE_SCREEN_BORDER_RIBBON_HORIZONTAL_PATH_DEFAULT,
           kMainEntryKey,
           kScreenBorderHorizontalRibbonImagePathKey
       );
@@ -491,7 +491,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kScreenBorderVerticalRibbonImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_ScreenBorderRibbon_GetVerticalPath(),
+          CEL_FILE_SCREEN_BORDER_RIBBON_VERTICAL_PATH_DEFAULT,
           kMainEntryKey,
           kScreenBorderVerticalRibbonImagePathKey
       );
@@ -499,7 +499,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundCenterImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_InterfaceBarBackground_GetCenterPath(),
+          CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
           kMainEntryKey,
           kInterfaceBarBackgroundCenterImagePathKey
       );
@@ -507,7 +507,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundLeftImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_InterfaceBarBackground_GetLeftPath(),
+          CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
           kMainEntryKey,
           kInterfaceBarBackgroundLeftImagePathKey
       );
@@ -515,7 +515,7 @@ bool AddMissingConfigEntries(
 
     if (!config_reader.HasString(kMainEntryKey, kInterfaceBarBackgroundRightImagePathKey)) {
       config_reader.SetDeepString(
-          CelFile_InterfaceBarBackground_GetRightPath(),
+          CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
           kMainEntryKey,
           kInterfaceBarBackgroundRightImagePathKey
       );
@@ -733,7 +733,7 @@ const ::std::string& GetCustomMpqPath() {
 
 std::string_view GetScreenBackgroundImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_LeftScreenBackground_GetPath();
+    return CEL_FILE_LEFT_SCREEN_BACKGROUND_PATH_DEFAULT;
   }
 
   static std::string screen_background_image_path;
@@ -754,7 +754,7 @@ std::string_view GetScreenBackgroundImagePath() {
 
 std::string_view GetCustomLeftScreenBorderLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_LeftScreenBorder_GetLeftPath();
+    return CEL_FILE_LEFT_SCREEN_BORDER_LEFT_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -775,7 +775,7 @@ std::string_view GetCustomLeftScreenBorderLeftImagePath() {
 
 std::string_view GetCustomLeftScreenBorderTopImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_LeftScreenBorder_GetTopPath();
+    return CEL_FILE_LEFT_SCREEN_BORDER_TOP_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -796,7 +796,7 @@ std::string_view GetCustomLeftScreenBorderTopImagePath() {
 
 std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_LeftScreenBorder_GetTopRightPath();
+    return CEL_FILE_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -817,7 +817,7 @@ std::string_view GetCustomLeftScreenBorderTopRightImagePath() {
 
 std::string_view GetCustomLeftScreenBorderBottomImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_LeftScreenBorder_GetBottomPath();
+    return CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -838,7 +838,7 @@ std::string_view GetCustomLeftScreenBorderBottomImagePath() {
 
 std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_LeftScreenBorder_GetBottomRightPath();
+    return CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -859,7 +859,7 @@ std::string_view GetCustomLeftScreenBorderBottomRightImagePath() {
 
 std::string_view GetCustomRightScreenBorderRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_RightScreenBorder_GetRightPath();
+    return CEL_FILE_RIGHT_SCREEN_BORDER_RIGHT_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -880,7 +880,7 @@ std::string_view GetCustomRightScreenBorderRightImagePath() {
 
 std::string_view GetCustomRightScreenBorderTopImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_RightScreenBorder_GetTopPath();
+    return CEL_FILE_RIGHT_SCREEN_BORDER_TOP_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -901,7 +901,7 @@ std::string_view GetCustomRightScreenBorderTopImagePath() {
 
 std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_RightScreenBorder_GetTopLeftPath();
+    return CEL_FILE_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -922,7 +922,7 @@ std::string_view GetCustomRightScreenBorderTopLeftImagePath() {
 
 std::string_view GetCustomRightScreenBorderBottomImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_RightScreenBorder_GetBottomPath();
+    return CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -943,7 +943,7 @@ std::string_view GetCustomRightScreenBorderBottomImagePath() {
 
 std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_RightScreenBorder_GetBottomLeftPath();
+    return CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH_DEFAULT;
   }
 
   static std::string screen_border_image_path;
@@ -964,7 +964,7 @@ std::string_view GetCustomRightScreenBorderBottomLeftImagePath() {
 
 std::string_view GetScreenBorderHorizontalRibbonImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_ScreenBorderRibbon_GetHorizontalPath();
+    return CEL_FILE_SCREEN_BORDER_RIBBON_HORIZONTAL_PATH_DEFAULT;
   }
 
   static std::string screen_border_ribbon_image_path;
@@ -985,7 +985,7 @@ std::string_view GetScreenBorderHorizontalRibbonImagePath() {
 
 std::string_view GetScreenBorderVerticalRibbonImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_ScreenBorderRibbon_GetVerticalPath();
+    return CEL_FILE_SCREEN_BORDER_RIBBON_VERTICAL_PATH_DEFAULT;
   }
 
   static std::string screen_border_ribbon_image_path;
@@ -1006,7 +1006,7 @@ std::string_view GetScreenBorderVerticalRibbonImagePath() {
 
 std::string_view GetInterfaceBarBackgroundCenterImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_InterfaceBarBackground_GetCenterPath();
+    return CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT;
   }
 
   static std::string interface_bar_background_image_path;
@@ -1027,7 +1027,7 @@ std::string_view GetInterfaceBarBackgroundCenterImagePath() {
 
 std::string_view GetInterfaceBarBackgroundLeftImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_InterfaceBarBackground_GetLeftPath();
+    return CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT;
   }
 
   static std::string interface_bar_background_image_path;
@@ -1048,7 +1048,7 @@ std::string_view GetInterfaceBarBackgroundLeftImagePath() {
 
 std::string_view GetInterfaceBarBackgroundRightImagePath() {
   if constexpr (!kIsAssetsPathCustomizable) {
-    return CelFile_InterfaceBarBackground_GetRightPath();
+    return CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT;
   }
 
   static std::string interface_bar_background_image_path;

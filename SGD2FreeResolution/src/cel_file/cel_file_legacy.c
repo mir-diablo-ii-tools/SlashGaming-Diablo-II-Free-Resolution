@@ -47,35 +47,6 @@
 
 #include <stddef.h>
 
-#include "../compile_time_switch.h"
-
-#define DEFAULT_LEFT_SCREEN_BORDER_LEFT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceLeft"
-#define DEFAULT_LEFT_SCREEN_BORDER_TOP_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopLeft"
-#define DEFAULT_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopLeft"
-#define DEFAULT_LEFT_SCREEN_BORDER_BOTTOM_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomLeft"
-#define DEFAULT_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomLeft"
-
-#define DEFAULT_RIGHT_SCREEN_BORDER_RIGHT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceRight"
-#define DEFAULT_RIGHT_SCREEN_BORDER_TOP_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopRight"
-#define DEFAULT_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopRight"
-#define DEFAULT_RIGHT_SCREEN_BORDER_BOTTOM_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomRight"
-#define DEFAULT_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomRight"
-
-#define DEFAULT_SCREEN_BORDER_RIBBON_HORIZONTAL \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyHorizontalBar"
-#define DEFAULT_SCREEN_BORDER_RIBBON_VERTICAL \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar"
-
 static struct D2_CelFile* left_screen_border_left = NULL;
 static struct D2_CelFile* left_screen_border_top = NULL;
 static struct D2_CelFile* left_screen_border_top_right = NULL;
@@ -97,7 +68,7 @@ static void InitLeftScreenBorderLeft(void) {
   }
 
   left_screen_border_left = D2_D2Win_LoadCelFile(
-      DEFAULT_LEFT_SCREEN_BORDER_LEFT_PATH,
+      CEL_FILE_LEFT_SCREEN_BORDER_LEFT_PATH_DEFAULT,
       0
   );
 }
@@ -108,7 +79,7 @@ static void InitLeftScreenBorderTop(void) {
   }
 
   left_screen_border_top = D2_D2Win_LoadCelFile(
-      DEFAULT_LEFT_SCREEN_BORDER_TOP_PATH,
+      CEL_FILE_LEFT_SCREEN_BORDER_TOP_PATH_DEFAULT,
       0
   );
 }
@@ -119,7 +90,7 @@ static void InitLeftScreenBorderTopRight(void) {
   }
 
   left_screen_border_top_right = D2_D2Win_LoadCelFile(
-      DEFAULT_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH,
+      CEL_FILE_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH_DEFAULT,
       0
   );
 }
@@ -130,7 +101,7 @@ static void InitLeftScreenBorderBottom(void) {
   }
 
   left_screen_border_bottom = D2_D2Win_LoadCelFile(
-      DEFAULT_LEFT_SCREEN_BORDER_BOTTOM_PATH,
+      CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT,
       0
   );
 }
@@ -141,7 +112,7 @@ static void InitLeftScreenBorderBottomRight(void) {
   }
 
   left_screen_border_bottom_right = D2_D2Win_LoadCelFile(
-      DEFAULT_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH,
+      CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH_DEFAULT,
       0
   );
 }
@@ -152,7 +123,7 @@ static void InitRightScreenBorderRight(void) {
   }
 
   right_screen_border_right = D2_D2Win_LoadCelFile(
-      DEFAULT_RIGHT_SCREEN_BORDER_RIGHT_PATH,
+      CEL_FILE_RIGHT_SCREEN_BORDER_RIGHT_PATH_DEFAULT,
       0
   );
 }
@@ -163,7 +134,7 @@ static void InitRightScreenBorderTop(void) {
   }
 
   right_screen_border_top = D2_D2Win_LoadCelFile(
-      DEFAULT_RIGHT_SCREEN_BORDER_TOP_PATH,
+      CEL_FILE_RIGHT_SCREEN_BORDER_TOP_PATH_DEFAULT,
       0
   );
 }
@@ -174,7 +145,7 @@ static void InitRightScreenBorderTopLeft(void) {
   }
 
   right_screen_border_top_left = D2_D2Win_LoadCelFile(
-      DEFAULT_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH,
+      CEL_FILE_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH_DEFAULT,
       0
   );
 }
@@ -185,7 +156,7 @@ static void InitRightScreenBorderBottom(void) {
   }
 
   right_screen_border_bottom = D2_D2Win_LoadCelFile(
-      DEFAULT_RIGHT_SCREEN_BORDER_BOTTOM_PATH,
+      CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT,
       0
   );
 }
@@ -196,7 +167,7 @@ static void InitRightScreenBorderBottomLeft(void) {
   }
 
   right_screen_border_bottom_left = D2_D2Win_LoadCelFile(
-      DEFAULT_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH,
+      CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH_DEFAULT,
       0
   );
 }
@@ -207,7 +178,7 @@ static void InitScreenBorderRibbonHorizontal(void) {
   }
 
   screen_border_ribbon_horizontal = D2_D2Win_LoadCelFile(
-      DEFAULT_SCREEN_BORDER_RIBBON_HORIZONTAL,
+      CEL_FILE_SCREEN_BORDER_RIBBON_HORIZONTAL_PATH_DEFAULT,
       0
   );
 }
@@ -218,7 +189,7 @@ static void InitScreenBorderRibbonVertical(void) {
   }
 
   screen_border_ribbon_vertical = D2_D2Win_LoadCelFile(
-      DEFAULT_SCREEN_BORDER_RIBBON_VERTICAL,
+      CEL_FILE_SCREEN_BORDER_RIBBON_VERTICAL_PATH_DEFAULT,
       0
   );
 }
@@ -252,10 +223,6 @@ void CelFile_LeftScreenBorder_UnloadLeft(void) {
   left_screen_border_left = NULL;
 }
 
-const char* CelFile_LeftScreenBorder_GetLeftPath(void) {
-  return DEFAULT_LEFT_SCREEN_BORDER_LEFT_PATH;
-}
-
 struct D2_CelFile* CelFile_LeftScreenBorder_GetTop(void) {
   InitLeftScreenBorderTop();
 
@@ -269,10 +236,6 @@ void CelFile_LeftScreenBorder_UnloadTop(void) {
 
   D2_D2Win_UnloadCelFile(left_screen_border_top);
   left_screen_border_top = NULL;
-}
-
-const char* CelFile_LeftScreenBorder_GetTopPath(void) {
-  return DEFAULT_LEFT_SCREEN_BORDER_TOP_PATH;
 }
 
 struct D2_CelFile* CelFile_LeftScreenBorder_GetTopRight(void) {
@@ -290,10 +253,6 @@ void CelFile_LeftScreenBorder_UnloadTopRight(void) {
   left_screen_border_top_right = NULL;
 }
 
-const char* CelFile_LeftScreenBorder_GetTopRightPath(void) {
-  return DEFAULT_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH;
-}
-
 struct D2_CelFile* CelFile_LeftScreenBorder_GetBottom(void) {
   InitLeftScreenBorderBottom();
 
@@ -309,10 +268,6 @@ void CelFile_LeftScreenBorder_UnloadBottom(void) {
   left_screen_border_bottom = NULL;
 }
 
-const char* CelFile_LeftScreenBorder_GetBottomPath(void) {
-  return DEFAULT_LEFT_SCREEN_BORDER_BOTTOM_PATH;
-}
-
 struct D2_CelFile* CelFile_LeftScreenBorder_GetBottomRight(void) {
   InitLeftScreenBorderBottomRight();
 
@@ -326,10 +281,6 @@ void CelFile_LeftScreenBorder_UnloadBottomRight(void) {
 
   D2_D2Win_UnloadCelFile(left_screen_border_bottom_right);
   left_screen_border_bottom_right = NULL;
-}
-
-const char* CelFile_LeftScreenBorder_GetBottomRightPath(void) {
-  return DEFAULT_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH;
 }
 
 /**
@@ -351,10 +302,6 @@ void CelFile_RightScreenBorder_UnloadRight(void) {
   right_screen_border_right = NULL;
 }
 
-const char* CelFile_RightScreenBorder_GetRightPath(void) {
-  return DEFAULT_RIGHT_SCREEN_BORDER_RIGHT_PATH;
-}
-
 struct D2_CelFile* CelFile_RightScreenBorder_GetTop(void) {
   InitRightScreenBorderTop();
 
@@ -368,10 +315,6 @@ void CelFile_RightScreenBorder_UnloadTop(void) {
 
   D2_D2Win_UnloadCelFile(right_screen_border_top);
   right_screen_border_top = NULL;
-}
-
-const char* CelFile_RightScreenBorder_GetTopPath(void) {
-  return DEFAULT_RIGHT_SCREEN_BORDER_TOP_PATH;
 }
 
 struct D2_CelFile* CelFile_RightScreenBorder_GetTopLeft(void) {
@@ -389,10 +332,6 @@ void CelFile_RightScreenBorder_UnloadTopLeft(void) {
   right_screen_border_top_left = NULL;
 }
 
-const char* CelFile_RightScreenBorder_GetTopLeftPath(void) {
-  return DEFAULT_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH;
-}
-
 struct D2_CelFile* CelFile_RightScreenBorder_GetBottom(void) {
   InitRightScreenBorderBottom();
 
@@ -408,10 +347,6 @@ void CelFile_RightScreenBorder_UnloadBottom(void) {
   right_screen_border_bottom = NULL;
 }
 
-const char* CelFile_RightScreenBorder_GetBottomPath(void) {
-  return DEFAULT_RIGHT_SCREEN_BORDER_BOTTOM_PATH;
-}
-
 struct D2_CelFile* CelFile_RightScreenBorder_GetBottomLeft(void) {
   InitRightScreenBorderBottomLeft();
 
@@ -425,10 +360,6 @@ void CelFile_RightScreenBorder_UnloadBottomLeft(void) {
 
   D2_D2Win_UnloadCelFile(right_screen_border_bottom_left);
   right_screen_border_bottom_left = NULL;
-}
-
-const char* CelFile_RightScreenBorder_GetBottomLeftPath(void) {
-  return DEFAULT_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH;
 }
 
 /**
@@ -450,10 +381,6 @@ void CelFile_ScreenBorderRibbon_UnloadHorizontal(void) {
   screen_border_ribbon_horizontal = NULL;
 }
 
-const char* CelFile_ScreenBorderRibbon_GetHorizontalPath(void) {
-  return DEFAULT_SCREEN_BORDER_RIBBON_HORIZONTAL;
-}
-
 struct D2_CelFile* CelFile_ScreenBorderRibbon_GetVertical(void) {
   InitScreenBorderRibbonVertical();
 
@@ -467,8 +394,4 @@ void CelFile_ScreenBorderRibbon_UnloadVertical(void) {
 
   D2_D2Win_UnloadCelFile(screen_border_ribbon_vertical);
   screen_border_ribbon_vertical = NULL;
-}
-
-const char* CelFile_ScreenBorderRibbon_GetVerticalPath(void) {
-  return DEFAULT_SCREEN_BORDER_RIBBON_VERTICAL;
 }

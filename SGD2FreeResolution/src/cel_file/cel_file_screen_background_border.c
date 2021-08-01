@@ -45,42 +45,6 @@
 
 #include "cel_file_screen_background_border.h"
 
-#include "../compile_time_switch.h"
-
-#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
-#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
-
-#define DEFAULT_LEFT_SCREEN_BACKGROUND_BORDER_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar"
-#define DEFAULT_RIGHT_SCREEN_BACKGROUND_BORDER_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar"
-
-#elif COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
-
-#define DEFAULT_LEFT_SCREEN_BACKGROUND_BORDER_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackgroundBorder\\LeftScreen"
-#define DEFAULT_RIGHT_SCREEN_BACKGROUND_BORDER_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackgroundBorder\\RightScreen"
-
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-static const char* const kDefaultLeftScreenBackgroundBorderPath =
-    DEFAULT_LEFT_SCREEN_BACKGROUND_BORDER_PATH;
-static const char* const kDefaultRightScreenBackgroundBorderPath =
-    DEFAULT_RIGHT_SCREEN_BACKGROUND_BORDER_PATH;
-
-enum {
-  kDefaultLeftScreenBorderPathLength =
-      sizeof(DEFAULT_LEFT_SCREEN_BACKGROUND_BORDER_PATH)
-          / sizeof(DEFAULT_LEFT_SCREEN_BACKGROUND_BORDER_PATH[0]) - 1,
-  kDefaultRightScreenBackgroundBorderPathLength =
-      sizeof(DEFAULT_RIGHT_SCREEN_BACKGROUND_BORDER_PATH)
-          / sizeof(DEFAULT_RIGHT_SCREEN_BACKGROUND_BORDER_PATH[0]) - 1,
-};
-
 static struct D2_CelFile* left_screen_background_border;
 static struct D2_CelFile* right_screen_background_border;
 
@@ -91,7 +55,7 @@ static void InitLeftScreenBackgroundBorder(void) {
   }
 
   left_screen_background_border = D2_D2Win_LoadCelFile(
-      kDefaultLeftScreenBackgroundBorderPath,
+      CEL_FILE_LEFT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT,
       0
   );
 }
@@ -102,7 +66,7 @@ static void InitRightScreenBackgroundBorder(void) {
   }
 
   right_screen_background_border = D2_D2Win_LoadCelFile(
-      kDefaultRightScreenBackgroundBorderPath,
+      CEL_FILE_RIGHT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT,
       0
   );
 }
@@ -126,10 +90,6 @@ void CelFile_LeftScreenBackgroundBorder_Unload(void) {
   left_screen_background_border = NULL;
 }
 
-const char* CelFile_LeftScreenBackgroundBorder_GetPath(void) {
-  return kDefaultLeftScreenBackgroundBorderPath;
-}
-
 struct D2_CelFile* CelFile_RightScreenBackgroundBorder_Get(void) {
   InitRightScreenBackgroundBorder();
 
@@ -143,8 +103,4 @@ void CelFile_RightScreenBackgroundBorder_Unload(void) {
 
   D2_D2Win_UnloadCelFile(right_screen_background_border);
   right_screen_background_border = NULL;
-}
-
-const char* CelFile_RightScreenBackgroundBorder_GetPath(void) {
-  return kDefaultRightScreenBackgroundBorderPath;
 }

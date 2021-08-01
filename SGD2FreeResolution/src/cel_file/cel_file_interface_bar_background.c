@@ -47,48 +47,6 @@
 
 #include <stddef.h>
 
-#include "../compile_time_switch.h"
-
-#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
-#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
-
-#define DEFAULT_BACKGROUND_LEFT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertLeft"
-#define DEFAULT_BACKGROUND_CENTER_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertHorizontalBar"
-#define DEFAULT_BACKGROUND_RIGHT_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertRight"
-
-#elif COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
-
-#define DEFAULT_BACKGROUND_LEFT_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Left"
-#define DEFAULT_BACKGROUND_CENTER_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Center"
-#define DEFAULT_BACKGROUND_RIGHT_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Right"
-
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-static const char* const kDefaultBackgroundLeftPath =
-    DEFAULT_BACKGROUND_LEFT_PATH;
-static const char* const kDefaultBackgroundCenterPath =
-    DEFAULT_BACKGROUND_CENTER_PATH;
-static const char* const kDefaultBackgroundRightPath =
-    DEFAULT_BACKGROUND_RIGHT_PATH;
-
-enum {
-  kDefaultBackgroundLeftPathLength = sizeof(DEFAULT_BACKGROUND_LEFT_PATH)
-      / sizeof(DEFAULT_BACKGROUND_LEFT_PATH[0]) - 1,
-  kDefaultBackgroundCenterPathLength = sizeof(DEFAULT_BACKGROUND_CENTER_PATH)
-      / sizeof(DEFAULT_BACKGROUND_CENTER_PATH[0]) - 1,
-  kDefaultBackgroundRightPathLength = sizeof(DEFAULT_BACKGROUND_RIGHT_PATH)
-      / sizeof(DEFAULT_BACKGROUND_RIGHT_PATH[0]) - 1,
-};
-
 static struct D2_CelFile* background_left = NULL;
 static struct D2_CelFile* background_center = NULL;
 static struct D2_CelFile* background_right = NULL;
@@ -98,7 +56,10 @@ static void InitBackgroundLeft(void) {
     return;
   }
 
-  background_left = D2_D2Win_LoadCelFile(kDefaultBackgroundLeftPath, 0);
+  background_left = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
+      0
+  );
 }
 
 static void InitBackgroundCenter(void) {
@@ -106,7 +67,10 @@ static void InitBackgroundCenter(void) {
     return;
   }
 
-  background_center = D2_D2Win_LoadCelFile(kDefaultBackgroundCenterPath, 0);
+  background_center = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
+      0
+  );
 }
 
 static void InitBackgroundRight(void) {
@@ -114,7 +78,10 @@ static void InitBackgroundRight(void) {
     return;
   }
 
-  background_right = D2_D2Win_LoadCelFile(kDefaultBackgroundRightPath, 0);
+  background_right = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
+      0
+  );
 }
 
 /**
@@ -136,10 +103,6 @@ void CelFile_InterfaceBarBackground_UnloadLeft(void) {
   background_left = NULL;
 }
 
-const char* CelFile_InterfaceBarBackground_GetLeftPath(void) {
-  return kDefaultBackgroundLeftPath;
-}
-
 struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void) {
   InitBackgroundCenter();
 
@@ -155,10 +118,6 @@ void CelFile_InterfaceBarBackground_UnloadCenter(void) {
   background_center = NULL;
 }
 
-const char* CelFile_InterfaceBarBackground_GetCenterPath(void) {
-  return kDefaultBackgroundCenterPath;
-}
-
 struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
   InitBackgroundRight();
 
@@ -172,8 +131,4 @@ void CelFile_InterfaceBarBackground_UnloadRight(void) {
 
   D2_D2Win_UnloadCelFile(background_center);
   background_center = NULL;
-}
-
-const char* CelFile_InterfaceBarBackground_GetRightPath(void) {
-  return kDefaultBackgroundRightPath;
 }

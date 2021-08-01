@@ -47,31 +47,6 @@
 
 #include <stddef.h>
 
-#define DEFAULT_LEFT_SCREEN_BORDER_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\LeftScreenBorder"
-#define DEFAULT_RIGHT_SCREEN_BORDER_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\RightScreenBorder"
-#define DEFAULT_VANILLA_SCREEN_BORDER_PATH \
-    "data\\global\\UI\\Panel\\800BorderFrame"
-
-static const char* const kDefaultLeftBorderPath =
-    DEFAULT_LEFT_SCREEN_BORDER_PATH;
-static const char* const kDefaultRightBorderPath =
-    DEFAULT_RIGHT_SCREEN_BORDER_PATH;
-static const char* const kDefaultVanillaBorderPath =
-    DEFAULT_VANILLA_SCREEN_BORDER_PATH;
-
-enum {
-  kDefaultLeftScreenBorderPathLength = sizeof(DEFAULT_LEFT_SCREEN_BORDER_PATH)
-      / sizeof(DEFAULT_LEFT_SCREEN_BORDER_PATH[0]) - 1,
-  kDefaultRightScreenBorderPathLength =
-      sizeof(DEFAULT_RIGHT_SCREEN_BORDER_PATH)
-          / sizeof(DEFAULT_RIGHT_SCREEN_BORDER_PATH[0]) - 1,
-  kDefaultVanillaScreenBorderPathLength =
-      sizeof(DEFAULT_VANILLA_SCREEN_BORDER_PATH)
-          / sizeof(DEFAULT_VANILLA_SCREEN_BORDER_PATH[0]) - 1,
-};
-
 static struct D2_CelFile* left_screen_border = NULL;
 static struct D2_CelFile* right_screen_border = NULL;
 static struct D2_CelFile* vanilla_screen_border = NULL;
@@ -81,7 +56,10 @@ static void InitLeftScreenBorder(void) {
     return;
   }
 
-  left_screen_border = D2_D2Win_LoadCelFile(kDefaultLeftBorderPath, 0);
+  left_screen_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_LEFT_SCREEN_BORDER_PATH_DEFAULT,
+      0
+  );
 }
 
 static void InitRightScreenBorder(void) {
@@ -89,7 +67,10 @@ static void InitRightScreenBorder(void) {
     return;
   }
 
-  right_screen_border = D2_D2Win_LoadCelFile(kDefaultRightBorderPath, 0);
+  right_screen_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_RIGHT_SCREEN_BORDER_PATH_DEFAULT,
+      0
+  );
 }
 
 static void InitVanillaScreenBorder(void) {
@@ -97,7 +78,10 @@ static void InitVanillaScreenBorder(void) {
     return;
   }
 
-  vanilla_screen_border = D2_D2Win_LoadCelFile(kDefaultVanillaBorderPath, 0);
+  vanilla_screen_border = D2_D2Win_LoadCelFile(
+      CEL_FILE_VANILLA_SCREEN_BORDER_PATH_DEFAULT,
+      0
+  );
 }
 
 /**
@@ -123,10 +107,6 @@ void CelFile_LeftScreenBorder_Unload(void) {
   left_screen_border = NULL;
 }
 
-const char* CelFile_LeftScreenBorder_GetPath(void) {
-  return kDefaultLeftBorderPath;
-}
-
 struct D2_CelFile* CelFile_RightScreenBorder_Get(void) {
   InitRightScreenBorder();
 
@@ -140,10 +120,6 @@ void CelFile_RightScreenBorder_Unload(void) {
 
   D2_D2Win_UnloadCelFile(right_screen_border);
   right_screen_border = NULL;
-}
-
-const char* CelFile_RightScreenBorder_GetPath(void) {
-  return kDefaultRightBorderPath;
 }
 
 /**
@@ -163,8 +139,4 @@ void CelFile_VanillaScreenBorder_Unload(void) {
 
   D2_D2Win_UnloadCelFile(vanilla_screen_border);
   vanilla_screen_border = NULL;
-}
-
-const char* CelFile_VanillaScreenBorder_GetPath(void) {
-  return kDefaultVanillaBorderPath;
 }

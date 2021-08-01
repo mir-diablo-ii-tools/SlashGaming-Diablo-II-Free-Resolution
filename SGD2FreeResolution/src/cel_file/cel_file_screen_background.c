@@ -47,40 +47,6 @@
 
 #include <stddef.h>
 
-#include "../compile_time_switch.h"
-
-#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
-#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
-
-#define DEFAULT_LEFT_SCREEN_BACKGROUND_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRStoneBack"
-#define DEFAULT_RIGHT_SCREEN_BACKGROUND_PATH \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRStoneBack"
-
-#elif COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
-
-#define DEFAULT_LEFT_SCREEN_BACKGROUND_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackground\\LeftScreen"
-#define DEFAULT_RIGHT_SCREEN_BACKGROUND_PATH \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackground\\RightScreen"
-
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-static const char* const kDefaultLeftScreenBackgroundPath =
-    DEFAULT_LEFT_SCREEN_BACKGROUND_PATH;
-static const char* const kDefaultRightScreenBackgroundPath =
-    DEFAULT_RIGHT_SCREEN_BACKGROUND_PATH;
-
-enum {
-  kDefaultLeftPathLength = sizeof(DEFAULT_LEFT_SCREEN_BACKGROUND_PATH)
-      / sizeof(DEFAULT_LEFT_SCREEN_BACKGROUND_PATH[0]) - 1,
-  kDefaultRightPathLength = sizeof(DEFAULT_RIGHT_SCREEN_BACKGROUND_PATH)
-      / sizeof(DEFAULT_RIGHT_SCREEN_BACKGROUND_PATH[0]) - 1,
-};
-
 static struct D2_CelFile* left_screen_background = NULL;
 static struct D2_CelFile* right_screen_background = NULL;
 
@@ -90,7 +56,7 @@ static void InitLeftScreenBackground(void) {
   }
 
   left_screen_background = D2_D2Win_LoadCelFile(
-      kDefaultLeftScreenBackgroundPath,
+      CEL_FILE_LEFT_SCREEN_BACKGROUND_PATH_DEFAULT,
       0
   );
 }
@@ -101,7 +67,7 @@ static void InitRightScreenBackground(void) {
   }
 
   right_screen_background = D2_D2Win_LoadCelFile(
-      kDefaultRightScreenBackgroundPath,
+      CEL_FILE_RIGHT_SCREEN_BACKGROUND_PATH_DEFAULT,
       0
   );
 }
@@ -125,10 +91,6 @@ void CelFile_LeftScreenBackground_Unload(void) {
   left_screen_background = NULL;
 }
 
-const char* CelFile_LeftScreenBackground_GetPath(void) {
-  return kDefaultLeftScreenBackgroundPath;
-}
-
 struct D2_CelFile* CelFile_RightScreenBackground_Get(void) {
   InitRightScreenBackground();
 
@@ -142,8 +104,4 @@ void CelFile_RightScreenBackground_Unload(void) {
 
   D2_D2Win_UnloadCelFile(right_screen_background);
   right_screen_background = NULL;
-}
-
-const char* CelFile_RightScreenBackground_GetPath(void) {
-  return kDefaultRightScreenBackgroundPath;
 }

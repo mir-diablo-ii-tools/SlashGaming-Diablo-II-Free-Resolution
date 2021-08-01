@@ -49,6 +49,13 @@
 #include <sgd2mapi.h>
 #include "../compile_time_switch.h"
 
+#define CEL_FILE_LEFT_SCREEN_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\LeftScreenBorder"
+#define CEL_FILE_RIGHT_SCREEN_BORDER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\RightScreenBorder"
+#define CEL_FILE_VANILLA_SCREEN_BORDER_PATH_DEFAULT \
+    "data\\global\\UI\\Panel\\800BorderFrame"
+
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */

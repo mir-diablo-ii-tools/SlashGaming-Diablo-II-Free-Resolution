@@ -47,6 +47,34 @@
 #define SGD2FR_CEL_FILE_CEL_FILE_LEGACY_H_
 
 #include <sgd2mapi.h>
+#include "../compile_time_switch.h"
+
+#define CEL_FILE_LEFT_SCREEN_BORDER_LEFT_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceLeft"
+#define CEL_FILE_LEFT_SCREEN_BORDER_TOP_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopLeft"
+#define CEL_FILE_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopLeft"
+#define CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomLeft"
+#define CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomLeft"
+
+#define CEL_FILE_RIGHT_SCREEN_BORDER_RIGHT_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderInterfaceRight"
+#define CEL_FILE_RIGHT_SCREEN_BORDER_TOP_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderTopRight"
+#define CEL_FILE_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerTopRight"
+#define CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderBottomRight"
+#define CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\NeoD2MRFancyBorderCornerBottomRight"
+
+#define CEL_FILE_SCREEN_BORDER_RIBBON_HORIZONTAL_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyHorizontalBar"
+#define CEL_FILE_SCREEN_BORDER_RIBBON_VERTICAL_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyVerticalBar"
 
 #ifdef __cplusplus
 extern "C" {
@@ -60,31 +88,21 @@ struct D2_CelFile* CelFile_LeftScreenBorder_GetLeft(void);
 
 void CelFile_LeftScreenBorder_UnloadLeft(void);
 
-const char* CelFile_LeftScreenBorder_GetLeftPath(void);
-
 struct D2_CelFile* CelFile_LeftScreenBorder_GetTop(void);
 
 void CelFile_LeftScreenBorder_UnloadTop(void);
-
-const char* CelFile_LeftScreenBorder_GetTopPath(void);
 
 struct D2_CelFile* CelFile_LeftScreenBorder_GetTopRight(void);
 
 void CelFile_LeftScreenBorder_UnloadTopRight(void);
 
-const char* CelFile_LeftScreenBorder_GetTopRightPath(void);
-
 struct D2_CelFile* CelFile_LeftScreenBorder_GetBottom(void);
 
 void CelFile_LeftScreenBorder_UnloadBottom(void);
 
-const char* CelFile_LeftScreenBorder_GetBottomPath(void);
-
 struct D2_CelFile* CelFile_LeftScreenBorder_GetBottomRight(void);
 
 void CelFile_LeftScreenBorder_UnloadBottomRight(void);
-
-const char* CelFile_LeftScreenBorder_GetBottomRightPath(void);
 
 /**
  * Right screen border
@@ -94,31 +112,21 @@ struct D2_CelFile* CelFile_RightScreenBorder_GetRight(void);
 
 void CelFile_RightScreenBorder_UnloadRight(void);
 
-const char* CelFile_RightScreenBorder_GetRightPath(void);
-
 struct D2_CelFile* CelFile_RightScreenBorder_GetTop(void);
 
 void CelFile_RightScreenBorder_UnloadTop(void);
-
-const char* CelFile_RightScreenBorder_GetTopPath(void);
 
 struct D2_CelFile* CelFile_RightScreenBorder_GetTopLeft(void);
 
 void CelFile_RightScreenBorder_UnloadTopLeft(void);
 
-const char* CelFile_RightScreenBorder_GetTopLeftPath(void);
-
 struct D2_CelFile* CelFile_RightScreenBorder_GetBottom(void);
 
 void CelFile_RightScreenBorder_UnloadBottom(void);
 
-const char* CelFile_RightScreenBorder_GetBottomPath(void);
-
 struct D2_CelFile* CelFile_RightScreenBorder_GetBottomLeft(void);
 
 void CelFile_RightScreenBorder_UnloadBottomLeft(void);
-
-const char* CelFile_RightScreenBorder_GetBottomLeftPath(void);
 
 /**
  * Screen border ribbons
@@ -128,13 +136,9 @@ struct D2_CelFile* CelFile_ScreenBorderRibbon_GetHorizontal(void);
 
 void CelFile_ScreenBorderRibbon_UnloadHorizontal(void);
 
-const char* CelFile_ScreenBorderRibbon_GetHorizontalPath(void);
-
 struct D2_CelFile* CelFile_ScreenBorderRibbon_GetVertical(void);
 
 void CelFile_ScreenBorderRibbon_UnloadVertical(void);
-
-const char* CelFile_ScreenBorderRibbon_GetVerticalPath(void);
 
 #ifdef __cplusplus
 } /* extern "C" */

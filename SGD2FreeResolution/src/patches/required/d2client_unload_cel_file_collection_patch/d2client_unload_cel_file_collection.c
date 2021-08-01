@@ -86,6 +86,12 @@ void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
   CelFile_LeftScreenBackgroundBorder_Unload();
   CelFile_RightScreenBackgroundBorder_Unload();
 
+#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
+
   CelFile_LeftScreenBorder_Unload();
   CelFile_RightScreenBorder_Unload();
+
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
+  CelFile_VanillaScreenBorder_Unload();
 }

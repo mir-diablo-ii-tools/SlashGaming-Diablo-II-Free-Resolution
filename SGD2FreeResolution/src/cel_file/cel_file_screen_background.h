@@ -47,6 +47,27 @@
 #define SGD2FR_CEL_FILE_CEL_FILE_SCREEN_BACKGROUND_H_
 
 #include <sgd2mapi.h>
+#include "../compile_time_switch.h"
+
+#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
+#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+
+#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
+
+#define CEL_FILE_LEFT_SCREEN_BACKGROUND_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRStoneBack"
+#define CEL_FILE_RIGHT_SCREEN_BACKGROUND_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRStoneBack"
+
+#elif COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
+
+#define CEL_FILE_LEFT_SCREEN_BACKGROUND_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackground\\LeftScreen"
+#define CEL_FILE_RIGHT_SCREEN_BACKGROUND_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBackground\\RightScreen"
+
+#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
 #ifdef __cplusplus
 extern "C" {
@@ -56,13 +77,9 @@ struct D2_CelFile* CelFile_LeftScreenBackground_Get(void);
 
 void CelFile_LeftScreenBackground_Unload(void);
 
-const char* CelFile_LeftScreenBackground_GetPath(void);
-
 struct D2_CelFile* CelFile_RightScreenBackground_Get(void);
 
 void CelFile_RightScreenBackground_Unload(void);
-
-const char* CelFile_RightScreenBackground_GetPath(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
