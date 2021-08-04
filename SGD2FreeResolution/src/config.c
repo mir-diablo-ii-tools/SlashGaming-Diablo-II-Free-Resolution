@@ -95,12 +95,14 @@ static void InitConfig(void) {
   if (PathFileExistsW(CONFIG_JSON_PATH)) {
     ConfigJsonFrozen_Read(&config, CONFIG_JSON_PATH);
     config_type = ConfigType_kJsonFrozen;
+    is_config_init = 1;
     return;
   }
 
   if (PathFileExistsW(CONFIG_INI_PATH)) {
     ConfigIni_Read(&config, CONFIG_INI_PATH);
     config_type = ConfigType_kIniWindows;
+    is_config_init = 1;
     return;
   }
 
