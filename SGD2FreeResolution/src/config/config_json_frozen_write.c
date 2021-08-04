@@ -164,9 +164,18 @@ static int WriteIngameResolutions(struct json_out *out, va_list *ap) {
   bytes_printed = 0;
   bytes_printed += json_printf(out, "[", 1);
 
-  bytes_printed += json_printf(out, "%M", &config->ingame_resolutions[0]);
-  for (i = 1; i < config->ingame_resolutions_count; i += 1) {
-    bytes_printed += json_printf(out, ", %M", &config->ingame_resolutions[i]);
+  bytes_printed += json_printf(
+      out,
+      "%M",
+      &config->ingame_resolutions.resolutions[0]
+  );
+
+  for (i = 1; i < config->ingame_resolutions.count; i += 1) {
+    bytes_printed += json_printf(
+        out,
+        ", %M",
+        &config->ingame_resolutions.resolutions[i]
+    );
   }
   bytes_printed += json_printf(out, "]", 1);
 

@@ -190,7 +190,7 @@ static void WriteIngameResolutions(
   wchar_t height_key[kHeightKeyCapacity];
   wchar_t height_str[kInt32StrCapacity];
 
-  for (i = 0; i < config->ingame_resolutions_count; i += 1) {
+  for (i = 0; i < config->ingame_resolutions.count; i += 1) {
     _snwprintf(
         width_key,
         kWidthKeyCapacity,
@@ -203,7 +203,7 @@ static void WriteIngameResolutions(
         width_str,
         kInt32StrCapacity,
         L"%d",
-        config->ingame_resolutions[i].width
+        config->ingame_resolutions.resolutions[i].width
     );
     width_str[kInt32StrCapacity - 1] = L'\0';
 
@@ -219,7 +219,7 @@ static void WriteIngameResolutions(
         height_str,
         kInt32StrCapacity,
         L"%d",
-        config->ingame_resolutions[i].height
+        config->ingame_resolutions.resolutions[i].height
     );
     height_str[kInt32StrCapacity - 1] = L'\0';
 

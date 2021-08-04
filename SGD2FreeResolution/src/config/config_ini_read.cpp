@@ -392,8 +392,8 @@ static void ReadIngameResolutions(
     config.impl->ingame_resolutions.push_back(it->second);
   }
 
-  config.ingame_resolutions_count = config.impl->ingame_resolutions.size();
-  config.ingame_resolutions = config.impl->ingame_resolutions.data();
+  config.ingame_resolutions.count = config.impl->ingame_resolutions.size();
+  config.ingame_resolutions.resolutions = config.impl->ingame_resolutions.data();
 }
 
 static void ReadIsEnableScreenBorderFrame(

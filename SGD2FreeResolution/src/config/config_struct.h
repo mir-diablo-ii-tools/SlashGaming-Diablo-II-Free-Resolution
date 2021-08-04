@@ -53,15 +53,19 @@
 
 struct Config_Implmentation;
 
+struct Config_Metadata_Version {
+  int major_high;
+  int major_low;
+  int minor_high;
+  int minor_low;
+};
+
+struct Config_Metadata {
+  struct Config_Metadata_Version version;
+};
+
 struct Config {
-  struct Config_Metadata {
-    struct Config_Metadata_Version {
-      int major_high;
-      int major_low;
-      int minor_high;
-      int minor_low;
-    } version;
-  } metadata;
+  struct Config_Metadata metadata;
 
   struct Config_Implmentation* impl;
 
@@ -69,8 +73,7 @@ struct Config {
 
   size_t ingame_resolution_mode;
 
-  size_t ingame_resolutions_count;
-  const struct GameResolution* ingame_resolutions;
+  struct IngameResolutions ingame_resolutions;
 
   int is_enable_screen_border_frame;
   int is_use_original_screen_border_frame;

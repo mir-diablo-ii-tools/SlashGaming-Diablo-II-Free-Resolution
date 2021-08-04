@@ -75,12 +75,10 @@ static void ExitOnInvalidConfig(
 }
 
 static void ReadMetadataVersion(const char *str, int len, void *user_data) {
-  typedef Config::Config_Metadata::Config_Metadata_Version
-      Config_Metadata_Version;
-  Config_Metadata_Version* version;
+  struct Config_Metadata_Version* version;
   int json_scanf_result;
 
-  version = (Config_Metadata_Version*) user_data;
+  version = (struct Config_Metadata_Version*) user_data;
 
   json_scanf_result = json_scanf(
       str,
@@ -107,11 +105,10 @@ static void ReadMetadataVersion(const char *str, int len, void *user_data) {
 }
 
 static void ReadMetadata(const char *str, int len, void *user_data) {
-  typedef Config::Config_Metadata Config_Metadata;
-  Config_Metadata* metadata;
+  struct Config_Metadata* metadata;
   int json_scanf_result;
 
-  metadata = (Config_Metadata*) user_data;
+  metadata = (struct Config_Metadata*) user_data;
 
   json_scanf_result = json_scanf(
       str,
@@ -229,8 +226,9 @@ static void ReadIngameResolutions(const char *str, int len, void *user_data) {
     }
   }
 
-  config->ingame_resolutions = config->impl->ingame_resolutions.data();
-  config->ingame_resolutions_count = config->impl->ingame_resolutions.size();
+  config->ingame_resolutions.count = config->impl->ingame_resolutions.size();
+  config->ingame_resolutions.resolutions =
+      config->impl->ingame_resolutions.data();
 }
 
 static void ReadConfig(const char *str, int len, void *user_data) {
