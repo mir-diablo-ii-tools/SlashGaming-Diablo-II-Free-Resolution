@@ -45,6 +45,8 @@
 
 #include "config_struct.h"
 
+#include "config_key_value.h"
+
 #define TO_WIDE_IMPL(str_lit) L##str_lit
 #define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
 

@@ -43,50 +43,41 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_STRUCT_H_
-#define SGD2FR_CONFIG_CONFIG_STRUCT_H_
+#ifndef SGD2FR_CONFIG_CONFIG_KEY_VALUE_H_
+#define SGD2FR_CONFIG_CONFIG_KEY_VALUE_H_
 
-#include <stddef.h>
+#define CONFIG_MAIN "Slash Gaming Diablo II Free Resolution"
 
-#include <mdc/std/wchar.h>
-#include "../game_resolution/game_resolution.h"
+#define CONFIG_METADATA "!!!Metadata (Do not modify)!!!"
 
-struct Config_Implmentation;
+#define CONFIG_METADATA_VERSION "Version"
 
-struct Config {
-  struct Config_Metadata {
-    struct Config_Metadata_Version {
-      int major_high;
-      int major_low;
-      int minor_high;
-      int minor_low;
-    } version;
-  } metadata;
+#define CONFIG_METADATA_VERSION_MAJOR_HIGH "Major High"
+#define CONFIG_METADATA_VERSION_MAJOR_HIGH_DEFAULT 3
+#define CONFIG_METADATA_VERSION_MAJOR_LOW "Major Low"
+#define CONFIG_METADATA_VERSION_MAJOR_LOW_DEFAULT 0
+#define CONFIG_METADATA_VERSION_MINOR_HIGH "Minor High"
+#define CONFIG_METADATA_VERSION_MINOR_HIGH_DEFAULT 2
+#define CONFIG_METADATA_VERSION_MINOR_LOW "Minor Low"
+#define CONFIG_METADATA_VERSION_MINOR_LOW_DEFAULT 1
 
-  struct Config_Implmentation* impl;
+#define CONFIG_INGAME_RESOLUTION_MODE "Ingame Resolution Mode"
+#define CONFIG_INGAME_RESOLUTION_MODE_DEFAULT 3
+#define CONFIG_INGAME_RESOLUTIONS "Ingame Resolutions"
 
-  const wchar_t* custom_mpq_path;
+#define CONFIG_MAIN_MENU_RESOLUTION "Main Menu Resolution"
+#define CONFIG_MAIN_MENU_RESOLUTION_WIDTH_DEFAULT 800
+#define CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT 600
 
-  size_t ingame_resolution_mode;
+#define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME "Enable Screen Border Frame?"
+#define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME_DEFAULT 0
+#define CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME \
+    "Use Original Screen Border Frame?"
+#define CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME_DEFAULT 0
+#define CONFIG_IS_USE_800_INTERFACE_BAR "Use 800 Interface Bar?"
+#define CONFIG_IS_USE_800_INTERFACE_BAR_DEFAULT 0
 
-  size_t ingame_resolutions_count;
-  const struct GameResolution* ingame_resolutions;
+#define CONFIG_CUSTOM_MPQ_PATH "Custom MPQ Path"
+#define CONFIG_CUSTOM_MPQ_PATH_DEFAULT "SGD2FreeRes.mpq"
 
-  int is_enable_screen_border_frame;
-  int is_use_original_screen_border_frame;
-  int is_use_800_interface_bar;
-
-  struct GameResolution main_menu_resolution;
-};
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-const struct Config kDefaultConfig;
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
-
-#endif /* SGD2FR_CONFIG_CONFIG_STRUCT_H_ */
+#endif /* SGD2FR_CONFIG_CONFIG_KEY_VALUE_H_ */
