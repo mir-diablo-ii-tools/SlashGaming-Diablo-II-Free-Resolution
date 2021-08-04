@@ -83,7 +83,7 @@ struct Config {
 extern "C" {
 #endif /* __cplusplus */
 
-const struct Config kDefaultConfig;
+extern const struct Config kDefaultConfig;
 
 #ifdef __cplusplus
 } /* extern "C" */
