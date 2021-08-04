@@ -302,7 +302,7 @@ static void MallocFileContent(
   }
 
   required_size = kReadCount;
-  while (feof(file) != EOF) {
+  while (!feof(file)) {
     if (buffer.size() < required_size) {
       buffer.resize(required_size);
     }
