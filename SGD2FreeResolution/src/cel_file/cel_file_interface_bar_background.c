@@ -125,10 +125,10 @@ struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
 }
 
 void CelFile_InterfaceBarBackground_UnloadRight(void) {
-  if (background_center == NULL) {
+  if (background_right == NULL) {
     return;
   }
 
-  D2_D2Win_UnloadCelFile(background_center);
-  background_center = NULL;
+  D2_D2Win_UnloadCelFile(background_right);
+  background_right = NULL;
 }
