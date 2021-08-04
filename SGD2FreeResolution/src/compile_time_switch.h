@@ -60,4 +60,12 @@
  */
 #define COMPILE_TIME_CEL_FILE_PATH_VERSION 2
 
+/**
+ * Specifies the config format to use when creating a new config,
+ * using the following integer values to represent a format type:
+ * 0. INI (Windows)
+ * 1. JSON (frozen)
+ */
+#define COMPILE_TIME_CREATE_CONFIG_FORMAT 1
+
 #endif // SGD2FR_COMPILE_TIME_SWITCH_H_
