@@ -46,7 +46,6 @@
 #include "d2client_draw_interface_bar_background.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
 #include "../../../cel_file/cel_file_interface_bar_background.h"
 #include "../../../game_resolution/game_resolution.hpp"
 

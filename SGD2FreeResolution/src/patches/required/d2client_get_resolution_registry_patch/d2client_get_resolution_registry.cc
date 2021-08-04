@@ -48,7 +48,6 @@
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
 #include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
@@ -58,7 +57,7 @@ void __cdecl Sgd2fr_D2Client_GetResolutionRegistry(
     uint32_t* ingame_resolution_mode
 ) {
   // Check the user's input to prevent out-of-index selections.
-  *reg_resolution_mode = config::GetIngameResolutionMode();
+  *reg_resolution_mode = GetIngameResolutionMode();
 
   size_t min_config_resolution_id = GetMinConfigResolutionId();
 

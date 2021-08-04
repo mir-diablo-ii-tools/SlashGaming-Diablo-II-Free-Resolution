@@ -51,7 +51,7 @@
 #include <mdc/error/exit_on_error.hpp>
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
+#include "../../../config.h"
 #include "../../../cel_file/cel_file_legacy.h"
 #include "../../../cel_file/cel_file_screen_background.h"
 #include "../../../cel_file/cel_file_screen_background_border.h"
@@ -561,11 +561,11 @@ void DrawCustomRightScreenBorderFrame() {
 }
 
 static void DrawLeftScreenBorderFrame() {
-  if (!config::IsScreenBorderFrameEnabled()) {
+  if (!GetConfig()->is_enable_screen_border_frame) {
     return;
   }
 
-  if (config::IsUseOriginalScreenBorderFrame()) {
+  if (GetConfig()->is_use_original_screen_border_frame) {
     DrawOriginalLeftScreenBorderFrame();
   } else {
     DrawCustomLeftScreenBorderFrame();
@@ -573,11 +573,11 @@ static void DrawLeftScreenBorderFrame() {
 }
 
 static void DrawRightScreenBorderFrame() {
-  if (!config::IsScreenBorderFrameEnabled()) {
+  if (!GetConfig()->is_enable_screen_border_frame) {
     return;
   }
 
-  if (config::IsUseOriginalScreenBorderFrame()) {
+  if (GetConfig()->is_use_original_screen_border_frame) {
     DrawOriginalRightScreenBorderFrame();
   } else {
     DrawCustomRightScreenBorderFrame();
