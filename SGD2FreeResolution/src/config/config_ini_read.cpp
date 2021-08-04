@@ -55,6 +55,7 @@
 #include <mdc/error/exit_on_error.h>
 #include <mdc/malloc/malloc.h>
 #include <mdc/wchar_t/filew.h>
+#include "config_key_value.h"
 #include "config_struct.hpp"
 
 #define TO_WIDE_IMPL(str_lit) L##str_lit

@@ -48,6 +48,8 @@
 #include <stddef.h>
 #include <windows.h>
 
+#include "config_key_value.h"
+
 #define TO_STR_IMPL(lit) #lit
 #define TO_STR(lit) TO_STR_IMPL(lit)
 

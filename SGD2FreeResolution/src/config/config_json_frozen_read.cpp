@@ -56,6 +56,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <mdc/wchar_t/wide_decoding.h>
 #include "../../third_party/frozen/frozen.h"
+#include "config_key_value.h"
 #include "config_struct.hpp"
 
 static void ExitOnInvalidConfig(
