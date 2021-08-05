@@ -58,8 +58,8 @@
  * Config read/write
  */
 
-#define CONFIG_INI_PATH L"SGD2FreeResolution.ini"
-#define CONFIG_JSON_PATH L"SGD2FreeResolution.json"
+#define CONFIG_INI_PATH L"./SGD2FreeResolution.config.ini"
+#define CONFIG_JSON_PATH L"SGD2FreeResolution.config.json"
 
 enum ConfigType {
   ConfigType_kIniWindows,
