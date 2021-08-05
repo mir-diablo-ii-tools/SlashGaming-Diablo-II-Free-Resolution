@@ -162,6 +162,7 @@ size_t GetIngameResolutionMode() {
 
 void SetIngameResolutionMode(size_t resolution_mode) {
   GetConfig()->ingame_resolution_mode = resolution_mode;
+  WriteConfig();
 }
 
 std::size_t GetMinConfigResolutionId() {
