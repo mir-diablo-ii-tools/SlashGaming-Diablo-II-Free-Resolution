@@ -68,14 +68,18 @@ static int WriteMetadataVersion(struct json_out *out, va_list *ap) {
   bytes_printed = json_printf(
       out,
       "{"
-          CONFIG_METADATA_VERSION_MINOR_HIGH ": %u,"
-          CONFIG_METADATA_VERSION_MAJOR_LOW ": %u,"
-          CONFIG_METADATA_VERSION_MINOR_HIGH ": %u,"
-          CONFIG_METADATA_VERSION_MINOR_LOW ": %u"
+          "%Q: %u,"
+          "%Q: %u,"
+          "%Q: %u,"
+          "%Q: %u"
       "}",
+      CONFIG_METADATA_VERSION_MINOR_HIGH,
       version->major_high,
+      CONFIG_METADATA_VERSION_MAJOR_LOW,
       version->major_low,
+      CONFIG_METADATA_VERSION_MINOR_HIGH,
       version->minor_high,
+      CONFIG_METADATA_VERSION_MINOR_LOW,
       version->minor_low
   );
 
@@ -91,7 +95,8 @@ static int WriteMetadata(struct json_out *out, va_list *ap) {
   bytes_printed = 0;
   bytes_printed += json_printf(
       out,
-      "{" CONFIG_METADATA_VERSION ": %M }",
+      "{ %Q: %M }",
+      CONFIG_METADATA_VERSION,
       &WriteMetadataVersion,
       &metadata->version
   );
@@ -124,7 +129,7 @@ static int WriteCustomMpqPath(struct json_out *out, va_list *ap) {
   /* Output string to file. */
   bytes_printed = json_printf(
       out,
-      "{" CONFIG_CUSTOM_MPQ_PATH ": %Q }",
+      "%Q",
       custom_mpq_path_utf8
   );
 
@@ -167,6 +172,7 @@ static int WriteIngameResolutions(struct json_out *out, va_list *ap) {
   bytes_printed += json_printf(
       out,
       "%M",
+      &WriteResolution,
       &config->ingame_resolutions.resolutions[0]
   );
 
@@ -174,6 +180,7 @@ static int WriteIngameResolutions(struct json_out *out, va_list *ap) {
     bytes_printed += json_printf(
         out,
         ", %M",
+        &WriteResolution,
         &config->ingame_resolutions.resolutions[i]
     );
   }
@@ -192,25 +199,33 @@ static int WriteConfig(struct json_out *out, va_list *ap) {
   bytes_printed += json_printf(
       out,
       "{"
-          CONFIG_METADATA ": %M,"
-          CONFIG_CUSTOM_MPQ_PATH ": %M,"
-          CONFIG_INGAME_RESOLUTION_MODE ": %u,"
-          CONFIG_INGAME_RESOLUTIONS ": %M,"
-          CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME ": %B,"
-          CONFIG_IS_USE_800_INTERFACE_BAR ": %B,"
-          CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME ": %B,"
-          CONFIG_MAIN_MENU_RESOLUTION ": %M"
+          "%Q: %M,"
+          "%Q: %M,"
+          "%Q: %u,"
+          "%Q: %M,"
+          "%Q: %B,"
+          "%Q: %B,"
+          "%Q: %B,"
+          "%Q: %M"
       "}",
+      CONFIG_METADATA,
       &WriteMetadataVersion,
       &config->metadata,
+      CONFIG_CUSTOM_MPQ_PATH,
       &WriteCustomMpqPath,
       config->custom_mpq_path,
+      CONFIG_INGAME_RESOLUTION_MODE,
       config->ingame_resolution_mode,
+      CONFIG_INGAME_RESOLUTIONS,
       &WriteIngameResolutions,
       config,
+      CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME,
       config->is_enable_screen_border_frame,
+      CONFIG_IS_USE_800_INTERFACE_BAR,
       config->is_use_800_interface_bar,
+      CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME,
       config->is_use_original_screen_border_frame,
+      CONFIG_MAIN_MENU_RESOLUTION,
       &WriteResolution,
       &config->main_menu_resolution
   );
@@ -368,10 +383,17 @@ void ConfigJsonFrozen_Write(
   struct json_out out = JSON_OUT_FILE(file);
 
   if (file == NULL) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"_wfopen failed.",
+        __FILEW__,
+        __LINE__
+    );
+
     goto return_bad;
   }
 
-  json_printf(&out, "{" CONFIG_MAIN ": %M }", &WriteConfig, config);
+  json_printf(&out, "{ %Q: %M }", CONFIG_MAIN, &WriteConfig, config);
 
   fclose_result = fclose(file);
   if (fclose_result == EOF) {
