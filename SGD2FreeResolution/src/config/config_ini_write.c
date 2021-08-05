@@ -182,11 +182,11 @@ static void WriteIngameResolutions(
     const wchar_t* path
 ) {
   enum {
-    kWidthKeyMinCapacity = sizeof(L"Resolution .Width")
+    kWidthKeyMinCapacity = sizeof(L"Resolution.Width")
         / sizeof(wchar_t),
     kWidthKeyCapacity = kWidthKeyMinCapacity + kInt32StrCapacity - 1,
 
-    kHeightKeyMinCapacity = sizeof(L"Resolution .Height")
+    kHeightKeyMinCapacity = sizeof(L"Resolution.Height")
         / sizeof(wchar_t),
     kHeightKeyCapacity = kHeightKeyMinCapacity + kInt32StrCapacity - 1,
   };
@@ -204,7 +204,7 @@ static void WriteIngameResolutions(
     _snwprintf(
         width_key,
         kWidthKeyCapacity,
-        L"Resolution %u.Width",
+        L"Resolution%u.Width",
         i
     );
     width_key[kWidthKeyCapacity - 1] = L'\0';
@@ -220,7 +220,7 @@ static void WriteIngameResolutions(
     _snwprintf(
         height_key,
         kHeightKeyCapacity,
-        L"Resolution %u.Height",
+        L"Resolution%u.Height",
         i
     );
     height_key[kHeightKeyCapacity - 1] = L'\0';
