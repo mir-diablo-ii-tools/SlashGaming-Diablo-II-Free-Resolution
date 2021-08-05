@@ -50,12 +50,12 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <vector>
-
 #include <mdc/error/exit_on_error.h>
+#include <mdc/malloc/malloc.h>
 #include <mdc/wchar_t/filew.h>
 #include <mdc/wchar_t/wide_decoding.h>
 #include "../../third_party/frozen/frozen.h"
+#include "../sgd2mapi_extension/file/file_content.h"
 #include "config_key_value.h"
 #include "config_struct.hpp"
 
@@ -350,19 +350,28 @@ return_bad:
  */
 
 void ConfigJsonFrozen_Read(struct Config* config, const wchar_t* path) {
-  ::std::vector<char> buffer(256);
-  size_t buffer_length;
+  size_t file_length;
+  char* file_contents;
 
-  MallocFileContent(buffer, path);
-  buffer_length = strlen(buffer.data());
+  file_length = Mapi_File_GetFileContentLength(path);
+  file_contents = (char*)Mdc_malloc(file_length * sizeof(file_contents[0]));
+  if (file_contents == NULL) {
+    Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+    goto return_bad;
+  }
 
   config->impl = new Config_Implmentation();
 
   json_scanf(
-      buffer.data(),
-      buffer_length,
-      "{ \"" CONFIG_MAIN "\": %M }",
+      file_contents,
+      file_length,
+      "{ " CONFIG_MAIN ": %M }",
       &ReadConfig,
       config
   );
+
+  return;
+
+return_bad:
+  return;
 }

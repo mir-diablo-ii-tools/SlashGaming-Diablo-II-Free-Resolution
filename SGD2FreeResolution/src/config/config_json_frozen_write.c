@@ -233,102 +233,6 @@ static int WriteConfig(struct json_out *out, va_list *ap) {
   return bytes_printed;
 }
 
-static char* ReadFileContents(const wchar_t* path) {
-  int fseek_result;
-  int fread_result;
-  int fclose_result;
-
-  FILE* file;
-  long file_length;
-  char* buffer;
-
-  file = _wfopen(path, L"rb");
-  if (file == NULL) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"_wfopen failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto return_bad;
-  }
-
-  fseek_result = fseek(file, 0, SEEK_END);
-  if (fseek_result != 0) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"fseek failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto fclose_file;
-  }
-
-  file_length = ftell(file);
-  if (file_length == -1L) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"ftell failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto fclose_file;
-  }
-
-  fseek_result = fseek(file, 0, SEEK_SET);
-  if (fseek_result != 0) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"fseek failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto fclose_file;
-  }
-
-  buffer = Mdc_malloc(file_length * sizeof(buffer[0]));
-  if (buffer == NULL) {
-    Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
-    goto fclose_file;
-  }
-
-  fread_result = fread(buffer, sizeof(buffer[0]), file_length, file);
-  if (fread_result < file_length) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"fread failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto fclose_file;
-  }
-
-  fclose_result = fclose(file);
-  if (fclose_result == EOF) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"fclose failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto return_bad;
-  }
-
-  return buffer;
-
-fclose_file:
-  fclose(file);
-
-return_bad:
-  return NULL;
-}
-
 static void WritePrettifyFile(const wchar_t* path, const char* str) {
   int fclose_result;
 
@@ -356,12 +260,24 @@ return_bad:
 }
 
 static void PrettifyFile(const wchar_t* path) {
+  size_t file_length;
   char* file_contents;
 
-  file_contents = ReadFileContents(path);
+  file_length = Mapi_File_GetFileContentLength(path);
+  file_contents = Mdc_malloc(file_length * sizeof(file_contents[0]));
+  if (file_contents == NULL) {
+    Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+    goto return_bad;
+  }
+
   WritePrettifyFile(path, file_contents);
 
   Mdc_free(file_contents);
+
+  return;
+
+return_bad:
+  return;
 }
 
 /**
