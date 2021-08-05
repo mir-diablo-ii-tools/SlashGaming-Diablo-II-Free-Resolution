@@ -129,19 +129,16 @@ static void ReadMetadata(const char *str, int len, void *user_data) {
   }
 }
 
-static void ReadCustomMpqPath(const char *str, int len, void *user_data) {
-  struct Config* config;
+static int ReadCustomMpqPath(const char *str, int len, struct Config* config) {
   int json_scanf_result;
   const char* custom_mpq_path_utf8;
 
   size_t custom_mpq_path_length;
 
-  config = (struct Config*) user_data;
-
   json_scanf_result = json_scanf(
       str,
       len,
-      "{" CONFIG_CUSTOM_MPQ_PATH ": %Q }",
+      "{ " CONFIG_CUSTOM_MPQ_PATH ": %Q }",
       &custom_mpq_path_utf8
   );
 
@@ -152,7 +149,7 @@ static void ReadCustomMpqPath(const char *str, int len, void *user_data) {
         __LINE__
     );
 
-    return;
+    return 0;
   }
 
   custom_mpq_path_length = Mdc_Wide_DecodeUtf8Length(custom_mpq_path_utf8);
@@ -165,6 +162,8 @@ static void ReadCustomMpqPath(const char *str, int len, void *user_data) {
   free((void*) custom_mpq_path_utf8);
 
   config->custom_mpq_path = config->impl->custom_mpq_path.c_str();
+
+  return json_scanf_result;
 }
 
 static void ReadResolution(const char *str, int len, void *user_data) {
@@ -242,7 +241,6 @@ static void ReadConfig(const char *str, int len, void *user_data) {
       len,
       "{"
           CONFIG_METADATA ": %M,"
-          CONFIG_CUSTOM_MPQ_PATH ": %M,"
           CONFIG_INGAME_RESOLUTION_MODE ": %u,"
           CONFIG_INGAME_RESOLUTIONS ": %M,"
           CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME ": %B,"
@@ -252,8 +250,6 @@ static void ReadConfig(const char *str, int len, void *user_data) {
       "}",
       &ReadMetadata,
       &config->metadata,
-      &ReadCustomMpqPath,
-      config,
       &config->ingame_resolution_mode,
       &ReadIngameResolutions,
       config,
@@ -264,85 +260,25 @@ static void ReadConfig(const char *str, int len, void *user_data) {
       &config->main_menu_resolution
   );
 
+  /*
+   * Custom MPQ Path has to be read in a separate function, due to %M
+   * removing initial quotes, and the path requiring conversion to
+   * wstring.
+   */
+  json_scanf_result += ReadCustomMpqPath(str, len, config);
+
+  /* json_scanf does not count Ingame Resolution Mode. */
+  json_scanf_result += 1;
+
   if (json_scanf_result < 8) {
     Mdc_Error_ExitOnGeneralError(
         L"Error",
-        L"Invalid JSON config. The program will now close.",
+        L"Invalid JSON config. The program will now close.%d",
         __FILEW__,
-        __LINE__
+        __LINE__,
+        json_scanf_result
     );
   }
-}
-
-static void MallocFileContent(
-    ::std::vector<char>& buffer,
-    const wchar_t* path
-) {
-  enum {
-    kReadCount = 256,
-  };
-
-  FILE* file;
-  size_t required_size;
-
-  char* fget_result;
-  int ferror_result;
-  int fclose_result;
-
-  file = _wfopen(path, L"r");
-  if (file == NULL) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"_wfopen failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto return_bad;
-  }
-
-  required_size = kReadCount;
-  while (!feof(file)) {
-    if (buffer.size() < required_size) {
-      buffer.resize(required_size);
-    }
-
-    fget_result = fgets(buffer.data(), required_size, file);
-    ferror_result = ferror(file);
-    if (fget_result == NULL && ferror_result != 0) {
-      Mdc_Error_ExitOnGeneralError(
-          L"Error",
-          L"fgets failed: %d.",
-          __FILEW__,
-          __LINE__,
-          ferror_result
-      );
-
-      goto fclose_file;
-    }
-
-    required_size += kReadCount;
-  }
-
-  fclose_result = fclose(file);
-  if (fclose_result == EOF) {
-    Mdc_Error_ExitOnGeneralError(
-        L"Error",
-        L"fclose failed.",
-        __FILEW__,
-        __LINE__
-    );
-
-    goto return_bad;
-  }
-
-  return;
-
-fclose_file:
-  fclose(file);
-
-return_bad:
-  return;
 }
 
 /**
