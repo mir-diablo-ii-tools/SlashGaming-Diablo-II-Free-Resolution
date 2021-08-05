@@ -159,10 +159,20 @@ static void WriteIngameResolutionMode(
 ) {
   BOOL is_write_success;
 
+  wchar_t str[kInt32StrCapacity];
+
+  _snwprintf(
+      str,
+      kInt32StrCapacity,
+      L"%u",
+      config->ingame_resolution_mode
+  );
+  str[kInt32StrCapacity - 1] = L'\0';
+
   is_write_success = WritePrivateProfileStringW(
       CONFIG_MAIN_SECTION,
-      TO_WIDE(CONFIG_CUSTOM_MPQ_PATH),
-      config->custom_mpq_path,
+      TO_WIDE(CONFIG_INGAME_RESOLUTION_MODE),
+      str,
       path
   );
 }
@@ -247,7 +257,7 @@ static void WriteIsEnableScreenBorderFrame(
 
   is_write_success = WritePrivateProfileStringW(
       CONFIG_MAIN_SECTION,
-      TO_WIDE(CONFIG_CUSTOM_MPQ_PATH),
+      TO_WIDE(CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME),
       config->is_enable_screen_border_frame ? L"1" : L"0",
       path
   );
@@ -261,7 +271,7 @@ static void WriteIsUse800InterfaceBar(
 
   is_write_success = WritePrivateProfileStringW(
       CONFIG_MAIN_SECTION,
-      TO_WIDE(CONFIG_CUSTOM_MPQ_PATH),
+      TO_WIDE(CONFIG_IS_USE_800_INTERFACE_BAR),
       config->is_use_800_interface_bar ? L"1" : L"0",
       path
   );
@@ -275,7 +285,7 @@ static void WriteIsUseOriginalScreenBorderFrame(
 
   is_write_success = WritePrivateProfileStringW(
       CONFIG_MAIN_SECTION,
-      TO_WIDE(CONFIG_CUSTOM_MPQ_PATH),
+      TO_WIDE(CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME),
       config->is_use_original_screen_border_frame ? L"1" : L"0",
       path
   );
