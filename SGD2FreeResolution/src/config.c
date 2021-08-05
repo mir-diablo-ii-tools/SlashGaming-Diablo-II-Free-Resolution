@@ -107,7 +107,7 @@ static void InitConfig(void) {
   }
 
   config_type = COMPILE_TIME_CREATE_CONFIG_FORMAT;
-  kConfigReadWriteTable[config_type].read(
+  kConfigReadWriteTable[config_type].write(
       &config,
       kConfigPathTable[config_type]
   );
