@@ -62,8 +62,8 @@
 #define CONFIG_JSON_PATH L"SGD2FreeResolution.json"
 
 enum ConfigType {
-  ConfigType_kJsonFrozen,
   ConfigType_kIniWindows,
+  ConfigType_kJsonFrozen,
 };
 
 struct ConfigReadWriteFunctions {
@@ -72,8 +72,8 @@ struct ConfigReadWriteFunctions {
 };
 
 const struct ConfigReadWriteFunctions kConfigReadWriteTable[] = {
-    { &ConfigJsonFrozen_Read, &ConfigJsonFrozen_Write },
     { &ConfigIni_Read, &ConfigIni_Write },
+    { &ConfigJsonFrozen_Read, &ConfigJsonFrozen_Write },
 };
 
 const wchar_t* const kConfigPathTable[] = {
