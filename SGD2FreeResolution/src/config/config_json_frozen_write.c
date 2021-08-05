@@ -54,6 +54,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <mdc/wchar_t/wide_encoding.h>
 #include "../../third_party/frozen/frozen.h"
+#include "../sgd2mapi_extension/file/file_content.h"
 #include "config_key_value.h"
 
 #define TO_STR_IMPL(lit) #lit
