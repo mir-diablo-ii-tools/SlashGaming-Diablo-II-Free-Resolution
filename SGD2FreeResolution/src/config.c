@@ -97,12 +97,18 @@ const wchar_t* const kConfigPathTable[kNumConfigTypes] = {
     CONFIG_JSON_PATH,
 };
 
+enum ConfigType kConfigTypePriority[kNumConfigTypes] = {
+    ConfigType_kJsonFrozen,
+    ConfigType_kIniWindows,
+};
+
 static int is_config_init = 0;
 static struct Config config;
 static enum ConfigType config_type;
 
 static void InitConfig(void) {
   size_t i;
+  enum ConfigType current_config_type;
 
   if (is_config_init) {
     return;
@@ -111,9 +117,14 @@ static void InitConfig(void) {
   config = kDefaultConfig;
 
   for (i = 0; i < kNumConfigTypes; i += 1) {
-    if (PathFileExistsW(kConfigPathTable[i])) {
-      ConfigJsonFrozen_Read(&config, kConfigPathTable[i]);
-      config_type = i;
+    current_config_type = kConfigTypePriority[i];
+
+    if (PathFileExistsW(kConfigPathTable[current_config_type])) {
+      kConfigReadWriteTable[current_config_type].read(
+          &config,
+          kConfigPathTable[current_config_type]
+      );
+      config_type = current_config_type;
       is_config_init = 1;
       return;
     }
