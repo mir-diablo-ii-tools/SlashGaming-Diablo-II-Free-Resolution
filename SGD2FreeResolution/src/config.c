@@ -75,12 +75,21 @@ enum {
 struct ConfigReadWriteFunctions {
   void (*read)(struct Config* config, const wchar_t* path);
   void (*write)(const struct Config* config, const wchar_t* path);
+  void (*clean_up)(struct Config* config);
 };
 
 const struct ConfigReadWriteFunctions
 kConfigReadWriteTable[kNumConfigTypes] = {
-    { &ConfigIni_Read, &ConfigIni_Write },
-    { &ConfigJsonFrozen_Read, &ConfigJsonFrozen_Write },
+    {
+        &ConfigIni_Read,
+        &ConfigIni_Write,
+        &ConfigIni_CleanUp,
+    },
+    {
+        &ConfigJsonFrozen_Read,
+        &ConfigJsonFrozen_Write,
+        &ConfigJsonFrozen_CleanUp,
+    },
 };
 
 const wchar_t* const kConfigPathTable[kNumConfigTypes] = {
@@ -130,7 +139,11 @@ struct Config* GetConfig(void) {
 }
 
 void LoadConfig(void) {
-  is_config_init = 0;
+  if (is_config_init) {
+    kConfigReadWriteTable[config_type].clean_up(&config);
+    is_config_init = 0;
+  }
+
   InitConfig();
 }
 

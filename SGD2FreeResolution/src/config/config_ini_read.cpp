@@ -529,3 +529,8 @@ void ConfigIni_Read(Config* config, const wchar_t* path) {
   ReadIsUseOriginalScreenBorderFrame(*config, path);
   ReadMainMenuResolution(*config, path);
 }
+
+void ConfigIni_CleanUp(struct Config* config) {
+  delete config->impl;
+  config->impl = NULL;
+}

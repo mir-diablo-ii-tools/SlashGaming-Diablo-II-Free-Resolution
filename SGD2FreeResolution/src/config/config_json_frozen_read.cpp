@@ -313,3 +313,8 @@ void ConfigJsonFrozen_Read(struct Config* config, const wchar_t* path) {
 return_bad:
   return;
 }
+
+void ConfigJsonFrozen_CleanUp(struct Config* config) {
+  delete config->impl;
+  config->impl = NULL;
+}

@@ -57,6 +57,8 @@ void ConfigIni_Read(struct Config* config, const wchar_t* path);
 
 void ConfigIni_Write(const struct Config* config, const wchar_t* path);
 
+void ConfigIni_CleanUp(struct Config* config);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */

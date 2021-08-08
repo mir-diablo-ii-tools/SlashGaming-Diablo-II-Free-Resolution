@@ -57,6 +57,8 @@ void ConfigJsonFrozen_Read(struct Config* config, const wchar_t* path);
 
 void ConfigJsonFrozen_Write(const struct Config* config, const wchar_t* path);
 
+void ConfigJsonFrozen_CleanUp(struct Config* config);
+
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
