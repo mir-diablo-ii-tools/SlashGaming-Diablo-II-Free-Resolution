@@ -58,7 +58,6 @@
 #define CONFIG_METADATA_VERSION_MINOR_LOW "Minor Low"
 
 #define CONFIG_INGAME_RESOLUTION_MODE "Ingame Resolution Mode"
-#define CONFIG_INGAME_RESOLUTION_MODE_DEFAULT 3
 #define CONFIG_INGAME_RESOLUTIONS "Ingame Resolutions"
 
 #define CONFIG_MAIN_MENU_RESOLUTION "Main Menu Resolution"
