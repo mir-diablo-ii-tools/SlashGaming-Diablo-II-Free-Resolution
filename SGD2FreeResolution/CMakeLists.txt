@@ -403,7 +403,6 @@ set(SRC_HEADERS
     "src/config/config_json_key_value.h"
     "src/config/config_key_value.h"
     "src/config/config_struct.h"
-    "src/config/config_struct.hpp"
     "src/config/config_value_default.h"
 
     # Game resolution
