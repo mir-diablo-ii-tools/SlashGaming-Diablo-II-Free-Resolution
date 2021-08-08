@@ -58,6 +58,7 @@
 #include "../sgd2mapi_extension/file/file_content.h"
 #include "config_key_value.h"
 #include "config_struct.hpp"
+#include "config_value_default.h"
 
 static void ExitOnInvalidConfig(
     const wchar_t* key_path,
