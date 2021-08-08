@@ -43,19 +43,19 @@
  *  work.
  */
 
-#include "config.h"
+#include "user_config.h"
 
 #include <stddef.h>
 #include <windows.h>
 #include <shlwapi.h>
 
 #include "compile_time_switch.h"
-#include "config/config_ini_windows.h"
-#include "config/config_json_frozen.h"
-#include "config/config_key_value.h"
+#include "user_config/user_config_ini_windows.h"
+#include "user_config/user_config_json_frozen.h"
+#include "user_config/user_config_key_value.h"
 
 /**
- * Config read/write
+ * User config read/write
  */
 
 #define CONFIG_INI_PATH L"./SGD2FreeResolution.user.ini"
@@ -73,9 +73,9 @@ enum {
 };
 
 struct ConfigReadWriteFunctions {
-  void (*read)(struct Config* config, const wchar_t* path);
-  void (*write)(const struct Config* config, const wchar_t* path);
-  void (*clean_up)(struct Config* config);
+  void (*read)(struct UserConfig* config, const wchar_t* path);
+  void (*write)(const struct UserConfig* config, const wchar_t* path);
+  void (*clean_up)(struct UserConfig* config);
 };
 
 const struct ConfigReadWriteFunctions
@@ -103,7 +103,7 @@ enum ConfigType kConfigTypePriority[kNumConfigTypes] = {
 };
 
 static int is_config_init = 0;
-static struct Config config;
+static struct UserConfig config;
 static enum ConfigType config_type;
 
 static void InitConfig(void) {
@@ -114,7 +114,7 @@ static void InitConfig(void) {
     return;
   }
 
-  config = kDefaultConfig;
+  config = UserConfig_kDefault;
 
   for (i = 0; i < kNumConfigTypes; i += 1) {
     current_config_type = kConfigTypePriority[i];
@@ -143,13 +143,13 @@ static void InitConfig(void) {
  * External
  */
 
-struct Config* GetConfig(void) {
+struct UserConfig* UserConfig_Get(void) {
   InitConfig();
 
   return &config;
 }
 
-void LoadConfig(void) {
+void UserConfig_Load(void) {
   if (is_config_init) {
     kConfigReadWriteTable[config_type].clean_up(&config);
     is_config_init = 0;
@@ -158,7 +158,7 @@ void LoadConfig(void) {
   InitConfig();
 }
 
-void WriteConfig(void) {
+void UserConfig_Write(void) {
   InitConfig();
 
   kConfigReadWriteTable[config_type].write(

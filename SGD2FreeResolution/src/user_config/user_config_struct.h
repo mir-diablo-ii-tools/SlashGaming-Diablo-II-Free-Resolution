@@ -43,44 +43,49 @@
  *  work.
  */
 
-#include "config_struct.h"
+#ifndef SGD2FR_USER_CONFIG_USER_CONFIG_STRUCT_H_
+#define SGD2FR_USER_CONFIG_USER_CONFIG_STRUCT_H_
 
-#include "config_value_default.h"
+#include <stddef.h>
 
-#define TO_WIDE_IMPL(str_lit) L##str_lit
-#define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
+#include <mdc/std/wchar.h>
+#include "../game_resolution/game_resolution.h"
 
-const struct GameResolution kDefaultResolutions[] = {
-    { 640, 480 },
-    { 800, 600 },
-    { 856, 480 },
-    { 1068, 600 },
+struct UserConfig_Metadata_Version {
+  int major_high;
+  int major_low;
+  int minor_high;
+  int minor_low;
 };
 
-enum {
-  kDefaultResolutionsCount = sizeof(kDefaultResolutions)
-      / sizeof(kDefaultResolutions[0]),
+struct UserConfig_Metadata {
+  struct UserConfig_Metadata_Version version;
 };
 
-const struct Config kDefaultConfig = {
-    {
-        {
-            CONFIG_METADATA_VERSION_MAJOR_HIGH_DEFAULT,
-            CONFIG_METADATA_VERSION_MAJOR_LOW_DEFAULT,
-            CONFIG_METADATA_VERSION_MINOR_HIGH_DEFAULT,
-            CONFIG_METADATA_VERSION_MINOR_LOW_DEFAULT,
-        }
-    },
-    NULL,
-    TO_WIDE(CONFIG_CUSTOM_MPQ_PATH_DEFAULT),
-    CONFIG_INGAME_RESOLUTION_MODE_DEFAULT,
-    kDefaultResolutionsCount,
-    kDefaultResolutions,
-    CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME_DEFAULT,
-    CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME_DEFAULT,
-    CONFIG_IS_USE_800_INTERFACE_BAR_DEFAULT,
-    {
-        CONFIG_MAIN_MENU_RESOLUTION_WIDTH_DEFAULT,
-        CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT,
-    }
+struct UserConfig {
+  struct UserConfig_Metadata metadata;
+
+  wchar_t* custom_mpq_path;
+
+  size_t ingame_resolution_mode;
+
+  struct IngameResolutions ingame_resolutions;
+
+  int is_enable_screen_border_frame;
+  int is_use_original_screen_border_frame;
+  int is_use_800_interface_bar;
+
+  struct GameResolution main_menu_resolution;
 };
+
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+extern const struct UserConfig UserConfig_kDefault;
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* SGD2FR_USER_CONFIG_USER_CONFIG_STRUCT_H_ */

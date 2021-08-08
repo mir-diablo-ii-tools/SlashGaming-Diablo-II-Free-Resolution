@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "config_ini_windows.h"
+#include "user_config_ini_windows.h"
 
 #include <limits.h>
 #include <stddef.h>
@@ -53,9 +53,9 @@
 #include <mdc/error/exit_on_error.h>
 #include <mdc/malloc/malloc.h>
 #include <mdc/wchar_t/filew.h>
-#include "config_key_value.h"
-#include "config_struct.h"
-#include "config_value_default.h"
+#include "user_config_key_value.h"
+#include "user_config_struct.h"
+#include "user_config_value_default.h"
 
 #define TO_WIDE_IMPL(str_lit) L##str_lit
 #define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
@@ -187,7 +187,7 @@ return_bad:
 }
 
 static void ReadMetadataVersion(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   enum {
@@ -273,14 +273,14 @@ return_bad:
 }
 
 static void ReadMetadata(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   ReadMetadataVersion(config, path);
 }
 
 static void ReadCustomMpqPath(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   wchar_t* custom_mpq_path;
@@ -309,7 +309,7 @@ static void ReadCustomMpqPath(
 }
 
 static void ReadIngameResolutionMode(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   enum {
@@ -391,7 +391,7 @@ static void ReadIngameResolution(
 }
 
 static void ReadIngameResolutions(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   static const struct GameResolution kDefaultResolution = { 0, 0 };
@@ -450,7 +450,7 @@ return_bad:
 }
 
 static void ReadIsEnableScreenBorderFrame(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   enum {
@@ -482,7 +482,7 @@ return_bad:
 }
 
 static void ReadIsUseOriginalScreenBorderFrame(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   enum {
@@ -514,7 +514,7 @@ return_bad:
 }
 
 static void ReadIsUse800InterfaceBar(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   enum {
@@ -546,7 +546,7 @@ return_bad:
 }
 
 static void ReadMainMenuResolution(
-    struct Config* config,
+    struct UserConfig* config,
     const wchar_t* path
 ) {
   enum {
@@ -599,7 +599,7 @@ return_bad:
  * External
  */
 
-void ConfigIniWindows_Read(struct Config* config, const wchar_t* path) {
+void ConfigIniWindows_Read(struct UserConfig* config, const wchar_t* path) {
   ReadMetadata(config, path);
   ReadCustomMpqPath(config, path);
   ReadIngameResolutionMode(config, path);
@@ -610,7 +610,7 @@ void ConfigIniWindows_Read(struct Config* config, const wchar_t* path) {
   ReadMainMenuResolution(config, path);
 }
 
-void ConfigIniWindows_CleanUp(struct Config* config) {
+void ConfigIniWindows_CleanUp(struct UserConfig* config) {
   Mdc_free(config->ingame_resolutions.resolutions);
   Mdc_free(config->custom_mpq_path);
 }

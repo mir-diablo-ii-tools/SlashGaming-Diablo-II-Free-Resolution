@@ -62,6 +62,24 @@ set(INCLUDE_HEADERS
 
 enable_language(ASM_NASM)
 
+set(SRC_USER_CONFIG
+    "src/user_config.c"
+    "src/user_config.h"
+
+    "src/user_config/user_config_ini_windows_read.c"
+    "src/user_config/user_config_ini_windows_write.c"
+    "src/user_config/user_config_json_frozen_read.c"
+    "src/user_config/user_config_json_frozen_write.c"
+    "src/user_config/user_config_struct.c"
+
+    "src/user_config/user_config_ini_windows.h"
+    "src/user_config/user_config_json_frozen.h"
+    "src/user_config/user_config_json_key_value.h"
+    "src/user_config/user_config_key_value.h"
+    "src/user_config/user_config_struct.h"
+    "src/user_config/user_config_value_default.h"
+)
+
 set(SRC_ASM
     # Cel file
     "src/cel_file/cel_file_legacy_asm.asm"
@@ -164,13 +182,6 @@ set(SRC_C
     "src/cel_file/cel_file_screen_background.c"
     "src/cel_file/cel_file_screen_background_border.c"
     "src/cel_file/cel_file_screen_border.c"
-
-    # Config
-    "src/config/config_ini_windows_read.c"
-    "src/config/config_ini_windows_write.c"
-    "src/config/config_json_frozen_read.c"
-    "src/config/config_json_frozen_write.c"
-    "src/config/config_struct.c"
 
     # Game resolution
     "src/game_resolution/gateway/game_resolution_d2lod_net.c"
@@ -383,7 +394,6 @@ set(SRC_C
     "src/sgd2mapi_extension/glide3x_library_version.c"
     "src/sgd2mapi_extension/glide3x_library_version_cpp98.cpp"
 
-    "src/config.c"
     "src/dll_main.cc"
     "src/license.c"
     "src/sgd2fml_mod_exports.cc"
@@ -396,14 +406,6 @@ set(SRC_HEADERS
     "src/cel_file/cel_file_screen_background.h"
     "src/cel_file/cel_file_screen_background_border.h"
     "src/cel_file/cel_file_screen_border.h"
-
-    # Config
-    "src/config/config_ini_windows.h"
-    "src/config/config_json_frozen.h"
-    "src/config/config_json_key_value.h"
-    "src/config/config_key_value.h"
-    "src/config/config_struct.h"
-    "src/config/config_value_default.h"
 
     # Game resolution
     "src/game_resolution/gateway/game_resolution_d2lod_net.h"
@@ -618,7 +620,6 @@ set(SRC_HEADERS
     "src/sgd2mapi_extension/sgd2mapi_extension.hpp"
 
     "src/compile_time_switch.h"
-    "src/config.h"
     "src/compile_time_switch.hpp"
 )
 
@@ -633,6 +634,7 @@ add_library(SGD2FreeRes SHARED
     ${SRC_ASM}
     ${SRC_C}
     ${SRC_HEADERS}
+    ${SRC_USER_CONFIG}
     ${INCLUDE_HEADERS}
     ${FROZEN_FILES}
 )
@@ -651,6 +653,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}
         ${SRC_C}
         ${SRC_HEADERS}
         ${INCLUDE_HEADERS}
+        ${SRC_USER_CONFIG}
 )
 
 install(TARGETS SGD2FreeRes)

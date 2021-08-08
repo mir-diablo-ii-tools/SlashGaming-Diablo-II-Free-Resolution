@@ -43,53 +43,30 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_STRUCT_H_
-#define SGD2FR_CONFIG_CONFIG_STRUCT_H_
+#ifndef SGD2FR_USER_CONFIG_USER_CONFIG_JSON_KEY_VALUE_H_
+#define SGD2FR_USER_CONFIG_USER_CONFIG_JSON_KEY_VALUE_H_
 
-#include <stddef.h>
+#define CONFIG_MAIN "sgd2FreeResolution"
 
-#include <mdc/std/wchar.h>
-#include "../game_resolution/game_resolution.h"
+#define CONFIG_METADATA "!!!metadata(DoNotModify)!!!"
 
-struct Config_Implmentation;
+#define CONFIG_METADATA_VERSION "version"
 
-struct Config_Metadata_Version {
-  int major_high;
-  int major_low;
-  int minor_high;
-  int minor_low;
-};
+#define CONFIG_METADATA_VERSION_MAJOR_HIGH "majorHigh"
+#define CONFIG_METADATA_VERSION_MAJOR_LOW "majorLow"
+#define CONFIG_METADATA_VERSION_MINOR_HIGH "minorHigh"
+#define CONFIG_METADATA_VERSION_MINOR_LOW "minorLow"
 
-struct Config_Metadata {
-  struct Config_Metadata_Version version;
-};
+#define CONFIG_INGAME_RESOLUTION_MODE "ingameResolutionMode"
+#define CONFIG_INGAME_RESOLUTIONS "ingameResolutions"
 
-struct Config {
-  struct Config_Metadata metadata;
+#define CONFIG_MAIN_MENU_RESOLUTION "mainMenuResolution"
 
-  struct Config_Implmentation* impl;
+#define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME "enableScreenBorderFrame"
+#define CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME \
+    "useOriginalScreenBorderFrame"
+#define CONFIG_IS_USE_800_INTERFACE_BAR "use800InterfaceBar?"
 
-  const wchar_t* custom_mpq_path;
+#define CONFIG_CUSTOM_MPQ_PATH "customMpqPath"
 
-  size_t ingame_resolution_mode;
-
-  struct IngameResolutions ingame_resolutions;
-
-  int is_enable_screen_border_frame;
-  int is_use_original_screen_border_frame;
-  int is_use_800_interface_bar;
-
-  struct GameResolution main_menu_resolution;
-};
-
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
-
-extern const struct Config kDefaultConfig;
-
-#ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
-
-#endif /* SGD2FR_CONFIG_CONFIG_STRUCT_H_ */
+#endif /* SGD2FR_USER_CONFIG_USER_CONFIG_JSON_KEY_VALUE_H_ */

@@ -43,12 +43,12 @@
  *  work.
  */
 
-#include "config_ini_windows.h"
+#include "user_config_ini_windows.h"
 
 #include <stddef.h>
 #include <windows.h>
 
-#include "config_key_value.h"
+#include "user_config_key_value.h"
 
 #define TO_STR_IMPL(lit) #lit
 #define TO_STR(lit) TO_STR_IMPL(lit)
@@ -72,7 +72,7 @@ enum {
 };
 
 static void WriteMetadata(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   BOOL is_write_success;
@@ -140,7 +140,7 @@ static void WriteMetadata(
 }
 
 static void WriteCustomMpqPath(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   BOOL is_write_success;
@@ -154,7 +154,7 @@ static void WriteCustomMpqPath(
 }
 
 static void WriteIngameResolutionMode(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   BOOL is_write_success;
@@ -178,7 +178,7 @@ static void WriteIngameResolutionMode(
 }
 
 static void WriteIngameResolutions(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   enum {
@@ -250,7 +250,7 @@ static void WriteIngameResolutions(
 }
 
 static void WriteIsEnableScreenBorderFrame(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   BOOL is_write_success;
@@ -264,7 +264,7 @@ static void WriteIsEnableScreenBorderFrame(
 }
 
 static void WriteIsUse800InterfaceBar(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   BOOL is_write_success;
@@ -278,7 +278,7 @@ static void WriteIsUse800InterfaceBar(
 }
 
 static void WriteIsUseOriginalScreenBorderFrame(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   BOOL is_write_success;
@@ -292,7 +292,7 @@ static void WriteIsUseOriginalScreenBorderFrame(
 }
 
 static void WriteMainMenuResolution(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   BOOL is_write_success;
@@ -335,7 +335,7 @@ static void WriteMainMenuResolution(
  */
 
 void ConfigIniWindows_Write(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   WriteMetadata(config, path);

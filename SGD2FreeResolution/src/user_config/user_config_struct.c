@@ -43,30 +43,43 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_JSON_KEY_VALUE_H_
-#define SGD2FR_CONFIG_CONFIG_JSON_KEY_VALUE_H_
+#include "user_config_struct.h"
 
-#define CONFIG_MAIN "sgd2FreeResolution"
+#include "user_config_value_default.h"
 
-#define CONFIG_METADATA "!!!metadata(DoNotModify)!!!"
+#define TO_WIDE_IMPL(str_lit) L##str_lit
+#define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
 
-#define CONFIG_METADATA_VERSION "version"
+const struct GameResolution kDefaultResolutions[] = {
+    { 640, 480 },
+    { 800, 600 },
+    { 856, 480 },
+    { 1068, 600 },
+};
 
-#define CONFIG_METADATA_VERSION_MAJOR_HIGH "majorHigh"
-#define CONFIG_METADATA_VERSION_MAJOR_LOW "majorLow"
-#define CONFIG_METADATA_VERSION_MINOR_HIGH "minorHigh"
-#define CONFIG_METADATA_VERSION_MINOR_LOW "minorLow"
+enum {
+  kDefaultResolutionsCount = sizeof(kDefaultResolutions)
+      / sizeof(kDefaultResolutions[0]),
+};
 
-#define CONFIG_INGAME_RESOLUTION_MODE "ingameResolutionMode"
-#define CONFIG_INGAME_RESOLUTIONS "ingameResolutions"
-
-#define CONFIG_MAIN_MENU_RESOLUTION "mainMenuResolution"
-
-#define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME "enableScreenBorderFrame"
-#define CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME \
-    "useOriginalScreenBorderFrame"
-#define CONFIG_IS_USE_800_INTERFACE_BAR "use800InterfaceBar?"
-
-#define CONFIG_CUSTOM_MPQ_PATH "customMpqPath"
-
-#endif /* SGD2FR_CONFIG_CONFIG_JSON_KEY_VALUE_H_ */
+const struct UserConfig UserConfig_kDefault = {
+    {
+        {
+            CONFIG_METADATA_VERSION_MAJOR_HIGH_DEFAULT,
+            CONFIG_METADATA_VERSION_MAJOR_LOW_DEFAULT,
+            CONFIG_METADATA_VERSION_MINOR_HIGH_DEFAULT,
+            CONFIG_METADATA_VERSION_MINOR_LOW_DEFAULT,
+        }
+    },
+    TO_WIDE(CONFIG_CUSTOM_MPQ_PATH_DEFAULT),
+    CONFIG_INGAME_RESOLUTION_MODE_DEFAULT,
+    kDefaultResolutionsCount,
+    kDefaultResolutions,
+    CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME_DEFAULT,
+    CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME_DEFAULT,
+    CONFIG_IS_USE_800_INTERFACE_BAR_DEFAULT,
+    {
+        CONFIG_MAIN_MENU_RESOLUTION_WIDTH_DEFAULT,
+        CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT,
+    }
+};

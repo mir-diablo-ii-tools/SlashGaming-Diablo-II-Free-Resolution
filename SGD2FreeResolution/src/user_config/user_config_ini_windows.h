@@ -43,25 +43,24 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_H_
-#define SGD2FR_CONFIG_H_
+#ifndef SGD2FR_USER_CONFIG_USER_CONFIG_INI_WINDOWS_H_
+#define SGD2FR_USER_CONFIG_USER_CONFIG_INI_WINDOWS_H_
 
-#include "config/config_struct.h"
+#include <mdc/std/wchar.h>
+#include "user_config_struct.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-extern const struct Config kDefaultConfig;
+void ConfigIniWindows_Read(struct UserConfig* config, const wchar_t* path);
 
-struct Config* GetConfig(void);
+void ConfigIniWindows_Write(const struct UserConfig* config, const wchar_t* path);
 
-void LoadConfig(void);
-
-void WriteConfig(void);
+void ConfigIniWindows_CleanUp(struct UserConfig* config);
 
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
 
-#endif /* SGD2FR_CONFIG_H_ */
+#endif /* SGD2FR_USER_CONFIG_USER_CONFIG_INI_WINDOWS_H_ */

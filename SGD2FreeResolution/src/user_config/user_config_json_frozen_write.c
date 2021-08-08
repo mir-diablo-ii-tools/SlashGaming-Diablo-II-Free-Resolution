@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "config_json_frozen.h"
+#include "user_config_json_frozen.h"
 
 #include <stdarg.h>
 #include <stddef.h>
@@ -55,16 +55,16 @@
 #include <mdc/wchar_t/wide_encoding.h>
 #include "../../third_party/frozen/frozen.h"
 #include "../sgd2mapi_extension/file/file_content.h"
-#include "config_json_key_value.h"
+#include "user_config_json_key_value.h"
 
 #define TO_STR_IMPL(lit) #lit
 #define TO_STR(lit) TO_STR_IMPL(lit)
 
 static int WriteMetadataVersion(struct json_out *out, va_list *ap) {
-  const struct Config_Metadata_Version* version;
+  const struct UserConfig_Metadata_Version* version;
   int bytes_printed;
 
-  version = va_arg(*ap, const struct Config_Metadata_Version*);
+  version = va_arg(*ap, const struct UserConfig_Metadata_Version*);
 
   bytes_printed = json_printf(
       out,
@@ -88,10 +88,10 @@ static int WriteMetadataVersion(struct json_out *out, va_list *ap) {
 }
 
 static int WriteMetadata(struct json_out *out, va_list *ap) {
-  const struct Config_Metadata* metadata;
+  const struct UserConfig_Metadata* metadata;
   int bytes_printed;
 
-  metadata = va_arg(*ap, const struct Config_Metadata*);
+  metadata = va_arg(*ap, const struct UserConfig_Metadata*);
 
   bytes_printed = 0;
   bytes_printed += json_printf(
@@ -162,10 +162,10 @@ static int WriteResolution(struct json_out *out, va_list *ap) {
 static int WriteIngameResolutions(struct json_out *out, va_list *ap) {
   size_t i;
 
-  const struct Config* config;
+  const struct UserConfig* config;
   int bytes_printed;
 
-  config = va_arg(*ap, const struct Config*);
+  config = va_arg(*ap, const struct UserConfig*);
 
   bytes_printed = 0;
   bytes_printed += json_printf(out, "[", 1);
@@ -191,10 +191,10 @@ static int WriteIngameResolutions(struct json_out *out, va_list *ap) {
 }
 
 static int WriteConfig(struct json_out *out, va_list *ap) {
-  const struct Config* config;
+  const struct UserConfig* config;
   int bytes_printed;
 
-  config = va_arg(*ap, const struct Config*);
+  config = va_arg(*ap, const struct UserConfig*);
 
   bytes_printed = 0;
   bytes_printed += json_printf(
@@ -287,7 +287,7 @@ return_bad:
  */
 
 void ConfigJsonFrozen_Write(
-    const struct Config* config,
+    const struct UserConfig* config,
     const wchar_t* path
 ) {
   int fclose_result;

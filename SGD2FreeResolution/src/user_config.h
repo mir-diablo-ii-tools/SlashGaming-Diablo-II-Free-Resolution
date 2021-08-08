@@ -43,24 +43,23 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_JSON_FROZEN_H_
-#define SGD2FR_CONFIG_CONFIG_JSON_FROZEN_H_
+#ifndef SGD2FR_USER_CONFIG_H_
+#define SGD2FR_USER_CONFIG_H_
 
-#include <mdc/std/wchar.h>
-#include "config_struct.h"
+#include "user_config/user_config_struct.h"
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-void ConfigJsonFrozen_Read(struct Config* config, const wchar_t* path);
+struct UserConfig* UserConfig_Get(void);
 
-void ConfigJsonFrozen_Write(const struct Config* config, const wchar_t* path);
+void UserConfig_Load(void);
 
-void ConfigJsonFrozen_CleanUp(struct Config* config);
+void UserConfig_Write(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
 
-#endif /* SGD2FR_CONFIG_CONFIG_JSON_FROZEN_H_ */
+#endif /* SGD2FR_USER_CONFIG_H_ */

@@ -49,7 +49,7 @@
 
 #include <mdc/wchar_t/wide_encoding.hpp>
 #include <sgd2mapi.hpp>
-#include "../config.h"
+#include "../user_config.h"
 
 namespace sgd2fr {
 namespace {
@@ -70,7 +70,7 @@ void LoadMpqOnce() {
   }
 
   ::std::string custom_mpq_path = ::mdc::wide::EncodeAscii(
-      GetConfig()->custom_mpq_path
+      UserConfig_Get()->custom_mpq_path
   );
 
   GetCustomMpq().Open(

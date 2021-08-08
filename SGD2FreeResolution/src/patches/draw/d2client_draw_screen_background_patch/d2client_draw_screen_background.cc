@@ -51,13 +51,13 @@
 #include <mdc/error/exit_on_error.hpp>
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
-#include "../../../config.h"
 #include "../../../cel_file/cel_file_legacy.h"
 #include "../../../cel_file/cel_file_screen_background.h"
 #include "../../../cel_file/cel_file_screen_background_border.h"
 #include "../../../cel_file/cel_file_screen_border.h"
 #include "../../../game_resolution/game_resolution.hpp"
 #include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include "../../../user_config.h"
 
 namespace sgd2fr {
 namespace {
@@ -561,11 +561,11 @@ void DrawCustomRightScreenBorderFrame() {
 }
 
 static void DrawLeftScreenBorderFrame() {
-  if (!GetConfig()->is_enable_screen_border_frame) {
+  if (!UserConfig_Get()->is_enable_screen_border_frame) {
     return;
   }
 
-  if (GetConfig()->is_use_original_screen_border_frame) {
+  if (UserConfig_Get()->is_use_original_screen_border_frame) {
     DrawOriginalLeftScreenBorderFrame();
   } else {
     DrawCustomLeftScreenBorderFrame();
@@ -573,11 +573,11 @@ static void DrawLeftScreenBorderFrame() {
 }
 
 static void DrawRightScreenBorderFrame() {
-  if (!GetConfig()->is_enable_screen_border_frame) {
+  if (!UserConfig_Get()->is_enable_screen_border_frame) {
     return;
   }
 
-  if (GetConfig()->is_use_original_screen_border_frame) {
+  if (UserConfig_Get()->is_use_original_screen_border_frame) {
     DrawOriginalRightScreenBorderFrame();
   } else {
     DrawCustomRightScreenBorderFrame();

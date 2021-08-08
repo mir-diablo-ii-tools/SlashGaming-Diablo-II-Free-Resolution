@@ -43,23 +43,24 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_VALUE_DEFAULT_H_
-#define SGD2FR_CONFIG_CONFIG_VALUE_DEFAULT_H_
+#ifndef SGD2FR_USER_CONFIG_USER_CONFIG_JSON_FROZEN_H_
+#define SGD2FR_USER_CONFIG_USER_CONFIG_JSON_FROZEN_H_
 
-#define CONFIG_METADATA_VERSION_MAJOR_HIGH_DEFAULT 3
-#define CONFIG_METADATA_VERSION_MAJOR_LOW_DEFAULT 0
-#define CONFIG_METADATA_VERSION_MINOR_HIGH_DEFAULT 2
-#define CONFIG_METADATA_VERSION_MINOR_LOW_DEFAULT 1
+#include <mdc/std/wchar.h>
+#include "user_config_struct.h"
 
-#define CONFIG_INGAME_RESOLUTION_MODE_DEFAULT 2
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-#define CONFIG_MAIN_MENU_RESOLUTION_WIDTH_DEFAULT 800
-#define CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT 600
+void ConfigJsonFrozen_Read(struct UserConfig* config, const wchar_t* path);
 
-#define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME_DEFAULT 1
-#define CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME_DEFAULT 0
-#define CONFIG_IS_USE_800_INTERFACE_BAR_DEFAULT 1
+void ConfigJsonFrozen_Write(const struct UserConfig* config, const wchar_t* path);
 
-#define CONFIG_CUSTOM_MPQ_PATH_DEFAULT "SGD2FreeRes.mpq"
+void ConfigJsonFrozen_CleanUp(struct UserConfig* config);
 
-#endif /* SGD2FR_CONFIG_CONFIG_VALUE_DEFAULT_H_ */
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
+#endif /* SGD2FR_USER_CONFIG_USER_CONFIG_JSON_FROZEN_H_ */

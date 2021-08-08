@@ -43,24 +43,30 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_INI_WINDOWS_H_
-#define SGD2FR_CONFIG_CONFIG_INI_WINDOWS_H_
+#ifndef SGD2FR_USER_CONFIG_USER_CONFIG_KEY_VALUE_H_
+#define SGD2FR_USER_CONFIG_USER_CONFIG_KEY_VALUE_H_
 
-#include <mdc/std/wchar.h>
-#include "config_struct.h"
+#define CONFIG_MAIN "Slash Gaming Diablo II Free Resolution"
 
-#ifdef __cplusplus
-extern "C" {
-#endif /* __cplusplus */
+#define CONFIG_METADATA "!!!Metadata (Do not modify)!!!"
 
-void ConfigIniWindows_Read(struct Config* config, const wchar_t* path);
+#define CONFIG_METADATA_VERSION "Version"
 
-void ConfigIniWindows_Write(const struct Config* config, const wchar_t* path);
+#define CONFIG_METADATA_VERSION_MAJOR_HIGH "Major High"
+#define CONFIG_METADATA_VERSION_MAJOR_LOW "Major Low"
+#define CONFIG_METADATA_VERSION_MINOR_HIGH "Minor High"
+#define CONFIG_METADATA_VERSION_MINOR_LOW "Minor Low"
 
-void ConfigIniWindows_CleanUp(struct Config* config);
+#define CONFIG_INGAME_RESOLUTION_MODE "Ingame Resolution Mode"
+#define CONFIG_INGAME_RESOLUTIONS "Ingame Resolutions"
 
-#ifdef __cplusplus
-} /* extern "C" */
-#endif /* __cplusplus */
+#define CONFIG_MAIN_MENU_RESOLUTION "Main Menu Resolution"
 
-#endif /* SGD2FR_CONFIG_CONFIG_INI_WINDOWS_H_ */
+#define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME "Enable Screen Border Frame?"
+#define CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME \
+    "Use Original Screen Border Frame?"
+#define CONFIG_IS_USE_800_INTERFACE_BAR "Use 800 Interface Bar?"
+
+#define CONFIG_CUSTOM_MPQ_PATH "Custom MPQ Path"
+
+#endif /* SGD2FR_USER_CONFIG_USER_CONFIG_KEY_VALUE_H_ */

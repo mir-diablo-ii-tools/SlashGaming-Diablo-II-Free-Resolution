@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "config_json_frozen.h"
+#include "user_config_json_frozen.h"
 
 #include <stddef.h>
 #include <stdio.h>
@@ -56,9 +56,9 @@
 #include <mdc/wchar_t/wide_decoding.h>
 #include "../../third_party/frozen/frozen.h"
 #include "../sgd2mapi_extension/file/file_content.h"
-#include "config_json_key_value.h"
-#include "config_struct.h"
-#include "config_value_default.h"
+#include "user_config_json_key_value.h"
+#include "user_config_struct.h"
+#include "user_config_value_default.h"
 
 #define TO_WIDE_IMPL(str_lit) L##str_lit
 #define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
@@ -79,10 +79,10 @@ static void ExitOnInvalidConfig(
 }
 
 static void ReadMetadataVersion(const char *str, int len, void *user_data) {
-  struct Config_Metadata_Version* version;
+  struct UserConfig_Metadata_Version* version;
   int json_scanf_result;
 
-  version = (struct Config_Metadata_Version*) user_data;
+  version = (struct UserConfig_Metadata_Version*) user_data;
 
   json_scanf_result = json_scanf(
       str,
@@ -110,10 +110,10 @@ static void ReadMetadataVersion(const char *str, int len, void *user_data) {
 }
 
 static void ReadMetadata(const char *str, int len, void *user_data) {
-  struct Config_Metadata* metadata;
+  struct UserConfig_Metadata* metadata;
   int json_scanf_result;
 
-  metadata = (struct Config_Metadata*) user_data;
+  metadata = (struct UserConfig_Metadata*) user_data;
 
   json_scanf_result = json_scanf(
       str,
@@ -137,7 +137,7 @@ static void ReadMetadata(const char *str, int len, void *user_data) {
 static int ReadCustomMpqPath(
     const char *str,
     int len,
-    struct Config* config
+    struct UserConfig* config
 ) {
   int json_scanf_result;
   const char* custom_mpq_path_utf8;
@@ -214,13 +214,13 @@ static void ReadResolution(const char *str, int len, void *user_data) {
 static void ReadIngameResolutions(const char *str, int len, void *user_data) {
   size_t i;
 
-  struct Config* config;
+  struct UserConfig* config;
   struct json_token token;
   int json_scanf_result;
 
   struct GameResolution resolution;
 
-  config = (struct Config*) user_data;
+  config = (struct UserConfig*) user_data;
 
   for (i = 0; json_scanf_array_elem(str, len, "", i, &token) > 0; i += 1) {
     json_scanf_result = json_scanf(
@@ -288,10 +288,10 @@ return_bad:
 }
 
 static void ReadConfig(const char *str, int len, void *user_data) {
-  struct Config* config;
+  struct UserConfig* config;
   int json_scanf_result;
 
-  config = (struct Config*) user_data;
+  config = (struct UserConfig*) user_data;
 
   json_scanf_result = json_scanf(
       str,
@@ -342,7 +342,7 @@ static void ReadConfig(const char *str, int len, void *user_data) {
  * External
  */
 
-void ConfigJsonFrozen_Read(struct Config* config, const wchar_t* path) {
+void ConfigJsonFrozen_Read(struct UserConfig* config, const wchar_t* path) {
   size_t file_length;
   char* file_contents;
 
@@ -368,7 +368,7 @@ return_bad:
   return;
 }
 
-void ConfigJsonFrozen_CleanUp(struct Config* config) {
+void ConfigJsonFrozen_CleanUp(struct UserConfig* config) {
   Mdc_free(config->custom_mpq_path);
   Mdc_free(config->ingame_resolutions.resolutions);
 }

@@ -48,10 +48,10 @@
 #include <mutex>
 
 #include <sgd2mapi.hpp>
-#include "config.h"
 #include "compile_time_switch.hpp"
 #include "helper/evaluation.h"
 #include "patches/patches.hpp"
+#include "user_config.h"
 
 namespace {
 
@@ -98,5 +98,5 @@ void Sgd2fml_Mod_ReloadConfig() {
   static std::mutex refresh_config_mutex;
   std::lock_guard lock_guard(refresh_config_mutex);
 
-  LoadConfig();
+  UserConfig_Load();
 }
