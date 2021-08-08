@@ -270,6 +270,7 @@ static void PrettifyFile(const wchar_t* path) {
     Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
     goto return_bad;
   }
+  Mapi_File_ReadFileContent(file_contents, file_length, path);
 
   WritePrettifyFile(path, file_contents);
 
