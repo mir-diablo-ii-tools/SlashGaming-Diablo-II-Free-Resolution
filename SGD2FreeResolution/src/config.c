@@ -64,6 +64,12 @@
 enum ConfigType {
   ConfigType_kIniWindows,
   ConfigType_kJsonFrozen,
+
+  ConfigType_kDefaultConfig,
+};
+
+enum {
+  kNumConfigTypes = ConfigType_kDefaultConfig
 };
 
 struct ConfigReadWriteFunctions {
@@ -71,14 +77,15 @@ struct ConfigReadWriteFunctions {
   void (*write)(const struct Config* config, const wchar_t* path);
 };
 
-const struct ConfigReadWriteFunctions kConfigReadWriteTable[] = {
+const struct ConfigReadWriteFunctions
+kConfigReadWriteTable[kNumConfigTypes] = {
     { &ConfigIni_Read, &ConfigIni_Write },
     { &ConfigJsonFrozen_Read, &ConfigJsonFrozen_Write },
 };
 
-const wchar_t* const kConfigPathTable[] = {
+const wchar_t* const kConfigPathTable[kNumConfigTypes] = {
     CONFIG_INI_PATH,
-    CONFIG_JSON_PATH
+    CONFIG_JSON_PATH,
 };
 
 static int is_config_init = 0;
@@ -86,24 +93,21 @@ static struct Config config;
 static enum ConfigType config_type;
 
 static void InitConfig(void) {
+  size_t i;
+
   if (is_config_init) {
     return;
   }
 
   config = kDefaultConfig;
 
-  if (PathFileExistsW(CONFIG_JSON_PATH)) {
-    ConfigJsonFrozen_Read(&config, CONFIG_JSON_PATH);
-    config_type = ConfigType_kJsonFrozen;
-    is_config_init = 1;
-    return;
-  }
-
-  if (PathFileExistsW(CONFIG_INI_PATH)) {
-    ConfigIni_Read(&config, CONFIG_INI_PATH);
-    config_type = ConfigType_kIniWindows;
-    is_config_init = 1;
-    return;
+  for (i = 0; i < kNumConfigTypes; i += 1) {
+    if (PathFileExistsW(kConfigPathTable[i])) {
+      ConfigJsonFrozen_Read(&config, kConfigPathTable[i]);
+      config_type = i;
+      is_config_init = 1;
+      return;
+    }
   }
 
   config_type = COMPILE_TIME_CREATE_CONFIG_FORMAT;
