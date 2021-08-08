@@ -296,7 +296,7 @@ static void ReadIngameResolutions(
     const wchar_t* path
 ) {
   enum {
-    kResolutionStrLength = sizeof("Resolution") - 1,
+    kResolutionStrLength = sizeof("Resolution ") - 1,
   };
 
   ::std::vector<wchar_t> keys;
@@ -330,10 +330,10 @@ static void ReadIngameResolutions(
   key_length = wcslen(&keys[0]);
 
   while (key_length > 0) {
-    /* Key prefix is "Resolution" */
+    /* Key prefix is "Resolution " */
     if (wcsncmp(
             &keys[key_start_index],
-            L"Resolution",
+            L"Resolution ",
             kResolutionStrLength
         ) != 0) {
       ExitOnInvalidConfigKey(
