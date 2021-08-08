@@ -151,7 +151,7 @@ static int WriteResolution(struct json_out *out, va_list *ap) {
   bytes_printed = 0;
   bytes_printed += json_printf(
       out,
-      "{ Width: %d, Height: %d }",
+      "{ width: %d, height: %d }",
       resolution->width,
       resolution->height
   );

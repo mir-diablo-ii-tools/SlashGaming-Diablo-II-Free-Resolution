@@ -176,7 +176,7 @@ static void ReadResolution(const char *str, int len, void *user_data) {
   json_scanf_result = json_scanf(
       str,
       len,
-      "{ Width: %d, Height: %d }",
+      "{ width: %d, height: %d }",
       &resolution->width,
       &resolution->height
   );
