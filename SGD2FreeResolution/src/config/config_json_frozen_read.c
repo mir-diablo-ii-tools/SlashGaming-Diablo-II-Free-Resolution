@@ -57,8 +57,11 @@
 #include "../../third_party/frozen/frozen.h"
 #include "../sgd2mapi_extension/file/file_content.h"
 #include "config_json_key_value.h"
-#include "config_struct.hpp"
+#include "config_struct.h"
 #include "config_value_default.h"
+
+#define TO_WIDE_IMPL(str_lit) L##str_lit
+#define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
 
 static void ExitOnInvalidConfig(
     const wchar_t* key_path,
@@ -98,7 +101,8 @@ static void ReadMetadataVersion(const char *str, int len, void *user_data) {
 
   if (json_scanf_result < 4) {
     ExitOnInvalidConfig(
-        CONFIG_MAIN L"." CONFIG_METADATA L"." CONFIG_METADATA_VERSION,
+        TO_WIDE(CONFIG_MAIN) L"." TO_WIDE(CONFIG_METADATA) L"."
+            TO_WIDE(CONFIG_METADATA_VERSION),
         __FILEW__,
         __LINE__
     );
@@ -123,14 +127,18 @@ static void ReadMetadata(const char *str, int len, void *user_data) {
 
   if (json_scanf_result < 1) {
     ExitOnInvalidConfig(
-        CONFIG_MAIN L"." CONFIG_METADATA,
+        TO_WIDE(CONFIG_MAIN) L"." TO_WIDE(CONFIG_METADATA),
         __FILEW__,
         __LINE__
     );
   }
 }
 
-static int ReadCustomMpqPath(const char *str, int len, struct Config* config) {
+static int ReadCustomMpqPath(
+    const char *str,
+    int len,
+    struct Config* config
+) {
   int json_scanf_result;
   const char* custom_mpq_path_utf8;
 
@@ -145,26 +153,38 @@ static int ReadCustomMpqPath(const char *str, int len, struct Config* config) {
 
   if (json_scanf_result < 1) {
     ExitOnInvalidConfig(
-        CONFIG_MAIN L"." CONFIG_CUSTOM_MPQ_PATH,
+        TO_WIDE(CONFIG_MAIN) L"." TO_WIDE(CONFIG_CUSTOM_MPQ_PATH),
         __FILEW__,
         __LINE__
     );
 
-    return 0;
+    goto return_bad;
   }
 
   custom_mpq_path_length = Mdc_Wide_DecodeUtf8Length(custom_mpq_path_utf8);
-  config->impl->custom_mpq_path.resize(custom_mpq_path_length);
+  config->custom_mpq_path = Mdc_malloc(
+      (custom_mpq_path_length + 1) * sizeof(config->custom_mpq_path[0])
+  );
+
+  if (config->custom_mpq_path == NULL) {
+    Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+    goto free_custom_mpq_path_utf8;
+  }
+
   Mdc_Wide_DecodeUtf8(
-      &config->impl->custom_mpq_path[0],
+      config->custom_mpq_path,
       custom_mpq_path_utf8
   );
 
-  free((void*) custom_mpq_path_utf8);
-
-  config->custom_mpq_path = config->impl->custom_mpq_path.c_str();
+  free(custom_mpq_path_utf8);
 
   return json_scanf_result;
+
+free_custom_mpq_path_utf8:
+  free(custom_mpq_path_utf8);
+
+return_bad:
+  return 0;
 }
 
 static void ReadResolution(const char *str, int len, void *user_data) {
@@ -198,17 +218,17 @@ static void ReadIngameResolutions(const char *str, int len, void *user_data) {
   struct json_token token;
   int json_scanf_result;
 
+  struct GameResolution resolution;
+
   config = (struct Config*) user_data;
 
   for (i = 0; json_scanf_array_elem(str, len, "", i, &token) > 0; i += 1) {
-    config->impl->ingame_resolutions.push_back(GameResolution());
-
     json_scanf_result = json_scanf(
         token.ptr,
         token.len,
         "%M",
         &ReadResolution,
-        &config->impl->ingame_resolutions[i]
+        &resolution
     );
 
     if (json_scanf_result < 1) {
@@ -218,7 +238,42 @@ static void ReadIngameResolutions(const char *str, int len, void *user_data) {
               L"will now close.",
           __FILEW__,
           __LINE__,
-          CONFIG_MAIN L"." CONFIG_INGAME_RESOLUTIONS,
+          TO_WIDE(CONFIG_MAIN) L"." TO_WIDE(CONFIG_INGAME_RESOLUTIONS),
+          i
+      );
+
+      goto return_bad;
+    }
+  }
+
+  config->ingame_resolutions.count = i;
+  config->ingame_resolutions.resolutions = Mdc_malloc(
+      config->ingame_resolutions.count
+          * sizeof(config->ingame_resolutions.resolutions[0])
+  );
+
+  if (config->ingame_resolutions.resolutions == NULL) {
+    Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+    goto return_bad;
+  }
+
+  for (i = 0; json_scanf_array_elem(str, len, "", i, &token) > 0; i += 1) {
+    json_scanf_result = json_scanf(
+        token.ptr,
+        token.len,
+        "%M",
+        &ReadResolution,
+        &config->ingame_resolutions.resolutions[i]
+    );
+
+    if (json_scanf_result < 1) {
+      Mdc_Error_ExitOnGeneralError(
+          L"Error",
+          L"Invalid JSON config value for \"%ls[%u]\". The program "
+              L"will now close.",
+          __FILEW__,
+          __LINE__,
+          TO_WIDE(CONFIG_MAIN) L"." TO_WIDE(CONFIG_INGAME_RESOLUTIONS),
           i
       );
 
@@ -226,9 +281,10 @@ static void ReadIngameResolutions(const char *str, int len, void *user_data) {
     }
   }
 
-  config->ingame_resolutions.count = config->impl->ingame_resolutions.size();
-  config->ingame_resolutions.resolutions =
-      config->impl->ingame_resolutions.data();
+  return;
+
+return_bad:
+  return;
 }
 
 static void ReadConfig(const char *str, int len, void *user_data) {
@@ -298,8 +354,6 @@ void ConfigJsonFrozen_Read(struct Config* config, const wchar_t* path) {
   }
   Mapi_File_ReadFileContent(file_contents, file_length, path);
 
-  config->impl = new Config_Implmentation();
-
   json_scanf(
       file_contents,
       file_length,
@@ -315,6 +369,6 @@ return_bad:
 }
 
 void ConfigJsonFrozen_CleanUp(struct Config* config) {
-  delete config->impl;
-  config->impl = NULL;
+  Mdc_free(config->custom_mpq_path);
+  Mdc_free(config->ingame_resolutions.resolutions);
 }
