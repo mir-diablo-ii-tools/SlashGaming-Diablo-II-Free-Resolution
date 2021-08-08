@@ -166,7 +166,7 @@ set(SRC_C
     "src/cel_file/cel_file_screen_border.c"
 
     # Config
-    "src/config/config_ini_windows_read.cpp"
+    "src/config/config_ini_windows_read.c"
     "src/config/config_ini_windows_write.c"
     "src/config/config_json_frozen_read.cpp"
     "src/config/config_json_frozen_write.c"

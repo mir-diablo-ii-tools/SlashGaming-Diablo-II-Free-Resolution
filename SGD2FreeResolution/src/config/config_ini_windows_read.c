@@ -46,17 +46,15 @@
 #include "config_ini_windows.h"
 
 #include <limits.h>
+#include <stddef.h>
 #include <stdio.h>
 #include <windows.h>
-
-#include <map>
-#include <vector>
 
 #include <mdc/error/exit_on_error.h>
 #include <mdc/malloc/malloc.h>
 #include <mdc/wchar_t/filew.h>
 #include "config_key_value.h"
-#include "config_struct.hpp"
+#include "config_struct.h"
 #include "config_value_default.h"
 
 #define TO_WIDE_IMPL(str_lit) L##str_lit
@@ -75,6 +73,10 @@
 
 /* These specific characters are unlikely to be used in text. */
 #define INI_DEFAULT_STR L"\a\b\f"
+
+enum {
+  kInt32StrCapacity = 10 + 1,
+};
 
 enum {
   kIniDefaultStrLength = sizeof(INI_DEFAULT_STR)
@@ -130,15 +132,27 @@ static void ExitOnResolutionParseError(
 }
 
 static void MallocIniStringW(
-    ::std::vector<wchar_t>& buffer,
+    wchar_t** buffer,
+    size_t* buffer_capacity,
     const wchar_t* path,
     const wchar_t* section,
     const wchar_t* key
 ) {
+  enum {
+    kInitialCapacity = 512,
+  };
+
   DWORD get_private_profile_string_result;
 
-  if (buffer.size() == 0) {
-    buffer.resize(16);
+  if (*buffer_capacity < kInitialCapacity) {
+    Mdc_free(*buffer);
+    *buffer = Mdc_malloc(kInitialCapacity * sizeof(*buffer[0]));
+    if (*buffer == NULL) {
+      Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+      goto return_bad;
+    }
+
+    *buffer_capacity = kInitialCapacity;
   }
 
   /* Read the config string. */
@@ -147,116 +161,144 @@ static void MallocIniStringW(
         section,
         key,
         INI_DEFAULT_STR,
-        buffer.data(),
-        buffer.size(),
+        *buffer,
+        *buffer_capacity,
         path
     );
 
-    if (get_private_profile_string_result < (buffer.size() - 2)) {
+    if (get_private_profile_string_result < (*buffer_capacity - 2)) {
       break;
     }
 
-    buffer.resize(buffer.size() * 2);
+    Mdc_free(*buffer);
+    *buffer = Mdc_malloc((*buffer_capacity * 2) * sizeof(*buffer[0]));
+    if (*buffer == NULL) {
+      Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+      goto return_bad;
+    }
+
+    *buffer_capacity *= 2;
   }
+
+  return;
+
+return_bad:
+  return;
 }
 
 static void ReadMetadataVersion(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
   enum {
-    kDefaultInvalidValue = INT_MAX,
+    kDefaultInvalidValue = INT_MIN,
   };
 
-  config.metadata.version.major_high = GetPrivateProfileIntW(
+  config->metadata.version.major_high = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_HIGH),
       kDefaultInvalidValue,
       path
   );
 
-  if (config.metadata.version.major_high == 42) {
+  if (config->metadata.version.major_high == 42) {
     ExitOnInvalidConfigValue(
         CONFIG_METADATA_VERSION_SECTION,
         TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_HIGH),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
 
-  config.metadata.version.major_low = GetPrivateProfileIntW(
+  config->metadata.version.major_low = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_LOW),
       kDefaultInvalidValue,
       path
   );
 
-  if (config.metadata.version.major_low == kDefaultInvalidValue) {
+  if (config->metadata.version.major_low == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_METADATA_VERSION_SECTION,
         TO_WIDE(CONFIG_METADATA_VERSION_MAJOR_LOW),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
 
-  config.metadata.version.minor_high = GetPrivateProfileIntW(
+  config->metadata.version.minor_high = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MINOR_HIGH),
       kDefaultInvalidValue,
       path
   );
 
-  if (config.metadata.version.minor_high == kDefaultInvalidValue) {
+  if (config->metadata.version.minor_high == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_METADATA_VERSION_SECTION,
         TO_WIDE(CONFIG_METADATA_VERSION_MINOR_HIGH),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
 
-  config.metadata.version.minor_low = GetPrivateProfileIntW(
+  config->metadata.version.minor_low = GetPrivateProfileIntW(
       CONFIG_METADATA_VERSION_SECTION,
       TO_WIDE(CONFIG_METADATA_VERSION_MINOR_LOW),
       kDefaultInvalidValue,
       path
   );
 
-  if (config.metadata.version.minor_low == kDefaultInvalidValue) {
+  if (config->metadata.version.minor_low == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_METADATA_VERSION_SECTION,
         TO_WIDE(CONFIG_METADATA_VERSION_MINOR_LOW),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
+
+  return;
+
+return_bad:
+  return;
 }
 
 static void ReadMetadata(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
   ReadMetadataVersion(config, path);
 }
 
 static void ReadCustomMpqPath(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
-  ::std::vector<wchar_t> buffer;
+  wchar_t* custom_mpq_path;
+  size_t custom_mpq_path_capacity;
 
+  custom_mpq_path = NULL;
+  custom_mpq_path_capacity = 0;
   MallocIniStringW(
-      buffer,
+      &custom_mpq_path,
+      &custom_mpq_path_capacity,
       path,
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_CUSTOM_MPQ_PATH)
   );
 
-  config.impl->custom_mpq_path = buffer.data();
-  config.custom_mpq_path = config.impl->custom_mpq_path.c_str();
+  config->custom_mpq_path = custom_mpq_path;
 
-  if (wcscmp(config.custom_mpq_path, INI_DEFAULT_STR) == 0) {
+  if (wcscmp(config->custom_mpq_path, INI_DEFAULT_STR) == 0) {
     ExitOnInvalidConfigValue(
         CONFIG_MAIN_SECTION,
         TO_WIDE(CONFIG_CUSTOM_MPQ_PATH),
@@ -267,270 +309,308 @@ static void ReadCustomMpqPath(
 }
 
 static void ReadIngameResolutionMode(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
   enum {
-    kDefaultInvalidValue = INT_MAX,
+    kDefaultInvalidValue = INT_MIN,
   };
 
-  config.ingame_resolution_mode = GetPrivateProfileIntW(
+  config->ingame_resolution_mode = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_INGAME_RESOLUTION_MODE),
       kDefaultInvalidValue,
       path
   );
 
-  if (config.ingame_resolution_mode == kDefaultInvalidValue) {
+  if (config->ingame_resolution_mode == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_MAIN_SECTION,
         TO_WIDE(CONFIG_INGAME_RESOLUTION_MODE),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
+
+  return;
+
+return_bad:
+  return;
 }
 
-static void ReadIngameResolutions(
-    struct Config& config,
+static void ReadIngameResolution(
+    struct GameResolution* resolution,
+    const struct GameResolution* default_resolution,
+    size_t resolution_index,
     const wchar_t* path
 ) {
   enum {
-    kResolutionStrLength = sizeof("Resolution ") - 1,
+    kWidthKeyMinCapacity = sizeof(L"Resolution .Width")
+        / sizeof(wchar_t),
+    kWidthKeyCapacity = kWidthKeyMinCapacity + kInt32StrCapacity - 1,
+
+    kHeightKeyMinCapacity = sizeof(L"Resolution .Height")
+        / sizeof(wchar_t),
+    kHeightKeyCapacity = kHeightKeyMinCapacity + kInt32StrCapacity - 1,
   };
 
-  ::std::vector<wchar_t> keys;
+  wchar_t width_key[kWidthKeyCapacity];
+  wchar_t height_key[kHeightKeyCapacity];
 
-  size_t key_start_index;
-  size_t key_length;
+  _snwprintf(
+      width_key,
+      kWidthKeyCapacity,
+      L"Resolution %u.Width",
+      resolution_index
+  );
+  width_key[kWidthKeyCapacity - 1] = L'\0';
 
-  ::std::vector<wchar_t> resolution_str;
+  _snwprintf(
+      height_key,
+      kHeightKeyCapacity,
+      L"Resolution %u.Height",
+      resolution_index
+  );
+  height_key[kHeightKeyCapacity - 1] = L'\0';
 
-  typedef ::std::map<size_t, GameResolution> ResolutionsMap;
-  ResolutionsMap resolutions;
-  wchar_t* resolution_str_end;
-  size_t resolution_index;
-
-  MallocIniStringW(
-      keys,
-      path,
+  resolution->width = GetPrivateProfileIntW(
       CONFIG_INGAME_RESOLUTIONS_SECTION,
-      NULL
+      width_key,
+      default_resolution->width,
+      path
   );
 
+  resolution->height = GetPrivateProfileIntW(
+      CONFIG_INGAME_RESOLUTIONS_SECTION,
+      height_key,
+      default_resolution->height,
+      path
+  );
+}
+
+static void ReadIngameResolutions(
+    struct Config* config,
+    const wchar_t* path
+) {
+  static const struct GameResolution kDefaultResolution = { 0, 0 };
+
+  size_t i;
+
+  struct GameResolution resolution;
+
   /*
-   * Read each value associated with keys and convert to resolutions.
-   * Key-value should be in the format: `Resolution 0.Width = 1068`.
-   *
-   * Keys do not need to be consecutive, and will simply choose the
-   * next highest value. The starting index is 0.
+   * Determine the number of resolutions in the config.
    */
+  i = 0;
+  do {
+    ReadIngameResolution(&resolution, &kDefaultResolution, i, path);
+    i += 1;
+  } while (resolution.width != kDefaultResolution.width
+        && resolution.height != kDefaultResolution.height);
 
-  key_start_index = 0;
-  key_length = wcslen(&keys[0]);
+  config->ingame_resolutions.count = i - 1;
 
-  while (key_length > 0) {
-    /* Key prefix is "Resolution " */
-    if (wcsncmp(
-            &keys[key_start_index],
-            L"Resolution ",
-            kResolutionStrLength
-        ) != 0) {
-      ExitOnInvalidConfigKey(
-          CONFIG_INGAME_RESOLUTIONS_SECTION,
-          &keys[key_start_index],
-          __FILEW__,
-          __LINE__
-      );
-
-      return;
-    }
-
-    resolution_index = wcstoul(
-        &keys[key_start_index + kResolutionStrLength],
-        &resolution_str_end,
-        10
+  if (config->ingame_resolutions.count == 0) {
+    ExitOnInvalidConfigValue(
+        CONFIG_MAIN_SECTION,
+        CONFIG_INGAME_RESOLUTIONS_SECTION,
+        __FILEW__,
+        __LINE__
     );
 
-    if (wcscmp(resolution_str_end, L".Width") == 0) {
-      resolutions[resolution_index].width = GetPrivateProfileIntW(
-          CONFIG_INGAME_RESOLUTIONS_SECTION,
-          &keys[key_start_index],
-          0,
-          path
-      );
-    } else if (wcscmp(resolution_str_end, L".Height") == 0) {
-      resolutions[resolution_index].height = GetPrivateProfileIntW(
-          CONFIG_INGAME_RESOLUTIONS_SECTION,
-          &keys[key_start_index],
-          0,
-          path
-      );
-    } else {
-      ExitOnInvalidConfigKey(
-          CONFIG_INGAME_RESOLUTIONS_SECTION,
-          &keys[key_start_index],
-          __FILEW__,
-          __LINE__
-      );
-
-      return;
-    }
-
-    key_start_index += key_length + 1;
-    key_length = wcslen(&keys[key_start_index]);
+    goto return_bad;
   }
 
-  for (ResolutionsMap::const_iterator it = resolutions.begin();
-      it != resolutions.end();
-      ++it
-  ) {
-    const GameResolution& resolution = it->second;
-    if (resolution.width <= 0 || resolution.height <= 0) {
-      continue;
-    }
+  config->ingame_resolutions.resolutions = Mdc_malloc(
+      config->ingame_resolutions.count
+          * sizeof(config->ingame_resolutions.resolutions[0])
+  );
 
-    config.impl->ingame_resolutions.push_back(it->second);
+  if (config->ingame_resolutions.resolutions == NULL) {
+    Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+    goto return_bad;
   }
 
-  config.ingame_resolutions.count = config.impl->ingame_resolutions.size();
-  config.ingame_resolutions.resolutions = config.impl->ingame_resolutions.data();
+  /* Read the resolution from the config. */
+  for (i = 0; i < config->ingame_resolutions.count; i += 1) {
+    ReadIngameResolution(
+        &config->ingame_resolutions.resolutions[i],
+        &kDefaultResolution,
+        i,
+        path
+    );
+  }
+
+  return;
+
+return_bad:
+  return;
 }
 
 static void ReadIsEnableScreenBorderFrame(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
   enum {
     kDefaultInvalidValue = INT_MAX,
   };
 
-  config.is_enable_screen_border_frame = GetPrivateProfileIntW(
+  config->is_enable_screen_border_frame = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME),
-      2,
+      kDefaultInvalidValue,
       path
   );
 
-  if (config.is_enable_screen_border_frame == kDefaultInvalidValue) {
+  if (config->is_enable_screen_border_frame == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_MAIN_SECTION,
         TO_WIDE(CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
+
+  return;
+
+return_bad:
+  return;
 }
 
 static void ReadIsUseOriginalScreenBorderFrame(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
   enum {
     kDefaultInvalidValue = INT_MAX,
   };
 
-  config.is_use_original_screen_border_frame = GetPrivateProfileIntW(
+  config->is_use_original_screen_border_frame = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME),
-      0,
+      kDefaultInvalidValue,
       path
   );
 
-  if (config.is_use_original_screen_border_frame == kDefaultInvalidValue) {
+  if (config->is_use_original_screen_border_frame == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_MAIN_SECTION,
         TO_WIDE(CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
+
+  return;
+
+return_bad:
+  return;
 }
 
 static void ReadIsUse800InterfaceBar(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
   enum {
     kDefaultInvalidValue = INT_MAX,
   };
 
-  config.is_use_800_interface_bar = GetPrivateProfileIntW(
+  config->is_use_800_interface_bar = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_IS_USE_800_INTERFACE_BAR),
-      0,
+      kDefaultInvalidValue,
       path
   );
 
-  if (config.is_use_800_interface_bar == kDefaultInvalidValue) {
+  if (config->is_use_800_interface_bar == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_MAIN_SECTION,
         TO_WIDE(CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME),
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
+
+  return;
+
+return_bad:
+  return;
 }
 
 static void ReadMainMenuResolution(
-    struct Config& config,
+    struct Config* config,
     const wchar_t* path
 ) {
   enum {
     kDefaultInvalidValue = INT_MAX,
   };
 
-  config.main_menu_resolution.width = GetPrivateProfileIntW(
+  config->main_menu_resolution.width = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Width",
-      CONFIG_MAIN_MENU_RESOLUTION_WIDTH_DEFAULT,
+      kDefaultInvalidValue,
       path
   );
 
-  if (config.main_menu_resolution.width == kDefaultInvalidValue) {
+  if (config->main_menu_resolution.width == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_MAIN_SECTION,
         TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Width",
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
 
-  config.main_menu_resolution.height = GetPrivateProfileIntW(
+  config->main_menu_resolution.height = GetPrivateProfileIntW(
       CONFIG_MAIN_SECTION,
       TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Height",
-      CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT,
+      kDefaultInvalidValue,
       path
   );
 
-  if (config.main_menu_resolution.height == kDefaultInvalidValue) {
+  if (config->main_menu_resolution.height == kDefaultInvalidValue) {
     ExitOnInvalidConfigValue(
         CONFIG_MAIN_SECTION,
         TO_WIDE(CONFIG_MAIN_MENU_RESOLUTION) L".Height",
         __FILEW__,
         __LINE__
     );
+
+    goto return_bad;
   }
+
+  return;
+
+return_bad:
+  return;
 }
 
 /**
  * External
  */
 
-void ConfigIniWindows_Read(Config* config, const wchar_t* path) {
-  config->impl = new Config_Implmentation();
-
-  ReadMetadata(*config, path);
-  ReadCustomMpqPath(*config, path);
-  ReadIngameResolutionMode(*config, path);
-  ReadIngameResolutions(*config, path);
-  ReadIsEnableScreenBorderFrame(*config, path);
-  ReadIsUse800InterfaceBar(*config, path);
-  ReadIsUseOriginalScreenBorderFrame(*config, path);
-  ReadMainMenuResolution(*config, path);
+void ConfigIniWindows_Read(struct Config* config, const wchar_t* path) {
+  ReadMetadata(config, path);
+  ReadCustomMpqPath(config, path);
+  ReadIngameResolutionMode(config, path);
+  ReadIngameResolutions(config, path);
+  ReadIsEnableScreenBorderFrame(config, path);
+  ReadIsUse800InterfaceBar(config, path);
+  ReadIsUseOriginalScreenBorderFrame(config, path);
+  ReadMainMenuResolution(config, path);
 }
 
 void ConfigIniWindows_CleanUp(struct Config* config) {
-  delete config->impl;
-  config->impl = NULL;
+  Mdc_free(config->ingame_resolutions.resolutions);
+  Mdc_free(config->custom_mpq_path);
 }
