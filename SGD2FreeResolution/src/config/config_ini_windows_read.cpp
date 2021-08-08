@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "config_ini.h"
+#include "config_ini_windows.h"
 
 #include <limits.h>
 #include <stdio.h>
@@ -517,7 +517,7 @@ static void ReadMainMenuResolution(
  * External
  */
 
-void ConfigIni_Read(Config* config, const wchar_t* path) {
+void ConfigIniWindows_Read(Config* config, const wchar_t* path) {
   config->impl = new Config_Implmentation();
 
   ReadMetadata(*config, path);
@@ -530,7 +530,7 @@ void ConfigIni_Read(Config* config, const wchar_t* path) {
   ReadMainMenuResolution(*config, path);
 }
 
-void ConfigIni_CleanUp(struct Config* config) {
+void ConfigIniWindows_CleanUp(struct Config* config) {
   delete config->impl;
   config->impl = NULL;
 }

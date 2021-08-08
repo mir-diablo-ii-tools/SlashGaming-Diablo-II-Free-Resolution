@@ -50,7 +50,7 @@
 #include <shlwapi.h>
 
 #include "compile_time_switch.h"
-#include "config/config_ini.h"
+#include "config/config_ini_windows.h"
 #include "config/config_json_frozen.h"
 #include "config/config_key_value.h"
 
@@ -81,9 +81,9 @@ struct ConfigReadWriteFunctions {
 const struct ConfigReadWriteFunctions
 kConfigReadWriteTable[kNumConfigTypes] = {
     {
-        &ConfigIni_Read,
-        &ConfigIni_Write,
-        &ConfigIni_CleanUp,
+        &ConfigIniWindows_Read,
+        &ConfigIniWindows_Write,
+        &ConfigIniWindows_CleanUp,
     },
     {
         &ConfigJsonFrozen_Read,

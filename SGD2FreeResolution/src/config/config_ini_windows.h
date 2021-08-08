@@ -43,8 +43,8 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_CONFIG_INI_H_
-#define SGD2FR_CONFIG_CONFIG_INI_H_
+#ifndef SGD2FR_CONFIG_CONFIG_INI_WINDOWS_H_
+#define SGD2FR_CONFIG_CONFIG_INI_WINDOWS_H_
 
 #include <mdc/std/wchar.h>
 #include "config_struct.h"
@@ -53,14 +53,14 @@
 extern "C" {
 #endif /* __cplusplus */
 
-void ConfigIni_Read(struct Config* config, const wchar_t* path);
+void ConfigIniWindows_Read(struct Config* config, const wchar_t* path);
 
-void ConfigIni_Write(const struct Config* config, const wchar_t* path);
+void ConfigIniWindows_Write(const struct Config* config, const wchar_t* path);
 
-void ConfigIni_CleanUp(struct Config* config);
+void ConfigIniWindows_CleanUp(struct Config* config);
 
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
 
-#endif /* SGD2FR_CONFIG_CONFIG_INI_H_ */
+#endif /* SGD2FR_CONFIG_CONFIG_INI_WINDOWS_H_ */

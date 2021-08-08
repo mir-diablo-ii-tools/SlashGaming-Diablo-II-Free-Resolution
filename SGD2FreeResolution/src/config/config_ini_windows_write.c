@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "config_ini.h"
+#include "config_ini_windows.h"
 
 #include <stddef.h>
 #include <windows.h>
@@ -334,7 +334,10 @@ static void WriteMainMenuResolution(
  * External
  */
 
-void ConfigIni_Write(const struct Config* config, const wchar_t* path) {
+void ConfigIniWindows_Write(
+    const struct Config* config,
+    const wchar_t* path
+) {
   WriteMetadata(config, path);
   WriteCustomMpqPath(config, path);
   WriteIngameResolutionMode(config, path);

@@ -166,8 +166,8 @@ set(SRC_C
     "src/cel_file/cel_file_screen_border.c"
 
     # Config
-    "src/config/config_ini_read.cpp"
-    "src/config/config_ini_write.c"
+    "src/config/config_ini_windows_read.cpp"
+    "src/config/config_ini_windows_write.c"
     "src/config/config_json_frozen_read.cpp"
     "src/config/config_json_frozen_write.c"
     "src/config/config_struct.c"
@@ -398,7 +398,7 @@ set(SRC_HEADERS
     "src/cel_file/cel_file_screen_border.h"
 
     # Config
-    "src/config/config_ini.h"
+    "src/config/config_ini_windows.h"
     "src/config/config_json_frozen.h"
     "src/config/config_json_key_value.h"
     "src/config/config_key_value.h"
