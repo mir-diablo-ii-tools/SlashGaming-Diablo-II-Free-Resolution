@@ -400,6 +400,7 @@ set(SRC_HEADERS
     # Config
     "src/config/config_ini.h"
     "src/config/config_json_frozen.h"
+    "src/config/config_json_key_value.h"
     "src/config/config_key_value.h"
     "src/config/config_struct.h"
     "src/config/config_struct.hpp"
