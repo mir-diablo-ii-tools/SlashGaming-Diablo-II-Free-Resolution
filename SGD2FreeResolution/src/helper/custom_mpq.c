@@ -43,53 +43,60 @@
  *  work.
  */
 
-#include "custom_mpq.hpp"
+#include "custom_mpq.h"
 
-#include <string>
+#include <stddef.h>
 
-#include <mdc/wchar_t/wide_encoding.hpp>
-#include <sgd2mapi.hpp>
+#include <mdc/error/exit_on_error.h>
+#include <mdc/malloc/malloc.h>
+#include <mdc/wchar_t/filew.h>
+#include <mdc/wchar_t/wide_encoding.h>
+#include <sgd2mapi.h>
 #include "../user_config.h"
 
-namespace sgd2fr {
-namespace {
+static int is_mpq_loaded = 0;
+static struct D2_MpqArchiveHandle* mpq_archive_handle = NULL;
 
-static bool IsCustomMpqLoaded = false;
+void CustomMpq_LoadMpqOnce(void) {
+  char* custom_mpq_path_mb;
+  size_t custom_mpq_path_mb_length;
 
-static ::d2::MpqArchiveHandle_Api& GetCustomMpq() {
-  static ::d2::MpqArchiveHandle_Api mpq;
-
-  return mpq;
-}
-
-} // namespace
-
-void LoadMpqOnce() {
-  if (IsCustomMpqLoaded) {
+  if (is_mpq_loaded) {
     return;
   }
 
-  ::std::string custom_mpq_path = ::mdc::wide::EncodeAscii(
+  custom_mpq_path_mb_length = Mdc_Wide_EncodeDefaultMultibyteLength(
       UserConfig_Get()->custom_mpq_path
   );
 
-  GetCustomMpq().Open(
-      custom_mpq_path.c_str(),
-      false,
-      5000
+  custom_mpq_path_mb = Mdc_malloc(
+      (custom_mpq_path_mb_length + 1) * sizeof(custom_mpq_path_mb[0])
   );
 
-  IsCustomMpqLoaded = true;
+  if (custom_mpq_path_mb == NULL) {
+    Mdc_Error_ExitOnMemoryAllocError(__FILEW__, __LINE__);
+    goto return_bad;
+  }
+
+  Mdc_Wide_EncodeDefaultMultibyte(
+      custom_mpq_path_mb,
+      UserConfig_Get()->custom_mpq_path
+  );
+
+  mpq_archive_handle = D2_D2Win_LoadMpq(custom_mpq_path_mb, 0, NULL, 5000);
+  is_mpq_loaded = 1;
+
+  return;
+
+return_bad:
+  return;
 }
 
-void UnloadMpqOnce() {
-  if (!IsCustomMpqLoaded) {
+void CustomMpq_UnloadMpqOnce(void) {
+  if (!is_mpq_loaded) {
     return;
   }
 
-  GetCustomMpq().Close();
-
-  IsCustomMpqLoaded = false;
+  D2_D2Win_UnloadMpq(mpq_archive_handle);
+  is_mpq_loaded = 0;
 }
-
-} // namespace sgd2fr
