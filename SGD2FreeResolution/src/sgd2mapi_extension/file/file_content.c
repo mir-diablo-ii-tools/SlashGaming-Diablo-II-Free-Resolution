@@ -43,92 +43,133 @@
  *  work.
  */
 
-#include "cel_file_interface_bar_background.h"
+#include "file_content.h"
 
-#include <stddef.h>
+#include <stdio.h>
 
-static struct D2_CelFile* background_left = NULL;
-static struct D2_CelFile* background_center = NULL;
-static struct D2_CelFile* background_right = NULL;
+#include <mdc/error/exit_on_error.h>
+#include <mdc/wchar_t/filew.h>
 
-static void InitBackgroundLeft(void) {
-  if (background_left != NULL) {
-    return;
+size_t Mapi_File_GetFileContentLength(const wchar_t* path) {
+  int fclose_result;
+  int fseek_result;
+  long file_length;
+
+  FILE* file;
+
+  file = _wfopen(path, L"rb");
+  if (file == NULL) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"_wfopen failed.",
+        __FILEW__,
+        __LINE__
+    );
+
+    goto return_bad;
   }
 
-  background_left = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
-      0
+  fseek_result = fseek(file, 0, SEEK_END);
+  if (fseek_result != 0) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"fseek failed.",
+        __FILEW__,
+        __LINE__
+    );
+
+    goto fclose_file;
+  }
+
+  file_length = ftell(file);
+  if (file_length == -1) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"ftell failed.",
+        __FILEW__,
+        __LINE__
+    );
+
+    goto fclose_file;
+  }
+
+  fclose_result = fclose(file);
+  if (fclose_result != 0) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"fclose failed.",
+        __FILEW__,
+        __LINE__
+    );
+
+    goto return_bad;
+  }
+
+  return file_length;
+
+fclose_file:
+  fclose(file);
+
+return_bad:
+  return 0;
+}
+
+void Mapi_File_ReadFileContent(
+    char* file_content,
+    size_t file_length,
+    const wchar_t* path
+) {
+  int fclose_result;
+  size_t fread_result;
+
+  FILE* file;
+
+  file = _wfopen(path, L"rb");
+  if (file == NULL) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"_wfopen failed.",
+        __FILEW__,
+        __LINE__
+    );
+
+    goto return_bad;
+  }
+
+  fread_result = fread(
+      file_content,
+      sizeof(file_content[0]),
+      file_length,
+      file
   );
-}
+  if (fread_result < file_length) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"fread failed.",
+        __FILEW__,
+        __LINE__
+    );
 
-static void InitBackgroundCenter(void) {
-  if (background_center != NULL) {
-    return;
+    goto fclose_file;
   }
 
-  background_center = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
-      0
-  );
-}
+  fclose_result = fclose(file);
+  if (fclose_result != 0) {
+    Mdc_Error_ExitOnGeneralError(
+        L"Error",
+        L"fclose failed.",
+        __FILEW__,
+        __LINE__
+    );
 
-static void InitBackgroundRight(void) {
-  if (background_right != NULL) {
-    return;
+    goto return_bad;
   }
 
-  background_right = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
-      0
-  );
-}
+  return;
 
-/**
- * External
- */
+fclose_file:
+  fclose(file);
 
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeft(void) {
-  InitBackgroundLeft();
-
-  return background_left;
-}
-
-void CelFile_InterfaceBarBackground_UnloadLeft(void) {
-  if (background_left == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_left);
-  background_left = NULL;
-}
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void) {
-  InitBackgroundCenter();
-
-  return background_center;
-}
-
-void CelFile_InterfaceBarBackground_UnloadCenter(void) {
-  if (background_center == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_center);
-  background_center = NULL;
-}
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
-  InitBackgroundRight();
-
-  return background_right;
-}
-
-void CelFile_InterfaceBarBackground_UnloadRight(void) {
-  if (background_right == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_right);
-  background_right = NULL;
+return_bad:
+  return;
 }

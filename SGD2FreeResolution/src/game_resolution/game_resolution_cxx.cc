@@ -56,10 +56,10 @@
 #include <mdc/error/exit_on_error.hpp>
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
-#include "../config.hpp"
 #include "../compile_time_switch.hpp"
 #include "../sgd2mapi_extension/sgd2mapi_extension.hpp"
 #include "game_resolution_gateway_ipv4.h"
+#include "../user_config.h"
 
 namespace sgd2fr {
 namespace {
@@ -70,7 +70,7 @@ const struct IngameResolutions* SelectLocalOrOnlineResolutions(void) {
         D2_BNClient_GetGatewayIpV4Address()
     );
   } else {
-    return config::GetIngameResolutions();
+    return &UserConfig_Get()->ingame_resolutions;
   }
 }
 
@@ -157,11 +157,12 @@ const IngameResolutions& GetNonCrashingIngameResolutions(void) {
 } // namespace
 
 size_t GetIngameResolutionMode() {
-  return config::GetIngameResolutionMode();
+  return UserConfig_Get()->ingame_resolution_mode;
 }
 
 void SetIngameResolutionMode(size_t resolution_mode) {
-  config::SetIngameResolutionMode(resolution_mode);
+  UserConfig_Get()->ingame_resolution_mode = resolution_mode;
+  UserConfig_Write();
 }
 
 std::size_t GetMinConfigResolutionId() {
@@ -194,7 +195,7 @@ GameResolution GetIngameResolutionFromId(std::size_t id) {
   if (id == 0) {
     return GameResolution_k640x480;
   } else if (id == 1) {
-    return config::GetMainMenuResolution();
+    return UserConfig_Get()->main_menu_resolution;
   }
 
   const auto& ingame_resolutions = GetNonCrashingIngameResolutions();

@@ -43,92 +43,43 @@
  *  work.
  */
 
-#include "cel_file_interface_bar_background.h"
+#include "user_config_struct.h"
 
-#include <stddef.h>
+#include "user_config_value_default.h"
 
-static struct D2_CelFile* background_left = NULL;
-static struct D2_CelFile* background_center = NULL;
-static struct D2_CelFile* background_right = NULL;
+#define TO_WIDE_IMPL(str_lit) L##str_lit
+#define TO_WIDE(str_lit) TO_WIDE_IMPL(str_lit)
 
-static void InitBackgroundLeft(void) {
-  if (background_left != NULL) {
-    return;
-  }
+const struct GameResolution kDefaultResolutions[] = {
+    { 640, 480 },
+    { 800, 600 },
+    { 856, 480 },
+    { 1068, 600 },
+};
 
-  background_left = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
-      0
-  );
-}
+enum {
+  kDefaultResolutionsCount = sizeof(kDefaultResolutions)
+      / sizeof(kDefaultResolutions[0]),
+};
 
-static void InitBackgroundCenter(void) {
-  if (background_center != NULL) {
-    return;
-  }
-
-  background_center = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
-      0
-  );
-}
-
-static void InitBackgroundRight(void) {
-  if (background_right != NULL) {
-    return;
-  }
-
-  background_right = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
-      0
-  );
-}
-
-/**
- * External
- */
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeft(void) {
-  InitBackgroundLeft();
-
-  return background_left;
-}
-
-void CelFile_InterfaceBarBackground_UnloadLeft(void) {
-  if (background_left == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_left);
-  background_left = NULL;
-}
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void) {
-  InitBackgroundCenter();
-
-  return background_center;
-}
-
-void CelFile_InterfaceBarBackground_UnloadCenter(void) {
-  if (background_center == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_center);
-  background_center = NULL;
-}
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
-  InitBackgroundRight();
-
-  return background_right;
-}
-
-void CelFile_InterfaceBarBackground_UnloadRight(void) {
-  if (background_right == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_right);
-  background_right = NULL;
-}
+const struct UserConfig UserConfig_kDefault = {
+    {
+        {
+            CONFIG_METADATA_VERSION_MAJOR_HIGH_DEFAULT,
+            CONFIG_METADATA_VERSION_MAJOR_LOW_DEFAULT,
+            CONFIG_METADATA_VERSION_MINOR_HIGH_DEFAULT,
+            CONFIG_METADATA_VERSION_MINOR_LOW_DEFAULT,
+        }
+    },
+    TO_WIDE(CONFIG_CUSTOM_MPQ_PATH_DEFAULT),
+    CONFIG_INGAME_RESOLUTION_MODE_DEFAULT,
+    kDefaultResolutionsCount,
+    kDefaultResolutions,
+    CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME_DEFAULT,
+    CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME_DEFAULT,
+    CONFIG_IS_USE_800_INTERFACE_BAR_DEFAULT,
+    {
+        CONFIG_MAIN_MENU_RESOLUTION_WIDTH_DEFAULT,
+        CONFIG_MAIN_MENU_RESOLUTION_HEIGHT_DEFAULT,
+    }
+};

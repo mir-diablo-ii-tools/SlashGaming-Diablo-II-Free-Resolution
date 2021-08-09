@@ -43,92 +43,49 @@
  *  work.
  */
 
-#include "cel_file_interface_bar_background.h"
+#ifndef SGD2FR_USER_CONFIG_USER_CONFIG_STRUCT_H_
+#define SGD2FR_USER_CONFIG_USER_CONFIG_STRUCT_H_
 
 #include <stddef.h>
 
-static struct D2_CelFile* background_left = NULL;
-static struct D2_CelFile* background_center = NULL;
-static struct D2_CelFile* background_right = NULL;
+#include <mdc/std/wchar.h>
+#include "../game_resolution/game_resolution.h"
 
-static void InitBackgroundLeft(void) {
-  if (background_left != NULL) {
-    return;
-  }
+struct UserConfig_Metadata_Version {
+  int major_high;
+  int major_low;
+  int minor_high;
+  int minor_low;
+};
 
-  background_left = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
-      0
-  );
-}
+struct UserConfig_Metadata {
+  struct UserConfig_Metadata_Version version;
+};
 
-static void InitBackgroundCenter(void) {
-  if (background_center != NULL) {
-    return;
-  }
+struct UserConfig {
+  struct UserConfig_Metadata metadata;
 
-  background_center = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
-      0
-  );
-}
+  wchar_t* custom_mpq_path;
 
-static void InitBackgroundRight(void) {
-  if (background_right != NULL) {
-    return;
-  }
+  size_t ingame_resolution_mode;
 
-  background_right = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
-      0
-  );
-}
+  struct IngameResolutions ingame_resolutions;
 
-/**
- * External
- */
+  int is_enable_screen_border_frame;
+  int is_use_original_screen_border_frame;
+  int is_use_800_interface_bar;
 
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeft(void) {
-  InitBackgroundLeft();
+  struct GameResolution main_menu_resolution;
+};
 
-  return background_left;
-}
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-void CelFile_InterfaceBarBackground_UnloadLeft(void) {
-  if (background_left == NULL) {
-    return;
-  }
+extern const struct UserConfig UserConfig_kDefault;
 
-  D2_D2Win_UnloadCelFile(background_left);
-  background_left = NULL;
-}
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void) {
-  InitBackgroundCenter();
-
-  return background_center;
-}
-
-void CelFile_InterfaceBarBackground_UnloadCenter(void) {
-  if (background_center == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_center);
-  background_center = NULL;
-}
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
-  InitBackgroundRight();
-
-  return background_right;
-}
-
-void CelFile_InterfaceBarBackground_UnloadRight(void) {
-  if (background_right == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_right);
-  background_right = NULL;
-}
+#endif /* SGD2FR_USER_CONFIG_USER_CONFIG_STRUCT_H_ */

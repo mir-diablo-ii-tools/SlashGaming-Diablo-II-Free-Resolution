@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../config.hpp"
+#include "../../../game_resolution/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
@@ -57,7 +57,7 @@ void __cdecl Sgd2fr_D2Client_SetResolutionRegistry(
 ) {
   // reg_resolution_mode value cycle:
   // 0 -> 1 -> 3 -> ... -> 0
-  config::SetIngameResolutionMode(
+  SetIngameResolutionMode(
       reg_resolution_mode
   );
 

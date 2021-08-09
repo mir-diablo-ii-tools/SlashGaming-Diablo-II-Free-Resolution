@@ -46,8 +46,8 @@
 #include "800_interface_bar.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../config.hpp"
 #include "../game_resolution/game_resolution.hpp"
+#include "../user_config.h"
 
 namespace sgd2fr {
 namespace {
@@ -118,7 +118,7 @@ unsigned int Get800InterfaceBarEnabledValue() {
   GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
 
   if (resolution.width < 800
-      || !config::Is800InterfaceBarEnabled()) {
+      || !UserConfig_Get()->is_use_800_interface_bar) {
     return 0;
   } else {
     return 2;

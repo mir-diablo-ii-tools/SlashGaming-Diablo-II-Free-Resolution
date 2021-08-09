@@ -43,92 +43,30 @@
  *  work.
  */
 
-#include "cel_file_interface_bar_background.h"
+#ifndef SGD2FR_USER_CONFIG_USER_CONFIG_JSON_KEY_VALUE_H_
+#define SGD2FR_USER_CONFIG_USER_CONFIG_JSON_KEY_VALUE_H_
 
-#include <stddef.h>
+#define CONFIG_MAIN "sgd2FreeResolution"
 
-static struct D2_CelFile* background_left = NULL;
-static struct D2_CelFile* background_center = NULL;
-static struct D2_CelFile* background_right = NULL;
+#define CONFIG_METADATA "!!!metadata(DoNotModify)!!!"
 
-static void InitBackgroundLeft(void) {
-  if (background_left != NULL) {
-    return;
-  }
+#define CONFIG_METADATA_VERSION "version"
 
-  background_left = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
-      0
-  );
-}
+#define CONFIG_METADATA_VERSION_MAJOR_HIGH "majorHigh"
+#define CONFIG_METADATA_VERSION_MAJOR_LOW "majorLow"
+#define CONFIG_METADATA_VERSION_MINOR_HIGH "minorHigh"
+#define CONFIG_METADATA_VERSION_MINOR_LOW "minorLow"
 
-static void InitBackgroundCenter(void) {
-  if (background_center != NULL) {
-    return;
-  }
+#define CONFIG_INGAME_RESOLUTION_MODE "ingameResolutionMode"
+#define CONFIG_INGAME_RESOLUTIONS "ingameResolutions"
 
-  background_center = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
-      0
-  );
-}
+#define CONFIG_MAIN_MENU_RESOLUTION "mainMenuResolution"
 
-static void InitBackgroundRight(void) {
-  if (background_right != NULL) {
-    return;
-  }
+#define CONFIG_IS_ENABLE_SCREEN_BORDER_FRAME "enableScreenBorderFrame"
+#define CONFIG_IS_USE_ORIGINAL_SCREEN_BORDER_FRAME \
+    "useOriginalScreenBorderFrame"
+#define CONFIG_IS_USE_800_INTERFACE_BAR "use800InterfaceBar?"
 
-  background_right = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
-      0
-  );
-}
+#define CONFIG_CUSTOM_MPQ_PATH "customMpqPath"
 
-/**
- * External
- */
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeft(void) {
-  InitBackgroundLeft();
-
-  return background_left;
-}
-
-void CelFile_InterfaceBarBackground_UnloadLeft(void) {
-  if (background_left == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_left);
-  background_left = NULL;
-}
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void) {
-  InitBackgroundCenter();
-
-  return background_center;
-}
-
-void CelFile_InterfaceBarBackground_UnloadCenter(void) {
-  if (background_center == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_center);
-  background_center = NULL;
-}
-
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
-  InitBackgroundRight();
-
-  return background_right;
-}
-
-void CelFile_InterfaceBarBackground_UnloadRight(void) {
-  if (background_right == NULL) {
-    return;
-  }
-
-  D2_D2Win_UnloadCelFile(background_right);
-  background_right = NULL;
-}
+#endif /* SGD2FR_USER_CONFIG_USER_CONFIG_JSON_KEY_VALUE_H_ */

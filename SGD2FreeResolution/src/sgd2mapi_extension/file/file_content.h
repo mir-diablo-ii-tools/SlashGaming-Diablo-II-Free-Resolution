@@ -43,57 +43,27 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_HPP_
-#define SGD2FR_CONFIG_HPP_
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_FILE_FILE_CONTENT_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_FILE_FILE_CONTENT_H_
 
-#include <windows.h>
-#include <string_view>
-#include <vector>
+#include <stddef.h>
 
-#include "game_resolution/game_resolution.h"
+#include <mdc/std/wchar.h>
 
-#include "dllexport_define.inc"
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-namespace sgd2fr::config {
+size_t Mapi_File_GetFileContentLength(const wchar_t* path);
 
-const IngameResolutions* GetIngameResolutions();
-GameResolution GetMainMenuResolution();
+void Mapi_File_ReadFileContent(
+    char* file_content,
+    size_t file_length,
+    const wchar_t* path
+);
 
-unsigned int GetIngameResolutionMode();
-void SetIngameResolutionMode(unsigned int resolution_mode);
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-const ::std::string& GetCustomMpqPath();
-
-std::string_view GetScreenBackgroundImagePath();
-
-std::string_view GetCustomLeftScreenBorderLeftImagePath();
-std::string_view GetCustomLeftScreenBorderTopImagePath();
-std::string_view GetCustomLeftScreenBorderTopRightImagePath();
-std::string_view GetCustomLeftScreenBorderBottomImagePath();
-std::string_view GetCustomLeftScreenBorderBottomRightImagePath();
-
-std::string_view GetCustomRightScreenBorderRightImagePath();
-std::string_view GetCustomRightScreenBorderTopImagePath();
-std::string_view GetCustomRightScreenBorderTopLeftImagePath();
-std::string_view GetCustomRightScreenBorderBottomImagePath();
-std::string_view GetCustomRightScreenBorderBottomLeftImagePath();
-
-std::string_view GetScreenBorderHorizontalRibbonImagePath();
-std::string_view GetScreenBorderVerticalRibbonImagePath();
-
-std::string_view GetInterfaceBarBackgroundCenterImagePath();
-std::string_view GetInterfaceBarBackgroundLeftImagePath();
-std::string_view GetInterfaceBarBackgroundRightImagePath();
-
-bool IsScreenBorderFrameEnabled();
-bool IsUseOriginalScreenBorderFrame();
-
-bool Is800InterfaceBarEnabled();
-
-bool LoadConfig();
-bool WriteConfig();
-
-} // namespace sgd2fr::config
-
-#include "dllexport_undefine.inc"
-#endif // SGD2FR_CONFIG_HPP_
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_FILE_FILE_CONTENT_H_ */

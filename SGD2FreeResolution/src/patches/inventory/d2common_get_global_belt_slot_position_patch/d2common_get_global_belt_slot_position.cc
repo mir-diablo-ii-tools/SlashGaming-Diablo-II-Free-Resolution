@@ -48,7 +48,6 @@
 #include <windows.h>
 
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
 #include "../../../game_resolution/game_resolution.hpp"
 #include "../../../helper/position_realignment.hpp"
 

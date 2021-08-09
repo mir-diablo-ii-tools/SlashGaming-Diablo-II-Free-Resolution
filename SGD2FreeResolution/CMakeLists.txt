@@ -62,9 +62,27 @@ set(INCLUDE_HEADERS
 
 enable_language(ASM_NASM)
 
+set(SRC_USER_CONFIG
+    "src/user_config.c"
+    "src/user_config.h"
+
+    "src/user_config/user_config_ini_windows_read.c"
+    "src/user_config/user_config_ini_windows_write.c"
+    "src/user_config/user_config_json_frozen_read.c"
+    "src/user_config/user_config_json_frozen_write.c"
+    "src/user_config/user_config_struct.c"
+
+    "src/user_config/user_config_ini_windows.h"
+    "src/user_config/user_config_json_frozen.h"
+    "src/user_config/user_config_json_key_value.h"
+    "src/user_config/user_config_key_value.h"
+    "src/user_config/user_config_struct.h"
+    "src/user_config/user_config_value_default.h"
+)
+
 set(SRC_ASM
-    # Helpers
-    "src/helper/cel_file_collection_asm.asm"
+    # Cel file
+    "src/cel_file/cel_file_legacy_asm.asm"
 
     # Patches
 
@@ -158,14 +176,31 @@ set(SRC_ASM
 )
 
 set(SRC_C
+    # Cel file
+    "src/cel_file/cel_file_interface_bar_background.c"
+    "src/cel_file/cel_file_legacy.c"
+    "src/cel_file/cel_file_screen_background.c"
+    "src/cel_file/cel_file_screen_background_border.c"
+    "src/cel_file/cel_file_screen_border.c"
+
+    # Game resolution
+    "src/game_resolution/gateway/game_resolution_d2lod_net.c"
+    "src/game_resolution/gateway/game_resolution_diablo_09.c"
+    "src/game_resolution/gateway/game_resolution_project_diablo_2.c"
+    "src/game_resolution/gateway/game_resolution_resurgence.c"
+    "src/game_resolution/gateway/game_resolution_slash_diablo.c"
+
+    "src/game_resolution/game_resolution.c"
+    "src/game_resolution/game_resolution_cxx.cc"
+    "src/game_resolution/game_resolution_gateway_ipv4.c"
+    "src/game_resolution/game_resolution_setting.c"
+
     # Helpers
     "src/helper/800_interface_bar.cc"
     "src/helper/abstract_multiversion_patch.cpp"
     "src/helper/abstract_version_patch.cpp"
-    "src/helper/cel_file_collection.cc"
     "src/helper/custom_mpq.cc"
     "src/helper/evaluation.c"
-    "src/helper/game_resolution.cc"
     "src/helper/patch_address_and_size.cpp"
     "src/helper/position_realignment.cc"
 
@@ -262,7 +297,7 @@ set(SRC_C
     "src/patches/required/d2client_set_screen_shift_patch/d2client_set_screen_shift_patch.cc"
     "src/patches/required/d2client_set_screen_shift_patch/d2client_set_screen_shift_patch_1_09d.cc"
 
-    "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection.cc"
+    "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection.c"
     "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.cc"
     "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_09d.cc"
     "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_13c.cc"
@@ -337,6 +372,9 @@ set(SRC_C
     ## DDraw library version
     "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.c"
 
+    ## File
+    "src/sgd2mapi_extension/file/file_content.c"
+
     ## Game function
     "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
 
@@ -356,21 +394,37 @@ set(SRC_C
     "src/sgd2mapi_extension/glide3x_library_version.c"
     "src/sgd2mapi_extension/glide3x_library_version_cpp98.cpp"
 
-    "src/config.cc"
     "src/dll_main.cc"
     "src/license.c"
     "src/sgd2fml_mod_exports.cc"
 )
 
 set(SRC_HEADERS
+    # Cel file
+    "src/cel_file/cel_file_interface_bar_background.h"
+    "src/cel_file/cel_file_legacy.h"
+    "src/cel_file/cel_file_screen_background.h"
+    "src/cel_file/cel_file_screen_background_border.h"
+    "src/cel_file/cel_file_screen_border.h"
+
+    # Game resolution
+    "src/game_resolution/gateway/game_resolution_d2lod_net.h"
+    "src/game_resolution/gateway/game_resolution_diablo_09.h"
+    "src/game_resolution/gateway/game_resolution_project_diablo_2.h"
+    "src/game_resolution/gateway/game_resolution_resurgence.h"
+    "src/game_resolution/gateway/game_resolution_slash_diablo.h"
+
+    "src/game_resolution/game_resolution.h"
+    "src/game_resolution/game_resolution.hpp"
+    "src/game_resolution/game_resolution_gateway_ipv4.h"
+    "src/game_resolution/game_resolution_setting.h"
+
     # Helpers
     "src/helper/800_interface_bar.hpp"
     "src/helper/abstract_multiversion_patch.hpp"
     "src/helper/abstract_version_patch.hpp"
-    "src/helper/cel_file_collection.hpp"
     "src/helper/custom_mpq.hpp"
     "src/helper/evaluation.h"
-    "src/helper/game_resolution.hpp"
     "src/helper/patch_address_and_size.hpp"
     "src/helper/position_realignment.hpp"
 
@@ -465,7 +519,7 @@ set(SRC_HEADERS
     "src/patches/required/d2client_set_screen_shift_patch/d2client_set_screen_shift_patch.hpp"
     "src/patches/required/d2client_set_screen_shift_patch/d2client_set_screen_shift_patch_1_09d.hpp"
 
-    "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection.hpp"
+    "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection.h"
     "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.hpp"
     "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_09d.hpp"
     "src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_13c.hpp"
@@ -540,6 +594,9 @@ set(SRC_HEADERS
     ## DDraw library version
     "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.h"
 
+    ## File
+    "src/sgd2mapi_extension/file/file_content.h"
+
     ## Game function
     "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.hpp"
 
@@ -562,12 +619,25 @@ set(SRC_HEADERS
     "src/sgd2mapi_extension/glide3x_library_version.hpp"
     "src/sgd2mapi_extension/sgd2mapi_extension.hpp"
 
+    "src/compile_time_switch.h"
     "src/compile_time_switch.hpp"
-    "src/config.hpp"
+)
+
+# frozen doesn't have CMakeLists, so this has to be done manually.
+set(FROZEN_FILES
+    "../third_party/frozen/frozen.h"
+    "../third_party/frozen/frozen.c"
 )
 
 # Output DLL
-add_library(SGD2FreeRes SHARED ${SRC_ASM} ${SRC_C} ${SRC_HEADERS} ${INCLUDE_HEADERS})
+add_library(SGD2FreeRes SHARED
+    ${SRC_ASM}
+    ${SRC_C}
+    ${SRC_HEADERS}
+    ${SRC_USER_CONFIG}
+    ${INCLUDE_HEADERS}
+    ${FROZEN_FILES}
+)
 
 target_compile_definitions(SGD2FreeRes PRIVATE SGD2FR_DLLEXPORT)
 target_compile_definitions(SGD2FreeRes INTERFACE SGD2FR_DLLIMPORT)
@@ -583,6 +653,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}
         ${SRC_C}
         ${SRC_HEADERS}
         ${INCLUDE_HEADERS}
+        ${SRC_USER_CONFIG}
 )
 
 install(TARGETS SGD2FreeRes)
