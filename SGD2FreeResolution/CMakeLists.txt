@@ -62,38 +62,83 @@ set(INCLUDE_HEADERS
 
 enable_language(ASM_NASM)
 
-set(SRC_USER_CONFIG
-    "src/user_config.c"
-    "src/user_config.h"
-
-    "src/user_config/user_config_ini_windows_read.c"
-    "src/user_config/user_config_ini_windows_write.c"
-    "src/user_config/user_config_json_frozen_read.c"
-    "src/user_config/user_config_json_frozen_write.c"
-    "src/user_config/user_config_struct.c"
-
-    "src/user_config/user_config_ini_windows.h"
-    "src/user_config/user_config_json_frozen.h"
-    "src/user_config/user_config_json_key_value.h"
-    "src/user_config/user_config_key_value.h"
-    "src/user_config/user_config_struct.h"
-    "src/user_config/user_config_value_default.h"
-)
-
-set(SRC_ASM
-    # Cel file
+set(SRC_CEL_FILE
     "src/cel_file/cel_file_legacy_asm.asm"
 
-    # Patches
+    "src/cel_file/cel_file_interface_bar_background.c"
+    "src/cel_file/cel_file_legacy.c"
+    "src/cel_file/cel_file_screen_background.c"
+    "src/cel_file/cel_file_screen_background_border.c"
+    "src/cel_file/cel_file_screen_border.c"
 
-    ## Draw patches
+    "src/cel_file/cel_file_interface_bar_background.h"
+    "src/cel_file/cel_file_legacy.h"
+    "src/cel_file/cel_file_screen_background.h"
+    "src/cel_file/cel_file_screen_background_border.h"
+    "src/cel_file/cel_file_screen_border.h"
+)
+
+set(SRC_GAME_RESOLUTION
+    "src/game_resolution/game_resolution.c"
+    "src/game_resolution/game_resolution_cxx.cc"
+    "src/game_resolution/game_resolution_gateway_ipv4.c"
+    "src/game_resolution/game_resolution_setting.c"
+
+    "src/game_resolution/game_resolution.h"
+    "src/game_resolution/game_resolution.hpp"
+    "src/game_resolution/game_resolution_gateway_ipv4.h"
+    "src/game_resolution/game_resolution_setting.h"
+
+    "src/game_resolution/gateway/game_resolution_d2lod_net.c"
+    "src/game_resolution/gateway/game_resolution_diablo_09.c"
+    "src/game_resolution/gateway/game_resolution_project_diablo_2.c"
+    "src/game_resolution/gateway/game_resolution_resurgence.c"
+    "src/game_resolution/gateway/game_resolution_slash_diablo.c"
+
+    "src/game_resolution/gateway/game_resolution_d2lod_net.h"
+    "src/game_resolution/gateway/game_resolution_diablo_09.h"
+    "src/game_resolution/gateway/game_resolution_project_diablo_2.h"
+    "src/game_resolution/gateway/game_resolution_resurgence.h"
+    "src/game_resolution/gateway/game_resolution_slash_diablo.h"
+)
+
+set(SRC_PATCHES_DRAW_PATCHES
+    # ASM
     "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d_shim.asm"
     "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14c_shim.asm"
     "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14d_shim.asm"
 
     "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d_shim.asm"
 
-    ## Interface bar patches
+    # Sources
+    "src/patches/draw/draw_patches.cc"
+
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background.cc"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.cc"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d.cc"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14c.cpp"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14d.cpp"
+
+    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background.cc"
+    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.cc"
+    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d.cc"
+
+    # Headers
+    "src/patches/draw/draw_patches.hpp"
+
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background.hpp"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d.hpp"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14c.hpp"
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14d.hpp"
+
+    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background.hpp"
+    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
+    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d.hpp"
+)
+
+set(SRC_PATCHES_INTERFACE_BAR_PATCHES
+    # ASM
     "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d_shim.asm"
     "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_13c_shim.asm"
 
@@ -103,7 +148,45 @@ set(SRC_ASM
     "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_09d_shim.asm"
     "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_13c_shim.asm"
 
-    ## Inventory patches
+    # Sources
+    "src/patches/interface_bar/interface_bar_patches.cc"
+
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar.cc"
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.cc"
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d.cc"
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_13c.cc"
+
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button.cc"
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.cc"
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_09d.cc"
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_13c.cc"
+
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button.cc"
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.cc"
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_09d.cc"
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_13c.cc"
+
+    # Headers
+    "src/patches/interface_bar/interface_bar_patches.hpp"
+
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar.hpp"
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d.hpp"
+    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_13c.hpp"
+
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button.hpp"
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_09d.hpp"
+    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_13c.hpp"
+
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button.hpp"
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_09d.hpp"
+    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_13c.hpp"
+)
+
+set(SRC_PATCHES_INVENTORY_PATCHES
+    # ASM
     "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch_1_09d_shim.asm"
 
     "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch_1_09d_shim.asm"
@@ -114,7 +197,55 @@ set(SRC_ASM
 
     "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d_shim.asm"
 
-    ## Required patches
+    # Sources
+    "src/patches/inventory/inventory_patches.cc"
+
+    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record.cc"
+    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.cc"
+    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch_1_09d.cc"
+
+    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position.cc"
+    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.cc"
+    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch_1_09d.cc"
+
+    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout.cc"
+    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.cc"
+    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch_1_09d.cc"
+
+    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout.cc"
+    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.cc"
+    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch_1_09d.cc"
+
+    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position.cc"
+    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.cc"
+    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d.cc"
+
+    # Headers
+    "src/patches/inventory/inventory_patches.hpp"
+
+    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record.hpp"
+    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
+    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch_1_09d.hpp"
+
+    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position.hpp"
+    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
+    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch_1_09d.hpp"
+
+    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout.hpp"
+    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.hpp"
+    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch_1_09d.hpp"
+
+    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout.hpp"
+    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
+    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch_1_09d.hpp"
+
+    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position.hpp"
+    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.hpp"
+    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d.hpp"
+)
+
+set(SRC_PATCHES_REQUIRED_PATCHES
+    # ASM
     "src/patches/required/d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch_1_09d_shim.asm"
     "src/patches/required/d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch_1_13c_shim.asm"
     "src/patches/required/d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch_lod_1_14c_shim.asm"
@@ -173,94 +304,10 @@ set(SRC_ASM
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_nglide_3_10_0_658_shim.asm"
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_4_21_shim.asm"
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_8_3_shim.asm"
-)
 
-set(SRC_C
-    # Cel file
-    "src/cel_file/cel_file_interface_bar_background.c"
-    "src/cel_file/cel_file_legacy.c"
-    "src/cel_file/cel_file_screen_background.c"
-    "src/cel_file/cel_file_screen_background_border.c"
-    "src/cel_file/cel_file_screen_border.c"
+    # Sources
+    "src/patches/required/required_patches.cc"
 
-    # Game resolution
-    "src/game_resolution/gateway/game_resolution_d2lod_net.c"
-    "src/game_resolution/gateway/game_resolution_diablo_09.c"
-    "src/game_resolution/gateway/game_resolution_project_diablo_2.c"
-    "src/game_resolution/gateway/game_resolution_resurgence.c"
-    "src/game_resolution/gateway/game_resolution_slash_diablo.c"
-
-    "src/game_resolution/game_resolution.c"
-    "src/game_resolution/game_resolution_cxx.cc"
-    "src/game_resolution/game_resolution_gateway_ipv4.c"
-    "src/game_resolution/game_resolution_setting.c"
-
-    # Helpers
-    "src/helper/800_interface_bar.cc"
-    "src/helper/abstract_multiversion_patch.cpp"
-    "src/helper/abstract_version_patch.cpp"
-    "src/helper/custom_mpq.cc"
-    "src/helper/evaluation.c"
-    "src/helper/patch_address_and_size.cpp"
-    "src/helper/position_realignment.cc"
-
-    # Patches
-
-    ## Draw patches
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background.cc"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.cc"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d.cc"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14c.cpp"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14d.cpp"
-
-    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background.cc"
-    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.cc"
-    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d.cc"
-
-    "src/patches/draw/draw_patches.cc"
-
-    ## Interface bar patches
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar.cc"
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.cc"
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d.cc"
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_13c.cc"
-
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button.cc"
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.cc"
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_09d.cc"
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_13c.cc"
-
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button.cc"
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.cc"
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_09d.cc"
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_13c.cc"
-
-    "src/patches/interface_bar/interface_bar_patches.cc"
-
-    ## Inventory patches
-    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record.cc"
-    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.cc"
-    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch_1_09d.cc"
-
-    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position.cc"
-    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.cc"
-    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch_1_09d.cc"
-
-    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout.cc"
-    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.cc"
-    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch_1_09d.cc"
-
-    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout.cc"
-    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.cc"
-    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch_1_09d.cc"
-
-    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position.cc"
-    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.cc"
-    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d.cc"
-
-    "src/patches/inventory/inventory_patches.cc"
-
-    ## Required patches
     "src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.cc"
     "src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_09d.cc"
     "src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_13c.cc"
@@ -363,126 +410,9 @@ set(SRC_C
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_4_21.cc"
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_8_3.cc"
 
-    "src/patches/required/required_patches.cc"
+    # Headers
+    "src/patches/required/required_patches.hpp"
 
-    "src/patches/patches.cc"
-
-    # SGD2MAPI extension
-
-    ## DDraw library version
-    "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.c"
-
-    ## File
-    "src/sgd2mapi_extension/file/file_content.c"
-
-    ## Game function
-    "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
-
-    ## Glide3x library D2DX
-    "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.c"
-    "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx_cpp98.cpp"
-
-    ## Glide3x library version
-    "src/sgd2mapi_extension/glide3x_library_version/glide3x_library_version_file_version.c"
-
-    "src/sgd2mapi_extension/ddraw_library.c"
-    "src/sgd2mapi_extension/ddraw_library_cpp98.cpp"
-    "src/sgd2mapi_extension/ddraw_library_version.c"
-    "src/sgd2mapi_extension/ddraw_library_version_cpp98.cpp"
-    "src/sgd2mapi_extension/glide3x_library.c"
-    "src/sgd2mapi_extension/glide3x_library_cpp98.cpp"
-    "src/sgd2mapi_extension/glide3x_library_version.c"
-    "src/sgd2mapi_extension/glide3x_library_version_cpp98.cpp"
-
-    "src/dll_main.cc"
-    "src/license.c"
-    "src/sgd2fml_mod_exports.cc"
-)
-
-set(SRC_HEADERS
-    # Cel file
-    "src/cel_file/cel_file_interface_bar_background.h"
-    "src/cel_file/cel_file_legacy.h"
-    "src/cel_file/cel_file_screen_background.h"
-    "src/cel_file/cel_file_screen_background_border.h"
-    "src/cel_file/cel_file_screen_border.h"
-
-    # Game resolution
-    "src/game_resolution/gateway/game_resolution_d2lod_net.h"
-    "src/game_resolution/gateway/game_resolution_diablo_09.h"
-    "src/game_resolution/gateway/game_resolution_project_diablo_2.h"
-    "src/game_resolution/gateway/game_resolution_resurgence.h"
-    "src/game_resolution/gateway/game_resolution_slash_diablo.h"
-
-    "src/game_resolution/game_resolution.h"
-    "src/game_resolution/game_resolution.hpp"
-    "src/game_resolution/game_resolution_gateway_ipv4.h"
-    "src/game_resolution/game_resolution_setting.h"
-
-    # Helpers
-    "src/helper/800_interface_bar.hpp"
-    "src/helper/abstract_multiversion_patch.hpp"
-    "src/helper/abstract_version_patch.hpp"
-    "src/helper/custom_mpq.hpp"
-    "src/helper/evaluation.h"
-    "src/helper/patch_address_and_size.hpp"
-    "src/helper/position_realignment.hpp"
-
-    # Draw patches
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background.hpp"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d.hpp"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14c.hpp"
-    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14d.hpp"
-
-    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background.hpp"
-    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
-    "src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d.hpp"
-
-    "src/patches/draw/draw_patches.hpp"
-
-    # Interface bar patches
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar.hpp"
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d.hpp"
-    "src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_13c.hpp"
-
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button.hpp"
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_09d.hpp"
-    "src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_13c.hpp"
-
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button.hpp"
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_09d.hpp"
-    "src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_13c.hpp"
-
-    "src/patches/interface_bar/interface_bar_patches.hpp"
-
-    # Inventory patches
-    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record.hpp"
-    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.hpp"
-    "src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch_1_09d.hpp"
-
-    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position.hpp"
-    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
-    "src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch_1_09d.hpp"
-
-    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout.hpp"
-    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.hpp"
-    "src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch_1_09d.hpp"
-
-    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout.hpp"
-    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
-    "src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch_1_09d.hpp"
-
-    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position.hpp"
-    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.hpp"
-    "src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d.hpp"
-
-    "src/patches/inventory/inventory_patches.hpp"
-
-    # Required patches
     "src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.hpp"
     "src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_09d.hpp"
     "src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_13c.hpp"
@@ -584,29 +514,17 @@ set(SRC_HEADERS
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.hpp"
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_4_21.hpp"
     "src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_8_3.hpp"
+)
 
-    "src/patches/required/required_patches.hpp"
-
-    "src/patches/patches.hpp"
-
-    # SGD2MAPI extension
-
-    ## DDraw library version
-    "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.h"
-
-    ## File
-    "src/sgd2mapi_extension/file/file_content.h"
-
-    ## Game function
-    "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.hpp"
-
-    "src/sgd2mapi_extension/game_function/d2client_function.hpp"
-
-    ## Glide3x library D2DX
-    "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.h"
-
-    ## Glide3x library version
-    "src/sgd2mapi_extension/glide3x_library_version/glide3x_library_version_file_version.h"
+set(SRC_SGD2MAPI_EXTENSION
+    "src/sgd2mapi_extension/ddraw_library.c"
+    "src/sgd2mapi_extension/ddraw_library_cpp98.cpp"
+    "src/sgd2mapi_extension/ddraw_library_version.c"
+    "src/sgd2mapi_extension/ddraw_library_version_cpp98.cpp"
+    "src/sgd2mapi_extension/glide3x_library.c"
+    "src/sgd2mapi_extension/glide3x_library_cpp98.cpp"
+    "src/sgd2mapi_extension/glide3x_library_version.c"
+    "src/sgd2mapi_extension/glide3x_library_version_cpp98.cpp"
 
     "src/sgd2mapi_extension/ddraw_library.h"
     "src/sgd2mapi_extension/ddraw_library.hpp"
@@ -618,6 +536,83 @@ set(SRC_HEADERS
     "src/sgd2mapi_extension/glide3x_library_version.h"
     "src/sgd2mapi_extension/glide3x_library_version.hpp"
     "src/sgd2mapi_extension/sgd2mapi_extension.hpp"
+
+    # DDraw library version
+    "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.c"
+
+    "src/sgd2mapi_extension/ddraw_library_version/ddraw_library_version_product_name.h"
+
+    # File
+    "src/sgd2mapi_extension/file/file_content.c"
+
+    "src/sgd2mapi_extension/file/file_content.h"
+
+    # Game function
+    "src/sgd2mapi_extension/game_function/d2client_function.hpp"
+
+    "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
+
+    "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.hpp"
+
+    # Glide3x library D2DX
+    "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.c"
+    "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx_cpp98.cpp"
+
+    "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.h"
+
+    # Glide3x library version
+    "src/sgd2mapi_extension/glide3x_library_version/glide3x_library_version_file_version.c"
+
+    "src/sgd2mapi_extension/glide3x_library_version/glide3x_library_version_file_version.h"
+)
+
+set(SRC_USER_CONFIG
+    "src/user_config.c"
+    "src/user_config.h"
+
+    "src/user_config/user_config_ini_windows_read.c"
+    "src/user_config/user_config_ini_windows_write.c"
+    "src/user_config/user_config_json_frozen_read.c"
+    "src/user_config/user_config_json_frozen_write.c"
+    "src/user_config/user_config_struct.c"
+
+    "src/user_config/user_config_ini_windows.h"
+    "src/user_config/user_config_json_frozen.h"
+    "src/user_config/user_config_json_key_value.h"
+    "src/user_config/user_config_key_value.h"
+    "src/user_config/user_config_struct.h"
+    "src/user_config/user_config_value_default.h"
+)
+
+set(SRC_C
+    # Helpers
+    "src/helper/800_interface_bar.cc"
+    "src/helper/abstract_multiversion_patch.cpp"
+    "src/helper/abstract_version_patch.cpp"
+    "src/helper/custom_mpq.cc"
+    "src/helper/evaluation.c"
+    "src/helper/patch_address_and_size.cpp"
+    "src/helper/position_realignment.cc"
+
+    # Patches
+    "src/patches/patches.cc"
+
+    "src/dll_main.cc"
+    "src/license.c"
+    "src/sgd2fml_mod_exports.cc"
+)
+
+set(SRC_HEADERS
+    # Helpers
+    "src/helper/800_interface_bar.hpp"
+    "src/helper/abstract_multiversion_patch.hpp"
+    "src/helper/abstract_version_patch.hpp"
+    "src/helper/custom_mpq.hpp"
+    "src/helper/evaluation.h"
+    "src/helper/patch_address_and_size.hpp"
+    "src/helper/position_realignment.hpp"
+
+    "src/patches/patches.hpp"
 
     "src/compile_time_switch.h"
     "src/compile_time_switch.hpp"
@@ -631,10 +626,18 @@ set(FROZEN_FILES
 
 # Output DLL
 add_library(SGD2FreeRes SHARED
-    ${SRC_ASM}
     ${SRC_C}
     ${SRC_HEADERS}
+
+    ${SRC_CEL_FILE}
+    ${SRC_GAME_RESOLUTION}
+    ${SRC_PATCHES_DRAW_PATCHES}
+    ${SRC_PATCHES_INTERFACE_BAR_PATCHES}
+    ${SRC_PATCHES_INVENTORY_PATCHES}
+    ${SRC_PATCHES_REQUIRED_PATCHES}
+    ${SRC_SGD2MAPI_EXTENSION}
     ${SRC_USER_CONFIG}
+
     ${INCLUDE_HEADERS}
     ${FROZEN_FILES}
 )
@@ -653,6 +656,14 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}
         ${SRC_C}
         ${SRC_HEADERS}
         ${INCLUDE_HEADERS}
+
+        ${SRC_CEL_FILE}
+        ${SRC_GAME_RESOLUTION}
+        ${SRC_PATCHES_DRAW_PATCHES}
+        ${SRC_PATCHES_INTERFACE_BAR_PATCHES}
+        ${SRC_PATCHES_INVENTORY_PATCHES}
+        ${SRC_PATCHES_REQUIRED_PATCHES}
+        ${SRC_SGD2MAPI_EXTENSION}
         ${SRC_USER_CONFIG}
 )
 
