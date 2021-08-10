@@ -43,15 +43,19 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_CUSTOM_MPQ_HPP_
-#define SGD2FR_HELPER_CUSTOM_MPQ_HPP_
+#ifndef SGD2FR_HELPER_CUSTOM_MPQ_H_
+#define SGD2FR_HELPER_CUSTOM_MPQ_H_
 
-namespace sgd2fr {
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-void LoadMpqOnce();
+void CustomMpq_LoadMpqOnce(void);
 
-void UnloadMpqOnce();
+void CustomMpq_UnloadMpqOnce(void);
 
-} // namespace sgd2fr
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-#endif SGD2FR_HELPER_CUSTOM_MPQ_HPP_
+#endif /* SGD2FR_HELPER_CUSTOM_MPQ_H_ */

@@ -47,6 +47,8 @@
 
 #include <stddef.h>
 
+#include "../helper/custom_mpq.h"
+
 static struct D2_CelFile* background_left = NULL;
 static struct D2_CelFile* background_center = NULL;
 static struct D2_CelFile* background_right = NULL;
@@ -55,6 +57,8 @@ static void InitBackgroundLeft(void) {
   if (background_left != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   background_left = D2_D2Win_LoadCelFile(
       CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
@@ -67,6 +71,8 @@ static void InitBackgroundCenter(void) {
     return;
   }
 
+  CustomMpq_LoadMpqOnce();
+
   background_center = D2_D2Win_LoadCelFile(
       CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
       0
@@ -77,6 +83,8 @@ static void InitBackgroundRight(void) {
   if (background_right != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   background_right = D2_D2Win_LoadCelFile(
       CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,

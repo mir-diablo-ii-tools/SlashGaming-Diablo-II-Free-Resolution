@@ -47,6 +47,8 @@
 
 #include <stddef.h>
 
+#include "../helper/custom_mpq.h"
+
 static struct D2_CelFile* left_screen_border_left = NULL;
 static struct D2_CelFile* left_screen_border_top = NULL;
 static struct D2_CelFile* left_screen_border_top_right = NULL;
@@ -67,6 +69,8 @@ static void InitLeftScreenBorderLeft(void) {
     return;
   }
 
+  CustomMpq_LoadMpqOnce();
+
   left_screen_border_left = D2_D2Win_LoadCelFile(
       CEL_FILE_LEFT_SCREEN_BORDER_LEFT_PATH_DEFAULT,
       0
@@ -77,6 +81,8 @@ static void InitLeftScreenBorderTop(void) {
   if (left_screen_border_top != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   left_screen_border_top = D2_D2Win_LoadCelFile(
       CEL_FILE_LEFT_SCREEN_BORDER_TOP_PATH_DEFAULT,
@@ -89,6 +95,8 @@ static void InitLeftScreenBorderTopRight(void) {
     return;
   }
 
+  CustomMpq_LoadMpqOnce();
+
   left_screen_border_top_right = D2_D2Win_LoadCelFile(
       CEL_FILE_LEFT_SCREEN_BORDER_TOP_RIGHT_PATH_DEFAULT,
       0
@@ -99,6 +107,8 @@ static void InitLeftScreenBorderBottom(void) {
   if (left_screen_border_bottom != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   left_screen_border_bottom = D2_D2Win_LoadCelFile(
       CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT,
@@ -111,6 +121,8 @@ static void InitLeftScreenBorderBottomRight(void) {
     return;
   }
 
+  CustomMpq_LoadMpqOnce();
+
   left_screen_border_bottom_right = D2_D2Win_LoadCelFile(
       CEL_FILE_LEFT_SCREEN_BORDER_BOTTOM_RIGHT_PATH_DEFAULT,
       0
@@ -121,6 +133,8 @@ static void InitRightScreenBorderRight(void) {
   if (right_screen_border_right != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   right_screen_border_right = D2_D2Win_LoadCelFile(
       CEL_FILE_RIGHT_SCREEN_BORDER_RIGHT_PATH_DEFAULT,
@@ -133,6 +147,8 @@ static void InitRightScreenBorderTop(void) {
     return;
   }
 
+  CustomMpq_LoadMpqOnce();
+
   right_screen_border_top = D2_D2Win_LoadCelFile(
       CEL_FILE_RIGHT_SCREEN_BORDER_TOP_PATH_DEFAULT,
       0
@@ -143,6 +159,8 @@ static void InitRightScreenBorderTopLeft(void) {
   if (right_screen_border_top_left != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   right_screen_border_top_left = D2_D2Win_LoadCelFile(
       CEL_FILE_RIGHT_SCREEN_BORDER_TOP_LEFT_PATH_DEFAULT,
@@ -155,6 +173,8 @@ static void InitRightScreenBorderBottom(void) {
     return;
   }
 
+  CustomMpq_LoadMpqOnce();
+
   right_screen_border_bottom = D2_D2Win_LoadCelFile(
       CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_PATH_DEFAULT,
       0
@@ -165,6 +185,8 @@ static void InitRightScreenBorderBottomLeft(void) {
   if (right_screen_border_bottom_left != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   right_screen_border_bottom_left = D2_D2Win_LoadCelFile(
       CEL_FILE_RIGHT_SCREEN_BORDER_BOTTOM_LEFT_PATH_DEFAULT,
@@ -177,6 +199,8 @@ static void InitScreenBorderRibbonHorizontal(void) {
     return;
   }
 
+  CustomMpq_LoadMpqOnce();
+
   screen_border_ribbon_horizontal = D2_D2Win_LoadCelFile(
       CEL_FILE_SCREEN_BORDER_RIBBON_HORIZONTAL_PATH_DEFAULT,
       0
@@ -187,6 +211,8 @@ static void InitScreenBorderRibbonVertical(void) {
   if (screen_border_ribbon_vertical != NULL) {
     return;
   }
+
+  CustomMpq_LoadMpqOnce();
 
   screen_border_ribbon_vertical = D2_D2Win_LoadCelFile(
       CEL_FILE_SCREEN_BORDER_RIBBON_VERTICAL_PATH_DEFAULT,
