@@ -82,12 +82,12 @@ set(SRC_GAME_RESOLUTION
     "src/game_resolution/game_resolution.c"
     "src/game_resolution/game_resolution_cxx.cc"
     "src/game_resolution/game_resolution_gateway_ipv4.c"
-    "src/game_resolution/game_resolution_setting.c"
+    "src/game_resolution/game_resolution_global.c"
 
     "src/game_resolution/game_resolution.h"
     "src/game_resolution/game_resolution.hpp"
     "src/game_resolution/game_resolution_gateway_ipv4.h"
-    "src/game_resolution/game_resolution_setting.h"
+    "src/game_resolution/game_resolution_global.h"
 
     "src/game_resolution/gateway/game_resolution_d2lod_net.c"
     "src/game_resolution/gateway/game_resolution_diablo_09.c"
