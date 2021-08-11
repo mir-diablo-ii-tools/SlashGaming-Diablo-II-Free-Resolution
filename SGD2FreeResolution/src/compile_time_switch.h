@@ -68,4 +68,10 @@
  */
 #define COMPILE_TIME_CREATE_CONFIG_FORMAT 1
 
-#endif // SGD2FR_COMPILE_TIME_SWITCH_H_
+/**
+ * If 1, the inventory arrangement sources from 800x600 entries in
+ * calculations. Otherwise, sources from 640x480 entries.
+ */
+#define COMPILE_TIME_IS_SOURCE_INVENTORY_ARRANGE_800 1
+
+#endif /* SGD2FR_COMPILE_TIME_SWITCH_H_ */
