@@ -190,6 +190,10 @@ static void InitStatic(void) {
  * External
  */
 
+const struct GameResolution GameResolution_kUninit = GAME_RESOLUTION_UNINIT;
+const struct IngameResolutions IngameResolutions_kUninit =
+    INGAME_RESOLUTIONS_UNINIT;
+
 const struct GameResolution GameResolution_k640x480 =
     GAME_RESOLUTION_640X480;
 const struct GameResolution GameResolution_k800x600 =
