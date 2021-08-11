@@ -174,18 +174,6 @@ return_bad:
   return;
 }
 
-static void InitStatic(void) {
-  static int is_init = 0;
-
-  if (is_init) {
-    return;
-  }
-
-  InitStandardResolutions();
-
-  is_init = 1;
-}
-
 /**
  * External
  */
@@ -215,8 +203,6 @@ int GameResolution_Compare(
     const struct GameResolution* resolution1,
     const struct GameResolution* resolution2
 ) {
-  InitStatic();
-
   if (resolution1->width < resolution2->width) {
     return -1;
   } else if (resolution1->width > resolution2->width) {
@@ -237,7 +223,7 @@ int GameResolution_IsStandardResolution(
 ) {
   const struct GameResolution* search_result;
 
-  InitStatic();
+  InitStandardResolutions();
 
   search_result = bsearch(
       resolution,
