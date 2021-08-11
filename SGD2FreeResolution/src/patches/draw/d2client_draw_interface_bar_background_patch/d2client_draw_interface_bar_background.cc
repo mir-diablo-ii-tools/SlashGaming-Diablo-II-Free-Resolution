@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../../../cel_file/cel_file_interface_bar_background.h"
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr {
 namespace {
@@ -55,7 +55,10 @@ namespace {
 static void DrawAntiCheatBlackRectangle() {
   static constexpr int interface_bar_height = 47;
 
-  GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 
@@ -71,7 +74,10 @@ static void DrawAntiCheatBlackRectangle() {
 }
 
 static void DrawLeftInterfaceBarBackground() {
-  GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 
@@ -131,7 +137,10 @@ static void DrawLeftInterfaceBarBackground() {
 }
 
 static void DrawRightInterfaceBarBackground() {
-  GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 

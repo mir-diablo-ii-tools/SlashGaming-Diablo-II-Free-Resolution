@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../../../helper/800_interface_bar.hpp"
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
@@ -75,7 +75,10 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
   int interface_bar_height = cel_file_wrapper.GetCel(0, 0).GetHeight();
 
   // Determine the start draw positions of the interface bar.
-  const GameResolution display_width_and_height = GetIngameResolutionFromId(
+  struct GameResolution display_width_and_height;
+
+  Global_GetIngameResolution(
+      &display_width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 

@@ -50,8 +50,6 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../game_resolution/game_resolution.hpp"
-
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Win_ResizeWindowOnMaximize(

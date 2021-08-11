@@ -46,7 +46,7 @@
 #include "d2common_get_global_equipment_slot_layout.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 #include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
@@ -60,7 +60,7 @@ void __cdecl Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout(
   // Original code, copies the values of the specified Global Inventory Grid
   // into the output Inventory Grid.
   unsigned int source_inventory_arrange_mode =
-      GetSourceInventoryArrangeMode();
+      Global_GetSourceInventoryArrangeMode();
 
   ::d2::InventoryRecord_View global_inventory_txt_view(
       ::d2::d2common::GetGlobalInventoryTxt()

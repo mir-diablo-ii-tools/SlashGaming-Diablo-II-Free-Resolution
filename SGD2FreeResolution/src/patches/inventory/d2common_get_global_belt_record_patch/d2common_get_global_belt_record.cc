@@ -45,8 +45,10 @@
 
 #include "d2common_get_global_belt_record.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
@@ -58,7 +60,7 @@ void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
   // Original code, copies the values of the specified Global Belt Slot
   // into the output Belt Slot.
   unsigned int source_inventory_arrange_mode =
-      GetSourceInventoryArrangeMode();
+      Global_GetSourceInventoryArrangeMode();
 
   ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
   ::d2::BeltRecord_View global_belt_record_view(
@@ -69,7 +71,7 @@ void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
   out_belt_record_wrapper.AssignMembers(global_belt_record_view);
 
   // Adjustment code to ensure that the objects appear in the correct location.
-  for (std::size_t belt_slot_index = 0;
+  for (size_t belt_slot_index = 0;
        belt_slot_index < out_belt_record_wrapper.GetNumSlots();
        belt_slot_index += 1) {
     ::d2::PositionalRectangle_Wrapper slot_positions(

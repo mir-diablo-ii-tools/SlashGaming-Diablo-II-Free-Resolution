@@ -46,7 +46,7 @@
 #include "d2common_get_global_inventory_position.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 #include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
@@ -59,7 +59,7 @@ void __cdecl Sgd2fr_D2Common_GetGlobalInventoryPosition(
   // Original code, copies the values of the specified Global Inventory
   // Position into the output Inventory Position.
   unsigned int source_inventory_arrange_mode =
-      GetSourceInventoryArrangeMode();
+      Global_GetSourceInventoryArrangeMode();
 
   ::d2::InventoryRecord_View global_inventory_txt_view(
       ::d2::d2common::GetGlobalInventoryTxt()

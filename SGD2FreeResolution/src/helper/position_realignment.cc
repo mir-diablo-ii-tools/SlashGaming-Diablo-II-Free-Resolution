@@ -45,22 +45,25 @@
 
 #include "position_realignment.hpp"
 
-#include "../game_resolution/game_resolution.hpp"
+#include "../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr {
 
 void RealignPositionFromCenter(
     ::d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
-  GameResolution current_resolution = GetIngameResolutionFromId(
+  struct GameResolution current_resolution;
+
+  Global_GetIngameResolution(
+      &current_resolution,
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const GameResolution& source_resolution =
-      GetSourceInventoryArrangeResolution();
+  const GameResolution* source_resolution =
+      Global_GetSourceInventoryArrangeResolution();
 
-  int source_width = source_resolution.width;
-  int source_height = source_resolution.height;
+  int source_width = source_resolution->width;
+  int source_height = source_resolution->height;
 
   // Set left and right values.
   int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()
@@ -98,15 +101,18 @@ void RealignPositionFromCenter(
 void RealignPositionFromBottomCenter(
     ::d2::PositionalRectangle_Wrapper out_position_wrapper
 ) {
-  GameResolution current_resolution = GetIngameResolutionFromId(
+  GameResolution current_resolution;
+
+  Global_GetIngameResolution(
+      &current_resolution,
       ::d2::d2gfx::GetResolutionMode()
   );
 
-  const GameResolution& source_resolution =
-      GetSourceInventoryArrangeResolution();
+  const GameResolution* source_resolution =
+      Global_GetSourceInventoryArrangeResolution();
 
-  int source_width = source_resolution.width;
-  int source_height = source_resolution.height;
+  int source_width = source_resolution->width;
+  int source_height = source_resolution->height;
 
   // Set left and right values.
   int dist_from_rect_left_to_display_center = out_position_wrapper.GetLeft()

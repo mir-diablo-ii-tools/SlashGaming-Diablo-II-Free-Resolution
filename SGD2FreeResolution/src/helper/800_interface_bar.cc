@@ -46,7 +46,7 @@
 #include "800_interface_bar.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../game_resolution/game_resolution.hpp"
+#include "../game_resolution/game_resolution_global.h"
 #include "../user_config.h"
 
 namespace sgd2fr {
@@ -115,7 +115,9 @@ enum {
 unsigned int Get800InterfaceBarEnabledValue() {
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
 
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(&resolution, resolution_mode);
 
   if (resolution.width < 800
       || !UserConfig_Get()->is_use_800_interface_bar) {
@@ -137,7 +139,10 @@ d2::PositionalRectangle_Api GetNewStatsButtonPosition() {
         - kSourceNewStatsButtonBottom,
   };
 
-  const GameResolution display_width_and_height = GetIngameResolutionFromId(
+  struct GameResolution display_width_and_height;
+
+  Global_GetIngameResolution(
+      &display_width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 
@@ -166,7 +171,10 @@ d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
         - kSourceNewSkillButtonBottom,
   };
 
-  const GameResolution display_width_and_height = GetIngameResolutionFromId(
+  struct GameResolution display_width_and_height;
+
+  Global_GetIngameResolution(
+      &display_width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 
@@ -191,7 +199,10 @@ GameResolution GetNewStatsPopupTextPosition() {
         - kSourceNewStatsTextPositionY,
   };
 
-  const GameResolution display_width_and_height = GetIngameResolutionFromId(
+  struct GameResolution display_width_and_height;
+
+  Global_GetIngameResolution(
+      &display_width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 
@@ -212,7 +223,10 @@ GameResolution GetNewSkillPopupTextPosition() {
         - kSourceNewSkillTextPositionY,
   };
 
-  const GameResolution display_width_and_height = GetIngameResolutionFromId(
+  struct GameResolution display_width_and_height;
+
+  Global_GetIngameResolution(
+      &display_width_and_height,
       ::d2::d2gfx::GetResolutionMode()
   );
 
