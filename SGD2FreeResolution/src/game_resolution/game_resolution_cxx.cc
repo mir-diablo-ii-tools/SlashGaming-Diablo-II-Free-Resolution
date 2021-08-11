@@ -57,7 +57,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 #include "../compile_time_switch.hpp"
-#include "../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include "../sgd2mapi_extension.hpp"
 #include "game_resolution_gateway_ipv4.h"
 #include "../user_config.h"
 

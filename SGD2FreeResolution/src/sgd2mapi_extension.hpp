@@ -46,11 +46,11 @@
 #ifndef SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
 #define SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_
 
-#include "ddraw_library.hpp"
-#include "ddraw_library_version.hpp"
-#include "game_function.hpp"
-#include "glide3x_library.hpp"
-#include "glide3x_library_version.hpp"
-#include "glide3x_library_d2dx/glide3x_library_d2dx.h"
+#include "sgd2mapi_extension/ddraw_library.hpp"
+#include "sgd2mapi_extension/ddraw_library_version.hpp"
+#include "sgd2mapi_extension/game_function.hpp"
+#include "sgd2mapi_extension/glide3x_library.hpp"
+#include "sgd2mapi_extension/glide3x_library_version.hpp"
+#include "sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.h"
 
 #endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_HPP_ */
