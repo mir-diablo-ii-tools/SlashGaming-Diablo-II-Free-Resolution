@@ -550,9 +550,9 @@ set(SRC_SGD2MAPI_EXTENSION
     # Game function
     "src/sgd2mapi_extension/game_function/d2client_function.hpp"
 
-    "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
+    "src/sgd2mapi_extension/game_function/d2client/d2client_draw_screens.cpp"
 
-    "src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.hpp"
+    "src/sgd2mapi_extension/game_function/d2client/d2client_draw_screens.hpp"
 
     # Glide3x library D2DX
     "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.c"
