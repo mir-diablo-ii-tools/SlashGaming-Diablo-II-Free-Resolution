@@ -532,6 +532,7 @@ set(SRC_SGD2MAPI_EXTENSION
     "src/sgd2mapi_extension/ddraw_library_version.hpp"
     "src/sgd2mapi_extension/game_function.h"
     "src/sgd2mapi_extension/game_function.hpp"
+    "src/sgd2mapi_extension/game_variable.h"
     "src/sgd2mapi_extension/glide3x_library.h"
     "src/sgd2mapi_extension/glide3x_library.hpp"
     "src/sgd2mapi_extension/glide3x_library_version.h"
@@ -557,6 +558,15 @@ set(SRC_SGD2MAPI_EXTENSION
 
     "src/sgd2mapi_extension/game_function/d2client/d2client_draw_screens.h"
     "src/sgd2mapi_extension/game_function/d2client/d2client_draw_screens.hpp"
+
+    # Game variable
+    "src/sgd2mapi_extension/game_variable/glide3x_variable.h"
+
+    "src/sgd2mapi_extension/game_variable/glide3x/glide3x_display_height_address.c"
+    "src/sgd2mapi_extension/game_variable/glide3x/glide3x_display_width_address.c"
+
+    "src/sgd2mapi_extension/game_variable/glide3x/glide3x_display_height_address.h"
+    "src/sgd2mapi_extension/game_variable/glide3x/glide3x_display_width_address.h"
 
     # Glide3x library D2DX
     "src/sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.c"
