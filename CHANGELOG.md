@@ -1,6 +1,6 @@
 # SGD2FreeRes Changelog
 
-## SGD2FreeRes 3.0.2.1 (August 12, 2021)
+## SGD2FreeRes 3.0.2.2 (August 12, 2021)
 - Fix interface bar background position cut off one pixel at the
   bottom.
 
