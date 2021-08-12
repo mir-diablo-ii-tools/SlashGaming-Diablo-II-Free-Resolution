@@ -43,51 +43,16 @@
  *  work.
  */
 
-#include "d2glide_set_display_width_and_height.hpp"
+#include "d2client_draw_screens.hpp"
 
-#include <sgd2mapi.hpp>
+#include "d2client_draw_screens.h"
 
-#include "../../../game_resolution/game_resolution.hpp"
-#include "../../../sgd2mapi_extension.h"
+namespace d2 {
+namespace d2client {
 
-namespace sgd2fr::patches {
-
-void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height,
-    uint32_t* glide_res_id
-) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
-
-  *width = resolution.width;
-  *height = resolution.height;
-
-  ::d2::d2glide::SetDisplayWidth(*width);
-  ::d2::d2glide::SetDisplayHeight(*height);
-
-  switch (resolution_mode) {
-    case 0: {
-      *glide_res_id = 7;
-      break;
-    }
-
-    case 1:
-    case 2: {
-      *glide_res_id = 8;
-      break;
-    }
-
-    default: {
-      *glide_res_id = 0x1000 + (resolution_mode - 3);
-      break;
-    }
-  }
-
-  if (D2_Glide3xLibraryVersion_GetRunning()
-      == D2_Glide3xLibraryVersion_kD2dx) {
-    SetCustomResolution(*width, *height);
-  }
+void DrawScreens() {
+  D2_D2Client_DrawScreens();
 }
 
-} // namespace sgd2fr::patches
+} // namespace d2client
+} // namespace d2

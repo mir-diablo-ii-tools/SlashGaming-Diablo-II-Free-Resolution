@@ -43,81 +43,10 @@
  *  work.
  */
 
-#include "d2client_draw_screens.hpp"
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_GAME_VARIABLE_GLIDE3X_VARIABLE_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_GAME_VARIABLE_GLIDE3X_VARIABLE_H_
 
-#include <stddef.h>
+#include "glide3x/glide3x_display_height_address.h"
+#include "glide3x/glide3x_display_width_address.h"
 
-#include <mdc/std/stdint.h>
-#include <mdc/wchar_t/filew.h>
-#include <mdc/error/exit_on_error.hpp>
-#include <sgd2mapi.hpp>
-
-namespace d2 {
-namespace d2client {
-namespace {
-
-static intptr_t GetGameAddress() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::game_version::k1_09D: {
-      return ::mapi::GameAddress::FromOffset(
-          ::d2::default_library::kD2Client,
-          0x35750
-      ).raw_address();
-
-      break;
-    }
-
-    case ::d2::game_version::k1_13C: {
-      return ::mapi::GameAddress::FromOffset(
-          ::d2::default_library::kD2Client,
-          0x5C5C0
-      ).raw_address();
-    }
-
-    case ::d2::game_version::k1_13D: {
-      return ::mapi::GameAddress::FromOffset(
-          ::d2::default_library::kD2Client,
-          0x8A970
-      ).raw_address();
-    }
-
-    case ::d2::game_version::kLod1_14C: {
-      return ::mapi::GameAddress::FromOffset(
-          ::d2::default_library::kD2Client,
-          0x8F800
-      ).raw_address();
-    }
-
-    case ::d2::game_version::kLod1_14D: {
-      return ::mapi::GameAddress::FromOffset(
-          ::d2::default_library::kD2Client,
-          0x93340
-      ).raw_address();
-    }
-
-    default: {
-      ::mdc::error::ExitOnConstantMappingError(
-          __FILEW__,
-          __LINE__,
-          static_cast<int>(running_game_version)
-      );
-
-      return NULL;
-    }
-  }
-}
-
-using FuncType = void (*)();
-
-} // namespace
-
-void DrawScreens() {
-  static intptr_t game_address = GetGameAddress();
-
-  reinterpret_cast<FuncType>(game_address)();
-}
-
-} // namespace d2client
-} // namespace d2
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_GAME_VARIABLE_GLIDE3X_VARIABLE_H_ */

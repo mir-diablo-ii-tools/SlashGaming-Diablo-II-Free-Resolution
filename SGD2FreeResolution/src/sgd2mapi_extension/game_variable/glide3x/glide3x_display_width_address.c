@@ -43,51 +43,95 @@
  *  work.
  */
 
-#include "d2glide_set_display_width_and_height.hpp"
+#include "glide3x_display_width_address.h"
 
-#include <sgd2mapi.hpp>
+#include <mdc/error/exit_on_error.h>
+#include <mdc/wchar_t/filew.h>
+#include <sgd2mapi.h>
+#include "../../glide3x_library.h"
+#include "../../glide3x_library_version.h"
 
-#include "../../../game_resolution/game_resolution.hpp"
-#include "../../../sgd2mapi_extension.h"
+static struct Mapi_GameAddress game_address;
 
-namespace sgd2fr::patches {
+static void InitGameAddress(void) {
+  static int is_init = 0;
 
-void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height,
-    uint32_t* glide_res_id
-) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+  enum D2_Glide3xLibraryVersion running_glide3x_library_version;
 
-  *width = resolution.width;
-  *height = resolution.height;
+  if (is_init) {
+    return;
+  }
 
-  ::d2::d2glide::SetDisplayWidth(*width);
-  ::d2::d2glide::SetDisplayHeight(*height);
+  running_glide3x_library_version = D2_Glide3xLibraryVersion_GetRunning();
 
-  switch (resolution_mode) {
-    case 0: {
-      *glide_res_id = 7;
+  switch (running_glide3x_library_version) {
+    case D2_Glide3xLibraryVersion_kSven1_4_4_21: {
+      game_address = Mapi_GameAddress_InitFromPathAndOffset(
+          D2_Glide3xLibrary_GetPath(),
+          0x1C9A0
+      );
+
       break;
     }
 
-    case 1:
-    case 2: {
-      *glide_res_id = 8;
+    case D2_Glide3xLibraryVersion_kSven1_4_6_1: {
+      game_address = Mapi_GameAddress_InitFromPathAndOffset(
+          D2_Glide3xLibrary_GetPath(),
+          0x1C870
+      );
+
+      break;
+    }
+
+    case D2_Glide3xLibraryVersion_kSven1_4_8_3: {
+      game_address = Mapi_GameAddress_InitFromPathAndOffset(
+          D2_Glide3xLibrary_GetPath(),
+          0x1D870
+      );
+
+      break;
+    }
+
+    case D2_Glide3xLibraryVersion_kNGlide3_10_0_658: {
+      game_address = Mapi_GameAddress_InitFromPathAndOffset(
+          D2_Glide3xLibrary_GetPath(),
+          0x169DA4
+      );
+
       break;
     }
 
     default: {
-      *glide_res_id = 0x1000 + (resolution_mode - 3);
-      break;
+      Mdc_Error_ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          running_glide3x_library_version
+      );
+
+      goto return_bad;
     }
   }
 
-  if (D2_Glide3xLibraryVersion_GetRunning()
-      == D2_Glide3xLibraryVersion_kD2dx) {
-    SetCustomResolution(*width, *height);
-  }
+  is_init = 1;
+  return;
+
+return_bad:
+  is_init = 0;
+  return;
 }
 
-} // namespace sgd2fr::patches
+/**
+ * External
+ */
+
+int* D2_Glide3x_GetDisplayWidthAddress(void) {
+  InitGameAddress();
+
+  return *(int**)game_address.raw_address;
+}
+
+void D2_Glide3x_SetDisplayWidthAddress(int* width_address) {
+  InitGameAddress();
+
+  *(int**)game_address.raw_address = width_address;
+}

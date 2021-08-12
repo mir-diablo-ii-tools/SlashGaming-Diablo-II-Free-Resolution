@@ -47,7 +47,7 @@
 
 #include <stddef.h>
 
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include "../../../sgd2mapi_extension.h"
 
 extern "C" {
 
@@ -73,14 +73,14 @@ GrSstWinOpenPatch_NGlide_3_10_0_658::GrSstWinOpenPatch_NGlide_3_10_0_658()
 
 PatchAddressAndSize
 GrSstWinOpenPatch_NGlide_3_10_0_658::GetPatchAddressAndSize01() {
-  ::d2::Glide3xLibraryVersion running_glide3x_library_version =
-      ::d2::glide3x_library_version::GetRunning();
+  D2_Glide3xLibraryVersion running_glide3x_library_version =
+      D2_Glide3xLibraryVersion_GetRunning();
 
   switch (running_glide3x_library_version) {
-    case ::d2::glide3x_library_version::kNGlide3_10_0_658: {
+    case D2_Glide3xLibraryVersion_kNGlide3_10_0_658: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
-              L"glide3x.dll",
+              D2_Glide3xLibrary_GetPath(),
               0x5691
           ),
           0x56A0 - 0x5691

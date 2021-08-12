@@ -43,51 +43,15 @@
  *  work.
  */
 
-#include "d2glide_set_display_width_and_height.hpp"
+#ifndef SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_H_
+#define SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_H_
 
-#include <sgd2mapi.hpp>
+#include "sgd2mapi_extension/ddraw_library.h"
+#include "sgd2mapi_extension/ddraw_library_version.h"
+#include "sgd2mapi_extension/game_function.h"
+#include "sgd2mapi_extension/game_variable.h"
+#include "sgd2mapi_extension/glide3x_library.h"
+#include "sgd2mapi_extension/glide3x_library_version.h"
+#include "sgd2mapi_extension/glide3x_library_d2dx/glide3x_library_d2dx.h"
 
-#include "../../../game_resolution/game_resolution.hpp"
-#include "../../../sgd2mapi_extension.h"
-
-namespace sgd2fr::patches {
-
-void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
-    uint32_t resolution_mode,
-    int32_t* width,
-    int32_t* height,
-    uint32_t* glide_res_id
-) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
-
-  *width = resolution.width;
-  *height = resolution.height;
-
-  ::d2::d2glide::SetDisplayWidth(*width);
-  ::d2::d2glide::SetDisplayHeight(*height);
-
-  switch (resolution_mode) {
-    case 0: {
-      *glide_res_id = 7;
-      break;
-    }
-
-    case 1:
-    case 2: {
-      *glide_res_id = 8;
-      break;
-    }
-
-    default: {
-      *glide_res_id = 0x1000 + (resolution_mode - 3);
-      break;
-    }
-  }
-
-  if (D2_Glide3xLibraryVersion_GetRunning()
-      == D2_Glide3xLibraryVersion_kD2dx) {
-    SetCustomResolution(*width, *height);
-  }
-}
-
-} // namespace sgd2fr::patches
+#endif /* SGD2FR_SGD2MAPI_EXTENSION_SGD2MAPI_EXTENSION_H_ */

@@ -56,7 +56,7 @@
 #include "../../../cel_file/cel_file_screen_background_border.h"
 #include "../../../cel_file/cel_file_screen_border.h"
 #include "../../../game_resolution/game_resolution.hpp"
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include "../../../sgd2mapi_extension.h"
 #include "../../../user_config.h"
 
 namespace sgd2fr {
@@ -954,7 +954,7 @@ void Sgd2fr_D2Client_DrawScreenBackground() {
   }
 
   // Original code
-  ::d2::d2client::DrawScreens();
+  D2_D2Client_DrawScreens();
 }
 
 } // namespace sgd2fr

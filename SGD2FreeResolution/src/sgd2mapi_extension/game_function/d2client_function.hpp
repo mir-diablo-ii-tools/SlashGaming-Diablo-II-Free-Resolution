@@ -46,6 +46,6 @@
 #ifndef SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_D2CLIENT_FUNCTION_HPP_
 #define SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_D2CLIENT_FUNCTION_HPP_
 
-#include "d2client_function/d2client_draw_screens.hpp"
+#include "d2client/d2client_draw_screens.hpp"
 
 #endif /* SGD2FR_SGD2MAPI_EXTENSION_GAME_FUNCTION_D2CLIENT_FUNCTION_HPP_ */
