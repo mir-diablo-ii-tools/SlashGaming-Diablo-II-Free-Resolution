@@ -95,7 +95,7 @@ static void DrawLeftInterfaceBarBackground() {
       frame += 1) {
     interface_bar_background_left.DrawFrame(
         width_covered,
-        std::get<1>(width_and_height),
+        std::get<1>(width_and_height) - 1,
         0,
         frame,
         frame_options
@@ -126,7 +126,7 @@ static void DrawLeftInterfaceBarBackground() {
 
     interface_bar_background_center.DrawFrame(
         width_covered,
-        std::get<1>(width_and_height),
+        std::get<1>(width_and_height) - 1,
         0,
         frame_to_draw,
         frame_options
@@ -160,7 +160,7 @@ static void DrawRightInterfaceBarBackground() {
       frame += 1) {
     interface_bar_background_right.DrawFrame(
         std::get<0>(width_and_height) - width_covered,
-        std::get<1>(width_and_height),
+        std::get<1>(width_and_height) - 1,
         0,
         frame,
         frame_options
@@ -189,7 +189,7 @@ static void DrawRightInterfaceBarBackground() {
 
     interface_bar_background_center.DrawFrame(
         std::get<0>(width_and_height) - width_covered,
-        std::get<1>(width_and_height),
+        std::get<1>(width_and_height) - 1,
         0,
         frame_to_draw,
         frame_options
