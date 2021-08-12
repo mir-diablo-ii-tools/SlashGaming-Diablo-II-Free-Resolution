@@ -72,10 +72,4 @@ constexpr bool kIsAssetsPathCustomizable = false;
  */
 constexpr bool kIsLoadCustomMpq = true;
 
-/**
- * If true, the inventory arrangement sources from 800x600 entries in
- * calculations. Otherwise, sources from 640x480 entries.
- */
-constexpr bool kIsSourceInventoryArrange800 = true;
-
 #endif // SGD2FR_COMPILE_TIME_SWITCH_HPP_

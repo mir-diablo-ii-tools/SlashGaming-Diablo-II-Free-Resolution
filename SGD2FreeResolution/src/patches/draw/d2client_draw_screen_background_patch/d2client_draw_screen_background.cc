@@ -55,7 +55,7 @@
 #include "../../../cel_file/cel_file_screen_background.h"
 #include "../../../cel_file/cel_file_screen_background_border.h"
 #include "../../../cel_file/cel_file_screen_border.h"
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 #include "../../../sgd2mapi_extension.h"
 #include "../../../user_config.h"
 
@@ -66,7 +66,12 @@ void DrawLeftScreenBackground() {
   ::d2::CelFile_Wrapper screen_background =
       CelFile_LeftScreenBackground_Get();
 
-  GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
+      d2::d2gfx::GetResolutionMode()
+  );
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   ::d2::d2gfx::DrawRectangle(
@@ -117,7 +122,12 @@ void DrawRightScreenBackground() {
   ::d2::CelFile_Wrapper screen_background =
       CelFile_RightScreenBackground_Get();
 
-  GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
+      d2::d2gfx::GetResolutionMode()
+  );
 
   // Draw a black rectangle to stop transparent DC6 cheaters.
   ::d2::d2gfx::DrawRectangle(
@@ -176,7 +186,10 @@ void DrawOriginalLeftScreenBorderFrame() {
   ::d2::CelFile_Wrapper screen_border_frame =
       CelFile_VanillaScreenBorder_Get();
 
-  GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       d2::d2gfx::GetResolutionMode()
   );
 
@@ -236,7 +249,12 @@ void DrawOriginalRightScreenBorderFrame() {
   ::d2::CelFile_Wrapper screen_border_frame =
       CelFile_VanillaScreenBorder_Get();
 
-  GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
+      d2::d2gfx::GetResolutionMode()
+  );
 
   const int right = (width_and_height.width + 640 + (800 - 640)) / 2;
   const int top = ((width_and_height.height - 480 - (600 - 480)) / 2) - 3;
@@ -303,7 +321,12 @@ void DrawCustomLeftScreenBorderFrame() {
   ::d2::CelFile_Wrapper screen_bottom_right_border =
       CelFile_LeftScreenBorder_GetBottomRight();
 
-  const GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
+      d2::d2gfx::GetResolutionMode()
+  );
 
   // Determine border starting positions.
   const int screen_left = (width_and_height.width - 640) / 2;
@@ -443,7 +466,12 @@ void DrawCustomRightScreenBorderFrame() {
   ::d2::CelFile_Wrapper screen_bottom_left_border =
       CelFile_RightScreenBorder_GetBottomLeft();
 
-  const GameResolution width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
+      d2::d2gfx::GetResolutionMode()
+  );
 
   // Determine border starting positions.
   const int screen_right = (width_and_height.width + 640) / 2;
@@ -592,7 +620,10 @@ static void DrawLeftScreenBackgroundHorizontalRibbons() {
       CelFile_LeftScreenBorder_GetLeft();
 
   // Determine border starting positions.
-  const GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       d2::d2gfx::GetResolutionMode()
   );
 
@@ -654,7 +685,10 @@ static void DrawLeftScreenBackgroundVerticalRibbons() {
       CelFile_LeftScreenBorder_GetLeft();
 
   // Determine border starting positions.
-  const GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       d2::d2gfx::GetResolutionMode()
   );
 
@@ -752,7 +786,10 @@ static void DrawRightScreenBackgroundHorizontalRibbon() {
       CelFile_RightScreenBorder_GetRight();
 
   // Determine border starting positions.
-  const GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       d2::d2gfx::GetResolutionMode()
   );
 
@@ -815,7 +852,10 @@ static void DrawRightScreenBackgroundVerticalRibbons() {
       CelFile_RightScreenBorder_GetRight();
 
   // Determine border starting positions.
-  const GameResolution width_and_height = GetIngameResolutionFromId(
+  struct GameResolution width_and_height;
+
+  Global_GetIngameResolution(
+      &width_and_height,
       d2::d2gfx::GetResolutionMode()
   );
 

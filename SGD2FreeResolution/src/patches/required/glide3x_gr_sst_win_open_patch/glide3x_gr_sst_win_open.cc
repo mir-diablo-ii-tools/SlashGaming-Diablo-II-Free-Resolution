@@ -46,7 +46,7 @@
 #include "glide3x_gr_sst_win_open.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 #include "../../../sgd2mapi_extension.h"
 
 namespace sgd2fr::patches {
@@ -61,7 +61,10 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
     int32_t* width,
     int32_t* height
 ) {
-  GameResolution resolution = GetIngameResolutionFromId(
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(
+      &resolution,
       glide_resolution_mode - (0x1000 - 3)
   );
 

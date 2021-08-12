@@ -47,14 +47,17 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
     std::size_t resolution_mode
 ) {
-  GameResolution resolution = GetIngameResolutionFromId(
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(
+      &resolution,
       resolution_mode
   );
 

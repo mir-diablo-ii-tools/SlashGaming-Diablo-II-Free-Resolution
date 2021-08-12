@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
@@ -56,7 +56,9 @@ void __cdecl Sgd2fr_D2GFX_SetDisplayWidthAndHeight(
     int32_t* width,
     int32_t* height
 ) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(&resolution, resolution_mode);
 
   *width = resolution.width;
   *height = resolution.height;

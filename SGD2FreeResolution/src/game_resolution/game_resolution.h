@@ -53,10 +53,14 @@ struct GameResolution {
   int height;
 };
 
+#define GAME_RESOLUTION_UNINIT { 0 }
+
 struct IngameResolutions {
   size_t count;
   struct GameResolution* resolutions;
 };
+
+#define INGAME_RESOLUTIONS_UNINIT { 0 }
 
 #define GAME_RESOLUTION_640X480 { 640, 480 }
 #define GAME_RESOLUTION_800X600 { 800, 600 }
@@ -67,6 +71,9 @@ struct IngameResolutions {
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
+
+extern const struct GameResolution GameResolution_kUninit;
+extern const struct IngameResolutions IngameResolutions_kUninit;
 
 extern const struct GameResolution GameResolution_k640x480;
 extern const struct GameResolution GameResolution_k800x600;
@@ -92,6 +99,10 @@ extern const struct IngameResolutions IngameResolution_kDefault;
 int GameResolution_Compare(
     const struct GameResolution* resolution1,
     const struct GameResolution* resolution2
+);
+
+int GameResolution_IsStandardResolution(
+    const struct GameResolution* resolution
 );
 
 #ifdef __cplusplus

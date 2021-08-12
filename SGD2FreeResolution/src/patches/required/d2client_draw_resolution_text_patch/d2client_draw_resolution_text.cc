@@ -53,7 +53,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
@@ -157,7 +157,9 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
   wchar_t resolution_str[32];
 
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(&resolution, resolution_mode);
 
   _snwprintf(
       resolution_str,

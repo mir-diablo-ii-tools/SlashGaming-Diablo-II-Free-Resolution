@@ -45,10 +45,12 @@
 
 #include "d2client_set_resolution_from_options_menu.hpp"
 
+#include <stddef.h>
+
 #include <mdc/wchar_t/filew.h>
 #include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
@@ -127,10 +129,11 @@ void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
     return;
   }
 
-  std::size_t max_registry_resolution_id = GetMaxConfigResolutionId();
+  size_t max_registry_resolution_id =
+      Global_GetMaxConfigResolutionMode();
 
   if (reg_resolution_mode >= max_registry_resolution_id) {
-    *reg_resolution_mode_out = GetMinConfigResolutionId();
+    *reg_resolution_mode_out = Global_GetMinConfigResolutionMode();
   } else {
     *reg_resolution_mode_out = reg_resolution_mode;
   }

@@ -43,52 +43,47 @@
  *  work.
  */
 
-#ifndef SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_HPP_
-#define SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_HPP_
+#ifndef SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_GLOBAL_H_
+#define SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_GLOBAL_H_
+
+#include <stddef.h>
 
 #include "game_resolution.h"
 
-inline bool operator==(
-    const GameResolution& lhs,
-    const GameResolution& rhs
-) {
-  return GameResolution_Compare(&lhs, &rhs) == 0;
-}
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
 
-inline bool operator<(
-    const GameResolution& lhs,
-    const GameResolution& rhs
-) {
-  return GameResolution_Compare(&lhs, &rhs) < 0;
-}
+size_t Global_GetIngameResolutionMode(void);
+void Global_SetIngameResolutionMode(size_t mode);
 
-#include <cstddef>
+size_t Global_GetMinConfigResolutionMode(void);
+size_t Global_GetMaxConfigResolutionMode(void);
 
-namespace sgd2fr {
+size_t Global_GetMinIngameResolutionMode(void);
+size_t Global_GetMaxIngameResolutionMode(void);
 
-size_t GetIngameResolutionMode();
-void SetIngameResolutionMode(size_t resolution_mode);
-
-std::size_t GetMinConfigResolutionId();
-std::size_t GetMaxConfigResolutionId();
-
-std::size_t GetMinIngameResolutionId();
-std::size_t GetMaxIngameResolutionId();
-
-std::size_t GetNumIngameResolutions();
-GameResolution GetIngameResolutionFromId(std::size_t id);
-bool IsStandardResolution(const GameResolution& width_and_height);
+size_t Global_GetNumIngameResolutions(void);
+void Global_GetIngameResolution(
+    struct GameResolution* resolution,
+    size_t mode
+);
 
 /**
  * Returns the display resolution using the global variables
  * corresponding to the current video mode.
  */
-GameResolution GetVideoModeDisplayResolution();
+void Global_GetVideoModeDisplayResolution(
+    struct GameResolution* resolution
+);
 
-unsigned int GetSourceInventoryArrangeMode();
+unsigned int Global_GetSourceInventoryArrangeMode(void);
 
-const GameResolution& GetSourceInventoryArrangeResolution();
+const struct GameResolution*
+Global_GetSourceInventoryArrangeResolution(void);
 
-} // namespace sgd2fr
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
 
-#endif // SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_HPP_
+#endif /* SGD2FR_GAME_RESOLUTION_GAME_RESOLUTION_GLOBAL_H_ */

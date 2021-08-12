@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 #include "../../../sgd2mapi_extension.h"
 
 namespace sgd2fr::patches {
@@ -58,7 +58,9 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
     int32_t* height,
     uint32_t* glide_res_id
 ) {
-  GameResolution resolution = GetIngameResolutionFromId(resolution_mode);
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(&resolution, resolution_mode);
 
   *width = resolution.width;
   *height = resolution.height;

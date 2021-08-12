@@ -49,7 +49,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
 
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
@@ -72,7 +72,9 @@ int __cdecl Sgd2fr_D2GFX_IsNeedRestoreDownWindowPatch() {
     return false;
   }
 
-  GameResolution ingame_resolution = GetVideoModeDisplayResolution();
+  struct GameResolution ingame_resolution;
+
+  Global_GetVideoModeDisplayResolution(&ingame_resolution);
 
   int client_width = client_rect.right - client_rect.left;
   int client_height = client_rect.bottom - client_rect.top;

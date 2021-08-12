@@ -45,9 +45,11 @@
 
 #include "d2gdi_set_bit_block_width_and_height.hpp"
 
+#include <stddef.h>
+
 #include <sgd2mapi.hpp>
 
-#include "../../../game_resolution/game_resolution.hpp"
+#include "../../../game_resolution/game_resolution_global.h"
 
 namespace sgd2fr::patches {
 
@@ -56,7 +58,10 @@ void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
     int32_t* width,
     int32_t* height
 ) {
-  GameResolution resolution = GetIngameResolutionFromId(
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(
+      &resolution,
       resolution_mode
   );
 
@@ -65,9 +70,12 @@ void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
 }
 
 void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
-    ::std::size_t resolution_mode
+    size_t resolution_mode
 ) {
-  GameResolution resolution = GetIngameResolutionFromId(
+  struct GameResolution resolution;
+
+  Global_GetIngameResolution(
+      &resolution,
       resolution_mode
   );
 
