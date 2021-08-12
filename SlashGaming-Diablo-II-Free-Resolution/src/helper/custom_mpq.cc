@@ -67,7 +67,7 @@ void LoadMpqOnce() {
   }
 
   GetCustomMpq().Open(
-      config::GetCustomMpqPath(),
+      config::GetCustomMpqPath().data(),
       false,
       5000
   );
