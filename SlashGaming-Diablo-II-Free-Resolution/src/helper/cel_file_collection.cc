@@ -78,7 +78,7 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
     );
   }
 #if defined(FLAG_CHECKSUM)
@@ -95,7 +95,7 @@ d2::CelFile_Api& GetCelFile(std::string_view cel_file_path) {
 
     cel_file_collection.insert_or_assign(
         cel_file_path_key,
-        ::d2::CelFile_Api(cel_file_path_key, false)
+        ::d2::CelFile_Api(cel_file_path_key.c_str(), false)
     );
 #if defined(FLAG_CHECKSUM)
   }
