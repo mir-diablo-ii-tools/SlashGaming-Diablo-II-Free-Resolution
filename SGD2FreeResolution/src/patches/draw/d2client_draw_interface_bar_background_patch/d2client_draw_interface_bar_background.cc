@@ -103,7 +103,7 @@ static void DrawLeftInterfaceBarBackground() {
 
     interface_bar_background_left.DrawFrame(
         left_start + width_covered,
-        width_and_height.height,
+        width_and_height.height - 1,
         0,
         frame_index
     );
@@ -127,7 +127,7 @@ static void DrawLeftInterfaceBarBackground() {
 
     interface_bar_background_center.DrawFrame(
         left_start + width_covered,
-        width_and_height.height,
+        width_and_height.height - 1,
         0,
         frame_index
     );
@@ -165,7 +165,7 @@ static void DrawRightInterfaceBarBackground() {
 
     interface_bar_background_right.DrawFrame(
         right_start - width_covered - cel.GetWidth(),
-        width_and_height.height,
+        width_and_height.height - 1,
         0,
         frame_index
     );
@@ -190,7 +190,7 @@ static void DrawRightInterfaceBarBackground() {
 
     interface_bar_background_center.DrawFrame(
         right_start - width_covered - cel.GetWidth(),
-        width_and_height.height,
+        width_and_height.height - 1,
         0,
         frame_index
     );

@@ -89,7 +89,9 @@ void Sgd2fml_Mod_OnUnloadMpqs() {
     return;
   }
 
+#if 0 // Disabled due to Windows 7 error on exit
   GetPatches().Remove();
+#endif
 
   is_loaded = false;
 }
