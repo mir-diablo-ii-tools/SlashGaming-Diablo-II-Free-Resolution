@@ -78,6 +78,12 @@ set(SRC_CEL_FILE
     "src/cel_file/cel_file_screen_border.h"
 )
 
+set(SRC_CEL_FILE_CONFIG
+    "src/cel_file_config/cel_file_config_draw_setting.h"
+    "src/cel_file_config/cel_file_config_json_key.h"
+    "src/cel_file_config/cel_file_config_struct.h"
+)
+
 set(SRC_GAME_RESOLUTION
     "src/game_resolution/game_resolution.c"
     "src/game_resolution/game_resolution_gateway_ipv4.c"
@@ -644,6 +650,7 @@ add_library(SGD2FreeRes SHARED
     ${SRC_HEADERS}
 
     ${SRC_CEL_FILE}
+    ${SRC_CEL_FILE_CONFIG}
     ${SRC_GAME_RESOLUTION}
     ${SRC_PATCHES_DRAW_PATCHES}
     ${SRC_PATCHES_INTERFACE_BAR_PATCHES}
@@ -672,6 +679,7 @@ source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR}
         ${INCLUDE_HEADERS}
 
         ${SRC_CEL_FILE}
+        ${SRC_CEL_FILE_CONFIG}
         ${SRC_GAME_RESOLUTION}
         ${SRC_PATCHES_DRAW_PATCHES}
         ${SRC_PATCHES_INTERFACE_BAR_PATCHES}
