@@ -57,19 +57,23 @@
 
 #define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT \
     "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertLeft"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT \
+#define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_CENTER_PATH_DEFAULT \
     "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertHorizontalBar"
 #define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT \
     "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertRight"
+#define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_CENTER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertHorizontalBar"
 
 #elif COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
 
 #define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT \
     "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Left"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Center"
+#define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_CENTER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\LeftCenter"
 #define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT \
     "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Right"
+#define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_CENTER_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\RightCenter"
 
 #endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
@@ -81,13 +85,17 @@ struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeft(void);
 
 void CelFile_InterfaceBarBackground_UnloadLeft(void);
 
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void);
+struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeftCenter(void);
 
-void CelFile_InterfaceBarBackground_UnloadCenter(void);
+void CelFile_InterfaceBarBackground_UnloadLeftCenter(void);
 
 struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void);
 
 void CelFile_InterfaceBarBackground_UnloadRight(void);
+
+struct D2_CelFile* CelFile_InterfaceBarBackground_GetRightCenter(void);
+
+void CelFile_InterfaceBarBackground_UnloadRightCenter(void);
 
 #ifdef __cplusplus
 } /* extern "C" */

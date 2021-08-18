@@ -113,7 +113,7 @@ static void DrawLeftInterfaceBarBackground() {
 
   // Draw the center part of the interface bar background.
   ::d2::CelFile_Wrapper interface_bar_background_center =
-      CelFile_InterfaceBarBackground_GetCenter();
+      CelFile_InterfaceBarBackground_GetLeftCenter();
 
   for (size_t frame_index = 0;
       (left_start + width_covered) < (width_and_height.width / 2);
@@ -175,7 +175,7 @@ static void DrawRightInterfaceBarBackground() {
 
   // Draw the center part of the interface bar background.
   ::d2::CelFile_Wrapper interface_bar_background_center =
-      CelFile_InterfaceBarBackground_GetCenter();
+      CelFile_InterfaceBarBackground_GetRightCenter();
 
   for (size_t frame_index = 0;
       (right_start - width_covered) > (width_and_height.width / 2);

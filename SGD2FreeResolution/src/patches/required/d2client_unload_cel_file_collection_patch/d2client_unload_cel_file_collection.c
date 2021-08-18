@@ -58,8 +58,9 @@
 
 void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
   CelFile_InterfaceBarBackground_UnloadLeft();
-  CelFile_InterfaceBarBackground_UnloadCenter();
+  CelFile_InterfaceBarBackground_UnloadLeftCenter();
   CelFile_InterfaceBarBackground_UnloadRight();
+  CelFile_InterfaceBarBackground_UnloadRightCenter();
 
 #if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
 
