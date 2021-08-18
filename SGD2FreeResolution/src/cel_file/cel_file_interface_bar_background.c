@@ -50,8 +50,9 @@
 #include "../helper/custom_mpq.h"
 
 static struct D2_CelFile* background_left = NULL;
-static struct D2_CelFile* background_center = NULL;
+static struct D2_CelFile* background_left_center = NULL;
 static struct D2_CelFile* background_right = NULL;
+static struct D2_CelFile* background_right_center = NULL;
 
 static void InitBackgroundLeft(void) {
   if (background_left != NULL) {
@@ -66,15 +67,15 @@ static void InitBackgroundLeft(void) {
   );
 }
 
-static void InitBackgroundCenter(void) {
-  if (background_center != NULL) {
+static void InitBackgroundLeftCenter(void) {
+  if (background_left_center != NULL) {
     return;
   }
 
   CustomMpq_LoadMpqOnce();
 
-  background_center = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_CENTER_PATH_DEFAULT,
+  background_left_center = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_CENTER_PATH_DEFAULT,
       0
   );
 }
@@ -88,6 +89,19 @@ static void InitBackgroundRight(void) {
 
   background_right = D2_D2Win_LoadCelFile(
       CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
+      0
+  );
+}
+
+static void InitBackgroundRightCenter(void) {
+  if (background_right != NULL) {
+    return;
+  }
+
+  CustomMpq_LoadMpqOnce();
+
+  background_right_center = D2_D2Win_LoadCelFile(
+      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_CENTER_PATH_DEFAULT,
       0
   );
 }
@@ -111,19 +125,19 @@ void CelFile_InterfaceBarBackground_UnloadLeft(void) {
   background_left = NULL;
 }
 
-struct D2_CelFile* CelFile_InterfaceBarBackground_GetCenter(void) {
-  InitBackgroundCenter();
+struct D2_CelFile* CelFile_InterfaceBarBackground_GetLeftCenter(void) {
+  InitBackgroundLeftCenter();
 
-  return background_center;
+  return background_left_center;
 }
 
-void CelFile_InterfaceBarBackground_UnloadCenter(void) {
-  if (background_center == NULL) {
+void CelFile_InterfaceBarBackground_UnloadLeftCenter(void) {
+  if (background_left_center == NULL) {
     return;
   }
 
-  D2_D2Win_UnloadCelFile(background_center);
-  background_center = NULL;
+  D2_D2Win_UnloadCelFile(background_left_center);
+  background_left_center = NULL;
 }
 
 struct D2_CelFile* CelFile_InterfaceBarBackground_GetRight(void) {
@@ -139,4 +153,19 @@ void CelFile_InterfaceBarBackground_UnloadRight(void) {
 
   D2_D2Win_UnloadCelFile(background_right);
   background_right = NULL;
+}
+
+struct D2_CelFile* CelFile_InterfaceBarBackground_GetRightCenter(void) {
+  InitBackgroundRightCenter();
+
+  return background_right_center;
+}
+
+void CelFile_InterfaceBarBackground_UnloadRightCenter(void) {
+  if (background_right_center == NULL) {
+    return;
+  }
+
+  D2_D2Win_UnloadCelFile(background_right_center);
+  background_right_center = NULL;
 }
