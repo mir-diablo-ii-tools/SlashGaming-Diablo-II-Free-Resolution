@@ -78,6 +78,10 @@ set(SRC_CEL_FILE
     "src/cel_file/cel_file_screen_border.h"
 )
 
+set(SRC_CEL_FILE_CONFIG
+    "src/cel_file_config/cel_file_config_struct.h"
+)
+
 set(SRC_GAME_RESOLUTION
     "src/game_resolution/game_resolution.c"
     "src/game_resolution/game_resolution_gateway_ipv4.c"
