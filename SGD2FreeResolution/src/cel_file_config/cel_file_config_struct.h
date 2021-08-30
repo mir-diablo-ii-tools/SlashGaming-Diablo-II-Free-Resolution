@@ -47,11 +47,11 @@
 #define SGD2FR_CEL_FILE_CONFIG_CEL_FILE_CONFIG_STRUCT_H_
 
 struct CelFileConfig_CelFile {
-  char* path;
+  char path[/* MAX_PATH */ 260];
 };
 
 struct CelFileConfig_RepeatCelFile {
-  char* path;
+  char path[/* MAX_PATH */ 260];
 };
 
 struct CelFileConfig {
