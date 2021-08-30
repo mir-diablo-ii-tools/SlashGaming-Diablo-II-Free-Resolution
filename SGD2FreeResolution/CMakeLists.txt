@@ -67,12 +67,16 @@ set(SRC_CEL_FILE
 
     "src/cel_file/cel_file_interface_bar_background.c"
     "src/cel_file/cel_file_legacy.c"
+    "src/cel_file/cel_file_life_orb.c"
+    "src/cel_file/cel_file_mana_orb.c"
     "src/cel_file/cel_file_screen_background.c"
     "src/cel_file/cel_file_screen_background_border.c"
     "src/cel_file/cel_file_screen_border.c"
 
     "src/cel_file/cel_file_interface_bar_background.h"
     "src/cel_file/cel_file_legacy.h"
+    "src/cel_file/cel_file_life_orb.h"
+    "src/cel_file/cel_file_mana_orb.h"
     "src/cel_file/cel_file_screen_background.h"
     "src/cel_file/cel_file_screen_background_border.h"
     "src/cel_file/cel_file_screen_border.h"
