@@ -79,6 +79,9 @@ set(SRC_CEL_FILE
 )
 
 set(SRC_CEL_FILE_CONFIG
+    "src/cel_file_config.c"
+    "src/cel_file_config.h"
+
     "src/cel_file_config/cel_file_config_struct.c"
 
     "src/cel_file_config/cel_file_config_struct.h"
