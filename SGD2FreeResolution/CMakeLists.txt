@@ -80,6 +80,7 @@ set(SRC_CEL_FILE
 
 set(SRC_CEL_FILE_CONFIG
     "src/cel_file_config/cel_file_config_struct.h"
+    "src/cel_file_config/cel_file_config_value_default.h"
 )
 
 set(SRC_GAME_RESOLUTION
