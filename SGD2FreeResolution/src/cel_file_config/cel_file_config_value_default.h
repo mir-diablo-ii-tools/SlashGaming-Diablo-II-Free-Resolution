@@ -148,7 +148,5 @@
     "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\LeftScreenBorder"
 #define CEL_FILE_CONFIG_RIGHT_SCREEN_BORDER_PATH_DEFAULT \
     "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\RightScreenBorder"
-#define CEL_FILE_CONFIG_VANILLA_SCREEN_BORDER_PATH_DEFAULT \
-    "data\\global\\UI\\Panel\\800BorderFrame"
 
 #endif /* SGD2FR_CEL_FILE_CONFIG_CEL_FILE_CONFIG_VALUE_DEFAULT_H_ */

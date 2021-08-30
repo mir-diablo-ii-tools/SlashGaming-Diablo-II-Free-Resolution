@@ -49,13 +49,6 @@
 #include <sgd2mapi.h>
 #include "../compile_time_switch.h"
 
-#define CEL_FILE_LEFT_SCREEN_BORDER_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\LeftScreenBorder"
-#define CEL_FILE_RIGHT_SCREEN_BORDER_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\ScreenBorder\\RightScreenBorder"
-#define CEL_FILE_VANILLA_SCREEN_BORDER_PATH_DEFAULT \
-    "data\\global\\UI\\Panel\\800BorderFrame"
-
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
@@ -74,13 +67,9 @@ struct D2_CelFile* CelFile_LeftScreenBorder_Get(void);
 
 void CelFile_LeftScreenBorder_Unload(void);
 
-const char* CelFile_LeftScreenBorder_GetPath(void);
-
 struct D2_CelFile* CelFile_RightScreenBorder_Get(void);
 
 void CelFile_RightScreenBorder_Unload(void);
-
-const char* CelFile_RightScreenBorder_GetPath(void);
 
 #endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
@@ -91,8 +80,6 @@ const char* CelFile_RightScreenBorder_GetPath(void);
 struct D2_CelFile* CelFile_VanillaScreenBorder_Get(void);
 
 void CelFile_VanillaScreenBorder_Unload(void);
-
-const char* CelFile_VanillaScreenBorder_GetPath(void);
 
 #ifdef __cplusplus
 } /* extern "C" */

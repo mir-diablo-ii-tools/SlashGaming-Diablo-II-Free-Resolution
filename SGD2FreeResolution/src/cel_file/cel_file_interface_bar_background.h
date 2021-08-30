@@ -47,35 +47,6 @@
 #define SGD2FR_CEL_FILE_CEL_FILE_INTERFACE_BAR_BACKGROUND_H_
 
 #include <sgd2mapi.h>
-#include "../compile_time_switch.h"
-
-#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
-#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
-
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertLeft"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_CENTER_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertHorizontalBar"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertRight"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_CENTER_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\panel\\D2MRFancyPanelInvertHorizontalBar"
-
-#elif COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
-
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Left"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_CENTER_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\LeftCenter"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\Right"
-#define CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_CENTER_PATH_DEFAULT \
-    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBarBackground\\RightCenter"
-
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
 #ifdef __cplusplus
 extern "C" {

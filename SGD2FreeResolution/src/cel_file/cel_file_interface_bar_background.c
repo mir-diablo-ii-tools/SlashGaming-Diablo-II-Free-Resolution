@@ -48,6 +48,7 @@
 #include <stddef.h>
 
 #include "../helper/custom_mpq.h"
+#include "../cel_file_config.h"
 
 static struct D2_CelFile* background_left = NULL;
 static struct D2_CelFile* background_left_center = NULL;
@@ -62,7 +63,7 @@ static void InitBackgroundLeft(void) {
   CustomMpq_LoadMpqOnce();
 
   background_left = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
+      CelFileConfig_Get()->interface_bar_background_left.path,
       0
   );
 }
@@ -75,7 +76,7 @@ static void InitBackgroundLeftCenter(void) {
   CustomMpq_LoadMpqOnce();
 
   background_left_center = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_CENTER_PATH_DEFAULT,
+      CelFileConfig_Get()->interface_bar_background_left_center.path,
       0
   );
 }
@@ -88,7 +89,7 @@ static void InitBackgroundRight(void) {
   CustomMpq_LoadMpqOnce();
 
   background_right = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_PATH_DEFAULT,
+      CelFileConfig_Get()->interface_bar_background_right.path,
       0
   );
 }
@@ -101,7 +102,7 @@ static void InitBackgroundRightCenter(void) {
   CustomMpq_LoadMpqOnce();
 
   background_right_center = D2_D2Win_LoadCelFile(
-      CEL_FILE_INTERFACE_BAR_BACKGROUND_RIGHT_CENTER_PATH_DEFAULT,
+      CelFileConfig_Get()->interface_bar_background_right_center.path,
       0
   );
 }

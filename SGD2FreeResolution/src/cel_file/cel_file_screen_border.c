@@ -48,6 +48,10 @@
 #include <stddef.h>
 
 #include "../helper/custom_mpq.h"
+#include "../cel_file_config.h"
+
+#define CEL_FILE_VANILLA_SCREEN_BORDER_PATH_DEFAULT \
+    "data\\global\\UI\\Panel\\800BorderFrame"
 
 static struct D2_CelFile* left_screen_border = NULL;
 static struct D2_CelFile* right_screen_border = NULL;
@@ -61,7 +65,7 @@ static void InitLeftScreenBorder(void) {
   CustomMpq_LoadMpqOnce();
 
   left_screen_border = D2_D2Win_LoadCelFile(
-      CEL_FILE_LEFT_SCREEN_BORDER_PATH_DEFAULT,
+      CelFileConfig_Get()->left_screen_border.path,
       0
   );
 }
@@ -74,7 +78,7 @@ static void InitRightScreenBorder(void) {
   CustomMpq_LoadMpqOnce();
 
   right_screen_border = D2_D2Win_LoadCelFile(
-      CEL_FILE_RIGHT_SCREEN_BORDER_PATH_DEFAULT,
+      CelFileConfig_Get()->right_screen_border.path,
       0
   );
 }

@@ -46,6 +46,7 @@
 #include "cel_file_screen_background_border.h"
 
 #include "../helper/custom_mpq.h"
+#include "../cel_file_config.h"
 
 static struct D2_CelFile* left_screen_background_border;
 static struct D2_CelFile* right_screen_background_border;
@@ -58,7 +59,7 @@ static void InitLeftScreenBackgroundBorder(void) {
   CustomMpq_LoadMpqOnce();
 
   left_screen_background_border = D2_D2Win_LoadCelFile(
-      CEL_FILE_LEFT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT,
+      CelFileConfig_Get()->left_screen_background_border.path,
       0
   );
 }
@@ -71,7 +72,7 @@ static void InitRightScreenBackgroundBorder(void) {
   CustomMpq_LoadMpqOnce();
 
   right_screen_background_border = D2_D2Win_LoadCelFile(
-      CEL_FILE_RIGHT_SCREEN_BACKGROUND_BORDER_PATH_DEFAULT,
+      CelFileConfig_Get()->right_screen_background_border.path,
       0
   );
 }
