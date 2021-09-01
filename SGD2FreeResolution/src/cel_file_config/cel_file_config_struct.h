@@ -47,14 +47,16 @@
 #define SGD2FR_CEL_FILE_CONFIG_CEL_FILE_CONFIG_STRUCT_H_
 
 struct CelFileConfig_CelFile {
-  char path[/* MAX_PATH */ 260];
+  char path[/* MAX_PATH */ 260 - sizeof(".dc6") + 1];
 };
 
 struct CelFileConfig_RepeatCelFile {
-  char path[/* MAX_PATH */ 260];
+  char path[/* MAX_PATH */ 260 - sizeof(".dc6") + 1];
 };
 
 struct CelFileConfig {
+  struct CelFileConfig_CelFile interface_bar;
+
   struct CelFileConfig_CelFile interface_bar_background_left;
   struct CelFileConfig_RepeatCelFile interface_bar_background_left_center;
 
