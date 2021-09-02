@@ -95,7 +95,7 @@ static void InitBackgroundRight(void) {
 }
 
 static void InitBackgroundRightCenter(void) {
-  if (background_right != NULL) {
+  if (background_right_center != NULL) {
     return;
   }
 
