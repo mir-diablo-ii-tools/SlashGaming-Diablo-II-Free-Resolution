@@ -53,7 +53,14 @@
 #endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
 /**
- * Interface bar 
+ * Interface bar
+ */
+
+#define CEL_FILE_CONFIG_INTERFACE_BAR_PATH_DEFAULT \
+    "data\\SGD2FreeResolution\\ui\\PANEL\\InterfaceBar"
+
+/**
+ * Interface bar background
  */
 
 #if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2

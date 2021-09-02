@@ -48,6 +48,11 @@
 #include "cel_file_config_value_default.h"
 
 const struct CelFileConfig CelFileConfig_kDefault = {
+    /* Interface bar */
+    {
+        CEL_FILE_CONFIG_INTERFACE_BAR_PATH_DEFAULT,
+    },
+
     /* Interface bar background left */
     {
         CEL_FILE_CONFIG_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
