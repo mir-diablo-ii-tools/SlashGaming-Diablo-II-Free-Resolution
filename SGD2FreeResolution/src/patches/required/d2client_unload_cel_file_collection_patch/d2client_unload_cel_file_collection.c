@@ -45,8 +45,11 @@
 
 #include "d2client_unload_cel_file_collection.h"
 
+#include "../../../cel_file/cel_file_interface_bar.h"
 #include "../../../cel_file/cel_file_interface_bar_background.h"
 #include "../../../cel_file/cel_file_legacy.h"
+#include "../../../cel_file/cel_file_life_orb.h"
+#include "../../../cel_file/cel_file_mana_orb.h"
 #include "../../../cel_file/cel_file_screen_background.h"
 #include "../../../cel_file/cel_file_screen_background_border.h"
 #include "../../../cel_file/cel_file_screen_border.h"
@@ -57,6 +60,8 @@
 #endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
 void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
+  CelFile_InterfaceBar_Unload();
+
   CelFile_InterfaceBarBackground_UnloadLeft();
   CelFile_InterfaceBarBackground_UnloadLeftCenter();
   CelFile_InterfaceBarBackground_UnloadRight();
@@ -78,6 +83,13 @@ void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
 
   CelFile_ScreenBorderRibbon_UnloadHorizontal();
   CelFile_ScreenBorderRibbon_UnloadVertical();
+
+  CelFile_LifeOrb_UnloadInterface();
+  CelFile_LifeOrb_UnloadRed();
+  CelFile_LifeOrb_UnloadGreen();
+
+  CelFile_ManaOrb_UnloadInterface();
+  CelFile_ManaOrb_UnloadBlue();
 
 #endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
 
