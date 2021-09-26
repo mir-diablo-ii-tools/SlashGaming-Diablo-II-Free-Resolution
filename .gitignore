@@ -15,7 +15,30 @@
 
 # CMake
 out/
+_deps/
 CMakeSettings.json
+
+CMakeASM_NASMCompiler.cmake
+CMakeCCompiler.cmake
+CMakeCCompilerId.c
+CMakeCXXCompiler.cmake
+CMakeCXXCompilerId.cpp
+CMakeDetermineCompilerABI_C.bin
+CMakeDetermineCompilerABI_CXX.bin
+CMakeRCCompiler.cmake
+CMakeSystem.cmake
+CMakeCache.txt
+INSTALL_force.rule
+TargetDirectories.txt
+VCTargetsPath.txt
+
+cmake.check_cache
+cmake_install.cmake
+generate.stamp
+generate.stamp.depend
+generate.stamp.list
+generate.stamp.rule
+nasm.props
 
 # Debug / Intermediate Files
 *.ipch
