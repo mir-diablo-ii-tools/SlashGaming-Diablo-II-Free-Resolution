@@ -56,34 +56,35 @@
 #include <sgd2mapi.hpp>
 #include "../config.hpp"
 #include "../compile_time_switch.hpp"
+#include "checksum_hash.h"
 #include "ddraw_version.hpp"
 
 namespace sgd2fr {
 namespace {
 
-using Ipv4ResolutionTableEntry = ::std::pair<
+using Ipv4HashResolutionTableEntry = ::std::pair<
     ::std::string_view,
     ::std::vector<::std::tuple<int, int>>
 >;
 
-struct Ipv4ResolutionTableEntryCompareKey {
+struct Ipv4HashResolutionTableEntryCompareKey {
   constexpr bool operator()(
-      const Ipv4ResolutionTableEntry& entry1,
-      const Ipv4ResolutionTableEntry& entry2
+      const Ipv4HashResolutionTableEntry& entry1,
+      const Ipv4HashResolutionTableEntry& entry2
   ) noexcept {
     return entry1.first < entry2.first;
   }
 
   constexpr bool operator()(
-      const Ipv4ResolutionTableEntry::first_type& key,
-      const Ipv4ResolutionTableEntry& entry
+      const Ipv4HashResolutionTableEntry::first_type& key,
+      const Ipv4HashResolutionTableEntry& entry
   ) noexcept {
     return key < entry.first;
   }
 
   constexpr bool operator()(
-      const Ipv4ResolutionTableEntry& entry,
-      const Ipv4ResolutionTableEntry::first_type& key
+      const Ipv4HashResolutionTableEntry& entry,
+      const Ipv4HashResolutionTableEntry::first_type& key
   ) noexcept {
     return entry.first < key;
   }
@@ -94,46 +95,13 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
 ) {
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
-      Ipv4ResolutionTableEntry,
+      Ipv4HashResolutionTableEntry,
       5
   > kSortedIpv4ResolutionTable = {{
 
-      // evnt.slashdiablo.net
-      Ipv4ResolutionTableEntry(
-          "207.252.75.177",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
-
-      // play.slashdiablo.net
-      Ipv4ResolutionTableEntry(
-          "209.222.25.91",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
-
-      // Project Diablo 2
-      Ipv4ResolutionTableEntry(
-          "35.225.107.249",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
-
       // ip.d2lod.net
-      Ipv4ResolutionTableEntry(
-          "51.222.51.12",
+      Ipv4HashResolutionTableEntry(
+          "8FD8A2923B012C29A1427B3972B16752AFB8FF0F",
           {
               kResolution640x480,
               kResolution800x600,
@@ -144,8 +112,41 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       ),
 
       // realm.diablo09.com
-      Ipv4ResolutionTableEntry(
-          "95.179.228.126",
+      Ipv4HashResolutionTableEntry(
+          "9A2517D7A8CC25A05F76C263DB923725157CC275",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
+      // Project Diablo 2
+      Ipv4HashResolutionTableEntry(
+          "AB3C21D075AFC5B3A07EEF579576454D89C998E4",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
+      // play.slashdiablo.net
+      Ipv4HashResolutionTableEntry(
+          "C311F388012034C4ACB91AC573965302CF5711E0",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
+      // evnt.slashdiablo.net
+      Ipv4HashResolutionTableEntry(
+          "F067533C94707F1DE2DBB0AFA1334F8EBE276450",
           {
               kResolution640x480,
               kResolution800x600,
@@ -160,11 +161,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       kResolution800x600
   };
 
+  char sha1_str[Sha1_kLength];
+  Sha1_GenerateHash(sha1_str, ipv4_address.data(), ipv4_address.length());
+
   ::std::pair search_range = ::std::equal_range(
       kSortedIpv4ResolutionTable.cbegin(),
       kSortedIpv4ResolutionTable.cend(),
-      ipv4_address,
-      Ipv4ResolutionTableEntryCompareKey()
+      sha1_str,
+      Ipv4HashResolutionTableEntryCompareKey()
   );
 
   if (search_range.first == kSortedIpv4ResolutionTable.cend()
