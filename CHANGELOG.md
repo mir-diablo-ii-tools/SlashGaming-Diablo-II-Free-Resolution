@@ -1,5 +1,22 @@
 # SGD2FreeRes Changelog
 
+## SGD2FreeRes 3.0.3.0 (Not yet available)
+- Add support for 1.10.
+- Refactor and compile on Visual C++ 6.0.
+  - Improve compatability with every Windows system that can play
+    Diablo II.
+  - Remove requirement to install C/C++ runtime files, as they are
+    included with every Windows since Windows 95 OSR 2.
+
+## SGD2FreeRes 3.0.2.3 (October 17, 2021)
+- Add ZombiesRUs and D2 Rebirth to the supported server list.
+- Fix D2Resurgence server not being properly detected. The IP address
+  entry has been updated.
+
+Developer notes:
+- MDC uses commit 30bda2723b8a18d1ddc3dca8e12f94c7aa2517c9.
+- SGD2MAPI uses commit 7586477cd25d2bfd6a95e62199d885a2ac3543f2.
+
 ## SGD2FreeRes 3.0.2.2 (August 12, 2021)
 - Fix interface bar background position cut off one pixel at the
   bottom.
