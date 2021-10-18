@@ -96,8 +96,21 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4HashResolutionTableEntry,
-      6
+      8
   > kSortedIpv4ResolutionTable = {{
+
+      // Rebirth D2
+      Ipv4HashResolutionTableEntry(
+          "3F37A6BE5E02055D3E57D45353338FFD0EFA58BC",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1024, 768),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 768)
+          }
+      ),
 
       // ip.d2lod.net
       Ipv4HashResolutionTableEntry(
@@ -125,6 +138,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       // Project Diablo 2
       Ipv4HashResolutionTableEntry(
           "AB3C21D075AFC5B3A07EEF579576454D89C998E4",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
+      // ZombiesRUs
+      Ipv4HashResolutionTableEntry(
+          "B0DE98F5C01859485AD9DE0902AC929AAE8FFEA4",
           {
               kResolution640x480,
               kResolution800x600,
