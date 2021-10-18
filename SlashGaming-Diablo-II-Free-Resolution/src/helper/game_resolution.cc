@@ -96,7 +96,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4HashResolutionTableEntry,
-      5
+      6
   > kSortedIpv4ResolutionTable = {{
 
       // ip.d2lod.net
@@ -145,6 +145,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       ),
 
       // evnt.slashdiablo.net
+      Ipv4HashResolutionTableEntry(
+          "E1625F180F649ED2E4C98B4210012B6C52D9361F",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
+      // evnt.slashdiablo.net (old)
       Ipv4HashResolutionTableEntry(
           "F067533C94707F1DE2DBB0AFA1334F8EBE276450",
           {
