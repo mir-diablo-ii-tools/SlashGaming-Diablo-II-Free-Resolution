@@ -8,6 +8,28 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.2.5b (February 5, 2022)
+- Add Diablo 09's public test realm.
+
+## SGD2FreeRes 3.0.2.5 (January 12, 2022)
+- Fix crash in closed online games due to incorrectly-sized buffer for
+  storing the server's IP's SHA-1 hash.
+
+## SGD2FreeRes 3.0.2.4d (January 10, 2022)
+- Updated timer's server in the supported server list.
+
+## SGD2FreeRes 3.0.2.4c (December 2, 2021)
+- Add timer's server to the supported server list.
+
+## SGD2FreeRes 3.0.2.4b (November 29, 2021)
+- Add 1.09 DiabloFans to the supported server list.
+
+## SGD2FreeRes 3.0.2.4 (November 05, 2021)
+- Fix gateway IPv4 hash verification crash with code NTE_BAD_KEYSET.
+
+## SGD2FreeRes 3.0.2.3b (November 05, 2021)
+- Add Diablo II Evolution to the supported server list.
+
 ## SGD2FreeRes 3.0.2.3 (October 17, 2021)
 - Add ZombiesRUs and D2 Rebirth to the supported server list.
 - Fix D2Resurgence server not being properly detected. The IP address
