@@ -67,7 +67,7 @@ static void InitCryptProvider(void) {
       NULL,
       NULL,
       PROV_RSA_FULL,
-      0);
+      CRYPT_VERIFYCONTEXT);
 
   if (!is_crypt_acquire_context_success) {
     Mdc_Error_ExitOnWindowsFunctionError(
