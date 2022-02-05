@@ -196,7 +196,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       kResolution800x600
   };
 
-  char sha1_str[Sha1_kLength];
+  char sha1_str[Sha1_kLength + 1];
   Sha1_GenerateHash(sha1_str, ipv4_address.data(), ipv4_address.length());
 
   ::std::pair search_range = ::std::equal_range(
