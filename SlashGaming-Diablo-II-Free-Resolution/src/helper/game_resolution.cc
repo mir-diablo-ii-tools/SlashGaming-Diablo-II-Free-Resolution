@@ -96,8 +96,30 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4HashResolutionTableEntry,
-      8
+      13
   > kSortedIpv4ResolutionTable = {{
+
+      // timer's server (old)
+      Ipv4HashResolutionTableEntry(
+          "1EF04EB4585C6521BDD6F644D0AB3D2020EC4600",
+          {
+              kResolution800x600,
+              std::make_tuple(1024, 768),
+              std::make_tuple(1280, 720),
+              std::make_tuple(1440, 900),
+              std::make_tuple(1920, 1080),
+          }
+      ),
+
+      // ptr.diablo09.com
+      Ipv4HashResolutionTableEntry(
+          "22A3E5D23BD68EED6A8163EB1F17F0A74EA3D119",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }),
 
       // Rebirth D2
       Ipv4HashResolutionTableEntry(
@@ -109,6 +131,28 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1024, 768),
               std::make_tuple(1068, 600),
               std::make_tuple(1280, 768)
+          }
+      ),
+
+      // timer's server
+      Ipv4HashResolutionTableEntry(
+          "44EBC5EE6B0C2D5474233AD3370161FA5CFE560D",
+          {
+              kResolution800x600,
+              std::make_tuple(1024, 768),
+              std::make_tuple(1280, 720),
+              std::make_tuple(1440, 900),
+              std::make_tuple(1920, 1080),
+          }
+      ),
+
+      // Diablo II Evolution
+      Ipv4HashResolutionTableEntry(
+          "4A0C205D82F5A1089606505350B5096829E9182C",
+          {
+                kResolution800x600,
+                std::make_tuple(1068, 600),
+                std::make_tuple(1280, 720),
           }
       ),
 
@@ -187,6 +231,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution800x600,
               std::make_tuple(856, 480),
               std::make_tuple(1068, 600)
+          }
+      ),
+
+      // 1.09 DiabloFans
+      Ipv4HashResolutionTableEntry(
+          "FCCB6017F496BD14AB7281E963E969D94C176568",
+          {
+              kResolution800x600,
+              std::make_tuple(1024, 768),
+              std::make_tuple(1244, 700),
           }
       ),
   }};
