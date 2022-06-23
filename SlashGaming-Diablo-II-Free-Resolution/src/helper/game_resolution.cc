@@ -103,11 +103,10 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4HashResolutionTableEntry(
           "1EF04EB4585C6521BDD6F644D0AB3D2020EC4600",
           {
+              kResolution640x480,
               kResolution800x600,
-              std::make_tuple(1024, 768),
-              std::make_tuple(1280, 720),
-              std::make_tuple(1440, 900),
-              std::make_tuple(1920, 1080),
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
           }
       ),
 
@@ -138,11 +137,10 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4HashResolutionTableEntry(
           "44EBC5EE6B0C2D5474233AD3370161FA5CFE560D",
           {
+              kResolution640x480,
               kResolution800x600,
-              std::make_tuple(1024, 768),
-              std::make_tuple(1280, 720),
-              std::make_tuple(1440, 900),
-              std::make_tuple(1920, 1080),
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
           }
       ),
 

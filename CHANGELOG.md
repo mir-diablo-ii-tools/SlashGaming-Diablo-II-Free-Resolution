@@ -8,6 +8,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.2.5c (April 3, 2022)
+- Updated timer's server in the supported server list.
+
 ## SGD2FreeRes 3.0.2.5b (February 5, 2022)
 - Add Diablo 09's public test realm.
 
