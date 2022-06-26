@@ -43,20 +43,32 @@
  *  work.
  */
 
-#include "draw_patches.hpp"
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
+
+#include <sgd2mapi.hpp>
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
+namespace d2client {
 
-void DrawPatches::Apply() {
-  this->d2client_disable_scroll_of_inifuss_rect_patch_.Apply();
-  this->d2client_draw_interface_bar_background_patch_.Apply();
-  this->d2client_draw_screen_background_patch_.Apply();
-}
+class DisableScrollOfInifussRectPatch_1_07
+    : public AbstractVersionPatch {
+ public:
+  DisableScrollOfInifussRectPatch_1_07();
 
-void DrawPatches::Remove() {
-  this->d2client_draw_screen_background_patch_.Remove();
-  this->d2client_draw_interface_bar_background_patch_.Remove();
-  this->d2client_disable_scroll_of_inifuss_rect_patch_.Remove();
-}
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
+  ::mapi::GamePatch patches_[kPatchesCount];
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
+
+} // namespace d2client
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
