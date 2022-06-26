@@ -1,12 +1,16 @@
 # SGD2FreeRes Changelog
 
-## SGD2FreeRes 3.0.3.0 (Not yet available)
+## SGD2FreeRes 3.1.0.0 (Not yet available)
 - Add support for 1.10.
 - Refactor and compile on Visual C++ 6.0.
   - Improve compatability with every Windows system that can play
     Diablo II.
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
+
+## SGD2FreeRes 3.0.2.6 (June 26, 2022)
+- Fix black rectangle being drawn when the Scroll of Inifuss screen is
+  open.
 
 ## SGD2FreeRes 3.0.2.5c (April 3, 2022)
 - Updated timer's server in the supported server list.
