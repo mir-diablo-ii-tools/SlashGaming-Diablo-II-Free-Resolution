@@ -1,8 +1,8 @@
 /**
- * SlashGaming Diablo II Modding API for C++98
- * Copyright (C) 2018-2021  Mir Drualga
+ * SlashGaming Diablo II Free Resolution
+ * Copyright (C) 2019-2022  Mir Drualga
  *
- * This file is part of SlashGaming Diablo II Modding API for C++98.
+ * This file is part of SlashGaming Diablo II Free Resolution.
  *
  *  This program is free software: you can redistribute it and/or modify
  *  it under the terms of the GNU Affero General Public License as published
