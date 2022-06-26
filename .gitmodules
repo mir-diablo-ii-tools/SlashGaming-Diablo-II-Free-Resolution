@@ -1,0 +1,12 @@
+[submodule "external/MirD-Common-C"]
+	path = external/MirD-Common-C
+	url = https://github.com/IAmTrial/MirD-Common-C
+[submodule "external/Multi-JSON-Interface"]
+	path = external/Multi-JSON-Interface
+	url = https://github.com/IAmTrial/Multi-JSON-Interface
+[submodule "external/rapidjson"]
+	path = external/rapidjson
+	url = https://github.com/Tencent/rapidjson
+[submodule "external/SlashGaming-Diablo-II-API"]
+	path = external/SlashGaming-Diablo-II-API
+	url = https://github.com/mir-diablo-ii-tools/SlashGaming-Diablo-II-API.git
