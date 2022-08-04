@@ -96,7 +96,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4HashResolutionTableEntry,
-      13
+      14
   > kSortedIpv4ResolutionTable = {{
 
       // timer's server (old)
@@ -110,7 +110,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
-      // ptr.diablo09.com
+      // ptr.diablo09.com (old)
       Ipv4HashResolutionTableEntry(
           "22A3E5D23BD68EED6A8163EB1F17F0A74EA3D119",
           {
@@ -153,6 +153,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
                 std::make_tuple(1280, 720),
           }
       ),
+
+      // ptr.diablo09.com
+      Ipv4HashResolutionTableEntry(
+          "4FEE7F8C74CB7EC0096D8653ED9D964EBEBBBDA2",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }),
 
       // ip.d2lod.net
       Ipv4HashResolutionTableEntry(
