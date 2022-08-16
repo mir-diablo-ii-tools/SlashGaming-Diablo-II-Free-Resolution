@@ -96,7 +96,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4HashResolutionTableEntry,
-      14
+      15
   > kSortedIpv4ResolutionTable = {{
 
       // timer's server (old)
@@ -161,6 +161,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution640x480,
               kResolution800x600,
               std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }),
+
+      // Casual Nostalgia
+      Ipv4HashResolutionTableEntry(
+          "7233C41BD36281AD8D0251D74F5E84984F35AC3E",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1024, 768),
               std::make_tuple(1068, 600)
           }),
 

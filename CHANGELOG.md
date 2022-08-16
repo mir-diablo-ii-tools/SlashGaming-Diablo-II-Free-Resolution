@@ -8,6 +8,12 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.2.6c (August 15, 2022)
+- Add Casual Nostalgia server to the supported server list.
+
+## SGD2FreeRes 3.0.2.6b (August 3, 2022)
+- Update Diablo09's event server in the supported server list.
+
 ## SGD2FreeRes 3.0.2.6 (June 26, 2022)
 - Fix black rectangle being drawn when the Scroll of Inifuss screen is
   open.
