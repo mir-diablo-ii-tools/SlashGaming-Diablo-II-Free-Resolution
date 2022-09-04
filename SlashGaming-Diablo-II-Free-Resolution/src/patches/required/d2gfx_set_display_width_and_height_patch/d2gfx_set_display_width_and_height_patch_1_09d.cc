@@ -81,7 +81,7 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
               ::d2::DefaultLibrary::kD2GFX,
               0x4B80
           ),
-          0x4BB8 - 0x4B80
+          0x4BB9 - 0x4B80
       );
     }
   }
