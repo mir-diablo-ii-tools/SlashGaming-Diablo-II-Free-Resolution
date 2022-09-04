@@ -72,6 +72,16 @@ void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
       break;
     }
 
+    case ::d2::GameVersion::k1_10: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xE6028
+          ).raw_address()
+      );
+      break;
+    }
+
     case ::d2::GameVersion::k1_13C: {
       resolution_settings_address = reinterpret_cast<void*>(
           ::mapi::GameAddress::FromOffset(

@@ -84,6 +84,16 @@ DrawResolutionTextPatch_1_09D::GetPatchAddressAndSize01() {
           0x6262D - 0x62627
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x68AAD
+          ),
+          0x68AB3 - 0x68AAD
+      );
+    }
   }
 }
 

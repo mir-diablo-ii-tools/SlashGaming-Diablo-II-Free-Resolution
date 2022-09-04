@@ -72,6 +72,7 @@ UnloadCelFileCollectionPatch::InitPatch() {
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10:
     case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
       return new UnloadCelFileCollectionPatch_1_09D();

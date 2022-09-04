@@ -69,6 +69,15 @@ static ::std::intptr_t GetGameAddress() {
       break;
     }
 
+    case ::d2::GameVersion::k1_10: {
+      return ::mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0x3B890
+      ).raw_address();
+
+      break;
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return ::mapi::GameAddress::FromOffset(
           ::d2::DefaultLibrary::kD2Client,

@@ -285,6 +285,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize01() {
           0x483B9 - 0x483B4
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4EEB4
+          ),
+          0x4EEB9 - 0x4EEB4
+      );
+    }
   }
 }
 
@@ -300,6 +310,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize02() {
               0x483D3
           ),
           0x483D8 - 0x483D3
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4EED3
+          ),
+          0x4EED8 - 0x4EED3
       );
     }
   }
@@ -319,6 +339,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize03() {
           0x484B5 - 0x4847D
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4EF50
+          ),
+          0x4EF7C - 0x4EF50
+      );
+    }
   }
 }
 
@@ -334,6 +364,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize04() {
               0x48694
           ),
           0x48699 - 0x48694
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F144
+          ),
+          0x4F149 - 0x4F144
       );
     }
   }
@@ -353,6 +393,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize05() {
           0x486B7 - 0x486B2
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F162
+          ),
+          0x4F167 - 0x4F162
+      );
+    }
   }
 }
 
@@ -368,6 +418,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize06() {
               0x4878C
           ),
           0x487C4 - 0x4878C
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F235
+          ),
+          0x4F26D - 0x4F235
       );
     }
   }
@@ -387,6 +447,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize07() {
           0x48DEA - 0x48DE5
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F875
+          ),
+          0x4F87A - 0x4F875
+      );
+    }
   }
 }
 
@@ -402,6 +472,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize08() {
               0x48EF1
           ),
           0x48F29 - 0x48EF1
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F970
+          ),
+          0x4F9A8 - 0x4F970
       );
     }
   }
@@ -421,6 +501,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize09() {
           0x48CB2 - 0x48CAD
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F73D
+          ),
+          0x4F742 - 0x4F73D
+      );
+    }
   }
 }
 
@@ -436,6 +526,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize10() {
               0x48D6D
           ),
           0x48D72 - 0x48D6D
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F7FD
+          ),
+          0x4F802 - 0x4F7FD
       );
     }
   }
@@ -455,6 +555,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize11() {
           0x48E6E - 0x48E69
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F8F9
+          ),
+          0x4F8FE - 0x4F8F9
+      );
+    }
   }
 }
 
@@ -470,6 +580,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize12() {
               0x48F3E
           ),
           0x48F6A - 0x48F3E
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F9BD
+          ),
+          0x4F9E9 - 0x4F9BD
       );
     }
   }
@@ -489,6 +609,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize13() {
           0x48F9A - 0x48F7C
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F9FB
+          ),
+          0x4FA19 - 0x4F9FB
+      );
+    }
   }
 }
 
@@ -504,6 +634,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize14() {
               0x48F9A
           ),
           0x48FB8 - 0x48F9A
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4FA19
+          ),
+          0x4FA37 - 0x4FA19
       );
     }
   }
@@ -523,6 +663,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize15() {
           0x48BE8 - 0x48BE3
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F673
+          ),
+          0x4F678 - 0x4F673
+      );
+    }
   }
 }
 
@@ -538,6 +688,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize16() {
               0x48C15
           ),
           0x48C41 - 0x48C15
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F6A5
+          ),
+          0x4F6D1 - 0x4F6A5
       );
     }
   }
@@ -557,6 +717,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize17() {
           0x48C71 - 0x48C53
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F6E3
+          ),
+          0x4F701 - 0x4F6E3
+      );
+    }
   }
 }
 
@@ -572,6 +742,16 @@ Enable800NewSkillButtonPatch_1_09D::GetPatchAddressAndSize18() {
               0x48C71
           ),
           0x48C8F - 0x48C71
+      );
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4F701
+          ),
+          0x4F71F - 0x4F701
       );
     }
   }
