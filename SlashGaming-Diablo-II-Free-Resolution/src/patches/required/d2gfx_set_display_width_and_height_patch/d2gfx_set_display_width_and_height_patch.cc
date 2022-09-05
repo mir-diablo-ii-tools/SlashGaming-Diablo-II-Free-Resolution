@@ -49,6 +49,7 @@
 
 #include <sgd2mapi.hpp>
 #include "d2gfx_set_display_width_and_height_patch_1_09d.hpp"
+#include "d2gfx_set_display_width_and_height_patch_1_12a.hpp"
 #include "d2gfx_set_display_width_and_height_patch_1_13c.hpp"
 
 namespace sgd2fr {
@@ -73,6 +74,10 @@ SetDisplayWidthAndHeightPatch::InitPatch() {
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D: {
       return new SetDisplayWidthAndHeightPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return new SetDisplayWidthAndHeightPatch_1_12A();
     }
 
     case ::d2::GameVersion::k1_13C:

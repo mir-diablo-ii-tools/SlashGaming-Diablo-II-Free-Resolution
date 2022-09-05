@@ -43,48 +43,78 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_stats_button_patch.hpp"
+#include "d2client_enable_800_interface_bar_patch_1_12a.hpp"
 
 #include <stddef.h>
 
-#include <sgd2mapi.hpp>
-#include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
-#include "d2client_enable_800_new_stats_button_patch_1_12a.hpp"
-#include "d2client_enable_800_new_stats_button_patch_1_13c.hpp"
+extern "C" {
+
+void __cdecl
+D2Client_Enable800InterfaceBarPatch_1_12A_InterceptionFunc01();
+
+void __cdecl
+D2Client_Enable800InterfaceBarPatch_1_12A_InterceptionFunc02();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-Enable800NewStatsButtonPatch::Enable800NewStatsButtonPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+Enable800InterfaceBarPatch_1_12A::Enable800InterfaceBarPatch_1_12A()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  // Enable drawing the 800x600 interface bar.
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800InterfaceBarPatch_1_12A_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+
+  // Draw the 800x600 interface bar.
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_02.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_Enable800InterfaceBarPatch_1_12A_InterceptionFunc02,
+      patch_address_and_size_02.second
+  );
+  this->patches_[1].Swap(patch_02);
 }
 
-bool Enable800NewStatsButtonPatch::IsApplicable() {
-  return true;
-}
-
-AbstractVersionPatch*
-Enable800NewStatsButtonPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
+PatchAddressAndSize
+Enable800InterfaceBarPatch_1_12A::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return new Enable800NewStatsButtonPatch_1_09D();
-    }
-
     case ::d2::GameVersion::k1_12A: {
-      return new Enable800NewStatsButtonPatch_1_12A();
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x82242
+          ),
+          0x82247 - 0x82242
+      );
     }
+  }
+}
 
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new Enable800NewStatsButtonPatch_1_13C();
+PatchAddressAndSize
+Enable800InterfaceBarPatch_1_12A::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x82404
+          ),
+          0x82489 - 0x82404
+      );
     }
   }
 }

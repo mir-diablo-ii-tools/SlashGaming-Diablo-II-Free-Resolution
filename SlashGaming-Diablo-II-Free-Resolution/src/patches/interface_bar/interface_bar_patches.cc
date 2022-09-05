@@ -48,7 +48,7 @@
 namespace sgd2fr {
 
 void InterfaceBarPatches::Apply() {
-  this->d2client_enable_800_interface_bar_patch_.Apply();
+//   this->d2client_enable_800_interface_bar_patch_.Apply();
   this->d2client_enable_800_new_skill_button_patch_.Apply();
   this->d2client_enable_800_new_stats_button_patch_.Apply();
 }

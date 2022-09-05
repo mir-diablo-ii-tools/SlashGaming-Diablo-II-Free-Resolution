@@ -43,51 +43,48 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_stats_button_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_12A_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_12A_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
-#include "d2client_enable_800_new_stats_button_patch_1_12a.hpp"
-#include "d2client_enable_800_new_stats_button_patch_1_13c.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-Enable800NewStatsButtonPatch::Enable800NewStatsButtonPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class Enable800NewSkillButtonPatch_1_12A
+    : public AbstractVersionPatch {
+ public:
+  Enable800NewSkillButtonPatch_1_12A();
 
-bool Enable800NewStatsButtonPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 17
+  };
 
-AbstractVersionPatch*
-Enable800NewStatsButtonPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return new Enable800NewStatsButtonPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_12A: {
-      return new Enable800NewStatsButtonPatch_1_12A();
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new Enable800NewStatsButtonPatch_1_13C();
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static PatchAddressAndSize GetPatchAddressAndSize02();
+  static PatchAddressAndSize GetPatchAddressAndSize03();
+  static PatchAddressAndSize GetPatchAddressAndSize04();
+  static PatchAddressAndSize GetPatchAddressAndSize05();
+  static PatchAddressAndSize GetPatchAddressAndSize06();
+  static PatchAddressAndSize GetPatchAddressAndSize07();
+  static PatchAddressAndSize GetPatchAddressAndSize08();
+  static PatchAddressAndSize GetPatchAddressAndSize09();
+  static PatchAddressAndSize GetPatchAddressAndSize10();
+  static PatchAddressAndSize GetPatchAddressAndSize11();
+  static PatchAddressAndSize GetPatchAddressAndSize12();
+  static PatchAddressAndSize GetPatchAddressAndSize13();
+  static PatchAddressAndSize GetPatchAddressAndSize14();
+  static PatchAddressAndSize GetPatchAddressAndSize15();
+  static PatchAddressAndSize GetPatchAddressAndSize16();
+  static PatchAddressAndSize GetPatchAddressAndSize17();
+};
 
 } // namespace d2client
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_

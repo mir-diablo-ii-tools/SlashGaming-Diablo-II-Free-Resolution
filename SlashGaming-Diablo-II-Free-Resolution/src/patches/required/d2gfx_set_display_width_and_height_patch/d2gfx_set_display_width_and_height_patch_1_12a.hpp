@@ -43,51 +43,32 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_stats_button_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_12A_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_12A_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
-#include "d2client_enable_800_new_stats_button_patch_1_12a.hpp"
-#include "d2client_enable_800_new_stats_button_patch_1_13c.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
-namespace d2client {
+namespace d2gfx {
 
-Enable800NewStatsButtonPatch::Enable800NewStatsButtonPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class SetDisplayWidthAndHeightPatch_1_12A
+    : public AbstractVersionPatch {
+ public:
+  SetDisplayWidthAndHeightPatch_1_12A();
 
-bool Enable800NewStatsButtonPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-AbstractVersionPatch*
-Enable800NewStatsButtonPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return new Enable800NewStatsButtonPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_12A: {
-      return new Enable800NewStatsButtonPatch_1_12A();
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new Enable800NewStatsButtonPatch_1_13C();
-    }
-  }
-}
-
-} // namespace d2client
+} // namespace d2gfx
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_

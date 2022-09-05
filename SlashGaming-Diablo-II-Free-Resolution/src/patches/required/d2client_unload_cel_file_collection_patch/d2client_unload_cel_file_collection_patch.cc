@@ -77,6 +77,7 @@ UnloadCelFileCollectionPatch::InitPatch() {
       return new UnloadCelFileCollectionPatch_1_09D();
     }
 
+    case ::d2::GameVersion::k1_12A:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
       return new UnloadCelFileCollectionPatch_1_13C();
