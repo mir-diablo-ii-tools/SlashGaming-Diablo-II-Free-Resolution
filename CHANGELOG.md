@@ -8,6 +8,10 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.2.6d (September 18, 2022)
+- Add Vahsify's "The Fury Within 1.02" server to the supported server
+  list.
+
 ## SGD2FreeRes 3.0.2.6c (August 15, 2022)
 - Add Casual Nostalgia server to the supported server list.
 

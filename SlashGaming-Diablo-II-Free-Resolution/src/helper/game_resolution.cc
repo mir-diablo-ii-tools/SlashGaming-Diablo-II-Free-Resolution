@@ -96,7 +96,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const ::std::array<
       Ipv4HashResolutionTableEntry,
-      15
+      16
   > kSortedIpv4ResolutionTable = {{
 
       // timer's server (old)
@@ -148,11 +148,20 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4HashResolutionTableEntry(
           "4A0C205D82F5A1089606505350B5096829E9182C",
           {
-                kResolution800x600,
-                std::make_tuple(1068, 600),
-                std::make_tuple(1280, 720),
-          }
-      ),
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720),
+          }),
+
+      // Vahsify's "The Fury Within 1.02"
+      Ipv4HashResolutionTableEntry(
+          "4B3B6D3727A0004E04DFF49E41D497C001C7DFCF",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+          }),
 
       // ptr.diablo09.com
       Ipv4HashResolutionTableEntry(
