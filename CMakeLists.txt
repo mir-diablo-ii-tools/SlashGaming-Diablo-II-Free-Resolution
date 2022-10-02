@@ -281,6 +281,14 @@ set(NASM_FILES
     "${PROJECT_DIR}/src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_8_3_shim.asm"
 )
 
+set(PCH_C_FILES
+    "${PROJECT_DIR}/src/pch.h"
+)
+
+set(PCH_CXX_FILES
+    "${PROJECT_DIR}/src/pch.hpp"
+)
+
 set(SOURCE_FILES
     ${RESOURCE_FILES}
 
@@ -290,6 +298,10 @@ set(SOURCE_FILES
 
 # Output DLL
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
+target_precompile_headers(${PROJECT_NAME} PRIVATE
+    "$<$<COMPILE_LANGUAGE:C>:${PCH_C_FILES}>"
+    "$<$<COMPILE_LANGUAGE:CXX>:${PCH_CXX_FILES}>"
+)
 
 add_dependencies(${PROJECT_NAME}
     libMDCc
