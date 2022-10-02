@@ -95,6 +95,16 @@ DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
       );
     }
 
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x5F66C
+          ),
+          0x5F671 - 0x5F66C
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(

@@ -71,7 +71,8 @@ Enable800InterfaceBarPatch::InitPatch() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
       return new Enable800InterfaceBarPatch_1_09D();
     }
 

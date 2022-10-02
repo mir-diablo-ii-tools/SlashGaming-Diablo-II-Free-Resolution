@@ -84,6 +84,16 @@ SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
           0x4BB8 - 0x4B80
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x4B50
+          ),
+          0x4B88 - 0x4B50
+      );
+    }
   }
 }
 

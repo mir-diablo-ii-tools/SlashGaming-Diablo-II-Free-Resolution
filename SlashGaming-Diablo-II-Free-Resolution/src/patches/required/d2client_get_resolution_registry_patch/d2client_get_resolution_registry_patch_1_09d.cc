@@ -105,6 +105,16 @@ GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize01() {
           0x610AE - 0x61097
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x67547
+          ),
+          0x6755E - 0x67547
+      );
+    }
   }
 }
 
@@ -122,6 +132,16 @@ GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize02() {
           0x610B6 - 0x610AF
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x6755F
+          ),
+          0x67566 - 0x6755F
+      );
+    }
   }
 }
 
@@ -137,6 +157,18 @@ GetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize03() {
               0x63885
           ),
           0x638A5 - 0x63885
+      );
+    }
+  }
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x69C95
+          ),
+          0x69CB5 - 0x69C95
       );
     }
   }

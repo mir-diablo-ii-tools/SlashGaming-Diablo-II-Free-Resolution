@@ -85,6 +85,16 @@ SetResolutionFromOptionsMenuPatch_1_09D::GetPatchAddressAndSize01() {
           0x61933 - 0x61929
       );
     }
+
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x67DB9
+          ),
+          0x67DC3 - 0x67DB9
+      );
+    }
   }
 }
 
