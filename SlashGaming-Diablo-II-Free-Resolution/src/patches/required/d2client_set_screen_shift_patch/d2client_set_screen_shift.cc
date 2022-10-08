@@ -46,6 +46,7 @@
 #include "d2client_set_screen_shift.hpp"
 
 #include <sgd2mapi.hpp>
+#include <format>
 
 namespace sgd2fr::patches {
 

@@ -43,48 +43,33 @@
  *  work.
  */
 
-#include "d2client_set_resolution_from_options_menu_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_12A_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_12A_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
-#include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
+#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-SetResolutionFromOptionsMenuPatch::SetResolutionFromOptionsMenuPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class Enable800InterfaceBarPatch_1_12A
+    : public AbstractVersionPatch {
+ public:
+  Enable800InterfaceBarPatch_1_12A();
 
-bool SetResolutionFromOptionsMenuPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 2
+  };
 
-AbstractVersionPatch*
-SetResolutionFromOptionsMenuPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10: {
-      return new SetResolutionFromOptionsMenuPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new SetResolutionFromOptionsMenuPatch_1_13C();
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static PatchAddressAndSize GetPatchAddressAndSize02();
+};
 
 } // namespace d2client
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_09D_HPP_

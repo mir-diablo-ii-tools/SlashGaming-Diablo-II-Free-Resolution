@@ -49,6 +49,7 @@
 
 #include <sgd2mapi.hpp>
 #include "d2client_enable_800_new_stats_button_patch_1_09d.hpp"
+#include "d2client_enable_800_new_stats_button_patch_1_12a.hpp"
 #include "d2client_enable_800_new_stats_button_patch_1_13c.hpp"
 
 namespace sgd2fr {
@@ -74,6 +75,10 @@ Enable800NewStatsButtonPatch::InitPatch() {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_10: {
       return new Enable800NewStatsButtonPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return new Enable800NewStatsButtonPatch_1_12A();
     }
 
     case ::d2::GameVersion::k1_13C:

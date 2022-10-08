@@ -43,48 +43,49 @@
  *  work.
  */
 
-#include "d2client_set_resolution_from_options_menu_patch.hpp"
+#include "d2gfx_set_display_width_and_height_patch_1_12a.hpp"
 
 #include <stddef.h>
 
-#include <sgd2mapi.hpp>
-#include "d2client_set_resolution_from_options_menu_patch_1_09.hpp"
-#include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
+extern "C" {
+
+void __cdecl
+D2GFX_SetDisplayWidthAndHeightPatch_1_12A_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
-namespace d2client {
+namespace d2gfx {
 
-SetResolutionFromOptionsMenuPatch::SetResolutionFromOptionsMenuPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+SetDisplayWidthAndHeightPatch_1_12A::SetDisplayWidthAndHeightPatch_1_12A()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GFX_SetDisplayWidthAndHeightPatch_1_12A_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
-bool SetResolutionFromOptionsMenuPatch::IsApplicable() {
-  return true;
-}
-
-AbstractVersionPatch*
-SetResolutionFromOptionsMenuPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
+PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_12A::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10: {
-      return new SetResolutionFromOptionsMenuPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new SetResolutionFromOptionsMenuPatch_1_13C();
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x8590
+          ),
+          0x85A8 - 0x8590
+      );
     }
   }
 }
 
-} // namespace d2client
+} // namespace d2gfx
 } // namespace sgd2fr

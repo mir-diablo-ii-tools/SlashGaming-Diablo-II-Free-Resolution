@@ -87,6 +87,16 @@ GetGlobalEquipmentSlotLayoutPatch_1_09D::GetPatchAddressAndSize01() {
       );
     }
 
+    case ::d2::GameVersion::k1_12A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOrdinal(
+              ::d2::DefaultLibrary::kD2Common,
+              10030
+          ),
+          5
+      );
+    }
+
     case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOrdinal(

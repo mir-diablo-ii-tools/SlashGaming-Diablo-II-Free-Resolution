@@ -94,6 +94,19 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
       break;
     }
 
+    case ::d2::GameVersion::k1_12A: {
+      std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
+          ::d2::DefaultLibrary::kD2Client,
+          0xEC550
+      ).raw_address();
+
+      comparing_cel_file_base_address = reinterpret_cast<d2::CelFile*>(
+          raw_address
+      );
+
+      break;
+    }
+
     case ::d2::GameVersion::k1_13C: {
       std::intptr_t raw_address = ::mapi::GameAddress::FromOffset(
           ::d2::DefaultLibrary::kD2Client,

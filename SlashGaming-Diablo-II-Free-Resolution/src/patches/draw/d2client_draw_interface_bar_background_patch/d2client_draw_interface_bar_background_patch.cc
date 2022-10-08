@@ -74,6 +74,7 @@ DrawInterfaceBarBackgroundPatch::InitPatch() {
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
     case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_12A:
     case ::d2::GameVersion::k1_13C:
     case ::d2::GameVersion::k1_13D: {
       return new DrawInterfaceBarBackgroundPatch_1_09D();
