@@ -56,6 +56,14 @@ BOOL WINAPI DllMain(
     DWORD fdwReason,
     LPVOID lpvReserved
 ) {
+  BOOL is_disable_thread_library_calls_success;
+
+  is_disable_thread_library_calls_success =
+      DisableThreadLibraryCalls(hinstDLL);
+  if (!is_disable_thread_library_calls_success) {
+    return FALSE;
+  }
+
   switch (fdwReason) {
     case DLL_PROCESS_ATTACH: {
       Sgd2fml_Mod_OnLoadMpqs();
