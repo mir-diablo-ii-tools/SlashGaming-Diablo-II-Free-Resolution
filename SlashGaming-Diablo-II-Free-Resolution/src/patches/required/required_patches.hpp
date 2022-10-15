@@ -53,6 +53,7 @@
 #include "d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch.hpp"
 #include "d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch.hpp"
 #include "d2client_set_screen_shift_patch/d2client_set_screen_shift_patch.hpp"
+#include "d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch.hpp"
 #include "d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.hpp"
 #include "d2ddraw_set_bit_block_width_and_height_patch/d2ddraw_set_bit_block_width_and_height_patch.hpp"
 #include "d2ddraw_set_cel_display_left_and_right_patch/d2ddraw_set_cel_display_left_and_right_patch.hpp"
@@ -95,6 +96,9 @@ class RequiredPatches {
 
   d2client::SetScreenShiftPatch
       d2client_set_screen_shift_patch_;
+
+  d2client::SetTileCullingBoundPatch
+      d2client_set_tile_culling_bound_patch_;
 
   d2client::UnloadCelFileCollectionPatch
       d2client_unload_cel_file_collection_patch_;

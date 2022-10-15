@@ -55,6 +55,7 @@ void RequiredPatches::Apply() {
   this->d2client_set_resolution_from_options_menu_patch_.Apply();
   this->d2client_set_resolution_registry_patch_.Apply();
   this->d2client_set_screen_shift_patch_.Apply();
+  this->d2client_set_tile_culling_bound_patch_.Apply();
   this->d2client_unload_cel_file_collection_patch_.Apply();
   this->d2ddraw_set_bit_block_width_and_height_patch_.Apply();
   this->d2ddraw_set_cel_display_left_and_right_patch_.Apply();
@@ -84,6 +85,7 @@ void RequiredPatches::Remove() {
   this->d2ddraw_set_cel_display_left_and_right_patch_.Remove();
   this->d2ddraw_set_bit_block_width_and_height_patch_.Remove();
   this->d2client_unload_cel_file_collection_patch_.Remove();
+  this->d2client_set_tile_culling_bound_patch_.Remove();
   this->d2client_set_screen_shift_patch_.Remove();
   this->d2client_set_resolution_registry_patch_.Remove();
   this->d2client_set_resolution_from_options_menu_patch_.Remove();
