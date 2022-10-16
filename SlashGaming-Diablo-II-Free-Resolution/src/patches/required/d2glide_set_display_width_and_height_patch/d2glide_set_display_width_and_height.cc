@@ -67,23 +67,9 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
   ::d2::d2glide::SetDisplayWidth(*width);
   ::d2::d2glide::SetDisplayHeight(*height);
 
-  switch (resolution_mode) {
-    case 0: {
-      *glide_res_id = 7;
-      break;
-    }
-
-    case 1:
-    case 2: {
-      *glide_res_id = 8;
-      break;
-    }
-
-    default: {
-      *glide_res_id = 0x1000 + (resolution_mode - 3);
-      break;
-    }
-  }
+  // Values starting at 0x1000 will cause a jump to the custom code.
+  // This needs to be undone before getting the game resolution.
+  *glide_res_id = resolution_mode + 0x1000;
 
   if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
     d2dx_glide::SetCustomResolution(*width, *height);

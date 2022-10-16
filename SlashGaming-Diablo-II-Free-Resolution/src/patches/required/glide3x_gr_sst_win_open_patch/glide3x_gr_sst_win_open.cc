@@ -45,71 +45,94 @@
 
 #include "glide3x_gr_sst_win_open.hpp"
 
+#include <stddef.h>
+
+#include <tuple>
+
+#include <mdc/std/stdint.h>
 #include <sgd2mapi.hpp>
 
 #include "../../../helper/game_resolution.hpp"
 #include "../../../helper/glide3x_version.hpp"
 
 namespace sgd2fr::patches {
+namespace {
 
-void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
-    std::uint32_t glide_resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(
-      glide_resolution_mode - (0x1000 - 3)
-  );
+using ::mapi::GameAddress;
+using ::sgd2fr::Glide3xVersion;
+using ::sgd2fr::glide3x_version::GetRunning;
 
-  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
+static int32_t* GetHeightPtr() {
+  ptrdiff_t offset;
+  Glide3xVersion running_glide3x_version = GetRunning();
   switch (running_glide3x_version) {
     case Glide3xVersion::kSven1_4_4_21: {
-      width = *reinterpret_cast<std::int32_t**>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x1C9A0).raw_address()
-      );
-      height = *reinterpret_cast<std::int32_t**>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x1C82C).raw_address()
-      );
-
+      offset = 0x1C82C;
       break;
     }
 
     case Glide3xVersion::kSven1_4_6_1: {
-      width = *reinterpret_cast<std::int32_t**>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x1C870).raw_address()
-      );
-      height = *reinterpret_cast<std::int32_t**>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x1C830).raw_address()
-      );
-
+      offset = 0x1C830;
       break;
     }
 
     case Glide3xVersion::kSven1_4_8_3: {
-      width = *reinterpret_cast<std::int32_t**>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x1D870).raw_address()
-      );
-      height = *reinterpret_cast<std::int32_t**>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x1D830).raw_address()
-      );
-
+      offset = 0x1D830;
       break;
     }
 
     case Glide3xVersion::kNGlide3_10_0_658: {
-      width = reinterpret_cast<std::int32_t*>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x169DA4).raw_address()
-      );
-      height = reinterpret_cast<std::int32_t*>(
-          ::mapi::GameAddress::FromOffset(L"glide3x.dll", 0x169F04).raw_address()
-      );
-
+      offset = 0x169F04;
       break;
     }
   }
 
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
+  return *reinterpret_cast<int32_t**>(
+      GameAddress::FromOffset(L"glide3x.dll", offset).raw_address());
 }
 
-} // namespace sgd2fr::patches
+static int32_t* GetWidthPtr() {
+  ptrdiff_t offset;
+  Glide3xVersion running_glide3x_version = GetRunning();
+  switch (running_glide3x_version) {
+    case Glide3xVersion::kSven1_4_4_21: {
+      offset = 0x1C9A0;
+      break;
+    }
+
+    case Glide3xVersion::kSven1_4_6_1: {
+      offset = 0x1C870;
+      break;
+    }
+
+    case Glide3xVersion::kSven1_4_8_3: {
+      offset = 0x1D870;
+      break;
+    }
+
+    case Glide3xVersion::kNGlide3_10_0_658: {
+      offset = 0x169DA4;
+      break;
+    }
+  }
+
+  return *reinterpret_cast<int32_t**>(
+      GameAddress::FromOffset(L"glide3x.dll", offset).raw_address());
+}
+
+}  // namespace
+
+void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
+    std::uint32_t glide_resolution_mode,
+    std::int32_t* width,
+    std::int32_t* height) {
+  int32_t* width_ptr = GetWidthPtr();
+  int32_t* height_ptr = GetHeightPtr();
+
+  std::tuple<int, int> resolution =
+      GetIngameResolutionFromId(glide_resolution_mode - 0x1000);
+
+  std::tie(*width_ptr, *height_ptr) = resolution;
+}
+
+}  // namespace sgd2fr::patches
