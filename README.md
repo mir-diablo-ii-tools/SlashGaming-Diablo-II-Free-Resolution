@@ -7,7 +7,7 @@ This is a project aimed at modding Diablo II to support any resolution.
 - Allows limited customization of the UI.
 
 ## Compatibility
-- Supports 1.09D, 1.13C, 1.13D, 1.14C, and 1.14D.
+- Supports 1.09D, 1.10, 1.12A, 1.13C, 1.13D, 1.14C, and 1.14D.
 - Supports multiple video modes.
   - Supports standard GDI mode. Resolutions are unrestricted.
   - Supports standard DirectDraw and Direct3D modes, restricted to "standard" resolutions.
@@ -31,11 +31,10 @@ Servers that permit SGD2FreeRes:
 - [Resurgence](https://resurgence.slashgaming.net/): 640x480, 800x600, 856x480, 1068x600
 - [Project Diablo 2](https://www.projectdiablo2.com/): 640x480, 800x600, 856x480, 1068x600
 - [D2LOD.NET](http://d2lod.net/): 640x480, 800x600, 856x480, 1024x768, 1068x600
+- And more...
 
 ## Contribution
 SGD2FreeRes is coded in C++20. It currently is intended to compile with Visual Studio 2019.
-
-The linker needs to be configured to link the DLL to version.lib, MDCc.lib, MDCcpp98.lib and SGD2MAPI.lib.
 
 When you submit a pull request, you certify that the code in the pull request is AGPLv3+ compatible. You also certify that you have authorization to submit the pull request with the code changes. You certify that the merging of the pull request with those changes is authorized under the license terms of the AGPLv3+. Finally, you certify that the contribution is licensed under the AGPLv3+.
 
@@ -43,6 +42,9 @@ When you submit a pull request, you certify that the code in the pull request is
 - [/r/SlashDiablo](https://www.reddit.com/r/slashdiablo/): The community that got me started. The whole reason the project took off.
 - [PhrozenKeep](https://d2mods.info/): Community with plenty of information on Diablo II, modding, and resources.
 - [bolrog](https://github.com/bolrog): For providing an extended API to enable interfacing with the D2DX Glide wrapper.
+- [Jarcho](https://github.com/Jarcho): For adding support for 1.10 and 1.12A.
+- Szumigajowy: For supplying the starting point for the tile culling boundary patch.
+- Necrolis: All-round code editing genius. Provides good advice.
 
 ## Legal
 The project is licensed under the terms of the Affero General Public License, version 3 or higher, with exceptions. Components may be licensed under other terms, so check LICENSE for more details. If you wish to apply for a proprietary license exception, please contact Mir Drualga on the SlashDiablo Discord channel.

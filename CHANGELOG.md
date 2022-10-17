@@ -1,12 +1,25 @@
 # SGD2FreeRes Changelog
 
 ## SGD2FreeRes 3.1.0.0 (Not yet available)
-- Add support for 1.10.
 - Refactor and compile on Visual C++ 6.0.
   - Improve compatability with every Windows system that can play
     Diablo II.
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
+
+## SGD2FreeRes 3.0.3.0 (October 17, 2022)
+- Add support for 1.10 and 1.12A. Credits to Jarcho for the ports.
+- Fix a New Stats and New Skill button 800x600 alignment issue in
+  1.09D after using a waypoint.
+- Extend the tile culling limit, so that tiles stay rendered with
+  extended field of vision and perspective mode enabled. Credits to
+  Szumigajowy for the starting point to fix this issue.
+  - Note that this does not fix room rendering boundary issues. Rooms
+    beyond the current adjacent rooms remain unrendered.
+- Fix a Glide-only window resize issue when 800x600 isn't the second
+  resolution in the resolution list.
+- Fix a crash caused by switching resolutions when 640x480 is the only
+  resolution in the resolution list.
 
 ## SGD2FreeRes 3.0.2.6d (September 18, 2022)
 - Add Vahsify's "The Fury Within 1.02" server to the supported server
