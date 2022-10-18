@@ -43,56 +43,7 @@
  *  work.
  */
 
-#include "d2client_unload_cel_file_collection.h"
+#ifndef SGD2FR_CEL_FILE_CONFIG_CEL_FILE_CONFIG_JSON_FROZEN_H_
+#define SGD2FR_CEL_FILE_CONFIG_CEL_FILE_CONFIG_JSON_FROZEN_H_
 
-#include "../../../cel_file/cel_file_interface_bar_background.h"
-#include "../../../cel_file/cel_file_legacy.h"
-#include "../../../cel_file/cel_file_screen_background.h"
-#include "../../../cel_file/cel_file_screen_background_border.h"
-#include "../../../cel_file/cel_file_screen_border.h"
-#include "../../../compile_time_switch.h"
-
-#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
-#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
-  CelFile_InterfaceBarBackground_UnloadLeft();
-  CelFile_InterfaceBarBackground_UnloadLeftCenter();
-  CelFile_InterfaceBarBackground_UnloadRight();
-  CelFile_InterfaceBarBackground_UnloadRightCenter();
-
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
-
-  CelFile_LeftScreenBorder_UnloadLeft();
-  CelFile_LeftScreenBorder_UnloadTop();
-  CelFile_LeftScreenBorder_UnloadTopRight();
-  CelFile_LeftScreenBorder_UnloadBottom();
-  CelFile_LeftScreenBorder_UnloadBottomRight();
-
-  CelFile_RightScreenBorder_UnloadRight();
-  CelFile_RightScreenBorder_UnloadTop();
-  CelFile_RightScreenBorder_UnloadTopLeft();
-  CelFile_RightScreenBorder_UnloadBottom();
-  CelFile_RightScreenBorder_UnloadBottomLeft();
-
-  CelFile_ScreenBorderRibbon_UnloadHorizontal();
-  CelFile_ScreenBorderRibbon_UnloadVertical();
-
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-  CelFile_LeftScreenBackground_Unload();
-  CelFile_RightScreenBackground_Unload();
-
-  CelFile_LeftScreenBackgroundBorder_Unload();
-  CelFile_RightScreenBackgroundBorder_Unload();
-
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
-
-  CelFile_LeftScreenBorder_Unload();
-  CelFile_RightScreenBorder_Unload();
-
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-  CelFile_VanillaScreenBorder_Unload();
-}
+#endif /* SGD2FR_CEL_FILE_CONFIG_CEL_FILE_CONFIG_JSON_FROZEN_H_ */

@@ -50,7 +50,7 @@
 
 namespace sgd2fr {
 
-extern "C" void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground();
+void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground();
 
 } // namespace sgd2fr
 

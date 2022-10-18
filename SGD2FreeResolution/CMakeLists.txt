@@ -79,7 +79,13 @@ set(SRC_CEL_FILE
 )
 
 set(SRC_CEL_FILE_CONFIG
+    "src/cel_file_config.c"
+    "src/cel_file_config.h"
+
+    "src/cel_file_config/cel_file_config_json_frozen_read.c"
+
     "src/cel_file_config/cel_file_config_draw_setting.h"
+    "src/cel_file_config/cel_file_config_json_frozen.h"
     "src/cel_file_config/cel_file_config_json_key.h"
     "src/cel_file_config/cel_file_config_struct.h"
 )
@@ -117,6 +123,7 @@ set(SRC_PATCHES_DRAW_PATCHES
     # Sources
     "src/patches/draw/draw_patches.cc"
 
+    "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background.c"
     "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background.cc"
     "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.cc"
     "src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d.cc"

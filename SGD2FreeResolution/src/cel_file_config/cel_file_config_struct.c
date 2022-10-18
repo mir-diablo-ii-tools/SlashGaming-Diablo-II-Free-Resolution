@@ -43,56 +43,51 @@
  *  work.
  */
 
-#include "d2client_unload_cel_file_collection.h"
+#include "cel_file_config_struct.h"
 
-#include "../../../cel_file/cel_file_interface_bar_background.h"
-#include "../../../cel_file/cel_file_legacy.h"
-#include "../../../cel_file/cel_file_screen_background.h"
-#include "../../../cel_file/cel_file_screen_background_border.h"
-#include "../../../cel_file/cel_file_screen_border.h"
-#include "../../../compile_time_switch.h"
+#include "../cel_file/cel_file_interface_bar_background.h"
 
-#if !defined(COMPILE_TIME_CEL_FILE_PATH_VERSION)
-#error COMPILE_TIME_CEL_FILE_PATH_VERSION not defined.
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
+const struct CelFileConfig CelFileConfig_kDefault[] = {
+    /* interface_bar_background_left */
+    {
+        CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_PATH_DEFAULT,
 
-void __cdecl Sgd2fr_D2Client_UnloadCelFileCollection() {
-  CelFile_InterfaceBarBackground_UnloadLeft();
-  CelFile_InterfaceBarBackground_UnloadLeftCenter();
-  CelFile_InterfaceBarBackground_UnloadRight();
-  CelFile_InterfaceBarBackground_UnloadRightCenter();
+        /* CelFileConfig_DrawSetting */
+        {
+            /* CelFileConfig_OriginPoint */
+            {
+                CelFileConfig_PointType_kPercent,
+                { 0, CelFileConfig_kPercent100 },
+            },
 
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 2
+            /* CelFileConfig_DestPosition */
+            {
+                { 0, CelFileConfig_kPercent100 },
+                { 117 + 48, 0 }
+            },
 
-  CelFile_LeftScreenBorder_UnloadLeft();
-  CelFile_LeftScreenBorder_UnloadTop();
-  CelFile_LeftScreenBorder_UnloadTopRight();
-  CelFile_LeftScreenBorder_UnloadBottom();
-  CelFile_LeftScreenBorder_UnloadBottomRight();
+            /* width and height */
+            20,
+            47
+        }
+    },
 
-  CelFile_RightScreenBorder_UnloadRight();
-  CelFile_RightScreenBorder_UnloadTop();
-  CelFile_RightScreenBorder_UnloadTopLeft();
-  CelFile_RightScreenBorder_UnloadBottom();
-  CelFile_RightScreenBorder_UnloadBottomLeft();
+    /* interface_bar_background_left_center */
+    {
+        CEL_FILE_INTERFACE_BAR_BACKGROUND_LEFT_CENTER_PATH_DEFAULT,
 
-  CelFile_ScreenBorderRibbon_UnloadHorizontal();
-  CelFile_ScreenBorderRibbon_UnloadVertical();
+        /* CelFileConfig_RepeatDrawSetting */
+        {
+            CelFileConfig_RepeatAlignHorizontal_kLeft,
+            CelFileConfig_RepeatAlignVertical_kBottom,
 
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-  CelFile_LeftScreenBackground_Unload();
-  CelFile_RightScreenBackground_Unload();
-
-  CelFile_LeftScreenBackgroundBorder_Unload();
-  CelFile_RightScreenBackgroundBorder_Unload();
-
-#if COMPILE_TIME_CEL_FILE_PATH_VERSION == 3
-
-  CelFile_LeftScreenBorder_Unload();
-  CelFile_RightScreenBorder_Unload();
-
-#endif /* COMPILE_TIME_CEL_FILE_PATH_VERSION */
-
-  CelFile_VanillaScreenBorder_Unload();
-}
+            /* CelFileConfig_DestPosition */
+            {
+                { 0, CelFileConfig_kPercent100 },
+                { (117 + 48) + 20, 0 }
+            },
+            221,
+            47
+        }
+    },
+};

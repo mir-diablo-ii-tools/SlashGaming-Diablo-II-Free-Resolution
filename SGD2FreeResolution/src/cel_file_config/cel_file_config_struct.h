@@ -75,4 +75,14 @@ struct CelFileConfig {
   struct CelFileConfig_CelFile right_screen_border;
 };
 
+#ifdef __cplusplus
+extern "C" {
+#endif /* __cplusplus */
+
+extern const struct CelFileConfig CelFileConfig_kDefault;
+
+#ifdef __cplusplus
+} /* extern "C" */
+#endif /* __cplusplus */
+
 #endif /* SGD2FR_CEL_FILE_CONFIG_CEL_FILE_CONFIG_STRUCT_H_ */
