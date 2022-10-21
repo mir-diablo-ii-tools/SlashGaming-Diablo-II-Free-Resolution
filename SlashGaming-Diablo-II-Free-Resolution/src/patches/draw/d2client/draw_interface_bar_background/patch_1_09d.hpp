@@ -43,26 +43,32 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_HPP_
-#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_1_09D_HPP_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DrawInterfaceBarBackgroundPatch
-    : public AbstractMultiversionPatch {
+class DrawInterfaceBarBackgroundPatch_1_09D
+    : public AbstractVersionPatch {
  public:
-  DrawInterfaceBarBackgroundPatch();
+  DrawInterfaceBarBackgroundPatch_1_09D();
 
  private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
+  enum {
+    kPatchesCount = 1
+  };
+
+  ::mapi::GamePatch patches_[kPatchesCount];
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_HPP_
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_1_09D_HPP_

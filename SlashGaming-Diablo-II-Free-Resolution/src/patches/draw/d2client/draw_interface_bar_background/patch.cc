@@ -43,15 +43,52 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_HPP_
-#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_HPP_
+#include "patch.hpp"
+
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
+#include "patch_lod_1_14c.hpp"
+#include "patch_lod_1_14d.hpp"
 
 namespace sgd2fr {
+namespace d2client {
 
-extern "C" void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground();
+DrawInterfaceBarBackgroundPatch::DrawInterfaceBarBackgroundPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
+bool DrawInterfaceBarBackgroundPatch::IsApplicable() {
+  return true;
+}
+
+AbstractVersionPatch*
+DrawInterfaceBarBackgroundPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      return new DrawInterfaceBarBackgroundPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return new DrawInterfaceBarBackgroundPatch_Lod1_14C();
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DrawInterfaceBarBackgroundPatch_Lod1_14D();
+    }
+  }
+}
+
+} // namespace d2client
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_HPP_

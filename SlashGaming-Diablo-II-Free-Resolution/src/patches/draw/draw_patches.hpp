@@ -47,7 +47,7 @@
 #define SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
 
 #include "d2client/disable_scroll_of_inifuss_rect/patch.hpp"
-#include "d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.hpp"
+#include "d2client/draw_interface_bar_background/patch.hpp"
 #include "d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.hpp"
 
 namespace sgd2fr {

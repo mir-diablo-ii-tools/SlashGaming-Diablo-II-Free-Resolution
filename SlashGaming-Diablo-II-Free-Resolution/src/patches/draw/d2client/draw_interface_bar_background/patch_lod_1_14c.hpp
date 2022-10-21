@@ -43,59 +43,32 @@
  *  work.
  */
 
-#include "d2client_draw_interface_bar_background_patch_lod_1_14d.hpp"
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14C_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14C_HPP_
 
-#include <stddef.h>
-
-extern "C" {
-
-void __cdecl
-D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14D_InterceptionFunc01();
-
-} // extern "C"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-DrawInterfaceBarBackgroundPatch_Lod1_14D
-::DrawInterfaceBarBackgroundPatch_Lod1_14D()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  // Draw the new interface bar background.
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14D_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
+class DrawInterfaceBarBackgroundPatch_Lod1_14C
+    : public AbstractVersionPatch {
+ public:
+  DrawInterfaceBarBackgroundPatch_Lod1_14C();
 
-PatchAddressAndSize
-DrawInterfaceBarBackgroundPatch_Lod1_14D::GetPatchAddressAndSize01() {
-  /*
-  * How to find patch locations:
-  * 1. Search for the locations where the 7-bit null-terminated ASCII
-  *    text "Panel\CtrlPnl7" is used. This text should be in a Read
-  *    Only section.
-  * 2. Scroll up to the top of the function.
-  */
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x983D9
-          ),
-          0x983DE - 0x983D9
-      );
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
 } // namespace d2client
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14C_HPP_

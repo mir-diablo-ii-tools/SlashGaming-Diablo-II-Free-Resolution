@@ -43,12 +43,12 @@
  *  work.
  */
 
-#include "d2client_draw_interface_bar_background.hpp"
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
-#include "../../../helper/cel_file_collection.hpp"
-#include "../../../helper/game_resolution.hpp"
+#include "../../../../config.hpp"
+#include "../../../../helper/cel_file_collection.hpp"
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr {
 namespace {
