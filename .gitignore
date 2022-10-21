@@ -1,46 +1,117 @@
+# Visual C++ 6.0 Data Files
+*.ncb
+*.opt
+*.positions
+*.wwdb
+
+# Binaries
 *.a
 *.dll
 *.exe
+*.lib
 *.o
 *.obj
-*.lib
-*.def
-*.dep
-*.bin
+*.so
 
-*.cfg
-*.json
+# CMake
+build/
+out/
+_deps/
+CMakeSettings.json
+*.dll.embed.manifest
+*.dll.intermediate.manifest
+*.exe.intermediate.manifest
+*.lastbuildstate
+*.vcxprojResolveAssemblyReference.cache
+*_manifest.rc
 
-*.log
-*.tlog
+BuildLog.htm
+CMakeASM_NASMCompiler.cmake
+CMakeCCompiler.cmake
+CMakeCCompilerId.c
+CMakeCXXCompiler.cmake
+CMakeCXXCompilerId.cpp
+CMakeDetermineCompilerABI_C.bin
+CMakeDetermineCompilerABI_CXX.bin
+CMakeDirectoryInformation.cmake
+CMakeRCCompiler.cmake
+CMakeSystem.cmake
+CMakeCache.txt
+DependInfo.cmake
+INSTALL_force.rule
+Makefile.cmake
+RC.includecache
+TargetDirectories.txt
+VCTargetsPath.txt
+
+build.make
+cmake.check_cache
+cmake_clean.cmake
+cmake_install.cmake
+compiler_depend.make
+compiler_depend.ts
+depend.internal
+depend.make
+feature_tests.bin
+feature_tests.cxx
+flags.make
+generate.stamp
+generate.stamp.depend
+generate.stamp.list
+generate.stamp.rule
+link.txt
+linklibs.rsp
+nasm.props
+mt.dep
+objects1.rsp
+progress.make
+progress.marks
+
+# Debug / Intermediate Files
+*.ipch
+*.idb
+*.ilk
+*.iobj
+*.ipdb
+*.exp
+*.pch
+*.pdb
+*.recipe
 *.vcxproj.FileListAbsolute.txt
 
-*.cbp
-*.layout
-*.depend
-*.mk
-*.project
-*.workspace
+# Resource Files
+*.aps
+*.res
+
+# Logs
+*.log
+*.plg
+*.tlog
+
+# Thumbnails
+*.DS_STORE
+*.db
+
+# MinGW Makefiles
+*.cpp.obj.d
+
 Makefile
+Makefile2
 
-*.sln
-*.vcxproj
-*.vcxproj.filters
-*.vcxproj.user
+# Visual Studio 2010 Solution / Project Files
+.vs
 
-*.vcxproj
-*.filters
-*.sdf
-*.sln
-*.suo
+# Visual Studio Code Files
+.vscode/
 
-*/CMakeFiles/*
-CMakeCache.txt
-*.cmake
+# Visual Studio Code Analysis
+CodeAnalysisResultManifest.txt
+*.lastcodeanalysissucceeded
+*.nativecodeanalysis.all.xml
+*.nativecodeanalysis.sarif
+*.nativecodeanalysis.xml
 
-.build-debug/*
-.codelite/*
-
-.vs/
-Debug/
-Release/
+# Compression Formats
+*.7z
+*.rar
+*.zip
