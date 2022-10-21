@@ -43,12 +43,12 @@
  *  work.
  */
 
-#include "d2client_disable_scroll_of_inifuss_rect_patch.hpp"
+#include "patch.hpp"
 
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "d2client_disable_scroll_of_inifuss_rect_patch_1_07.hpp"
+#include "patch_1_07.hpp"
 
 namespace sgd2fr {
 namespace d2client {

@@ -43,12 +43,12 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
-#define SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -71,4 +71,4 @@ class DisableScrollOfInifussRectPatch_1_07
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
