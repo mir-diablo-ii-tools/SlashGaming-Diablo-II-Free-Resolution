@@ -81,10 +81,10 @@ void __cdecl Sgd2fr_D2Client_SetTileCullingBound(
   RECT* tile_culling_rect = &culling_spec->tile_culling_window;
   SetRect(
       tile_culling_rect,
-      -80,
-      -80,
-      GetGeneralDisplayWidth() + 80,
-      GetGeneralDisplayHeight() + 80);
+      -160,
+      -160,
+      GetGeneralDisplayWidth() + 160,
+      GetGeneralDisplayHeight() + 160);
   if (GetIsPerspectiveModeEnabled()) {
     tile_culling_rect->top -= 160;
     tile_culling_rect->left -= 320;

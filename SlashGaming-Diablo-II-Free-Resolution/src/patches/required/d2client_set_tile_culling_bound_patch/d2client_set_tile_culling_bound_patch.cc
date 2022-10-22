@@ -90,9 +90,13 @@ AbstractVersionPatch* SetTileCullingBoundPatch::InitPatch() {
     case GameVersion::k1_10Beta:
     case GameVersion::k1_10SBeta:
     case GameVersion::k1_10:
+    case GameVersion::kClassic1_14A:
     case GameVersion::kLod1_14A:
+    case GameVersion::kClassic1_14B:
     case GameVersion::kLod1_14B:
+    case GameVersion::kClassic1_14C:
     case GameVersion::kLod1_14C:
+    case GameVersion::kClassic1_14D:
     case GameVersion::kLod1_14D: {
       return new SetTileCullingBoundPatch_1_07();
     }
