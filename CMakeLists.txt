@@ -41,7 +41,7 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.24)
 
 # Name of the project, also is the name of the file
 project(SGD2FreeRes)
@@ -97,9 +97,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/patches/draw/d2client/draw_interface_bar_background/patch_lod_1_14c.cpp"
     "${PROJECT_DIR}/src/patches/draw/d2client/draw_interface_bar_background/patch_lod_1_14d.cpp"
     "${PROJECT_DIR}/src/patches/draw/d2client/draw_interface_bar_background/replacement.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d.cc"
     "${PROJECT_DIR}/src/patches/draw/draw_patches.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.cc"
@@ -236,7 +233,6 @@ set(NASM_FILES
     "${PROJECT_DIR}/src/patches/draw/d2client/draw_interface_bar_background/patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/draw/d2client/draw_interface_bar_background/patch_lod_1_14c_shim.asm"
     "${PROJECT_DIR}/src/patches/draw/d2client/draw_interface_bar_background/patch_lod_1_14d_shim.asm"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_12a_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_13c_shim.asm"
@@ -317,6 +313,8 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
     "$<$<COMPILE_LANGUAGE:C>:${PCH_C_FILES}>"
     "$<$<COMPILE_LANGUAGE:CXX>:${PCH_CXX_FILES}>"
 )
+
+add_subdirectory(${PROJECT_DIR})
 
 add_dependencies(${PROJECT_NAME}
     libMDCc
