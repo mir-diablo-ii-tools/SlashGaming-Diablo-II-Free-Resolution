@@ -41,6 +41,11 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(disable_scroll_of_inifuss_rect)
-add_subdirectory(draw_interface_bar_background)
-add_subdirectory(draw_screen_background)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "patch.cc"
+        "patch.hpp"
+
+        "patch_1_07.cc"
+        "patch_1_07.hpp"
+)
