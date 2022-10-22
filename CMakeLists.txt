@@ -41,7 +41,7 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-cmake_minimum_required(VERSION 3.11)
+cmake_minimum_required(VERSION 3.24)
 
 # Name of the project, also is the name of the file
 project(SGD2FreeRes)
@@ -90,17 +90,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_disable_scroll_of_inifuss_rect_patch/d2client_disable_scroll_of_inifuss_rect_patch.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_disable_scroll_of_inifuss_rect_patch/d2client_disable_scroll_of_inifuss_rect_patch_1_07.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14c.cpp"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14d.cpp"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch.cc"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d.cc"
-    "${PROJECT_DIR}/src/patches/draw/draw_patches.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d.cc"
@@ -233,10 +222,6 @@ set(CPP_FILES
 
 set(NASM_FILES
     "${PROJECT_DIR}/src/helper/cel_file_collection_asm.asm"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_1_09d_shim.asm"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14c_shim.asm"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_interface_bar_background_patch/d2client_draw_interface_bar_background_patch_lod_1_14d_shim.asm"
-    "${PROJECT_DIR}/src/patches/draw/d2client_draw_screen_background_patch/d2client_draw_screen_background_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_12a_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch_1_13c_shim.asm"
@@ -318,6 +303,8 @@ target_precompile_headers(${PROJECT_NAME} PRIVATE
     "$<$<COMPILE_LANGUAGE:CXX>:${PCH_CXX_FILES}>"
 )
 
+add_subdirectory(${PROJECT_DIR})
+
 add_dependencies(${PROJECT_NAME}
     libMDCc
     libMDCcpp98
@@ -330,6 +317,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     libSGD2MAPI
     rapidjson
     mjsoni)
+get_target_property(SOURCE_FILES ${PROJECT_NAME} SOURCES)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 
 # MSVC options

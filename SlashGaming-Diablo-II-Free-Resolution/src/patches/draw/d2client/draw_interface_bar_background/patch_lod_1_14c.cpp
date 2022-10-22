@@ -43,22 +43,22 @@
  *  work.
  */
 
-#include "d2client_draw_interface_bar_background_patch_1_09d.hpp"
+#include "patch_lod_1_14c.hpp"
 
 #include <stddef.h>
 
 extern "C" {
 
 void __cdecl
-D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01();
+D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14C_InterceptionFunc01();
 
 } // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-DrawInterfaceBarBackgroundPatch_1_09D
-::DrawInterfaceBarBackgroundPatch_1_09D()
+DrawInterfaceBarBackgroundPatch_Lod1_14C
+::DrawInterfaceBarBackgroundPatch_Lod1_14C()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Draw the new interface bar background.
   PatchAddressAndSize patch_address_and_size_01 =
@@ -66,14 +66,14 @@ DrawInterfaceBarBackgroundPatch_1_09D
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
-      &D2Client_DrawInterfaceBarBackgroundPatch_1_09D_InterceptionFunc01,
+      &D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14C_InterceptionFunc01,
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
 }
 
 PatchAddressAndSize
-DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
+DrawInterfaceBarBackgroundPatch_Lod1_14C::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
   * 1. Search for the locations where the 7-bit null-terminated ASCII
@@ -85,53 +85,13 @@ DrawInterfaceBarBackgroundPatch_1_09D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
+    case ::d2::GameVersion::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x5909C
+              0x94866
           ),
-          0x590A1 - 0x5909C
-      );
-    }
-
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x5F66C
-          ),
-          0x5F671 - 0x5F66C
-      );
-    }
-
-    case ::d2::GameVersion::k1_12A: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x82237
-          ),
-          0x8223C - 0x82237
-      );
-    }
-
-    case ::d2::GameVersion::k1_13C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x27297
-          ),
-          0x2729C - 0x27297
-      );
-    }
-
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x6D387
-          ),
-          0x6D38C - 0x6D387
+          0x9486C - 0x94866
       );
     }
   }

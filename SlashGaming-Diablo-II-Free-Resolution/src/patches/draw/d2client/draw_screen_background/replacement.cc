@@ -43,17 +43,17 @@
  *  work.
  */
 
-#include "d2client_draw_screen_background.hpp"
+#include "replacement.hpp"
 
 #include <windows.h>
 
 #include <mdc/error/exit_on_error.hpp>
 #include <mdc/wchar_t/filew.h>
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
-#include "../../../helper/cel_file_collection.hpp"
-#include "../../../helper/game_resolution.hpp"
-#include "../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
+#include "../../../../config.hpp"
+#include "../../../../helper/cel_file_collection.hpp"
+#include "../../../../helper/game_resolution.hpp"
+#include "../../../../sgd2mapi_extension/sgd2mapi_extension.hpp"
 
 namespace sgd2fr {
 namespace {

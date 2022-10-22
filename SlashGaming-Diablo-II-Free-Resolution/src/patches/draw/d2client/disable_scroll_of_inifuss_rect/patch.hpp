@@ -43,15 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_HPP_
-#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_HPP_
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
+namespace d2client {
 
-extern "C" void __cdecl Sgd2fr_D2Client_DrawScreenBackground();
+class DisableScrollOfInifussRectPatch
+    : public AbstractMultiversionPatch {
+ public:
+  DisableScrollOfInifussRectPatch();
 
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
+
+} // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_HPP_
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_HPP_

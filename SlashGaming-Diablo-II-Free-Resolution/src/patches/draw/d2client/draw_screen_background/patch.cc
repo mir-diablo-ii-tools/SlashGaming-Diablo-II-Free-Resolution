@@ -43,32 +43,44 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14D_HPP_
-#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14D_HPP_
+#include "patch.hpp"
+
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DrawInterfaceBarBackgroundPatch_Lod1_14D
-    : public AbstractVersionPatch {
- public:
-  DrawInterfaceBarBackgroundPatch_Lod1_14D();
+DrawScreenBackgroundPatch::DrawScreenBackgroundPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+bool DrawScreenBackgroundPatch::IsApplicable() {
+  return true;
+}
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+AbstractVersionPatch*
+DrawScreenBackgroundPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DrawScreenBackgroundPatch_1_09D();
+    }
+  }
+}
 
 } // namespace d2client
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14D_HPP_

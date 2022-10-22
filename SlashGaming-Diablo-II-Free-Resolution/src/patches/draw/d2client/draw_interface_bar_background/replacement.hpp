@@ -43,59 +43,15 @@
  *  work.
  */
 
-#include "d2client_draw_interface_bar_background_patch_lod_1_14c.hpp"
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_REPLACEMENT_HPP_
 
-#include <stddef.h>
-
-extern "C" {
-
-void __cdecl
-D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14C_InterceptionFunc01();
-
-} // extern "C"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr {
-namespace d2client {
 
-DrawInterfaceBarBackgroundPatch_Lod1_14C
-::DrawInterfaceBarBackgroundPatch_Lod1_14C()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  // Draw the new interface bar background.
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2Client_DrawInterfaceBarBackgroundPatch_Lod1_14C_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
+extern "C" void __cdecl Sgd2fr_D2Client_DrawInterfaceBarBackground();
 
-PatchAddressAndSize
-DrawInterfaceBarBackgroundPatch_Lod1_14C::GetPatchAddressAndSize01() {
-  /*
-  * How to find patch locations:
-  * 1. Search for the locations where the 7-bit null-terminated ASCII
-  *    text "Panel\CtrlPnl7" is used. This text should be in a Read
-  *    Only section.
-  * 2. Scroll up to the top of the function.
-  */
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x94866
-          ),
-          0x9486C - 0x94866
-      );
-    }
-  }
-}
-
-} // namespace d2client
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_REPLACEMENT_HPP_

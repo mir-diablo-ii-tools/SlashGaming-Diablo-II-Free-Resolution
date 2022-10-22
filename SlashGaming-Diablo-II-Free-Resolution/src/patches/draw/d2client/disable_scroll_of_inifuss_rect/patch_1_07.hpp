@@ -43,20 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14C_HPP_
-#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14C_HPP_
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DrawInterfaceBarBackgroundPatch_Lod1_14C
+class DisableScrollOfInifussRectPatch_1_07
     : public AbstractVersionPatch {
  public:
-  DrawInterfaceBarBackgroundPatch_Lod1_14C();
+  DisableScrollOfInifussRectPatch_1_07();
 
  private:
   enum {
@@ -71,4 +71,4 @@ class DrawInterfaceBarBackgroundPatch_Lod1_14C
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_D2CLIENT_DRAW_INTERFACE_BAR_BACKGROUND_PATCH_LOD_1_14C_HPP_
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DISABLE_SCROLL_OF_INIFUSS_RECT_PATCH_1_07_HPP_

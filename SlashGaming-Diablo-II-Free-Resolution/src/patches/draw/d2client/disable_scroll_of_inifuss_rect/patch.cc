@@ -43,26 +43,59 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_HPP_
-#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_HPP_
+#include "patch.hpp"
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "patch_1_07.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DrawScreenBackgroundPatch
-    : public AbstractMultiversionPatch {
- public:
-  DrawScreenBackgroundPatch();
+DisableScrollOfInifussRectPatch::DisableScrollOfInifussRectPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
+bool DisableScrollOfInifussRectPatch::IsApplicable() {
+  return true;
+}
+
+AbstractVersionPatch* DisableScrollOfInifussRectPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_11B:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kClassic1_14A:
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kClassic1_14B:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kClassic1_14C:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kClassic1_14D:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DisableScrollOfInifussRectPatch_1_07();
+    }
+  }
+}
 
 } // namespace d2client
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_D2CLIENT_DRAW_SCREEN_BACKGROUND_PATCH_HPP_

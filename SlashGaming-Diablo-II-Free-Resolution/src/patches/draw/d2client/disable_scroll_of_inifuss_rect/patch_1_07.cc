@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_disable_scroll_of_inifuss_rect_patch_1_07.hpp"
+#include "patch_1_07.hpp"
 
 #include <stddef.h>
 
