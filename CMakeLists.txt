@@ -317,6 +317,7 @@ target_link_libraries(${PROJECT_NAME} PUBLIC
     libSGD2MAPI
     rapidjson
     mjsoni)
+get_target_property(SOURCE_FILES ${PROJECT_NAME} SOURCES)
 source_group(TREE ${CMAKE_CURRENT_SOURCE_DIR} FILES ${SOURCE_FILES})
 
 # MSVC options
