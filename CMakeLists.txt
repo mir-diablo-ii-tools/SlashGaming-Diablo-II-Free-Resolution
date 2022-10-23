@@ -90,9 +90,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position.cc"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.cc"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_09d.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_13c.cc"
@@ -193,7 +190,6 @@ set(CPP_FILES
 
 set(NASM_FILES
     "${PROJECT_DIR}/src/helper/cel_file_collection_asm.asm"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch_1_13c_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch_lod_1_14c_shim.asm"

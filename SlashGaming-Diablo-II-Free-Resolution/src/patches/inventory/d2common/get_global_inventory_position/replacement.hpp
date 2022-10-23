@@ -43,44 +43,19 @@
  *  work.
  */
 
-#include "d2common_get_global_inventory_position_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_REPLACEMENT_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2common_get_global_inventory_position_patch_1_09d.hpp"
 
-namespace sgd2fr {
-namespace d2common {
+namespace sgd2fr::patches {
 
-GetGlobalInventoryPositionPatch::GetGlobalInventoryPositionPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalInventoryPosition(
+    std::uint32_t inventory_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::PositionalRectangle* out_position
+);
 
-bool GetGlobalInventoryPositionPatch::IsApplicable() {
-  return true;
-}
+} // namespace sgd2fr::patches
 
-AbstractVersionPatch*
-GetGlobalInventoryPositionPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new GetGlobalInventoryPositionPatch_1_09D();
-    }
-  }
-}
-
-} // namespace d2common
-} // namespace sgd2fr
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_REPLACEMENT_HPP_

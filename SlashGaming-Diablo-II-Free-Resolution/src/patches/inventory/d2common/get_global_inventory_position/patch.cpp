@@ -43,98 +43,41 @@
  *  work.
  */
 
-#include "d2common_get_global_inventory_position_patch_1_09d.hpp"
+#include "patch.hpp"
 
 #include <stddef.h>
 
-extern "C" {
-
-void __cdecl
-D2Common_GetGlobalInventoryPositionPatch_1_09D_InterceptionFunc01();
-
-} // extern "C"
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2common {
 
-GetGlobalInventoryPositionPatch_1_09D
-::GetGlobalInventoryPositionPatch_1_09D()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kJump,
-      &D2Common_GetGlobalInventoryPositionPatch_1_09D_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
+GetGlobalInventoryPositionPatch::GetGlobalInventoryPositionPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-PatchAddressAndSize
-GetGlobalInventoryPositionPatch_1_09D::GetPatchAddressAndSize01() {
+bool GetGlobalInventoryPositionPatch::IsApplicable() {
+  return true;
+}
+
+AbstractVersionPatch*
+GetGlobalInventoryPositionPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10635
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::k1_12A: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10279
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::k1_13C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              11012
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10770
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::kLod1_14C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Common,
-              0x25E280
-          ),
-          5
-      );
-    }
-
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Common,
-              0x25C180
-          ),
-          5
-      );
+      return new GetGlobalInventoryPositionPatch_1_09D();
     }
   }
 }

@@ -41,8 +41,15 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(get_global_belt_record)
-add_subdirectory(get_global_belt_slot_position)
-add_subdirectory(get_global_equipment_slot_layout)
-add_subdirectory(get_global_inventory_grid_layout)
-add_subdirectory(get_global_inventory_position)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "patch.cpp"
+        "patch.hpp"
+
+        "patch_1_09d.cpp"
+        "patch_1_09d.hpp"
+        "patch_1_09d_shim_d2common_get_global_inventory_position.asm"
+
+        "replacement.cpp"
+        "replacement.hpp"
+)
