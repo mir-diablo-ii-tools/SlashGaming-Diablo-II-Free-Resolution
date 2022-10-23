@@ -177,7 +177,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_nglide_3_10_0_658.cc"
     "${PROJECT_DIR}/src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_4_21.cc"
     "${PROJECT_DIR}/src/patches/required/glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch_sven_1_4_8_3.cc"
-    "${PROJECT_DIR}/src/patches/required/required_patches.cc"
     "${PROJECT_DIR}/src/patches/patches.cc"
     "${PROJECT_DIR}/src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
     "${PROJECT_DIR}/src/sgd2mapi_extension/game_variable/d2gfx/is_perspective_mode_enabled.cpp"
