@@ -43,20 +43,44 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_HPP_
-#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_HPP_
+#include "patch.hpp"
+
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
+namespace d2common {
 
-extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
-    std::uint32_t belt_record_index,
-    std::uint32_t inventory_arrange_mode,
-    ::d2::PositionalRectangle* out_belt_slot,
-    std::uint32_t belt_slot_index
-);
+GetGlobalBeltSlotPositionPatch::GetGlobalBeltSlotPositionPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
-} // namespace sgd2fr::patches
+bool GetGlobalBeltSlotPositionPatch::IsApplicable() {
+  return true;
+}
 
-#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_HPP_
+AbstractVersionPatch*
+GetGlobalBeltSlotPositionPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new GetGlobalBeltSlotPositionPatch_1_09D();
+    }
+  }
+}
+
+} // namespace d2common
+} // namespace sgd2fr

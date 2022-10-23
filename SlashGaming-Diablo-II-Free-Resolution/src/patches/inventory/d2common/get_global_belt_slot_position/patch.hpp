@@ -43,32 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2common {
 
-class GetGlobalBeltSlotPositionPatch_1_09D
-    : public AbstractVersionPatch {
+class GetGlobalBeltSlotPositionPatch
+    : public AbstractMultiversionPatch {
  public:
-  GetGlobalBeltSlotPositionPatch_1_09D();
+  GetGlobalBeltSlotPositionPatch();
 
  private:
-  enum {
-    kPatchesCount = 1
-  };
-
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2common
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_PATCH_HPP_

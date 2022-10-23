@@ -43,44 +43,55 @@
  *  work.
  */
 
-#include "d2common_get_global_belt_slot_position_patch.hpp"
+#include "replacement.hpp"
 
-#include <stddef.h>
+#include <windows.h>
 
 #include <sgd2mapi.hpp>
-#include "d2common_get_global_belt_slot_position_patch_1_09d.hpp"
+#include "../../../../config.hpp"
+#include "../../../../helper/cel_file_collection.hpp"
+#include "../../../../helper/game_resolution.hpp"
+#include "../../../../helper/position_realignment.hpp"
 
-namespace sgd2fr {
-namespace d2common {
+namespace sgd2fr::patches {
 
-GetGlobalBeltSlotPositionPatch::GetGlobalBeltSlotPositionPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
+    std::uint32_t belt_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::PositionalRectangle* out_belt_slot,
+    std::uint32_t belt_slot_index
+) {
+  // Original code, copies the values of the specified Global Belt Slot
+  // into the output Belt Slot.
+  unsigned int source_inventory_arrange_mode =
+      GetSourceInventoryArrangeMode();
 
-bool GetGlobalBeltSlotPositionPatch::IsApplicable() {
-  return true;
-}
+  ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
 
-AbstractVersionPatch*
-GetGlobalBeltSlotPositionPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
+  ::d2::PositionalRectangle_View global_belt_slot_position(
+      global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
+          .GetSlotPositions()[belt_slot_index]
+  );
+
+  ::d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
+  out_belt_slot_wrapper.AssignMembers(global_belt_slot_position);
+
+  // Do not adjust positions if the entries are empty, which use value 0.
+  constexpr int entry_empty_value = 0;
+
+  if (out_belt_slot_wrapper.GetLeft() == entry_empty_value
+      && out_belt_slot_wrapper.GetRight() == entry_empty_value
+      && out_belt_slot_wrapper.GetTop() == entry_empty_value
+      && out_belt_slot_wrapper.GetBottom() == entry_empty_value
+  ) {
+    return;
   }
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new GetGlobalBeltSlotPositionPatch_1_09D();
-    }
-  }
+  // Adjustment code to ensure that the objects appear in the correct
+  // position.
+  RealignPositionFromBottomCenter(
+      out_belt_slot_wrapper
+  );
 }
 
-} // namespace d2common
-} // namespace sgd2fr
+} // namespace sgd2fr::patches

@@ -47,7 +47,7 @@
 #define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
 
 #include "d2common/get_global_belt_record/patch.hpp"
-#include "d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.hpp"
+#include "d2common/get_global_belt_slot_position/patch.hpp"
 #include "d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch.hpp"
 #include "d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch.hpp"
 #include "d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.hpp"

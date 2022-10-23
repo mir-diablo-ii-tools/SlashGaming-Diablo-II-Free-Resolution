@@ -43,55 +43,20 @@
  *  work.
  */
 
-#include "d2common_get_global_belt_slot_position.hpp"
-
-#include <windows.h>
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_REPLACEMENT_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../config.hpp"
-#include "../../../helper/cel_file_collection.hpp"
-#include "../../../helper/game_resolution.hpp"
-#include "../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
 
-void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
+extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
     std::uint32_t belt_record_index,
     std::uint32_t inventory_arrange_mode,
     ::d2::PositionalRectangle* out_belt_slot,
     std::uint32_t belt_slot_index
-) {
-  // Original code, copies the values of the specified Global Belt Slot
-  // into the output Belt Slot.
-  unsigned int source_inventory_arrange_mode =
-      GetSourceInventoryArrangeMode();
-
-  ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
-
-  ::d2::PositionalRectangle_View global_belt_slot_position(
-      global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
-          .GetSlotPositions()[belt_slot_index]
-  );
-
-  ::d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
-  out_belt_slot_wrapper.AssignMembers(global_belt_slot_position);
-
-  // Do not adjust positions if the entries are empty, which use value 0.
-  constexpr int entry_empty_value = 0;
-
-  if (out_belt_slot_wrapper.GetLeft() == entry_empty_value
-      && out_belt_slot_wrapper.GetRight() == entry_empty_value
-      && out_belt_slot_wrapper.GetTop() == entry_empty_value
-      && out_belt_slot_wrapper.GetBottom() == entry_empty_value
-  ) {
-    return;
-  }
-
-  // Adjustment code to ensure that the objects appear in the correct
-  // position.
-  RealignPositionFromBottomCenter(
-      out_belt_slot_wrapper
-  );
-}
+);
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_REPLACEMENT_HPP_
