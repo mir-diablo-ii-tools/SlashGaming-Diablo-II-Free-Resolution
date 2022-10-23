@@ -66,7 +66,7 @@
 #include "d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.hpp"
 #include "d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch.hpp"
 #include "d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch.hpp"
-#include "glide3x_gr_sst_win_open_patch/glide3x_gr_sst_win_open_patch.hpp"
+#include "glide3x/gr_sst_win_open/patch.hpp"
 
 namespace sgd2fr {
 

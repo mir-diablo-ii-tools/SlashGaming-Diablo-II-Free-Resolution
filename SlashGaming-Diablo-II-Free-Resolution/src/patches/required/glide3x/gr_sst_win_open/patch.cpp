@@ -43,20 +43,58 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_HPP_
-#define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_HPP_
+#include "patch.hpp"
 
-#include <cstddef>
-#include <cstdint>
+#include <stddef.h>
 
-namespace sgd2fr::patches {
+#include <sgd2mapi.hpp>
+#include "../../../../helper/glide3x_version.hpp"
 
-extern "C" void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
-    std::uint32_t glide_resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height
-);
+namespace sgd2fr {
+namespace glide3x {
 
-} // namespace sgd2fr::patches
+GrSstWinOpenPatch::GrSstWinOpenPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
-#endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_HPP_
+bool GrSstWinOpenPatch::IsApplicable() {
+  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  if (video_mode != ::d2::VideoMode::kGlide) {
+    return false;
+  }
+
+  // The D2DX API extensions are used instead.
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
+  return (running_glide3x_version != Glide3xVersion::kD2dx);
+}
+
+AbstractVersionPatch*
+GrSstWinOpenPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
+
+  switch (running_glide3x_version) {
+    case Glide3xVersion::kSven1_4_4_21:
+    case Glide3xVersion::kSven1_4_6_1: {
+      return new GrSstWinOpenPatch_Sven_1_4_4_21();
+    }
+
+    case Glide3xVersion::kSven1_4_8_3: {
+      return new GrSstWinOpenPatch_Sven_1_4_8_3();
+    }
+
+    case Glide3xVersion::kNGlide3_10_0_658: {
+      return new GrSstWinOpenPatch_NGlide_3_10_0_658();
+    }
+
+    case Glide3xVersion::kD2dx: {
+      return NULL;
+    }
+  }
+}
+
+} // namespace glide3x
+} // namespace sgd2fr

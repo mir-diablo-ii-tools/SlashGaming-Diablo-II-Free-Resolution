@@ -43,32 +43,29 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_4_21_HPP_
-#define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_4_21_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "patch_nglide_3_10_0_658.hpp"
+#include "patch_sven_1_4_4_21.hpp"
+#include "patch_sven_1_4_8_3.hpp"
 
 namespace sgd2fr {
 namespace glide3x {
 
-class GrSstWinOpenPatch_Sven_1_4_4_21
-    : public AbstractVersionPatch {
+class GrSstWinOpenPatch
+    : public AbstractMultiversionPatch {
  public:
-  GrSstWinOpenPatch_Sven_1_4_4_21();
+  GrSstWinOpenPatch();
 
  private:
-  enum {
-    kPatchesCount = 1
-  };
-
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace glide3x
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_4_21_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_HPP_

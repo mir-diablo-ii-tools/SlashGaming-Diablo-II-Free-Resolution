@@ -43,32 +43,60 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_8_3_HPP_
-#define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_8_3_HPP_
+#include "patch_sven_1_4_4_21.hpp"
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include <stddef.h>
+
+#include "../../../../helper/glide3x_version.hpp"
+
+extern "C" {
+
+void __cdecl Glide3x_GrSstWinOpenPatch_Sven_1_4_4_21_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace glide3x {
 
-class GrSstWinOpenPatch_Sven_1_4_8_3
-    : public AbstractVersionPatch {
- public:
-  GrSstWinOpenPatch_Sven_1_4_8_3();
+GrSstWinOpenPatch_Sven_1_4_4_21::GrSstWinOpenPatch_Sven_1_4_4_21()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &Glide3x_GrSstWinOpenPatch_Sven_1_4_4_21_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+}
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+PatchAddressAndSize
+GrSstWinOpenPatch_Sven_1_4_4_21::GetPatchAddressAndSize01() {
+  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+  switch (running_glide3x_version) {
+    case Glide3xVersion::kSven1_4_4_21: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              L"glide3x.dll",
+              0xCBA9
+          ),
+          0xCBB0 - 0xCBA9
+      );
+    }
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
+    case Glide3xVersion::kSven1_4_6_1: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              L"glide3x.dll",
+              0xCAD5
+          ),
+          0xCADC - 0xCAD5
+      );
+    }
+  }
+}
 
 } // namespace glide3x
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_8_3_HPP_

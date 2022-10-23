@@ -43,58 +43,32 @@
  *  work.
  */
 
-#include "glide3x_gr_sst_win_open_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_4_21_HPP_
+#define SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_4_21_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/glide3x_version.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace glide3x {
 
-GrSstWinOpenPatch::GrSstWinOpenPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class GrSstWinOpenPatch_Sven_1_4_4_21
+    : public AbstractVersionPatch {
+ public:
+  GrSstWinOpenPatch_Sven_1_4_4_21();
 
-bool GrSstWinOpenPatch::IsApplicable() {
-  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  if (video_mode != ::d2::VideoMode::kGlide) {
-    return false;
-  }
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-  // The D2DX API extensions are used instead.
-  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
-  return (running_glide3x_version != Glide3xVersion::kD2dx);
-}
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-AbstractVersionPatch*
-GrSstWinOpenPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
-  Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
-
-  switch (running_glide3x_version) {
-    case Glide3xVersion::kSven1_4_4_21:
-    case Glide3xVersion::kSven1_4_6_1: {
-      return new GrSstWinOpenPatch_Sven_1_4_4_21();
-    }
-
-    case Glide3xVersion::kSven1_4_8_3: {
-      return new GrSstWinOpenPatch_Sven_1_4_8_3();
-    }
-
-    case Glide3xVersion::kNGlide3_10_0_658: {
-      return new GrSstWinOpenPatch_NGlide_3_10_0_658();
-    }
-
-    case Glide3xVersion::kD2dx: {
-      return NULL;
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
 } // namespace glide3x
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_GLIDE3X_GR_SST_WIN_OPEN_PATCH_SVEN_1_4_4_21_HPP_
