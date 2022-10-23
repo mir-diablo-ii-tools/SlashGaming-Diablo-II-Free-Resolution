@@ -43,37 +43,26 @@
  *  work.
  */
 
-#include "d2glide_set_display_width_and_height.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
-#include "../../../helper/game_resolution.hpp"
-#include "../../../helper/glide3x_d2dx.hpp"
-#include "../../../helper/glide3x_version.hpp"
+namespace sgd2fr {
+namespace d2glide {
 
-namespace sgd2fr::patches {
+class SetDisplayWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
+ public:
+  SetDisplayWidthAndHeightPatch();
 
-void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
-    std::uint32_t resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height,
-    std::uint32_t* glide_res_id
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
+} // namespace d2glide
+} // namespace sgd2fr
 
-  ::d2::d2glide::SetDisplayWidth(*width);
-  ::d2::d2glide::SetDisplayHeight(*height);
-
-  // Values starting at 0x1000 will cause a jump to the custom code.
-  // This needs to be undone before getting the game resolution.
-  *glide_res_id = resolution_mode + 0x1000;
-
-  if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
-    d2dx_glide::SetCustomResolution(*width, *height);
-  }
-}
-
-} // namespace sgd2fr::patches
+#endif // SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

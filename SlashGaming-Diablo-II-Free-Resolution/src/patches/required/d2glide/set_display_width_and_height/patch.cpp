@@ -43,26 +43,58 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
+#include "patch.hpp"
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
+#include "patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2glide {
 
-class SetDisplayWidthAndHeightPatch
-    : public AbstractMultiversionPatch {
- public:
-  SetDisplayWidthAndHeightPatch();
+SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
+bool SetDisplayWidthAndHeightPatch::IsApplicable() {
+  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  return (video_mode == ::d2::VideoMode::kGlide);
+}
+
+AbstractVersionPatch*
+SetDisplayWidthAndHeightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10: {
+      return new SetDisplayWidthAndHeightPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new SetDisplayWidthAndHeightPatch_1_13C();
+    }
+  }
+}
 
 } // namespace d2glide
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

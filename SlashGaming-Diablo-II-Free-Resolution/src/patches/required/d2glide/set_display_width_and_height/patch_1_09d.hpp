@@ -43,20 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2glide {
 
-class SetDisplayWidthAndHeightPatch_1_13C
+class SetDisplayWidthAndHeightPatch_1_09D
     : public AbstractVersionPatch {
  public:
-  SetDisplayWidthAndHeightPatch_1_13C();
+  SetDisplayWidthAndHeightPatch_1_09D();
 
  private:
   enum {
@@ -73,4 +73,4 @@ class SetDisplayWidthAndHeightPatch_1_13C
 } // namespace d2glide
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_

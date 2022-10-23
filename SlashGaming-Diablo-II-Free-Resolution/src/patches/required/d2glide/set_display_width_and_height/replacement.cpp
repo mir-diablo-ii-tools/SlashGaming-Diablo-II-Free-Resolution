@@ -43,58 +43,37 @@
  *  work.
  */
 
-#include "d2glide_set_display_width_and_height_patch.hpp"
-
-#include <stddef.h>
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
-#include "d2glide_set_display_width_and_height_patch_1_09d.hpp"
-#include "d2glide_set_display_width_and_height_patch_1_13c.hpp"
 
-namespace sgd2fr {
-namespace d2glide {
+#include "../../../../helper/game_resolution.hpp"
+#include "../../../../helper/glide3x_d2dx.hpp"
+#include "../../../../helper/glide3x_version.hpp"
 
-SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+namespace sgd2fr::patches {
 
-bool SetDisplayWidthAndHeightPatch::IsApplicable() {
-  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  return (video_mode == ::d2::VideoMode::kGlide);
-}
+void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
+    std::uint32_t resolution_mode,
+    std::int32_t* width,
+    std::int32_t* height,
+    std::uint32_t* glide_res_id
+) {
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
 
-AbstractVersionPatch*
-SetDisplayWidthAndHeightPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  *width = std::get<0>(resolution);
+  *height = std::get<1>(resolution);
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  ::d2::d2glide::SetDisplayWidth(*width);
+  ::d2::d2glide::SetDisplayHeight(*height);
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10: {
-      return new SetDisplayWidthAndHeightPatch_1_09D();
-    }
+  // Values starting at 0x1000 will cause a jump to the custom code.
+  // This needs to be undone before getting the game resolution.
+  *glide_res_id = resolution_mode + 0x1000;
 
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new SetDisplayWidthAndHeightPatch_1_13C();
-    }
+  if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
+    d2dx_glide::SetCustomResolution(*width, *height);
   }
 }
 
-} // namespace d2glide
-} // namespace sgd2fr
+} // namespace sgd2fr::patches

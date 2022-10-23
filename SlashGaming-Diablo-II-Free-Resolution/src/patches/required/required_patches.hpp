@@ -64,7 +64,7 @@
 #include "d2gfx_is_need_resize_window_patch/d2gfx_is_need_resize_window_patch.hpp"
 #include "d2gfx_is_need_restore_down_window_patch/d2gfx_is_need_restore_down_window_patch.hpp"
 #include "d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.hpp"
-#include "d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch.hpp"
+#include "d2glide/set_display_width_and_height/patch.hpp"
 #include "d2win/resize_window_on_maximize/patch.hpp"
 #include "glide3x/gr_sst_win_open/patch.hpp"
 
