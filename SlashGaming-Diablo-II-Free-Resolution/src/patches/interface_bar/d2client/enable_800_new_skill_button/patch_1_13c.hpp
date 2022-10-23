@@ -43,12 +43,12 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -80,4 +80,4 @@ class Enable800NewSkillButtonPatch_1_13C
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_

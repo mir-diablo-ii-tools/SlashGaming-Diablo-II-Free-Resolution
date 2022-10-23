@@ -43,24 +43,24 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_12A_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_12A_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class Enable800NewSkillButtonPatch_1_12A
+class Enable800NewSkillButtonPatch_1_09D
     : public AbstractVersionPatch {
  public:
-  Enable800NewSkillButtonPatch_1_12A();
+  Enable800NewSkillButtonPatch_1_09D();
 
  private:
   enum {
-    kPatchesCount = 17
+    kPatchesCount = 18
   };
 
   ::mapi::GamePatch patches_[kPatchesCount];
@@ -82,9 +82,10 @@ class Enable800NewSkillButtonPatch_1_12A
   static PatchAddressAndSize GetPatchAddressAndSize15();
   static PatchAddressAndSize GetPatchAddressAndSize16();
   static PatchAddressAndSize GetPatchAddressAndSize17();
+  static PatchAddressAndSize GetPatchAddressAndSize18();
 };
 
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_13C_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_09D_HPP_

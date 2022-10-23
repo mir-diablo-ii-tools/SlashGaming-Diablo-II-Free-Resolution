@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
+#include "patch_1_13c.hpp"
 
 #include <stddef.h>
 

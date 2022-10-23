@@ -43,52 +43,31 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_skill_button_patch.hpp"
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_REPLACEMENT_HPP_
 
-#include <stddef.h>
+#include <cstdint>
 
 #include <sgd2mapi.hpp>
-#include "d2client_enable_800_new_skill_button_patch_1_09d.hpp"
-#include "d2client_enable_800_new_skill_button_patch_1_12a.hpp"
-#include "d2client_enable_800_new_skill_button_patch_1_13c.hpp"
 
-namespace sgd2fr {
-namespace d2client {
+namespace sgd2fr::patches {
 
-Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton();
 
-bool Enable800NewSkillButtonPatch::IsApplicable() {
-  return true;
-}
+/**
+ * Returns 0 if using 640x480 style, or 2 if 800x600 style.
+ */
+extern "C" std::uint32_t __cdecl
+Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue();
 
-AbstractVersionPatch*
-Enable800NewSkillButtonPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton();
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+extern "C" void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText();
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10: {
-      return new Enable800NewSkillButtonPatch_1_09D();
-    }
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
+    ::d2::CelContext* cel_context
+);
 
-    case ::d2::GameVersion::k1_12A: {
-      return new Enable800NewSkillButtonPatch_1_12A();
-    }
+} // namespace sgd2fr::patches
 
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new Enable800NewSkillButtonPatch_1_13C();
-    }
-  }
-}
-
-} // namespace d2client
-} // namespace sgd2fr
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_REPLACEMENT_HPP_

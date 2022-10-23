@@ -90,11 +90,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button.cc"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.cc"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_09d.cc"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_12a.cc"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_13c.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.cc"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_09d.cc"
@@ -217,9 +212,6 @@ set(CPP_FILES
 
 set(NASM_FILES
     "${PROJECT_DIR}/src/helper/cel_file_collection_asm.asm"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_09d_shim.asm"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_12a_shim.asm"
-    "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch_1_13c_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_12a_shim.asm"
     "${PROJECT_DIR}/src/patches/interface_bar/d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch_1_13c_shim.asm"

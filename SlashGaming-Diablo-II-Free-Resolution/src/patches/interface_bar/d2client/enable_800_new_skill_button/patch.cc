@@ -43,49 +43,52 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_skill_button.hpp"
+#include "patch.hpp"
+
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/800_interface_bar.hpp"
+#include "patch_1_09d.hpp"
+#include "patch_1_12a.hpp"
+#include "patch_1_13c.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
+namespace d2client {
 
-std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton() {
-  return Get800InterfaceBarEnabledValue();
+Enable800NewSkillButtonPatch::Enable800NewSkillButtonPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-std::uint32_t __cdecl Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue() {
-  return Get800InterfaceBarEnabledValue();
+bool Enable800NewSkillButtonPatch::IsApplicable() {
+  return true;
 }
 
-mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton() {
-  return IsMouseOverNewSkillButton();
+AbstractVersionPatch*
+Enable800NewSkillButtonPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
+      return new Enable800NewSkillButtonPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return new Enable800NewSkillButtonPatch_1_12A();
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new Enable800NewSkillButtonPatch_1_13C();
+    }
+  }
 }
 
-void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText() {
-  const ::d2::UnicodeChar* new_stats_text = ::d2::d2lang::GetStringByIndex(3987);
-  const std::tuple popup_text_position = GetNewSkillPopupTextPosition();
-
-  ::d2::d2win::SetPopUpUnicodeText(
-      new_stats_text,
-      std::get<0>(popup_text_position),
-      std::get<1>(popup_text_position),
-      ::d2::TextColor::kWhite,
-      true
-  );
-}
-
-mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
-    ::d2::CelContext* cel_context
-) {
-  ::d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
-
-  ::d2::CelContext_Wrapper cel_context_wrapper(cel_context);
-
-  return cel_context_wrapper.DrawFrame(
-      button_position.GetLeft(),
-      button_position.GetBottom()
-  );
-}
-
-} // namespace sgd2fr::patches
+} // namespace d2client
+} // namespace sgd2fr

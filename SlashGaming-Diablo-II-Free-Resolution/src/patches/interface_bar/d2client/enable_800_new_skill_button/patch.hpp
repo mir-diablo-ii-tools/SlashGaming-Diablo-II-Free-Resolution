@@ -43,31 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_
 
-#include <cstdint>
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
+namespace sgd2fr {
+namespace d2client {
 
-namespace sgd2fr::patches {
+class Enable800NewSkillButtonPatch
+    : public AbstractMultiversionPatch {
+ public:
+  Enable800NewSkillButtonPatch();
 
-extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton();
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
-/**
- * Returns 0 if using 640x480 style, or 2 if 800x600 style.
- */
-extern "C" std::uint32_t __cdecl
-Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue();
+} // namespace d2client
+} // namespace sgd2fr
 
-extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton();
-
-extern "C" void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText();
-
-extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
-    ::d2::CelContext* cel_context
-);
-
-} // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_HPP_

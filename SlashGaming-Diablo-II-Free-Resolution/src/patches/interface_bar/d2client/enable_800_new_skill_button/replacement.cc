@@ -43,49 +43,49 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_09D_HPP_
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/800_interface_bar.hpp"
 
-namespace sgd2fr {
-namespace d2client {
+namespace sgd2fr::patches {
 
-class Enable800NewSkillButtonPatch_1_09D
-    : public AbstractVersionPatch {
- public:
-  Enable800NewSkillButtonPatch_1_09D();
+std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton() {
+  return Get800InterfaceBarEnabledValue();
+}
 
- private:
-  enum {
-    kPatchesCount = 18
-  };
+std::uint32_t __cdecl Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue() {
+  return Get800InterfaceBarEnabledValue();
+}
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton() {
+  return IsMouseOverNewSkillButton();
+}
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
-  static PatchAddressAndSize GetPatchAddressAndSize04();
-  static PatchAddressAndSize GetPatchAddressAndSize05();
-  static PatchAddressAndSize GetPatchAddressAndSize06();
-  static PatchAddressAndSize GetPatchAddressAndSize07();
-  static PatchAddressAndSize GetPatchAddressAndSize08();
-  static PatchAddressAndSize GetPatchAddressAndSize09();
-  static PatchAddressAndSize GetPatchAddressAndSize10();
-  static PatchAddressAndSize GetPatchAddressAndSize11();
-  static PatchAddressAndSize GetPatchAddressAndSize12();
-  static PatchAddressAndSize GetPatchAddressAndSize13();
-  static PatchAddressAndSize GetPatchAddressAndSize14();
-  static PatchAddressAndSize GetPatchAddressAndSize15();
-  static PatchAddressAndSize GetPatchAddressAndSize16();
-  static PatchAddressAndSize GetPatchAddressAndSize17();
-  static PatchAddressAndSize GetPatchAddressAndSize18();
-};
+void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText() {
+  const ::d2::UnicodeChar* new_stats_text = ::d2::d2lang::GetStringByIndex(3987);
+  const std::tuple popup_text_position = GetNewSkillPopupTextPosition();
 
-} // namespace d2client
-} // namespace sgd2fr
+  ::d2::d2win::SetPopUpUnicodeText(
+      new_stats_text,
+      std::get<0>(popup_text_position),
+      std::get<1>(popup_text_position),
+      ::d2::TextColor::kWhite,
+      true
+  );
+}
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_SKILL_BUTTON_PATCH_1_09D_HPP_
+mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
+    ::d2::CelContext* cel_context
+) {
+  ::d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
+
+  ::d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+
+  return cel_context_wrapper.DrawFrame(
+      button_position.GetLeft(),
+      button_position.GetBottom()
+  );
+}
+
+} // namespace sgd2fr::patches
