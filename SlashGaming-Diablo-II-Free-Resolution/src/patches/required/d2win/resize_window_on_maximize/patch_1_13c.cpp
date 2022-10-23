@@ -43,28 +43,28 @@
  *  work.
  */
 
-#include "d2win_resize_window_on_maximize_patch_lod_1_14c.hpp"
+#include "patch_1_13c.hpp"
 
 #include <stddef.h>
 
 extern "C" {
 
 void __cdecl
-D2Win_ResizeWindowOnMaximizePatch_Lod1_14C_InterceptionFunc01();
+D2Win_ResizeWindowOnMaximizePatch_1_13C_InterceptionFunc01();
 
 } // extern "C"
 
 namespace sgd2fr {
 namespace d2win {
 
-ResizeWindowOnMaximizePatch_Lod1_14C::ResizeWindowOnMaximizePatch_Lod1_14C()
+ResizeWindowOnMaximizePatch_1_13C::ResizeWindowOnMaximizePatch_1_13C()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
-      &D2Win_ResizeWindowOnMaximizePatch_Lod1_14C_InterceptionFunc01,
+      &D2Win_ResizeWindowOnMaximizePatch_1_13C_InterceptionFunc01,
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
@@ -79,7 +79,7 @@ ResizeWindowOnMaximizePatch_Lod1_14C::ResizeWindowOnMaximizePatch_Lod1_14C()
 }
 
 PatchAddressAndSize
-ResizeWindowOnMaximizePatch_Lod1_14C::GetPatchAddressAndSize01() {
+ResizeWindowOnMaximizePatch_1_13C::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
   * 1. Start the game in windowed GDI mode.
@@ -94,30 +94,50 @@ ResizeWindowOnMaximizePatch_Lod1_14C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::GameVersion::k1_13C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Win,
-              0xF74B5
+              0x175C8
           ),
-          0xF74C8 - 0xF74B5
+          0x175D9 - 0x175C8
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Win,
+              0xD858
+          ),
+          0xD869 - 0xD858
       );
     }
   }
 }
 
 PatchAddressAndSize
-ResizeWindowOnMaximizePatch_Lod1_14C::GetPatchAddressAndSize02() {
+ResizeWindowOnMaximizePatch_1_13C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14C: {
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+        ::mapi::GameAddress::FromOffset(
+            ::d2::DefaultLibrary::kD2Win,
+            0x175E6
+        ),
+        0x175E9 - 0x175E6
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Win,
-              0xF74D3
+              0xD876
           ),
-          0xF74D6 - 0xF74D3
+          0xD879 - 0xD876
       );
     }
   }

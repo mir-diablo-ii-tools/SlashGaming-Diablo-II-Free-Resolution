@@ -167,11 +167,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/patches/required/d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch.cc"
     "${PROJECT_DIR}/src/patches/required/d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch_1_09d.cc"
     "${PROJECT_DIR}/src/patches/required/d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch_1_13c.cc"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize.cc"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch.cc"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch_1_13c.cc"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch_lod_1_14c.cpp"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch_lod_1_14d.cpp"
     "${PROJECT_DIR}/src/patches/patches.cc"
     "${PROJECT_DIR}/src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
     "${PROJECT_DIR}/src/sgd2mapi_extension/game_variable/d2gfx/is_perspective_mode_enabled.cpp"
@@ -221,9 +216,6 @@ set(NASM_FILES
     "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch_1_13c_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2glide_set_display_width_and_height_patch/d2glide_set_display_width_and_height_patch_1_13c_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch_1_13c_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch_lod_1_14c_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2win_resize_window_on_maximize_patch/d2win_resize_window_on_maximize_patch_lod_1_14d_shim.asm"
 )
 
 set(PCH_C_FILES

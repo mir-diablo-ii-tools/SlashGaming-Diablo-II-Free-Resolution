@@ -43,28 +43,28 @@
  *  work.
  */
 
-#include "d2win_resize_window_on_maximize_patch_lod_1_14d.hpp"
+#include "patch_lod_1_14c.hpp"
 
 #include <stddef.h>
 
 extern "C" {
 
 void __cdecl
-D2Win_ResizeWindowOnMaximizePatch_Lod1_14D_InterceptionFunc01();
+D2Win_ResizeWindowOnMaximizePatch_Lod1_14C_InterceptionFunc01();
 
 } // extern "C"
 
 namespace sgd2fr {
 namespace d2win {
 
-ResizeWindowOnMaximizePatch_Lod1_14D::ResizeWindowOnMaximizePatch_Lod1_14D()
+ResizeWindowOnMaximizePatch_Lod1_14C::ResizeWindowOnMaximizePatch_Lod1_14C()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
-      &D2Win_ResizeWindowOnMaximizePatch_Lod1_14D_InterceptionFunc01,
+      &D2Win_ResizeWindowOnMaximizePatch_Lod1_14C_InterceptionFunc01,
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
@@ -79,7 +79,7 @@ ResizeWindowOnMaximizePatch_Lod1_14D::ResizeWindowOnMaximizePatch_Lod1_14D()
 }
 
 PatchAddressAndSize
-ResizeWindowOnMaximizePatch_Lod1_14D::GetPatchAddressAndSize01() {
+ResizeWindowOnMaximizePatch_Lod1_14C::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
   * 1. Start the game in windowed GDI mode.
@@ -94,30 +94,30 @@ ResizeWindowOnMaximizePatch_Lod1_14D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::GameVersion::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Win,
-              0xF9E35
+              0xF74B5
           ),
-          0xF9E47 - 0xF9E35
+          0xF74C8 - 0xF74B5
       );
     }
   }
 }
 
 PatchAddressAndSize
-ResizeWindowOnMaximizePatch_Lod1_14D::GetPatchAddressAndSize02() {
+ResizeWindowOnMaximizePatch_Lod1_14C::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::GameVersion::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Win,
-              0xF9E51
+              0xF74D3
           ),
-          0xF9E54 - 0xF9E51
+          0xF74D6 - 0xF74D3
       );
     }
   }

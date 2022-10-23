@@ -43,14 +43,14 @@
  *  work.
  */
 
-#include "d2win_resize_window_on_maximize.hpp"
+#include "replacement.hpp"
 
 #include <cmath>
 #include <numeric>
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/game_resolution.hpp"
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
