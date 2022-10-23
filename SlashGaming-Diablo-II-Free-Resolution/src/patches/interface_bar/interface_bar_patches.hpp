@@ -46,7 +46,7 @@
 #ifndef SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
 #define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
 
-#include "d2client_enable_800_interface_bar_patch/d2client_enable_800_interface_bar_patch.hpp"
+#include "d2client/enable_800_interface_bar/patch.hpp"
 #include "d2client_enable_800_new_skill_button_patch/d2client_enable_800_new_skill_button_patch.hpp"
 #include "d2client_enable_800_new_stats_button_patch/d2client_enable_800_new_stats_button_patch.hpp"
 

@@ -43,33 +43,21 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_12A_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_12A_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_REPLACEMENT_HPP_
+
+#include <cstdint>
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr {
-namespace d2client {
+namespace sgd2fr::patches {
 
-class Enable800InterfaceBarPatch_1_12A
-    : public AbstractVersionPatch {
- public:
-  Enable800InterfaceBarPatch_1_12A();
+extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar();
 
- private:
-  enum {
-    kPatchesCount = 2
-  };
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
+    ::d2::CelContext* cel_context
+);
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+} // namespace sgd2fr::patches
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-};
-
-} // namespace d2client
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_REPLACEMENT_HPP_

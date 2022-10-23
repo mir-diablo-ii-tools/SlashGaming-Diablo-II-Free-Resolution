@@ -43,21 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_HPP_
 
-#include <cstdint>
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
-#include <sgd2mapi.hpp>
+namespace sgd2fr {
+namespace d2client {
 
-namespace sgd2fr::patches {
+class Enable800InterfaceBarPatch
+    : public AbstractMultiversionPatch {
+ public:
+  Enable800InterfaceBarPatch();
 
-extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar();
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
-extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
-    ::d2::CelContext* cel_context
-);
+} // namespace d2client
+} // namespace sgd2fr
 
-} // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_D2CLIENT_ENABLE_800_INTERFACE_BAR_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_INTERFACE_BAR_PATCH_HPP_

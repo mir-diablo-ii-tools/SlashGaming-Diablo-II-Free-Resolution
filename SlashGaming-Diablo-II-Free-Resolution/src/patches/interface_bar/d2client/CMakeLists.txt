@@ -41,5 +41,4 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
+add_subdirectory(enable_800_interface_bar)
