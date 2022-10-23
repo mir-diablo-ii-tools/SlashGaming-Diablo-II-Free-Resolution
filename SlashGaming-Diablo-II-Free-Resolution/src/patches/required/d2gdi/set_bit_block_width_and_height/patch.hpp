@@ -43,32 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2gdi {
 
-class SetBitBlockWidthAndHeightPatch_Lod1_14A
-    : public AbstractVersionPatch {
+class SetBitBlockWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
  public:
-  SetBitBlockWidthAndHeightPatch_Lod1_14A();
+  SetBitBlockWidthAndHeightPatch();
 
  private:
-  enum {
-    kPatchesCount = 1
-  };
-
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2gdi
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_

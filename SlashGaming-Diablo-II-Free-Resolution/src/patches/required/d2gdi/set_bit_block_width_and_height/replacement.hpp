@@ -43,26 +43,24 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <cstddef>
+#include <cstdint>
 
-namespace sgd2fr {
-namespace d2gdi {
+namespace sgd2fr::patches {
 
-class SetBitBlockWidthAndHeightPatch
-    : public AbstractMultiversionPatch {
- public:
-  SetBitBlockWidthAndHeightPatch();
+extern "C" void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
+    ::std::size_t resolution_mode,
+    ::std::int32_t* width,
+    ::std::int32_t* height
+);
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
+extern "C" void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
+    ::std::size_t resolution_mode
+);
 
-} // namespace d2gdi
-} // namespace sgd2fr
+} // namespace sgd2fr::patches
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_

@@ -43,39 +43,32 @@
  *  work.
  */
 
-#include "d2gdi_set_bit_block_width_and_height.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
-#include "../../../helper/game_resolution.hpp"
+namespace sgd2fr {
+namespace d2gdi {
 
-namespace sgd2fr::patches {
+class SetBitBlockWidthAndHeightPatch_1_13C
+    : public AbstractVersionPatch {
+ public:
+  SetBitBlockWidthAndHeightPatch_1_13C();
 
-void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
-    ::std::size_t resolution_mode,
-    ::std::int32_t* width,
-    ::std::int32_t* height
-) {
-  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
-      resolution_mode
-  );
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-  *width = ::std::get<0>(resolution);
-  *height = ::std::get<1>(resolution);
-}
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
-    ::std::size_t resolution_mode
-) {
-  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
-      resolution_mode
-  );
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
-  int bit_block_width = ::std::get<0>(resolution);
-  int bit_block_height = ::std::get<1>(resolution);
+} // namespace d2gdi
+} // namespace sgd2fr
 
-  ::d2::d2gdi::SetBitBlockWidth(bit_block_width);
-  ::d2::d2gdi::SetBitBlockHeight(bit_block_height);
-}
-
-} // namespace sgd2fr::patches
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_

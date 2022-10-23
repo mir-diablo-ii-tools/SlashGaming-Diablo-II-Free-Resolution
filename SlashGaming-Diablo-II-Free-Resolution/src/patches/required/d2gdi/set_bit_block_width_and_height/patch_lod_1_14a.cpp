@@ -43,62 +43,77 @@
  *  work.
  */
 
-#include "d2gdi_set_bit_block_width_and_height_patch.hpp"
+#include "patch_lod_1_14a.hpp"
 
 #include <stddef.h>
 
-#include <sgd2mapi.hpp>
-#include "d2gdi_set_bit_block_width_and_height_patch_1_09d.hpp"
-#include "d2gdi_set_bit_block_width_and_height_patch_1_13c.hpp"
-#include "d2gdi_set_bit_block_width_and_height_patch_lod_1_14a.hpp"
+extern "C" {
+
+void __cdecl
+D2GDI_SetBitBlockWidthAndHeightPatch_Lod1_14A_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2gdi {
 
-SetBitBlockWidthAndHeightPatch::SetBitBlockWidthAndHeightPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+SetBitBlockWidthAndHeightPatch_Lod1_14A
+::SetBitBlockWidthAndHeightPatch_Lod1_14A()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GDI_SetBitBlockWidthAndHeightPatch_Lod1_14A_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
 }
 
-bool SetBitBlockWidthAndHeightPatch::IsApplicable() {
-  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  return (video_mode == ::d2::VideoMode::kGdi);
-}
-
-AbstractVersionPatch*
-SetBitBlockWidthAndHeightPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
+PatchAddressAndSize
+SetBitBlockWidthAndHeightPatch_Lod1_14A::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10: {
-      return new SetBitBlockWidthAndHeightPatch_1_09D();
+    case ::d2::GameVersion::kLod1_14A: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x106D6F
+          ),
+          0x106D98 - 0x106D6F
+      );
     }
 
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return new SetBitBlockWidthAndHeightPatch_1_13C();
+    case ::d2::GameVersion::kLod1_14B: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x2C8F8F
+          ),
+          0x2C8FB8 - 0x2C8F8F
+      );
     }
 
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x2C8B6F
+          ),
+          0x2C8B98 - 0x2C8B6F
+      );
+    }
+
     case ::d2::GameVersion::kLod1_14D: {
-      return new SetBitBlockWidthAndHeightPatch_Lod1_14A();
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GDI,
+              0x2C7B32
+          ),
+          0x2C7B5B - 0x2C7B32
+      );
     }
   }
 }

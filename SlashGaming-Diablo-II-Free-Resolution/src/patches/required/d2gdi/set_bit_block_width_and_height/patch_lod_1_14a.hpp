@@ -43,20 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2gdi {
 
-class SetBitBlockWidthAndHeightPatch_1_09D
+class SetBitBlockWidthAndHeightPatch_Lod1_14A
     : public AbstractVersionPatch {
  public:
-  SetBitBlockWidthAndHeightPatch_1_09D();
+  SetBitBlockWidthAndHeightPatch_Lod1_14A();
 
  private:
   enum {
@@ -71,4 +71,4 @@ class SetBitBlockWidthAndHeightPatch_1_09D
 } // namespace d2gdi
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_LOD_1_14A_HPP_

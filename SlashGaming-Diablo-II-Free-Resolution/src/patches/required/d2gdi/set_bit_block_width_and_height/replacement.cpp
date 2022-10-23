@@ -43,24 +43,39 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
+#include "replacement.hpp"
 
-#include <cstddef>
-#include <cstdint>
+#include <sgd2mapi.hpp>
+
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
+void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
     ::std::size_t resolution_mode,
     ::std::int32_t* width,
     ::std::int32_t* height
-);
+) {
+  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
+      resolution_mode
+  );
 
-extern "C" void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
+  *width = ::std::get<0>(resolution);
+  *height = ::std::get<1>(resolution);
+}
+
+void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
     ::std::size_t resolution_mode
-);
+) {
+  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
+      resolution_mode
+  );
+
+  int bit_block_width = ::std::get<0>(resolution);
+  int bit_block_height = ::std::get<1>(resolution);
+
+  ::d2::d2gdi::SetBitBlockWidth(bit_block_width);
+  ::d2::d2gdi::SetBitBlockHeight(bit_block_height);
+}
 
 } // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2GDI_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_HPP_
