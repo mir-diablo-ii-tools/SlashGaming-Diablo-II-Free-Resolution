@@ -43,32 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_REPLACEMENT_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr {
-namespace d2common {
+namespace sgd2fr::patches {
 
-class GetGlobalEquipmentSlotLayoutPatch_1_09D
-    : public AbstractVersionPatch {
- public:
-  GetGlobalEquipmentSlotLayoutPatch_1_09D();
+extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout(
+    std::uint32_t inventory_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::EquipmentLayout* out_equipment_slot_layout,
+    std::uint32_t equipment_slot_index
+);
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+} // namespace sgd2fr::patches
 
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
-
-} // namespace d2common
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_REPLACEMENT_HPP_

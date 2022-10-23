@@ -43,54 +43,26 @@
  *  work.
  */
 
-#include "d2common_get_global_equipment_slot_layout.hpp"
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/game_resolution.hpp"
-#include "../../../helper/position_realignment.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
+namespace d2common {
 
-void __cdecl Sgd2fr_D2Common_GetGlobalEquipmentSlotLayout(
-    std::uint32_t inventory_record_index,
-    std::uint32_t inventory_arrange_mode,
-    ::d2::EquipmentLayout* out_equipment_slot_layout,
-    std::uint32_t equipment_slot_index
-) {
-  // Original code, copies the values of the specified Global Inventory Grid
-  // into the output Inventory Grid.
-  unsigned int source_inventory_arrange_mode =
-      GetSourceInventoryArrangeMode();
+class GetGlobalEquipmentSlotLayoutPatch
+    : public AbstractMultiversionPatch {
+ public:
+  GetGlobalEquipmentSlotLayoutPatch();
 
-  ::d2::InventoryRecord_View global_inventory_txt_view(
-      ::d2::d2common::GetGlobalInventoryTxt()
-  );
-  ::d2::EquipmentLayout_View global_equipment_slot_layout_view(
-      global_inventory_txt_view[
-          inventory_record_index + (source_inventory_arrange_mode * 16)
-      ].GetEquipmentSlots()[equipment_slot_index]
-  );
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
-  ::d2::EquipmentLayout_Wrapper out_equipment_slot_layout_wrapper(
-      out_equipment_slot_layout
-  );
-  out_equipment_slot_layout_wrapper.AssignMembers(
-      global_equipment_slot_layout_view
-  );
+} // namespace d2common
+} // namespace sgd2fr
 
-  // Do not adjust positions if the entries are empty, which use value -1.
-  constexpr int entry_empty_value = -1;
-  if (out_equipment_slot_layout_wrapper.GetHeight() == entry_empty_value
-      || out_equipment_slot_layout_wrapper.GetWidth() == entry_empty_value
-  ) {
-    return;
-  }
-
-  // Adjustment code to ensure that the objects appear in the correct
-  // location.
-  RealignPositionFromCenter(
-      out_equipment_slot_layout_wrapper.GetPosition()
-  );
-}
-
-} // namespace sgd2fr::patches
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_HPP_

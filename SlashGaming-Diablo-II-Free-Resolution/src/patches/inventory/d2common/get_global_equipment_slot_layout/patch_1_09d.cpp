@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2common_get_global_equipment_slot_layout_patch_1_09d.hpp"
+#include "patch_1_09d.hpp"
 
 #include <stddef.h>
 

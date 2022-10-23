@@ -43,44 +43,32 @@
  *  work.
  */
 
-#include "d2common_get_global_equipment_slot_layout_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2common_get_global_equipment_slot_layout_patch_1_09d.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2common {
 
-GetGlobalEquipmentSlotLayoutPatch::GetGlobalEquipmentSlotLayoutPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class GetGlobalEquipmentSlotLayoutPatch_1_09D
+    : public AbstractVersionPatch {
+ public:
+  GetGlobalEquipmentSlotLayoutPatch_1_09D();
 
-bool GetGlobalEquipmentSlotLayoutPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-AbstractVersionPatch*
-GetGlobalEquipmentSlotLayoutPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new GetGlobalEquipmentSlotLayoutPatch_1_09D();
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
 } // namespace d2common
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_EQUIPMENT_SLOT_LAYOUT_PATCH_1_09D_HPP_
