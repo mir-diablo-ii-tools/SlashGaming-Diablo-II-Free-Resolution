@@ -43,32 +43,52 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_
+#include "patch.hpp"
 
-#include <cstdint>
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
+#include "patch_1_12a.hpp"
+#include "patch_1_13c.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
+namespace d2client {
 
-extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton();
+Enable800NewStatsButtonPatch::Enable800NewStatsButtonPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
-/**
- * Returns 0 if using 640x480 style, or 2 if 800x600 style.
- */
-extern "C" std::uint32_t __cdecl
-Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue();
+bool Enable800NewStatsButtonPatch::IsApplicable() {
+  return true;
+}
 
-extern "C" ::mapi::bool32 __cdecl
-Sgd2fr_D2Client_IsMouseOver800NewStatsButton();
+AbstractVersionPatch*
+Enable800NewStatsButtonPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-extern "C" void __cdecl Sgd2fr_D2Client_Set800NewStatsPopupText();
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
-extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewStatsButton(
-    ::d2::CelContext* cel_context
-);
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
+      return new Enable800NewStatsButtonPatch_1_09D();
+    }
 
-} // namespace sgd2fr::patches
+    case ::d2::GameVersion::k1_12A: {
+      return new Enable800NewStatsButtonPatch_1_12A();
+    }
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_HPP_
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new Enable800NewStatsButtonPatch_1_13C();
+    }
+  }
+}
+
+} // namespace d2client
+} // namespace sgd2fr

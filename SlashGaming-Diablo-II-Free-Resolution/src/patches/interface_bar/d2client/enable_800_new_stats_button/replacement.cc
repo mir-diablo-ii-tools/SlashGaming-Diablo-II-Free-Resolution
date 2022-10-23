@@ -43,41 +43,49 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_13C_HPP_
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/800_interface_bar.hpp"
 
-namespace sgd2fr {
-namespace d2client {
+namespace sgd2fr::patches {
 
-class Enable800NewStatsButtonPatch_1_13C
-    : public AbstractVersionPatch {
- public:
-  Enable800NewStatsButtonPatch_1_13C();
+std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton() {
+  return Get800InterfaceBarEnabledValue();
+}
 
- private:
-  enum {
-    kPatchesCount = 10
-  };
+std::uint32_t __cdecl Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue() {
+  return Get800InterfaceBarEnabledValue();
+}
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewStatsButton() {
+  return IsMouseOverNewStatsButton();
+}
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
-  static PatchAddressAndSize GetPatchAddressAndSize04();
-  static PatchAddressAndSize GetPatchAddressAndSize05();
-  static PatchAddressAndSize GetPatchAddressAndSize06();
-  static PatchAddressAndSize GetPatchAddressAndSize07();
-  static PatchAddressAndSize GetPatchAddressAndSize08();
-  static PatchAddressAndSize GetPatchAddressAndSize09();
-  static PatchAddressAndSize GetPatchAddressAndSize10();
-};
+void __cdecl Sgd2fr_D2Client_Set800NewStatsPopupText() {
+  const ::d2::UnicodeChar* new_stats_text = ::d2::d2lang::GetStringByIndex(3986);
+  const std::tuple popup_text_position = GetNewStatsPopupTextPosition();
 
-} // namespace d2client
-} // namespace sgd2fr
+  ::d2::d2win::SetPopUpUnicodeText(
+      new_stats_text,
+      std::get<0>(popup_text_position),
+      std::get<1>(popup_text_position),
+      ::d2::TextColor::kWhite,
+      true
+  );
+}
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_1_13C_HPP_
+mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewStatsButton(
+    ::d2::CelContext* cel_context
+) {
+  ::d2::PositionalRectangle_Api button_position = GetNewStatsButtonPosition();
+
+  ::d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+
+  return cel_context_wrapper.DrawFrame(
+      button_position.GetLeft(),
+      button_position.GetBottom()
+  );
+}
+
+} // namespace sgd2fr::patches

@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_enable_800_new_stats_button_patch_1_12a.hpp"
+#include "patch_1_13c.hpp"
 
 #include <stddef.h>
 
@@ -53,14 +53,14 @@ namespace d2client {
 extern "C" {
 
 void __cdecl
-D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01();
+D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01();
 
 void __cdecl
-D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc02();
+D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc02();
 
 } // extern "C"
 
-Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
+Enable800NewStatsButtonPatch_1_13C::Enable800NewStatsButtonPatch_1_13C()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   // Enable drawing the New Stats button on the interface bar when the
   // (Lying) Character Screen is open or screens on both sides are
@@ -70,7 +70,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
@@ -82,7 +82,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_02.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_02.second
   );
   this->patches_[1].Swap(patch_02);
@@ -94,7 +94,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_03 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_03.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_03.second
   );
   this->patches_[2].Swap(patch_03);
@@ -106,7 +106,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_04 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_04.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_04.second
   );
   this->patches_[3].Swap(patch_04);
@@ -117,7 +117,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_05 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_05.first,
       ::mapi::BranchType::kJump,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc02,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc02,
       patch_address_and_size_05.second
   );
   this->patches_[4].Swap(patch_05);
@@ -129,7 +129,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_06 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_06.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_06.second
   );
   this->patches_[5].Swap(patch_06);
@@ -141,7 +141,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_07 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_07.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_07.second
   );
   this->patches_[6].Swap(patch_07);
@@ -154,7 +154,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_08 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_08.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_08.second
   );
   this->patches_[7].Swap(patch_08);
@@ -166,7 +166,7 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_09 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_09.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_09.second
   );
   this->patches_[8].Swap(patch_09);
@@ -178,14 +178,14 @@ Enable800NewStatsButtonPatch_1_12A::Enable800NewStatsButtonPatch_1_12A()
   ::mapi::GamePatch patch_10 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_10.first,
       ::mapi::BranchType::kCall,
-      &D2Client_Enable800NewStatsButtonPatch_1_12A_InterceptionFunc01,
+      &D2Client_Enable800NewStatsButtonPatch_1_13C_InterceptionFunc01,
       patch_address_and_size_10.second
   );
   this->patches_[9].Swap(patch_10);
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize01() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -209,11 +209,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize01() {
           0x3C2BC - 0x3C2B7
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x50447
+          ),
+          0x5044C - 0x50447
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x20E67
+          ),
+          0x20E6C - 0x20E67
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA31EF
+          ),
+          0xA31F4 - 0xA31EF
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6B41
+          ),
+          0xA6B46 - 0xA6B41
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize02() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize02() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -237,11 +277,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize02() {
           0x3C361 - 0x3C35C
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x504EC
+          ),
+          0x504F1 - 0x504EC
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x20F0C
+          ),
+          0x20F11 - 0x20F0C
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3279
+          ),
+          0xA327E - 0xA3279
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6BC5
+          ),
+          0xA6BCA - 0xA6BC5
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize03() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize03() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -265,11 +345,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize03() {
           0x3C3D8 - 0x3C3D3
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x50563
+          ),
+          0x50568 - 0x50563
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x20F83
+          ),
+          0x20F88 - 0x20F83
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA32F1
+          ),
+          0xA32F6 - 0xA32F1
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6C41
+          ),
+          0xA6C46 - 0xA6C41
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize04() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize04() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -293,11 +413,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize04() {
           0x3C43D - 0x3C438
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x505C8
+          ),
+          0x505CD - 0x505C8
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x20FE8
+          ),
+          0x20FED - 0x20FE8
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA335A
+          ),
+          0xA335F - 0xA335A
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6CA6
+          ),
+          0xA6CAB - 0xA6CA6
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize05() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize05() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -322,11 +482,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize05() {
           0x3BF45 - 0x3BF10
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x4FF10
+          ),
+          0x4FF55 - 0x4FF10
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x20AB0
+          ),
+          0x20AF5 - 0x20AB0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2CB0
+          ),
+          0xA2CFA - 0xA2CB0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA65E0
+          ),
+          0xA662A - 0xA65E0
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize06() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize06() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -351,11 +551,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize06() {
           0x3C674 - 0x3C66F
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x5075F
+          ),
+          0x50764 - 0x5075F
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x2128F
+          ),
+          0x21294 - 0x2128F
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2DBF
+          ),
+          0xA2DC4 - 0xA2DBF
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA66F3
+          ),
+          0xA66F8 - 0xA66F3
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize07() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize07() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -380,11 +620,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize07() {
           0x3C692 - 0x3C68D
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x5077D
+          ),
+          0x50782 - 0x5077D
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x212AD
+          ),
+          0x212B2 - 0x212AD
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2DDD
+          ),
+          0xA2DE2 - 0xA2DDD
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6711
+          ),
+          0xA6716 - 0xA6711
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize08() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize08() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -409,11 +689,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize08() {
           0x3CAE5 - 0x3CAE0
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x50B70
+          ),
+          0x50B75 - 0x50B70
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x216A0
+          ),
+          0x216A5 - 0x216A0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2EFF
+          ),
+          0xA2F04 - 0xA2EFF
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6853
+          ),
+          0xA6858 - 0xA6853
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize09() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize09() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with at least 1 stat point.
@@ -438,11 +758,51 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize09() {
           0x3CB03 - 0x3CAFE
       );
     }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x50B8E
+          ),
+          0x50B93 - 0x50B8E
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x216BE
+          ),
+          0x216C3 - 0x216BE
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA2F20
+          ),
+          0xA2F25 - 0xA2F20
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6874
+          ),
+          0xA6879 - 0xA6874
+      );
+    }
   }
 }
 
 PatchAddressAndSize
-Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize10() {
+Enable800NewStatsButtonPatch_1_13C::GetPatchAddressAndSize10() {
   /*
   * How to find patch locations:
   * 1. Start a game with a character with no stat points.
@@ -466,6 +826,46 @@ Enable800NewStatsButtonPatch_1_12A::GetPatchAddressAndSize10() {
               0x3C4E3
           ),
           0x3C4E8 - 0x3C4E3
+      );
+    }
+
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x50103
+          ),
+          0x50108 - 0x50103
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x21093
+          ),
+          0x21098 - 0x21093
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA3123
+          ),
+          0xA3128 - 0xA3123
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xA6A76
+          ),
+          0xA6A7B - 0xA6A76
       );
     }
   }
