@@ -43,31 +43,49 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+#include "replacement.hpp"
 
-#include "d2client/enable_800_interface_bar/patch.hpp"
-#include "d2client/enable_800_new_skill_button/patch.hpp"
-#include "d2client/enable_800_new_stats_button/patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/800_interface_bar.hpp"
 
-namespace sgd2fr {
+namespace sgd2fr::patches {
 
-class InterfaceBarPatches {
- public:
-  void Apply();
-  void Remove();
+std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewSkillButton() {
+  return Get800InterfaceBarEnabledValue();
+}
 
- private:
-  d2client::Enable800InterfaceBarPatch
-      d2client_enable_800_interface_bar_patch_;
+std::uint32_t __cdecl Sgd2fr_D2Client_Get800NewSkillButtonEnabledValue() {
+  return Get800InterfaceBarEnabledValue();
+}
 
-  d2client::Enable800NewSkillButtonPatch
-      d2client_enable_800_new_skill_button_patch_;
+mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewSkillButton() {
+  return IsMouseOverNewSkillButton();
+}
 
-  d2client::Enable800NewStatsButtonPatch
-      d2client_enable_800_new_stats_button_patch_;
-};
+void __cdecl Sgd2fr_D2Client_Set800NewSkillPopupText() {
+  const ::d2::UnicodeChar* new_stats_text = ::d2::d2lang::GetStringByIndex(3987);
+  const std::tuple popup_text_position = GetNewSkillPopupTextPosition();
 
-} // namespace sgd2fr
+  ::d2::d2win::SetPopUpUnicodeText(
+      new_stats_text,
+      std::get<0>(popup_text_position),
+      std::get<1>(popup_text_position),
+      ::d2::TextColor::kWhite,
+      true
+  );
+}
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewSkillButton(
+    ::d2::CelContext* cel_context
+) {
+  ::d2::PositionalRectangle_Api button_position = GetNewSkillButtonPosition();
+
+  ::d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+
+  return cel_context_wrapper.DrawFrame(
+      button_position.GetLeft(),
+      button_position.GetBottom()
+  );
+}
+
+} // namespace sgd2fr::patches

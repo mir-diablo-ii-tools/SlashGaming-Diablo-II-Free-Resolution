@@ -41,5 +41,10 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "interface_bar_patches.cc"
+        "interface_bar_patches.hpp"
+)
+
+add_subdirectory(d2client)

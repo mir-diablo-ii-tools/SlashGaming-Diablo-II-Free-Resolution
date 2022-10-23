@@ -43,31 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_HPP_
 
-#include "d2client/enable_800_interface_bar/patch.hpp"
-#include "d2client/enable_800_new_skill_button/patch.hpp"
-#include "d2client/enable_800_new_stats_button/patch.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
+namespace d2client {
 
-class InterfaceBarPatches {
+class Enable800NewStatsButtonPatch
+    : public AbstractMultiversionPatch {
  public:
-  void Apply();
-  void Remove();
+  Enable800NewStatsButtonPatch();
 
  private:
-  d2client::Enable800InterfaceBarPatch
-      d2client_enable_800_interface_bar_patch_;
-
-  d2client::Enable800NewSkillButtonPatch
-      d2client_enable_800_new_skill_button_patch_;
-
-  d2client::Enable800NewStatsButtonPatch
-      d2client_enable_800_new_stats_button_patch_;
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
+} // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_PATCH_HPP_

@@ -43,31 +43,71 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+#include "replacement.hpp"
 
-#include "d2client/enable_800_interface_bar/patch.hpp"
-#include "d2client/enable_800_new_skill_button/patch.hpp"
-#include "d2client/enable_800_new_stats_button/patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/800_interface_bar.hpp"
+#include "../../../../helper/game_resolution.hpp"
 
-namespace sgd2fr {
+namespace sgd2fr::patches {
 
-class InterfaceBarPatches {
- public:
-  void Apply();
-  void Remove();
+std::uint32_t __cdecl Sgd2fr_D2Client_Enable800InterfaceBar() {
+  return Get800InterfaceBarEnabledValue();
+}
 
- private:
-  d2client::Enable800InterfaceBarPatch
-      d2client_enable_800_interface_bar_patch_;
+mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
+    ::d2::CelContext* cel_context
+) {
+  // Grab the CelFile from the CelContext.
+  ::d2::CelContext_Wrapper cel_context_wrapper(cel_context);
+  ::d2::CelFile_Wrapper cel_file_wrapper(cel_context_wrapper.GetCelFile());
 
-  d2client::Enable800NewSkillButtonPatch
-      d2client_enable_800_new_skill_button_patch_;
+  // Determine the width and height of the interface bar. Note that only
+  // frames 1 - 4 should be drawn.
+  unsigned int interface_bar_width = 0;
 
-  d2client::Enable800NewStatsButtonPatch
-      d2client_enable_800_new_stats_button_patch_;
-};
+  for (unsigned int frame = 1; frame <= 4; frame += 1) {
+    ::d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
 
-} // namespace sgd2fr
+    interface_bar_width += cel_view.GetWidth();
+  }
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+  unsigned int interface_bar_height = ::d2::Cel_View(
+      cel_file_wrapper.GetCel(0, 0)
+  ).GetHeight();
+
+  // Determine the start draw positions of the interface bar.
+  const std::tuple display_width_and_height = GetIngameResolutionFromId(
+      ::d2::d2gfx::GetResolutionMode()
+  );
+
+  int draw_position_x =
+      (std::get<0>(display_width_and_height) - interface_bar_width) / 2;
+
+  // Draw the interface bar. Note that only frames 1 - 4 should be drawn.
+  ::d2::DrawCelFileFrameOptions frame_options;
+  frame_options.color = ::mapi::Rgba32BitColor();
+  frame_options.draw_effect = ::d2::DrawEffect::kNone;
+  frame_options.position_x_behavior = ::d2::DrawPositionXBehavior::kLeft;
+  frame_options.position_y_behavior = ::d2::DrawPositionYBehavior::kBottom;
+
+  ::mapi::bool32 total_result = true;
+  for (unsigned int frame = 1; frame <= 4; frame += 1) {
+    bool result = cel_file_wrapper.DrawFrame(
+        draw_position_x,
+        std::get<1>(display_width_and_height),
+        0,
+        frame,
+        frame_options
+    );
+
+    ::d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
+    draw_position_x += cel_view.GetWidth();
+
+    total_result = total_result && result;
+  }
+
+  return total_result;
+}
+
+} // namespace sgd2fr::patches

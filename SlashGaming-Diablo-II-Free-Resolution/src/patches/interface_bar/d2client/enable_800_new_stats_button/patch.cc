@@ -43,31 +43,52 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+#include "patch.hpp"
 
-#include "d2client/enable_800_interface_bar/patch.hpp"
-#include "d2client/enable_800_new_skill_button/patch.hpp"
-#include "d2client/enable_800_new_stats_button/patch.hpp"
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
+#include "patch_1_12a.hpp"
+#include "patch_1_13c.hpp"
 
 namespace sgd2fr {
+namespace d2client {
 
-class InterfaceBarPatches {
- public:
-  void Apply();
-  void Remove();
+Enable800NewStatsButtonPatch::Enable800NewStatsButtonPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  d2client::Enable800InterfaceBarPatch
-      d2client_enable_800_interface_bar_patch_;
+bool Enable800NewStatsButtonPatch::IsApplicable() {
+  return true;
+}
 
-  d2client::Enable800NewSkillButtonPatch
-      d2client_enable_800_new_skill_button_patch_;
+AbstractVersionPatch*
+Enable800NewStatsButtonPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-  d2client::Enable800NewStatsButtonPatch
-      d2client_enable_800_new_stats_button_patch_;
-};
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
+      return new Enable800NewStatsButtonPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      return new Enable800NewStatsButtonPatch_1_12A();
+    }
+
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new Enable800NewStatsButtonPatch_1_13C();
+    }
+  }
+}
+
+} // namespace d2client
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_

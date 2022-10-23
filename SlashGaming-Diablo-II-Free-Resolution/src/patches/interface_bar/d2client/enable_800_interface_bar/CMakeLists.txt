@@ -41,5 +41,23 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "patch.cc"
+        "patch.hpp"
+
+        "patch_1_09d.cc"
+        "patch_1_09d.hpp"
+        "interface_bar_d2client_e8ib_patch_1_09d_shim.asm"
+
+        "patch_1_12a.cc"
+        "patch_1_12a.hpp"
+        "interface_bar_d2client_e8ib_patch_1_12a_shim.asm"
+
+        "patch_1_13c.cc"
+        "patch_1_13c.hpp"
+        "interface_bar_d2client_e8ib_patch_1_13c_shim.asm"
+
+        "replacement.cc"
+        "replacement.hpp"
+)

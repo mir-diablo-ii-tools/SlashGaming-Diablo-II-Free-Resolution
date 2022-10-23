@@ -43,31 +43,32 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
-#define SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+#ifndef SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_REPLACEMENT_HPP_
 
-#include "d2client/enable_800_interface_bar/patch.hpp"
-#include "d2client/enable_800_new_skill_button/patch.hpp"
-#include "d2client/enable_800_new_stats_button/patch.hpp"
+#include <cstdint>
 
-namespace sgd2fr {
+#include <sgd2mapi.hpp>
 
-class InterfaceBarPatches {
- public:
-  void Apply();
-  void Remove();
+namespace sgd2fr::patches {
 
- private:
-  d2client::Enable800InterfaceBarPatch
-      d2client_enable_800_interface_bar_patch_;
+extern "C" std::uint32_t __cdecl Sgd2fr_D2Client_Enable800NewStatsButton();
 
-  d2client::Enable800NewSkillButtonPatch
-      d2client_enable_800_new_skill_button_patch_;
+/**
+ * Returns 0 if using 640x480 style, or 2 if 800x600 style.
+ */
+extern "C" std::uint32_t __cdecl
+Sgd2fr_D2Client_Get800NewStatsButtonEnabledValue();
 
-  d2client::Enable800NewStatsButtonPatch
-      d2client_enable_800_new_stats_button_patch_;
-};
+extern "C" ::mapi::bool32 __cdecl
+Sgd2fr_D2Client_IsMouseOver800NewStatsButton();
 
-} // namespace sgd2fr
+extern "C" void __cdecl Sgd2fr_D2Client_Set800NewStatsPopupText();
 
-#endif // SGD2FR_PATCHES_INTERFACE_BAR_INTERFACE_BAR_PATCHES_HPP_
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800NewStatsButton(
+    ::d2::CelContext* cel_context
+);
+
+} // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_INTERFACE_BAR_D2CLIENT_ENABLE_800_NEW_STATS_BUTTON_REPLACEMENT_HPP_
