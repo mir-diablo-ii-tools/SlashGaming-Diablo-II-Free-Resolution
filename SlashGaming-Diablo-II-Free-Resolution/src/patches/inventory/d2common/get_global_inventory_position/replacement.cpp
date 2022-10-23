@@ -43,39 +43,51 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
-#define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#include "replacement.hpp"
 
-#include "d2common/get_global_belt_record/patch.hpp"
-#include "d2common/get_global_belt_slot_position/patch.hpp"
-#include "d2common/get_global_equipment_slot_layout/patch.hpp"
-#include "d2common/get_global_inventory_grid_layout/patch.hpp"
-#include "d2common/get_global_inventory_position/patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/game_resolution.hpp"
+#include "../../../../helper/position_realignment.hpp"
 
-namespace sgd2fr {
+namespace sgd2fr::patches {
 
-class InventoryPatches {
- public:
-  void Apply();
-  void Remove();
+void __cdecl Sgd2fr_D2Common_GetGlobalInventoryPosition(
+    std::uint32_t inventory_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::PositionalRectangle* out_position
+) {
+  // Original code, copies the values of the specified Global Inventory
+  // Position into the output Inventory Position.
+  unsigned int source_inventory_arrange_mode =
+      GetSourceInventoryArrangeMode();
 
- private:
-  d2common::GetGlobalBeltRecordPatch
-      d2common_get_global_belt_record_patch_;
+  ::d2::InventoryRecord_View global_inventory_txt_view(
+      ::d2::d2common::GetGlobalInventoryTxt()
+  );
+  ::d2::PositionalRectangle_View global_inventory_position(
+      global_inventory_txt_view[
+          inventory_record_index + (source_inventory_arrange_mode * 16)
+      ].GetPosition()
+  );
 
-  d2common::GetGlobalBeltSlotPositionPatch
-      d2common_get_global_belt_slot_position_patch_;
+  ::d2::PositionalRectangle_Wrapper out_position_wrapper(out_position);
+  out_position_wrapper.AssignMembers(global_inventory_position);
 
-  d2common::GetGlobalEquipmentSlotLayoutPatch
-      d2common_get_global_equipment_slot_layout_patch_;
+  // Do not adjust positions if the entries are empty, which use value -1.
+  constexpr int entry_empty_value = -1;
+  if (out_position_wrapper.GetLeft() == entry_empty_value
+      || out_position_wrapper.GetRight() == entry_empty_value
+      || out_position_wrapper.GetTop() == entry_empty_value
+      || out_position_wrapper.GetBottom() == entry_empty_value
+  ) {
+    return;
+  }
 
-  d2common::GetGlobalInventoryGridLayoutPatch
-      d2common_get_global_inventory_grid_layout_patch_;
+  // Adjustment code to ensure that the objects appear in the correct
+  // location.
+  RealignPositionFromCenter(
+      out_position_wrapper
+  );
+}
 
-  d2common::GetGlobalInventoryPositionPatch
-      d2common_get_global_inventory_position_patch_;
-};
-
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+} // namespace sgd2fr::patches

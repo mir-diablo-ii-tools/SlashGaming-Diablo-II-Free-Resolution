@@ -43,39 +43,44 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
-#define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#include "patch.hpp"
 
-#include "d2common/get_global_belt_record/patch.hpp"
-#include "d2common/get_global_belt_slot_position/patch.hpp"
-#include "d2common/get_global_equipment_slot_layout/patch.hpp"
-#include "d2common/get_global_inventory_grid_layout/patch.hpp"
-#include "d2common/get_global_inventory_position/patch.hpp"
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
 
 namespace sgd2fr {
+namespace d2common {
 
-class InventoryPatches {
- public:
-  void Apply();
-  void Remove();
+GetGlobalInventoryGridLayoutPatch::GetGlobalInventoryGridLayoutPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  d2common::GetGlobalBeltRecordPatch
-      d2common_get_global_belt_record_patch_;
+bool GetGlobalInventoryGridLayoutPatch::IsApplicable() {
+  return true;
+}
 
-  d2common::GetGlobalBeltSlotPositionPatch
-      d2common_get_global_belt_slot_position_patch_;
+AbstractVersionPatch*
+GetGlobalInventoryGridLayoutPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-  d2common::GetGlobalEquipmentSlotLayoutPatch
-      d2common_get_global_equipment_slot_layout_patch_;
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
-  d2common::GetGlobalInventoryGridLayoutPatch
-      d2common_get_global_inventory_grid_layout_patch_;
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new GetGlobalInventoryGridLayoutPatch_1_09D();
+    }
+  }
+}
 
-  d2common::GetGlobalInventoryPositionPatch
-      d2common_get_global_inventory_position_patch_;
-};
-
+} // namespace d2common
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_

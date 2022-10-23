@@ -43,39 +43,32 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
-#define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_1_09D_HPP_
 
-#include "d2common/get_global_belt_record/patch.hpp"
-#include "d2common/get_global_belt_slot_position/patch.hpp"
-#include "d2common/get_global_equipment_slot_layout/patch.hpp"
-#include "d2common/get_global_inventory_grid_layout/patch.hpp"
-#include "d2common/get_global_inventory_position/patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
+namespace d2common {
 
-class InventoryPatches {
+class GetGlobalInventoryPositionPatch_1_09D
+    : public AbstractVersionPatch {
  public:
-  void Apply();
-  void Remove();
+  GetGlobalInventoryPositionPatch_1_09D();
 
  private:
-  d2common::GetGlobalBeltRecordPatch
-      d2common_get_global_belt_record_patch_;
+  enum {
+    kPatchesCount = 1
+  };
 
-  d2common::GetGlobalBeltSlotPositionPatch
-      d2common_get_global_belt_slot_position_patch_;
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  d2common::GetGlobalEquipmentSlotLayoutPatch
-      d2common_get_global_equipment_slot_layout_patch_;
-
-  d2common::GetGlobalInventoryGridLayoutPatch
-      d2common_get_global_inventory_grid_layout_patch_;
-
-  d2common::GetGlobalInventoryPositionPatch
-      d2common_get_global_inventory_position_patch_;
+  static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
+} // namespace d2common
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_POSITION_PATCH_1_09D_HPP_

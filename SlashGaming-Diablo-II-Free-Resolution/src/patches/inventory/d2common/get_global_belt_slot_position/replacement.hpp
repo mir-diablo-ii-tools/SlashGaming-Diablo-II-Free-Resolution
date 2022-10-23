@@ -43,39 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
-#define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_REPLACEMENT_HPP_
 
-#include "d2common/get_global_belt_record/patch.hpp"
-#include "d2common/get_global_belt_slot_position/patch.hpp"
-#include "d2common/get_global_equipment_slot_layout/patch.hpp"
-#include "d2common/get_global_inventory_grid_layout/patch.hpp"
-#include "d2common/get_global_inventory_position/patch.hpp"
+#include <sgd2mapi.hpp>
 
-namespace sgd2fr {
+namespace sgd2fr::patches {
 
-class InventoryPatches {
- public:
-  void Apply();
-  void Remove();
+extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
+    std::uint32_t belt_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::PositionalRectangle* out_belt_slot,
+    std::uint32_t belt_slot_index
+);
 
- private:
-  d2common::GetGlobalBeltRecordPatch
-      d2common_get_global_belt_record_patch_;
+} // namespace sgd2fr::patches
 
-  d2common::GetGlobalBeltSlotPositionPatch
-      d2common_get_global_belt_slot_position_patch_;
-
-  d2common::GetGlobalEquipmentSlotLayoutPatch
-      d2common_get_global_equipment_slot_layout_patch_;
-
-  d2common::GetGlobalInventoryGridLayoutPatch
-      d2common_get_global_inventory_grid_layout_patch_;
-
-  d2common::GetGlobalInventoryPositionPatch
-      d2common_get_global_inventory_position_patch_;
-};
-
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_SLOT_POSITION_REPLACEMENT_HPP_

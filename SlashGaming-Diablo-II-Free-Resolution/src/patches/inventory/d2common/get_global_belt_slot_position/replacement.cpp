@@ -43,39 +43,55 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
-#define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#include "replacement.hpp"
 
-#include "d2common/get_global_belt_record/patch.hpp"
-#include "d2common/get_global_belt_slot_position/patch.hpp"
-#include "d2common/get_global_equipment_slot_layout/patch.hpp"
-#include "d2common/get_global_inventory_grid_layout/patch.hpp"
-#include "d2common/get_global_inventory_position/patch.hpp"
+#include <windows.h>
 
-namespace sgd2fr {
+#include <sgd2mapi.hpp>
+#include "../../../../config.hpp"
+#include "../../../../helper/cel_file_collection.hpp"
+#include "../../../../helper/game_resolution.hpp"
+#include "../../../../helper/position_realignment.hpp"
 
-class InventoryPatches {
- public:
-  void Apply();
-  void Remove();
+namespace sgd2fr::patches {
 
- private:
-  d2common::GetGlobalBeltRecordPatch
-      d2common_get_global_belt_record_patch_;
+void __cdecl Sgd2fr_D2Common_GetGlobalBeltSlotPosition(
+    std::uint32_t belt_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::PositionalRectangle* out_belt_slot,
+    std::uint32_t belt_slot_index
+) {
+  // Original code, copies the values of the specified Global Belt Slot
+  // into the output Belt Slot.
+  unsigned int source_inventory_arrange_mode =
+      GetSourceInventoryArrangeMode();
 
-  d2common::GetGlobalBeltSlotPositionPatch
-      d2common_get_global_belt_slot_position_patch_;
+  ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
 
-  d2common::GetGlobalEquipmentSlotLayoutPatch
-      d2common_get_global_equipment_slot_layout_patch_;
+  ::d2::PositionalRectangle_View global_belt_slot_position(
+      global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
+          .GetSlotPositions()[belt_slot_index]
+  );
 
-  d2common::GetGlobalInventoryGridLayoutPatch
-      d2common_get_global_inventory_grid_layout_patch_;
+  ::d2::PositionalRectangle_Wrapper out_belt_slot_wrapper(out_belt_slot);
+  out_belt_slot_wrapper.AssignMembers(global_belt_slot_position);
 
-  d2common::GetGlobalInventoryPositionPatch
-      d2common_get_global_inventory_position_patch_;
-};
+  // Do not adjust positions if the entries are empty, which use value 0.
+  constexpr int entry_empty_value = 0;
 
-} // namespace sgd2fr
+  if (out_belt_slot_wrapper.GetLeft() == entry_empty_value
+      && out_belt_slot_wrapper.GetRight() == entry_empty_value
+      && out_belt_slot_wrapper.GetTop() == entry_empty_value
+      && out_belt_slot_wrapper.GetBottom() == entry_empty_value
+  ) {
+    return;
+  }
 
-#endif // SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+  // Adjustment code to ensure that the objects appear in the correct
+  // position.
+  RealignPositionFromBottomCenter(
+      out_belt_slot_wrapper
+  );
+}
+
+} // namespace sgd2fr::patches

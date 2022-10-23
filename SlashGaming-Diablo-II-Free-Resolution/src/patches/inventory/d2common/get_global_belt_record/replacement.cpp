@@ -43,39 +43,46 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
-#define SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+#include "replacement.hpp"
 
-#include "d2common/get_global_belt_record/patch.hpp"
-#include "d2common/get_global_belt_slot_position/patch.hpp"
-#include "d2common/get_global_equipment_slot_layout/patch.hpp"
-#include "d2common/get_global_inventory_grid_layout/patch.hpp"
-#include "d2common/get_global_inventory_position/patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/game_resolution.hpp"
 
-namespace sgd2fr {
+namespace sgd2fr::patches {
 
-class InventoryPatches {
- public:
-  void Apply();
-  void Remove();
+void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
+    std::uint32_t belt_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::BeltRecord* out_belt_record
+) {
+  // Original code, copies the values of the specified Global Belt Slot
+  // into the output Belt Slot.
+  unsigned int source_inventory_arrange_mode =
+      GetSourceInventoryArrangeMode();
 
- private:
-  d2common::GetGlobalBeltRecordPatch
-      d2common_get_global_belt_record_patch_;
+  ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
+  ::d2::BeltRecord_View global_belt_record_view(
+      global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
+  );
 
-  d2common::GetGlobalBeltSlotPositionPatch
-      d2common_get_global_belt_slot_position_patch_;
+  ::d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
+  out_belt_record_wrapper.AssignMembers(global_belt_record_view);
 
-  d2common::GetGlobalEquipmentSlotLayoutPatch
-      d2common_get_global_equipment_slot_layout_patch_;
+  // Adjustment code to ensure that the objects appear in the correct location.
+  for (std::size_t belt_slot_index = 0;
+       belt_slot_index < out_belt_record_wrapper.GetNumSlots();
+       belt_slot_index += 1) {
+    ::d2::PositionalRectangle_Wrapper slot_positions(
+        out_belt_record_wrapper.GetSlotPositions()
+    );
 
-  d2common::GetGlobalInventoryGridLayoutPatch
-      d2common_get_global_inventory_grid_layout_patch_;
+    ::d2::d2common::GetGlobalBeltSlotPosition(
+        belt_record_index,
+        inventory_arrange_mode,
+        slot_positions[belt_slot_index].Get(),
+        belt_slot_index
+    );
+  }
+}
 
-  d2common::GetGlobalInventoryPositionPatch
-      d2common_get_global_inventory_position_patch_;
-};
-
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INVENTORY_INVENTORY_PATCHES_HPP_
+} // namespace sgd2fr::patches
