@@ -43,61 +43,17 @@
  *  work.
  */
 
-#include "d2gdi_set_cel_display_left_and_right_patch.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_REPLACEMENT_HPP_
 
-#include <stddef.h>
+#include <cstddef>
 
-#include <sgd2mapi.hpp>
-#include "d2gdi_set_cel_display_left_and_right_patch_1_09d.hpp"
-#include "d2gdi_set_cel_display_left_and_right_patch_1_13c.hpp"
+namespace sgd2fr::patches {
 
-namespace sgd2fr {
-namespace d2gdi {
+extern "C" void __cdecl Sgd2fr_D2GDI_SetCelDisplayLeftAndRight(
+    std::size_t resolution_mode
+);
 
-SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+} // namespace sgd2fr::patches
 
-bool SetCelDisplayLeftAndRightPatch::IsApplicable() {
-  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
-  return (video_mode == ::d2::VideoMode::kGdi);
-}
-
-AbstractVersionPatch*
-SetCelDisplayLeftAndRightPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_07Beta:
-    case ::d2::GameVersion::k1_07:
-    case ::d2::GameVersion::k1_08:
-    case ::d2::GameVersion::k1_09:
-    case ::d2::GameVersion::k1_09B:
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10Beta:
-    case ::d2::GameVersion::k1_10SBeta:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::kLod1_14A:
-    case ::d2::GameVersion::kLod1_14B:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new SetCelDisplayLeftAndRightPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_11:
-    case ::d2::GameVersion::k1_11B:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13ABeta:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D: {
-      return new SetCelDisplayLeftAndRightPatch_1_13C();
-    }
-  }
-}
-
-} // namespace d2gdi
-} // namespace sgd2fr
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_REPLACEMENT_HPP_

@@ -43,11 +43,11 @@
  *  work.
  */
 
-#include "d2gdi_set_cel_display_left_and_right.hpp"
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/game_resolution.hpp"
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 

@@ -43,26 +43,32 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2gdi {
 
-class SetCelDisplayLeftAndRightPatch
-    : public AbstractMultiversionPatch {
+class SetCelDisplayLeftAndRightPatch_1_09D
+    : public AbstractVersionPatch {
  public:
-  SetCelDisplayLeftAndRightPatch();
+  SetCelDisplayLeftAndRightPatch_1_09D();
 
  private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
+  enum {
+    kPatchesCount = 1
+  };
+
+  ::mapi::GamePatch patches_[kPatchesCount];
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
 } // namespace d2gdi
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2GDI_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
