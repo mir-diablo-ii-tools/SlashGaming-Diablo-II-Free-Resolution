@@ -43,34 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2direct3d {
 
-class SetDisplayWidthAndHeightPatch_1_13C
-    : public AbstractVersionPatch {
+class SetDisplayWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
  public:
-  SetDisplayWidthAndHeightPatch_1_13C();
+  SetDisplayWidthAndHeightPatch();
 
  private:
-  enum {
-    kPatchesCount = 3
-  };
-
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2direct3d
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2DIRECT3D_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

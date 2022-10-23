@@ -43,11 +43,11 @@
  *  work.
  */
 
-#include "d2direct3d_set_display_width_and_height.hpp"
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/game_resolution.hpp"
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 

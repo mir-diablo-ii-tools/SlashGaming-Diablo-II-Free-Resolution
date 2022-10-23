@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2direct3d_set_display_width_and_height_patch_1_13c.hpp"
+#include "patch_1_13c.hpp"
 
 #include <stddef.h>
 
