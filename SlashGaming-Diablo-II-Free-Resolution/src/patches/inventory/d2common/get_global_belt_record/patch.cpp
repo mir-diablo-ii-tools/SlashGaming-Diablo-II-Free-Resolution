@@ -43,97 +43,42 @@
  *  work.
  */
 
-#include "d2common_get_global_belt_record_patch_1_09d.hpp"
+#include "patch.hpp"
 
 #include <stddef.h>
 
-extern "C" {
-
-void __cdecl
-D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01();
-
-} // extern "C"
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2common {
 
-GetGlobalBeltRecordPatch_1_09D::GetGlobalBeltRecordPatch_1_09D()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kJump,
-      &D2Common_GetGlobalBeltRecordPatch_1_09D_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
+GetGlobalBeltRecordPatch::GetGlobalBeltRecordPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-PatchAddressAndSize
-GetGlobalBeltRecordPatch_1_09D::GetPatchAddressAndSize01() {
+bool GetGlobalBeltRecordPatch::IsApplicable() {
+  return true;
+}
+
+AbstractVersionPatch*
+GetGlobalBeltRecordPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10638
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::k1_12A: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10225
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::k1_13C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10991
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOrdinal(
-              ::d2::DefaultLibrary::kD2Common,
-              10370
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::kLod1_14C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Common,
-              0x262F70
-          ),
-          5
-      );
-    }
-
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Common,
-              0x260CB0
-          ),
-          5
-      );
+      return new GetGlobalBeltRecordPatch_1_09D();
+      break;
     }
   }
 }

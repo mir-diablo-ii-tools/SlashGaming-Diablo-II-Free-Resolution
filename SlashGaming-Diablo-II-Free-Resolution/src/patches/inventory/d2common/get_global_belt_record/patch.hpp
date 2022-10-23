@@ -43,46 +43,26 @@
  *  work.
  */
 
-#include "d2common_get_global_belt_record.hpp"
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_RECORD_PATCH_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_RECORD_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/game_resolution.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
+namespace d2common {
 
-void __cdecl Sgd2fr_D2Common_GetGlobalBeltRecord(
-    std::uint32_t belt_record_index,
-    std::uint32_t inventory_arrange_mode,
-    ::d2::BeltRecord* out_belt_record
-) {
-  // Original code, copies the values of the specified Global Belt Slot
-  // into the output Belt Slot.
-  unsigned int source_inventory_arrange_mode =
-      GetSourceInventoryArrangeMode();
+class GetGlobalBeltRecordPatch
+    : public AbstractMultiversionPatch {
+ public:
+  GetGlobalBeltRecordPatch();
 
-  ::d2::BeltRecord_View global_belt_txt_view(d2::d2common::GetGlobalBeltsTxt());
-  ::d2::BeltRecord_View global_belt_record_view(
-      global_belt_txt_view[belt_record_index + (source_inventory_arrange_mode * 7)]
-  );
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
-  ::d2::BeltRecord_Wrapper out_belt_record_wrapper(out_belt_record);
-  out_belt_record_wrapper.AssignMembers(global_belt_record_view);
+} // namespace d2common
+} // namespace sgd2fr
 
-  // Adjustment code to ensure that the objects appear in the correct location.
-  for (std::size_t belt_slot_index = 0;
-       belt_slot_index < out_belt_record_wrapper.GetNumSlots();
-       belt_slot_index += 1) {
-    ::d2::PositionalRectangle_Wrapper slot_positions(
-        out_belt_record_wrapper.GetSlotPositions()
-    );
-
-    ::d2::d2common::GetGlobalBeltSlotPosition(
-        belt_record_index,
-        inventory_arrange_mode,
-        slot_positions[belt_slot_index].Get(),
-        belt_slot_index
-    );
-  }
-}
-
-} // namespace sgd2fr::patches
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_BELT_RECORD_PATCH_HPP_

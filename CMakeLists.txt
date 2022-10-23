@@ -90,9 +90,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record.cc"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch.cc"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch_1_09d.cc"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position.cc"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch.cc"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch_1_09d.cc"
@@ -205,7 +202,6 @@ set(CPP_FILES
 
 set(NASM_FILES
     "${PROJECT_DIR}/src/helper/cel_file_collection_asm.asm"
-    "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_record_patch/d2common_get_global_belt_record_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_belt_slot_position_patch/d2common_get_global_belt_slot_position_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_equipment_slot_layout_patch/d2common_get_global_equipment_slot_layout_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_grid_layout_patch/d2common_get_global_inventory_grid_layout_patch_1_09d_shim.asm"
