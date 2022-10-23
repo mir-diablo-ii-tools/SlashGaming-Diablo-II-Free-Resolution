@@ -43,26 +43,19 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_HPP_
-#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_REPLACEMENT_HPP_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <sgd2mapi.hpp>
 
-namespace sgd2fr {
-namespace d2common {
+namespace sgd2fr::patches {
 
-class GetGlobalInventoryGridLayoutPatch
-    : public AbstractMultiversionPatch {
- public:
-  GetGlobalInventoryGridLayoutPatch();
+extern "C" void __cdecl Sgd2fr_D2Common_GetGlobalInventoryGridLayout(
+    std::uint32_t inventory_record_index,
+    std::uint32_t inventory_arrange_mode,
+    ::d2::GridLayout* out_grid_layout
+);
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
+} // namespace sgd2fr::patches
 
-} // namespace d2common
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_HPP_
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_REPLACEMENT_HPP_

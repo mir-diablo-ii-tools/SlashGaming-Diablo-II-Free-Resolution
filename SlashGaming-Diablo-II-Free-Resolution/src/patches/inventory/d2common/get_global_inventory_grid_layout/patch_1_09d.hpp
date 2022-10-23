@@ -43,12 +43,12 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2common {
@@ -71,4 +71,4 @@ class GetGlobalInventoryGridLayoutPatch_1_09D
 } // namespace d2common
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_INVENTORY_D2COMMON_GET_GLOBAL_INVENTORY_GRID_LAYOUT_PATCH_1_09D_HPP_

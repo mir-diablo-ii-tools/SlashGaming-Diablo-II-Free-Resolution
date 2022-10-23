@@ -43,11 +43,11 @@
  *  work.
  */
 
-#include "d2common_get_global_inventory_grid_layout.hpp"
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/game_resolution.hpp"
-#include "../../../helper/position_realignment.hpp"
+#include "../../../../helper/game_resolution.hpp"
+#include "../../../../helper/position_realignment.hpp"
 
 namespace sgd2fr::patches {
 
