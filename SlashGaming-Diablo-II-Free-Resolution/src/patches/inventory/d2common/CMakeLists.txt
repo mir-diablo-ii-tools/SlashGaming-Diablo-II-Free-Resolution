@@ -40,7 +40,3 @@
 # containing parts not covered by a compatible license, the licensors of
 # this Program grant you additional permission to convey the resulting
 # work.
-
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
-add_subdirectory(inventory)

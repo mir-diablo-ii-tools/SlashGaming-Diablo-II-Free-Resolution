@@ -41,6 +41,10 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
-add_subdirectory(inventory)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "inventory_patches.cc"
+        "inventory_patches.hpp"
+)
+
+add_subdirectory(d2common)

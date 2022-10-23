@@ -105,7 +105,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position.cc"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch.cc"
     "${PROJECT_DIR}/src/patches/inventory/d2common_get_global_inventory_position_patch/d2common_get_global_inventory_position_patch_1_09d.cc"
-    "${PROJECT_DIR}/src/patches/inventory/inventory_patches.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_09d.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch_1_13c.cc"
