@@ -40,3 +40,5 @@
 # containing parts not covered by a compatible license, the licensors of
 # this Program grant you additional permission to convey the resulting
 # work.
+
+add_subdirectory(is_need_resize_window)

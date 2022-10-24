@@ -43,15 +43,16 @@
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        "required_patches.cc"
-        "required_patches.hpp"
-)
+        "patch.cpp"
+        "patch.hpp"
 
-add_subdirectory(d2client)
-add_subdirectory(d2ddraw)
-add_subdirectory(d2direct3d)
-add_subdirectory(d2gdi)
-add_subdirectory(d2gfx)
-add_subdirectory(d2glide)
-add_subdirectory(d2win)
-add_subdirectory(glide3x)
+        "patch_1_13c.cpp"
+        "patch_1_13c.hpp"
+        "patch_1_13c_shim_d2gfx_is_need_resize_window.asm"
+
+        "patch_1_13d.cpp"
+        "patch_1_13d.hpp"
+
+        "replacement.cpp"
+        "replacement.hpp"
+)

@@ -43,43 +43,81 @@
  *  work.
  */
 
-#include "d2gfx_is_need_resize_window_patch.hpp"
+#include "patch_1_13c.hpp"
 
 #include <stddef.h>
 
-#include <sgd2mapi.hpp>
-#include "d2gfx_is_need_resize_window_patch_1_13c.hpp"
-#include "d2gfx_is_need_resize_window_patch_1_13d.hpp"
+#include <mdc/std/stdint.h>
+
+extern "C" {
+
+void __cdecl
+D2GFX_IsNeedResizeWindowPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2gfx {
+namespace {
 
-IsNeedResizeWindowPatch::IsNeedResizeWindowPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+static const uint8_t kJeOpcodes[] = {
+    0x0F, 0x84,
+};
+
+} // namespace
+
+IsNeedResizeWindowPatch_1_13C::IsNeedResizeWindowPatch_1_13C()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GFX_IsNeedResizeWindowPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+
+  PatchAddressAndSize patch_address_and_size_02 =
+      GetPatchAddressAndSize02();
+  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameBufferPatch(
+      patch_address_and_size_02.first,
+      kJeOpcodes,
+      patch_address_and_size_02.second
+  );
+  this->patches_[1].Swap(patch_02);
 }
 
-bool IsNeedResizeWindowPatch::IsApplicable() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-  return (running_game_version >= ::d2::GameVersion::k1_13C);
-}
-
-AbstractVersionPatch*
-IsNeedResizeWindowPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
+PatchAddressAndSize
+IsNeedResizeWindowPatch_1_13C::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
     case ::d2::GameVersion::k1_13C: {
-      return new IsNeedResizeWindowPatch_1_13C();
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x83CE
+          ),
+          0x8409 - 0x83CE
+      );
     }
+  }
+}
 
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new IsNeedResizeWindowPatch_1_13D();
+PatchAddressAndSize
+IsNeedResizeWindowPatch_1_13C::GetPatchAddressAndSize02() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x8409
+          ),
+          sizeof(kJeOpcodes)
+      );
     }
   }
 }

@@ -61,7 +61,7 @@
 #include "d2direct3d/set_display_width_and_height/patch.hpp"
 #include "d2gdi/set_bit_block_width_and_height/patch.hpp"
 #include "d2gdi/set_cel_display_left_and_right/patch.hpp"
-#include "d2gfx_is_need_resize_window_patch/d2gfx_is_need_resize_window_patch.hpp"
+#include "d2gfx/is_need_resize_window/patch.hpp"
 #include "d2gfx_is_need_restore_down_window_patch/d2gfx_is_need_restore_down_window_patch.hpp"
 #include "d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.hpp"
 #include "d2glide/set_display_width_and_height/patch.hpp"

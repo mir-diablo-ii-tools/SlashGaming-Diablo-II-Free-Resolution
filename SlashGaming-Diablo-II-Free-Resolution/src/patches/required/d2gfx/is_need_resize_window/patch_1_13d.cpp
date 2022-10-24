@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2gfx_is_need_resize_window_patch_1_13d.hpp"
+#include "patch_1_13d.hpp"
 
 #include <stddef.h>
 

@@ -43,17 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_HPP_
 
-#include <windows.h>
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
-#include <cstdint>
+namespace sgd2fr {
+namespace d2gfx {
 
-namespace sgd2fr::patches {
+class IsNeedResizeWindowPatch
+    : public AbstractMultiversionPatch {
+ public:
+  IsNeedResizeWindowPatch();
 
-extern "C" int __cdecl Sgd2fr_D2GFX_IsNeedResizeWindowPatch();
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
-} // namespace sgd2fr::patches
+} // namespace d2gfx
+} // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_D2GFX_IS_NEED_RESIZE_WINDOW_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_PATCH_HPP_

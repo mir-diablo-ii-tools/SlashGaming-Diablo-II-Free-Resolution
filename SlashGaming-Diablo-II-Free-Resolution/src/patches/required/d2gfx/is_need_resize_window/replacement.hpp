@@ -43,37 +43,17 @@
  *  work.
  */
 
-#include "d2gfx_is_need_resize_window.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_REPLACEMENT_HPP_
 
-#include <mdc/error/exit_on_error.hpp>
-#include <mdc/wchar_t/filew.h>
-#include <sgd2mapi.hpp>
+#include <windows.h>
 
-#include "../../../helper/game_resolution.hpp"
+#include <cstdint>
 
 namespace sgd2fr::patches {
 
-int __cdecl Sgd2fr_D2GFX_IsNeedResizeWindowPatch() {
-  RECT client_rect = { 0 };
-
-  BOOL is_get_client_rect_success = GetClientRect(
-      ::d2::d2gfx::GetWindowHandle(),
-      &client_rect
-  );
-
-  // Original code does not exit on error, but effectively returns true
-  // on the windows resolution check.
-  if (!is_get_client_rect_success) {
-    return true;
-  }
-
-  ::std::tuple ingame_resolution = GetVideoModeDisplayResolution();
-
-  int client_width = client_rect.right - client_rect.left;
-  int client_height = client_rect.bottom - client_rect.top;
-
-  return (client_width <= ::std::get<0>(ingame_resolution)
-      && client_height <= ::std::get<1>(ingame_resolution));
-}
+extern "C" int __cdecl Sgd2fr_D2GFX_IsNeedResizeWindowPatch();
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESIZE_WINDOW_REPLACEMENT_HPP_
