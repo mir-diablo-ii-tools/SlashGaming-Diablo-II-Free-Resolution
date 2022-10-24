@@ -56,7 +56,7 @@
 #include "d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch.hpp"
 #include "d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.hpp"
 #include "d2ddraw/set_bit_block_width_and_height/patch.hpp"
-#include "d2ddraw_set_cel_display_left_and_right_patch/d2ddraw_set_cel_display_left_and_right_patch.hpp"
+#include "d2ddraw/set_cel_display_left_and_right/patch.hpp"
 #include "d2ddraw_set_display_width_and_height_patch/d2ddraw_set_display_width_and_height_patch.hpp"
 #include "d2direct3d/set_display_width_and_height/patch.hpp"
 #include "d2gdi/set_bit_block_width_and_height/patch.hpp"

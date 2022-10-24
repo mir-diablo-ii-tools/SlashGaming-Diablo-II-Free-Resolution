@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2ddraw_set_cel_display_left_and_right_patch_1_09d.hpp"
+#include "patch_1_09d.hpp"
 
 #include <stddef.h>
 

@@ -43,11 +43,11 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2ddraw {
@@ -65,4 +65,4 @@ class SetCelDisplayLeftAndRightPatch
 } // namespace d2ddraw
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_HPP_

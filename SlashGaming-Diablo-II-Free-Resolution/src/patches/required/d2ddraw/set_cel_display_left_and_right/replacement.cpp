@@ -43,17 +43,23 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_HPP_
+#include "replacement.hpp"
 
-#include <cstdint>
+#include <sgd2mapi.hpp>
+
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
-extern "C" void __cdecl Sgd2fr_D2DDraw_SetCelDisplayLeftAndRight(
+void __cdecl Sgd2fr_D2DDraw_SetCelDisplayLeftAndRight(
     std::uint32_t resolution_mode
-);
+) {
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+
+  int width = std::get<0>(resolution);
+
+  ::d2::d2ddraw::SetCelDisplayLeft(0);
+  ::d2::d2ddraw::SetCelDisplayRight(width);
+}
 
 } // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_HPP_

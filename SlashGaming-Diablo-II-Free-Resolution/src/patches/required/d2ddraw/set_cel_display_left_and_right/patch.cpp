@@ -43,32 +43,56 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
+#include "patch.hpp"
+
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "patch_1_09d.hpp"
 
 namespace sgd2fr {
 namespace d2ddraw {
 
-class SetCelDisplayLeftAndRightPatch_1_09D
-    : public AbstractVersionPatch {
- public:
-  SetCelDisplayLeftAndRightPatch_1_09D();
+SetCelDisplayLeftAndRightPatch::SetCelDisplayLeftAndRightPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+bool SetCelDisplayLeftAndRightPatch::IsApplicable() {
+  ::d2::VideoMode video_mode = ::d2::DetermineVideoMode();
+  return (video_mode == ::d2::VideoMode::kDirectDraw);
+}
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+AbstractVersionPatch* SetCelDisplayLeftAndRightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_07Beta:
+    case ::d2::GameVersion::k1_07:
+    case ::d2::GameVersion::k1_08:
+    case ::d2::GameVersion::k1_09:
+    case ::d2::GameVersion::k1_09B:
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10Beta:
+    case ::d2::GameVersion::k1_10SBeta:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_11:
+    case ::d2::GameVersion::k1_11B:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13ABeta:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14A:
+    case ::d2::GameVersion::kLod1_14B:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new SetCelDisplayLeftAndRightPatch_1_09D();
+    }
+  }
+}
 
 } // namespace d2ddraw
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_D2DDRAW_SET_CEL_DISPLAY_LEFT_AND_RIGHT_PATCH_1_09D_HPP_
