@@ -43,13 +43,13 @@
  *  work.
  */
 
-#include "d2ddraw_set_display_width_and_height_patch.hpp"
+#include "patch.hpp"
 
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "d2ddraw_set_display_width_and_height_patch_1_09d.hpp"
-#include "d2ddraw_set_display_width_and_height_patch_1_13c.hpp"
+#include "patch_1_09d.hpp"
+#include "patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2ddraw {

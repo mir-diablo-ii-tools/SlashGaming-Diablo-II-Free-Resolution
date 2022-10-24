@@ -43,33 +43,19 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include <cstdint>
 
-namespace sgd2fr {
-namespace d2ddraw {
+namespace sgd2fr::patches {
 
-class SetDisplayWidthAndHeightPatch_1_13C
-    : public AbstractVersionPatch {
- public:
-  SetDisplayWidthAndHeightPatch_1_13C();
+extern "C" void __cdecl Sgd2fr_D2DDraw_SetDisplayWidthAndHeight(
+    std::uint32_t resolution_mode,
+    std::int32_t* width,
+    std::int32_t* height
+);
 
- private:
-  enum {
-    kPatchesCount = 2
-  };
+} // namespace sgd2fr::patches
 
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-};
-
-} // namespace d2ddraw
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_

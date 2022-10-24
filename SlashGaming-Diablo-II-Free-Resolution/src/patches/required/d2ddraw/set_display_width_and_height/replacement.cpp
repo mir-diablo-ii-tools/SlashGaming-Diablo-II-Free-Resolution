@@ -43,26 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
+#include "replacement.hpp"
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <sgd2mapi.hpp>
 
-namespace sgd2fr {
-namespace d2ddraw {
+#include "../../../../helper/game_resolution.hpp"
 
-class SetDisplayWidthAndHeightPatch
-    : public AbstractMultiversionPatch {
- public:
-  SetDisplayWidthAndHeightPatch();
+namespace sgd2fr::patches {
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
+void __cdecl Sgd2fr_D2DDraw_SetDisplayWidthAndHeight(
+    std::uint32_t resolution_mode,
+    std::int32_t* width,
+    std::int32_t* height
+) {
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
 
-} // namespace d2ddraw
-} // namespace sgd2fr
+  *width = std::get<0>(resolution);
+  *height = std::get<1>(resolution);
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
+  ::d2::d2ddraw::SetDisplayWidth(*width);
+  ::d2::d2ddraw::SetDisplayHeight(*height);
+}
+
+} // namespace sgd2fr::patches
