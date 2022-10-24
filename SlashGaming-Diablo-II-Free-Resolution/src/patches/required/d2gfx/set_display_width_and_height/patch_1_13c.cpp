@@ -43,32 +43,86 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#include "patch_1_13c.hpp"
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include <stddef.h>
+
+extern "C" {
+
+void __cdecl
+D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2gfx {
 
-class SetDisplayWidthAndHeightPatch_1_13C
-    : public AbstractVersionPatch {
- public:
-  SetDisplayWidthAndHeightPatch_1_13C();
+SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+}
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
+  /*
+  * How to find patch locations:
+  * 1. Go to D2GFX's IsNeedResizeWindowPatch patch address.
+  * 2. Scroll down to the very first function call that appears after
+  *    the patch location. That is the patch location.
+  */
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_13C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x7FD0
+          ),
+          0x7FF4 - 0x7FD0
+      );
+    }
+
+    case ::d2::GameVersion::k1_13D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xB0E0
+          ),
+          0xB104 - 0xB0E0
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14C: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF2B10
+          ),
+          0xF2B34 - 0xF2B10
+      );
+    }
+
+    case ::d2::GameVersion::kLod1_14D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0xF5570
+          ),
+          0xF5595 - 0xF5570
+      );
+    }
+  }
+}
 
 } // namespace d2gfx
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_

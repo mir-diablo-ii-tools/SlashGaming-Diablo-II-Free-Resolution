@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2gfx_set_display_width_and_height_patch_1_12a.hpp"
+#include "patch_1_12a.hpp"
 
 #include <stddef.h>
 

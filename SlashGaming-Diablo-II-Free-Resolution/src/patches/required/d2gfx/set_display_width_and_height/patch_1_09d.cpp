@@ -43,32 +43,59 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_12A_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_12A_HPP_
+#include "patch_1_09d.hpp"
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include <stddef.h>
+
+extern "C" {
+
+void __cdecl
+D2GFX_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2gfx {
 
-class SetDisplayWidthAndHeightPatch_1_12A
-    : public AbstractVersionPatch {
- public:
-  SetDisplayWidthAndHeightPatch_1_12A();
+SetDisplayWidthAndHeightPatch_1_09D::SetDisplayWidthAndHeightPatch_1_09D()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2GFX_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+}
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+PatchAddressAndSize
+SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x4B80
+          ),
+          0x4BB8 - 0x4B80
+      );
+    }
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2GFX,
+              0x4B50
+          ),
+          0x4B88 - 0x4B50
+      );
+    }
+  }
+}
 
 } // namespace d2gfx
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_

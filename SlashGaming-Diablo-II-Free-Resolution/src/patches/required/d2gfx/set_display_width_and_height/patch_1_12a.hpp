@@ -43,23 +43,32 @@
  *  work.
  */
 
-#include "d2gfx_set_display_width_and_height.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_12A_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_12A_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
-#include "../../../helper/game_resolution.hpp"
+namespace sgd2fr {
+namespace d2gfx {
 
-namespace sgd2fr::patches {
+class SetDisplayWidthAndHeightPatch_1_12A
+    : public AbstractVersionPatch {
+ public:
+  SetDisplayWidthAndHeightPatch_1_12A();
 
-void __cdecl Sgd2fr_D2GFX_SetDisplayWidthAndHeight(
-    std::uint32_t resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
-}
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-} // namespace sgd2fr::patches
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
+
+} // namespace d2gfx
+} // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_12A_HPP_

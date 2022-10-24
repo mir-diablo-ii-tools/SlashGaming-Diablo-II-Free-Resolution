@@ -43,59 +43,26 @@
  *  work.
  */
 
-#include "d2gfx_set_display_width_and_height_patch_1_09d.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <stddef.h>
-
-extern "C" {
-
-void __cdecl
-D2GFX_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01();
-
-} // extern "C"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2gfx {
 
-SetDisplayWidthAndHeightPatch_1_09D::SetDisplayWidthAndHeightPatch_1_09D()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2GFX_SetDisplayWidthAndHeightPatch_1_09D_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
+class SetDisplayWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
+ public:
+  SetDisplayWidthAndHeightPatch();
 
-PatchAddressAndSize
-SetDisplayWidthAndHeightPatch_1_09D::GetPatchAddressAndSize01() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
-              0x4B80
-          ),
-          0x4BB8 - 0x4B80
-      );
-    }
-
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
-              0x4B50
-          ),
-          0x4B88 - 0x4B50
-      );
-    }
-  }
-}
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
 } // namespace d2gfx
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_HPP_

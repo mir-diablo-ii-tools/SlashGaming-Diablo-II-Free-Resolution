@@ -63,7 +63,7 @@
 #include "d2gdi/set_cel_display_left_and_right/patch.hpp"
 #include "d2gfx/is_need_resize_window/patch.hpp"
 #include "d2gfx/is_need_restore_down_window/patch.hpp"
-#include "d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.hpp"
+#include "d2gfx/set_display_width_and_height/patch.hpp"
 #include "d2glide/set_display_width_and_height/patch.hpp"
 #include "d2win/resize_window_on_maximize/patch.hpp"
 #include "glide3x/gr_sst_win_open/patch.hpp"

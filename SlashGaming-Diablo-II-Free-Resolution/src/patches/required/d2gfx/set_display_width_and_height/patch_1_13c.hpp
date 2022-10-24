@@ -43,52 +43,32 @@
  *  work.
  */
 
-#include "d2gfx_set_display_width_and_height_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2gfx_set_display_width_and_height_patch_1_09d.hpp"
-#include "d2gfx_set_display_width_and_height_patch_1_12a.hpp"
-#include "d2gfx_set_display_width_and_height_patch_1_13c.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2gfx {
 
-SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class SetDisplayWidthAndHeightPatch_1_13C
+    : public AbstractVersionPatch {
+ public:
+  SetDisplayWidthAndHeightPatch_1_13C();
 
-bool SetDisplayWidthAndHeightPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-AbstractVersionPatch*
-SetDisplayWidthAndHeightPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10: {
-      return new SetDisplayWidthAndHeightPatch_1_09D();
-    }
-
-    case ::d2::GameVersion::k1_12A: {
-      return new SetDisplayWidthAndHeightPatch_1_12A();
-    }
-
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new SetDisplayWidthAndHeightPatch_1_13C();
-    }
-  }
-}
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
 } // namespace d2gfx
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_13C_HPP_

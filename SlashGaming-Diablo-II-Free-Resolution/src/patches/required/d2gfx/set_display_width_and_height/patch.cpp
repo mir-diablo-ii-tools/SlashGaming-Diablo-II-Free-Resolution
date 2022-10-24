@@ -43,83 +43,49 @@
  *  work.
  */
 
-#include "d2gfx_set_display_width_and_height_patch_1_13c.hpp"
+#include "patch.hpp"
 
 #include <stddef.h>
 
-extern "C" {
-
-void __cdecl
-D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01();
-
-} // extern "C"
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
+#include "patch_1_12a.hpp"
+#include "patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2gfx {
 
-SetDisplayWidthAndHeightPatch_1_13C::SetDisplayWidthAndHeightPatch_1_13C()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2GFX_SetDisplayWidthAndHeightPatch_1_13C_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
+SetDisplayWidthAndHeightPatch::SetDisplayWidthAndHeightPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-PatchAddressAndSize
-SetDisplayWidthAndHeightPatch_1_13C::GetPatchAddressAndSize01() {
-  /*
-  * How to find patch locations:
-  * 1. Go to D2GFX's IsNeedResizeWindowPatch patch address.
-  * 2. Scroll down to the very first function call that appears after
-  *    the patch location. That is the patch location.
-  */
+bool SetDisplayWidthAndHeightPatch::IsApplicable() {
+  return true;
+}
+
+AbstractVersionPatch*
+SetDisplayWidthAndHeightPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_13C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
-              0x7FD0
-          ),
-          0x7FF4 - 0x7FD0
-      );
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
+      return new SetDisplayWidthAndHeightPatch_1_09D();
     }
 
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
-              0xB0E0
-          ),
-          0xB104 - 0xB0E0
-      );
+    case ::d2::GameVersion::k1_12A: {
+      return new SetDisplayWidthAndHeightPatch_1_12A();
     }
 
-    case ::d2::GameVersion::kLod1_14C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
-              0xF2B10
-          ),
-          0xF2B34 - 0xF2B10
-      );
-    }
-
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
     case ::d2::GameVersion::kLod1_14D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2GFX,
-              0xF5570
-          ),
-          0xF5595 - 0xF5570
-      );
+      return new SetDisplayWidthAndHeightPatch_1_13C();
     }
   }
 }

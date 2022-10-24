@@ -127,11 +127,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_09d.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_13c.cc"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height.cc"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch.cc"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch_1_09d.cc"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch_1_12a.cc"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch_1_13c.cc"
     "${PROJECT_DIR}/src/patches/patches.cc"
     "${PROJECT_DIR}/src/sgd2mapi_extension/game_function/d2client_function/d2client_draw_screens.cpp"
     "${PROJECT_DIR}/src/sgd2mapi_extension/game_variable/d2gfx/is_perspective_mode_enabled.cpp"
@@ -162,9 +157,6 @@ set(NASM_FILES
     "${PROJECT_DIR}/src/patches/required/d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch_1_11_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_13c_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch_1_09d_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch_1_12a_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2gfx_set_display_width_and_height_patch/d2gfx_set_display_width_and_height_patch_1_13c_shim.asm"
 )
 
 set(PCH_C_FILES
