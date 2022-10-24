@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2gfx_is_need_restore_down_window_patch_1_13c.hpp"
+#include "patch_1_13c.hpp"
 
 #include <stddef.h>
 

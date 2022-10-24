@@ -43,17 +43,42 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_HPP_
+#include "replacement.hpp"
 
-#include <windows.h>
+#include <mdc/error/exit_on_error.hpp>
+#include <mdc/wchar_t/filew.h>
+#include <sgd2mapi.hpp>
 
-#include <cstdint>
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 
-extern "C" int __cdecl Sgd2fr_D2GFX_IsNeedRestoreDownWindowPatch();
+int __cdecl Sgd2fr_D2GFX_IsNeedRestoreDownWindowPatch() {
+  RECT client_rect = { 0 };
+
+  BOOL is_get_client_rect_success = GetClientRect(
+      ::d2::d2gfx::GetWindowHandle(),
+      &client_rect
+  );
+
+  if (!is_get_client_rect_success) {
+    ::mdc::error::ExitOnWindowsFunctionError(
+        __FILEW__,
+        __LINE__,
+        L"GetClientRect",
+        GetLastError()
+    );
+
+    return false;
+  }
+
+  ::std::tuple ingame_resolution = GetVideoModeDisplayResolution();
+
+  int client_width = client_rect.right - client_rect.left;
+  int client_height = client_rect.bottom - client_rect.top;
+
+  return (client_width <= ::std::get<0>(ingame_resolution)
+      && client_height <= ::std::get<1>(ingame_resolution));
+}
 
 } // namespace sgd2fr::patches
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_HPP_

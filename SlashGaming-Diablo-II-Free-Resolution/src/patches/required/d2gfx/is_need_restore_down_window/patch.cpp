@@ -43,26 +43,42 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_HPP_
+#include "patch.hpp"
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2gfx {
 
-class IsNeedRestoreDownWindowPatch
-    : public AbstractMultiversionPatch {
- public:
-  IsNeedRestoreDownWindowPatch();
+IsNeedRestoreDownWindowPatch::IsNeedRestoreDownWindowPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
+bool IsNeedRestoreDownWindowPatch::IsApplicable() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  return (running_game_version >= ::d2::GameVersion::k1_13C);
+}
+
+AbstractVersionPatch*
+IsNeedRestoreDownWindowPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new IsNeedRestoreDownWindowPatch_1_13C();
+    }
+  }
+}
 
 } // namespace d2gfx
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_D2GFX_IS_NEED_RESTORE_DOWN_WINDOW_PATCH_HPP_
