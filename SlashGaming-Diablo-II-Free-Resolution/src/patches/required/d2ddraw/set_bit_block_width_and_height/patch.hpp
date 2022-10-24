@@ -43,32 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2ddraw {
 
-class SetBitBlockWidthAndHeightPatch_1_09D
-    : public AbstractVersionPatch {
+class SetBitBlockWidthAndHeightPatch
+    : public AbstractMultiversionPatch {
  public:
-  SetBitBlockWidthAndHeightPatch_1_09D();
+  SetBitBlockWidthAndHeightPatch();
 
  private:
-  enum {
-    kPatchesCount = 1
-  };
-
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2ddraw
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2DDRAW_SET_BIT_BLOCK_WIDTH_AND_HEIGHT_PATCH_HPP_
