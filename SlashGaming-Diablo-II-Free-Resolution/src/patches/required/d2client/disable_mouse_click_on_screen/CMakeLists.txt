@@ -41,4 +41,14 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(disable_mouse_click_on_screen)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "patch.cpp"
+        "patch.hpp"
+
+        "patch_1_09d.cpp"
+        "patch_1_09d.hpp"
+
+        "patch_1_13c.cpp"
+        "patch_1_13c.hpp"
+)

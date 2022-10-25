@@ -46,7 +46,7 @@
 #ifndef SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
 #define SGD2FR_PATCHES_REQUIRED_REQUIRED_PATCHES_HPP_
 
-#include "d2client_disable_mouse_click_on_screen_patch/d2client_disable_mouse_click_on_screen_patch.hpp"
+#include "d2client/disable_mouse_click_on_screen/patch.hpp"
 #include "d2client_draw_resolution_text_patch/d2client_draw_resolution_text_patch.hpp"
 #include "d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch.hpp"
 #include "d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height_patch.hpp"

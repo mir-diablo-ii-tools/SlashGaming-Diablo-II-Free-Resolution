@@ -43,26 +43,34 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_1_09D_HPP_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DisableMouseClickOnScreenPatch
-    : public AbstractMultiversionPatch {
+class DisableMouseClickOnScreenPatch_1_09D
+    : public AbstractVersionPatch {
  public:
-  DisableMouseClickOnScreenPatch();
+  DisableMouseClickOnScreenPatch_1_09D();
 
  private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
+  enum {
+    kPatchesCount = 3
+  };
+
+  ::mapi::GamePatch patches_[kPatchesCount];
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static PatchAddressAndSize GetPatchAddressAndSize02();
+  static PatchAddressAndSize GetPatchAddressAndSize03();
 };
 
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_1_09D_HPP_

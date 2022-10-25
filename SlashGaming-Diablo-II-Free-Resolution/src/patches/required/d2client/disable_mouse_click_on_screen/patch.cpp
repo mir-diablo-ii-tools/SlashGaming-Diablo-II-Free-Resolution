@@ -43,33 +43,48 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_1_13C_HPP_
+#include "patch.hpp"
+
+#include <stddef.h>
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "patch_1_09d.hpp"
+#include "patch_1_13c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DisableMouseClickOnScreenPatch_1_13C
-    : public AbstractVersionPatch {
- public:
-  DisableMouseClickOnScreenPatch_1_13C();
+DisableMouseClickOnScreenPatch::DisableMouseClickOnScreenPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  enum {
-    kPatchesCount = 2
-  };
+bool DisableMouseClickOnScreenPatch::IsApplicable() {
+  return true;
+}
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+AbstractVersionPatch*
+DisableMouseClickOnScreenPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-};
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
+      return new DisableMouseClickOnScreenPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DisableMouseClickOnScreenPatch_1_13C();
+    }
+  }
+}
 
 } // namespace d2client
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_D2CLIENT_DISABLE_MOUSE_CLICK_ON_SCREEN_PATCH_1_13C_HPP_
