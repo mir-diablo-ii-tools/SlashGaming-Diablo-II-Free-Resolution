@@ -90,10 +90,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch_1_09.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch_1_13c.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_registry_patch/d2client_set_resolution_registry.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch_1_09d.cc"
@@ -122,8 +118,6 @@ set(CPP_FILES
 
 set(NASM_FILES
     "${PROJECT_DIR}/src/helper/cel_file_collection_asm.asm"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch_1_09_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch_1_13c_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch_1_13c_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch_lod_1_14c_shim.asm"

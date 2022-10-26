@@ -43,19 +43,48 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_HPP_
+#include "patch.hpp"
 
-#include <cstdint>
+#include <stddef.h>
 
-namespace sgd2fr::patches {
+#include <sgd2mapi.hpp>
+#include "patch_1_09.hpp"
+#include "patch_1_13c.hpp"
 
-extern "C" void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
-    void* settings,
-    std::uint32_t reg_resolution_mode,
-    std::uint32_t* reg_resolution_mode_out
-);
+namespace sgd2fr {
+namespace d2client {
 
-} // namespace sgd2fr::patches
+SetResolutionFromOptionsMenuPatch::SetResolutionFromOptionsMenuPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_HPP_
+bool SetResolutionFromOptionsMenuPatch::IsApplicable() {
+  return true;
+}
+
+AbstractVersionPatch*
+SetResolutionFromOptionsMenuPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
+
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
+      return new SetResolutionFromOptionsMenuPatch_1_09D();
+    }
+
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new SetResolutionFromOptionsMenuPatch_1_13C();
+    }
+  }
+}
+
+} // namespace d2client
+} // namespace sgd2fr

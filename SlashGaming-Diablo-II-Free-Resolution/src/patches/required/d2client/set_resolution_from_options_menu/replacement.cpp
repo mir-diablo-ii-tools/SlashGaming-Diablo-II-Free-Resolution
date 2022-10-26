@@ -43,98 +43,118 @@
  *  work.
  */
 
-#include "d2client_set_resolution_from_options_menu_patch_1_13c.hpp"
+#include "replacement.hpp"
 
-#include <stddef.h>
+#include <mdc/wchar_t/filew.h>
+#include <mdc/error/exit_on_error.hpp>
+#include <sgd2mapi.hpp>
+#include "../../../../config.hpp"
+#include "../../../../helper/game_resolution.hpp"
 
-extern "C" {
+namespace sgd2fr::patches {
 
-void __cdecl
-D2Client_SetResolutionFromOptionsMenuPatch_1_13C_InterceptionFunc01();
-
-} // extern "C"
-
-namespace sgd2fr {
-namespace d2client {
-
-SetResolutionFromOptionsMenuPatch_1_13C
-::SetResolutionFromOptionsMenuPatch_1_13C()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2Client_SetResolutionFromOptionsMenuPatch_1_13C_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
-
-PatchAddressAndSize
-SetResolutionFromOptionsMenuPatch_1_13C::GetPatchAddressAndSize01() {
-  /*
-  * How to find patch locations:
-  * 1. Make sure to find the patch location of the D2Client
-  *    SetResolutionRegistryPatch. Set a code breakpoint there.
-  * 2. Step over until the very first function return is executed.
-  * 3. Scroll up to find the patch location.
-  */
+void __cdecl Sgd2fr_D2Client_SetResolutionFromOptionsMenu(
+    void* settings,
+    std::uint32_t reg_resolution_mode,
+    std::uint32_t* reg_resolution_mode_out
+) {
+  void* resolution_settings_address;
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_12A: {
-      return PatchAddressAndSize(
+    case ::d2::GameVersion::k1_09D: {
+      resolution_settings_address = reinterpret_cast<void*>(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x54DA0
-          ),
-          0x54DAA - 0x54DA0
+              0xE6468
+          ).raw_address()
       );
+      break;
+    }
+
+    case ::d2::GameVersion::k1_10: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xE6028
+          ).raw_address()
+      );
+      break;
+    }
+
+    case ::d2::GameVersion::k1_12A: {
+      resolution_settings_address = reinterpret_cast<void*>(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0xECAA0
+          ).raw_address()
+      );
+      break;
     }
 
     case ::d2::GameVersion::k1_13C: {
-      return PatchAddressAndSize(
+      resolution_settings_address = reinterpret_cast<void*>(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x651E0
-          ),
-          0x651EA - 0x651E0
+              0xEAAB8
+          ).raw_address()
       );
+      break;
     }
 
     case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
+      resolution_settings_address = reinterpret_cast<void*>(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0xC33A0
-          ),
-          0xC33AA - 0xC33A0
+              0xE4E20
+          ).raw_address()
       );
+      break;
     }
 
     case ::d2::GameVersion::kLod1_14C: {
-      return PatchAddressAndSize(
+      resolution_settings_address = reinterpret_cast<void*>(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x79411
-          ),
-          0x7941B - 0x79411
+              0x3197D0
+          ).raw_address()
       );
+      break;
     }
 
     case ::d2::GameVersion::kLod1_14D: {
-      return PatchAddressAndSize(
+      resolution_settings_address = reinterpret_cast<void*>(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x7D621
-          ),
-          0x7D62B - 0x7D621
+              0x31B1F0
+          ).raw_address()
       );
+      break;
     }
+
+    default: {
+      ::mdc::error::ExitOnConstantMappingError(
+          __FILEW__,
+          __LINE__,
+          static_cast<int>(running_game_version)
+      );
+
+      return;
+    }
+  }
+
+  if (settings != resolution_settings_address) {
+    *reg_resolution_mode_out = 0;
+    return;
+  }
+
+  std::size_t max_registry_resolution_id = GetMaxConfigResolutionId();
+
+  if (reg_resolution_mode >= max_registry_resolution_id) {
+    *reg_resolution_mode_out = GetMinConfigResolutionId();
+  } else {
+    *reg_resolution_mode_out = reg_resolution_mode;
   }
 }
 
-} // namespace d2client
-} // namespace sgd2fr
+} // namespace sgd2fr::patches

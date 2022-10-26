@@ -43,32 +43,60 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_1_13C_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_1_13C_HPP_
+#include "patch_1_09.hpp"
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include <stddef.h>
+
+extern "C" {
+
+void __cdecl
+D2Client_SetResolutionFromOptionsMenuPatch_1_09D_InterceptionFunc01();
+
+} // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-class SetResolutionFromOptionsMenuPatch_1_13C
-    : public AbstractVersionPatch {
- public:
-  SetResolutionFromOptionsMenuPatch_1_13C();
+SetResolutionFromOptionsMenuPatch_1_09D
+::SetResolutionFromOptionsMenuPatch_1_09D()
+    : AbstractVersionPatch(this->patches_, kPatchesCount) {
+  PatchAddressAndSize patch_address_and_size_01 =
+      GetPatchAddressAndSize01();
+  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
+      patch_address_and_size_01.first,
+      ::mapi::BranchType::kCall,
+      &D2Client_SetResolutionFromOptionsMenuPatch_1_09D_InterceptionFunc01,
+      patch_address_and_size_01.second
+  );
+  this->patches_[0].Swap(patch_01);
+}
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+PatchAddressAndSize
+SetResolutionFromOptionsMenuPatch_1_09D::GetPatchAddressAndSize01() {
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x61929
+          ),
+          0x61933 - 0x61929
+      );
+    }
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
+    case ::d2::GameVersion::k1_10: {
+      return PatchAddressAndSize(
+          ::mapi::GameAddress::FromOffset(
+              ::d2::DefaultLibrary::kD2Client,
+              0x67DB9
+          ),
+          0x67DC3 - 0x67DB9
+      );
+    }
+  }
+}
 
 } // namespace d2client
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_D2CLIENT_SET_RESOLUTION_FROM_OPTIONS_MENU_PATCH_1_13C_HPP_

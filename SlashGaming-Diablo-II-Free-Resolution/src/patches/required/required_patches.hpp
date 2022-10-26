@@ -50,7 +50,7 @@
 #include "d2client/draw_resolution_text/patch.hpp"
 #include "d2client/get_resolution_registry/patch.hpp"
 #include "d2client/set_general_display_width_and_height/patch.hpp"
-#include "d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch.hpp"
+#include "d2client/set_resolution_from_options_menu/patch.hpp"
 #include "d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch.hpp"
 #include "d2client_set_screen_shift_patch/d2client_set_screen_shift_patch.hpp"
 #include "d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch.hpp"
