@@ -43,35 +43,35 @@
  *  work.
  */
 
-#include "d2client_draw_resolution_text_patch_lod_1_14d.hpp"
+#include "patch_lod_1_14c.hpp"
 
 #include <stddef.h>
 
 extern "C" {
 
 void __cdecl
-D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01();
+D2Client_DrawResolutionTextPatch_Lod1_14C_InterceptionFunc01();
 
 } // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-DrawResolutionTextPatch_Lod1_14D::DrawResolutionTextPatch_Lod1_14D()
+DrawResolutionTextPatch_Lod1_14C::DrawResolutionTextPatch_Lod1_14C()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
-      &D2Client_DrawResolutionTextPatch_Lod1_14D_InterceptionFunc01,
+      &D2Client_DrawResolutionTextPatch_Lod1_14C_InterceptionFunc01,
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
 }
 
 PatchAddressAndSize
-DrawResolutionTextPatch_Lod1_14D::GetPatchAddressAndSize01() {
+DrawResolutionTextPatch_Lod1_14C::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
   * 1. Start a game with any character. Do not open the Game Menu.
@@ -102,13 +102,13 @@ DrawResolutionTextPatch_Lod1_14D::GetPatchAddressAndSize01() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::kLod1_14D: {
+    case ::d2::GameVersion::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x7E5AB
+              0x7A3A5
           ),
-          0x7E5B1 - 0x7E5AB
+          0x7A3AB - 0x7A3A5
       );
     }
   }

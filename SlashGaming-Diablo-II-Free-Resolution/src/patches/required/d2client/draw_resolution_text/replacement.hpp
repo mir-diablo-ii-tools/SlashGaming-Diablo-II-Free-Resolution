@@ -43,59 +43,20 @@
  *  work.
  */
 
-#include "d2client_draw_resolution_text_patch_1_09d.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_REPLACEMENT_HPP_
 
-#include <stddef.h>
+#include <sgd2mapi.hpp>
 
-extern "C" {
+namespace sgd2fr::patches {
 
-void __cdecl
-D2Client_DrawResolutionTextPatch_1_09D_InterceptionFunc01();
+extern "C" ::mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
+    const ::d2::CelFile* cel_file_base_address,
+    std::int32_t offset_value,
+    std::int32_t right,
+    std::int32_t top
+);
 
-} // extern "C"
+} // namespace sgd2fr::patches
 
-namespace sgd2fr {
-namespace d2client {
-
-DrawResolutionTextPatch_1_09D::DrawResolutionTextPatch_1_09D()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2Client_DrawResolutionTextPatch_1_09D_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
-
-PatchAddressAndSize
-DrawResolutionTextPatch_1_09D::GetPatchAddressAndSize01() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x62627
-          ),
-          0x6262D - 0x62627
-      );
-    }
-
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x68AAD
-          ),
-          0x68AB3 - 0x68AAD
-      );
-    }
-  }
-}
-
-} // namespace d2client
-} // namespace sgd2fr
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_REPLACEMENT_HPP_

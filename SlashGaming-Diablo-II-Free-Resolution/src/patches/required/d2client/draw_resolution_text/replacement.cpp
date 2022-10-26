@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_draw_resolution_text.hpp"
+#include "replacement.hpp"
 
 #include <cstdio>
 #include <array>
@@ -53,7 +53,7 @@
 #include <mdc/wchar_t/filew.h>
 #include <mdc/error/exit_on_error.hpp>
 #include <sgd2mapi.hpp>
-#include "../../../helper/game_resolution.hpp"
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr::patches {
 

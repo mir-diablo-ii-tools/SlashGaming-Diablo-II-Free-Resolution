@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_draw_resolution_text_patch_1_13c.hpp"
+#include "patch_1_13c.hpp"
 
 #include <stddef.h>
 

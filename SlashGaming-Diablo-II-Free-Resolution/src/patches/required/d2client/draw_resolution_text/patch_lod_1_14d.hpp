@@ -43,20 +43,20 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_1_09D_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_LOD_1_14D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_LOD_1_14D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class DrawResolutionTextPatch_1_09D
+class DrawResolutionTextPatch_Lod1_14D
     : public AbstractVersionPatch {
  public:
-  DrawResolutionTextPatch_1_09D();
+  DrawResolutionTextPatch_Lod1_14D();
 
  private:
   enum {
@@ -71,4 +71,4 @@ class DrawResolutionTextPatch_1_09D
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_1_09D_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_DRAW_RESOLUTION_TEXT_PATCH_LOD_1_14D_HPP_
