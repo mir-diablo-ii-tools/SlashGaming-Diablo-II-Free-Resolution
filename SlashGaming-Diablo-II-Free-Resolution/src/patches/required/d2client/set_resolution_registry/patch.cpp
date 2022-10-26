@@ -43,91 +43,49 @@
  *  work.
  */
 
-#include "d2client_set_resolution_registry_patch_1_09d.hpp"
+#include "patch.hpp"
 
 #include <stddef.h>
 
-extern "C" {
-
-void __cdecl
-D2Client_SetResolutionRegistryPatch_1_09D_InterceptionFunc01();
-
-} // extern "C"
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
+#include "patch_1_13c.hpp"
+#include "patch_lod_1_14c.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-SetResolutionRegistryPatch_1_09D::SetResolutionRegistryPatch_1_09D()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kCall,
-      &D2Client_SetResolutionRegistryPatch_1_09D_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-
-  PatchAddressAndSize patch_address_and_size_02 =
-      GetPatchAddressAndSize02();
-  ::mapi::GamePatch patch_02 = ::mapi::GamePatch::MakeGameNopPatch(
-      patch_address_and_size_02.first,
-      patch_address_and_size_02.second
-  );
-  this->patches_[1].Swap(patch_02);
+SetResolutionRegistryPatch::SetResolutionRegistryPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
 }
 
-PatchAddressAndSize
-SetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize01() {
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+bool SetResolutionRegistryPatch::IsApplicable() {
+  return true;
+}
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x61059
-          ),
-          0x61074 - 0x61059
-      );
-    }
-
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x67509
-          ),
-          0x67524 - 0x67509
-      );
-    }
+AbstractVersionPatch*
+SetResolutionRegistryPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
   }
-}
 
-PatchAddressAndSize
-SetResolutionRegistryPatch_1_09D::GetPatchAddressAndSize02() {
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x61075
-          ),
-          0x6107C - 0x61075
-      );
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10: {
+      return new SetResolutionRegistryPatch_1_09D();
     }
 
-    case ::d2::GameVersion::k1_10: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x67525
-          ),
-          0x6752C - 0x67525
-      );
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D: {
+      return new SetResolutionRegistryPatch_1_13C();
+    }
+
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new SetResolutionRegistryPatch_Lod1_14C();
     }
   }
 }

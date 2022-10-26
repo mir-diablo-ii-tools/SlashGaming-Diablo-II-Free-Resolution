@@ -43,31 +43,32 @@
  *  work.
  */
 
-#include "d2client_set_resolution_registry.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_1_13C_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_1_13C_HPP_
 
 #include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
-#include "../../../config.hpp"
-#include "../../../helper/game_resolution.hpp"
+namespace sgd2fr {
+namespace d2client {
 
-namespace sgd2fr::patches {
+class SetResolutionRegistryPatch_1_13C
+    : public AbstractVersionPatch {
+ public:
+  SetResolutionRegistryPatch_1_13C();
 
-void __cdecl Sgd2fr_D2Client_SetResolutionRegistry(
-    std::uint32_t reg_resolution_mode,
-    std::uint32_t* ingame_resolution_mode
-) {
-  // reg_resolution_mode value cycle:
-  // 0 -> 1 -> 3 -> ... -> 0
-  config::SetIngameResolutionMode(
-      reg_resolution_mode
-  );
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-  if (reg_resolution_mode == 0
-      || reg_resolution_mode >= GetMaxConfigResolutionId()) {
-    *ingame_resolution_mode = 0;
-  } else {
-    *ingame_resolution_mode = reg_resolution_mode + 1;
-  }
-}
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-} // namespace sgd2fr::patches
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
+
+} // namespace d2client
+} // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_1_13C_HPP_

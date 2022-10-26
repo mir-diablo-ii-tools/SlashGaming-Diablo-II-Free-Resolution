@@ -43,74 +43,64 @@
  *  work.
  */
 
-#include "d2client_set_resolution_registry_patch_1_13c.hpp"
+#include "patch_lod_1_14c.hpp"
 
 #include <stddef.h>
 
 extern "C" {
 
 void __cdecl
-D2Client_SetResolutionRegistryPatch_1_13C_InterceptionFunc01();
+D2Client_SetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01();
 
 } // extern "C"
 
 namespace sgd2fr {
 namespace d2client {
 
-SetResolutionRegistryPatch_1_13C::SetResolutionRegistryPatch_1_13C()
+SetResolutionRegistryPatch_Lod1_14C::SetResolutionRegistryPatch_Lod1_14C()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       ::mapi::BranchType::kCall,
-      &D2Client_SetResolutionRegistryPatch_1_13C_InterceptionFunc01,
+      &D2Client_SetResolutionRegistryPatch_Lod1_14C_InterceptionFunc01,
       patch_address_and_size_01.second
   );
   this->patches_[0].Swap(patch_01);
 }
 
 PatchAddressAndSize
-SetResolutionRegistryPatch_1_13C::GetPatchAddressAndSize01() {
+SetResolutionRegistryPatch_Lod1_14C::GetPatchAddressAndSize01() {
   /*
   * How to find patch locations:
   * 1. Search for the location of the 7-bit null-terminated ASCII text
   *    "Resolution". This text should be in a Read Only section.
   * 2. Search for the locations where "Resolution" is used. There will
-  *    be 5 results. One of those is the setter function.
+  *    be 3 results. One of those is the setter function.
   * 3. Choose the patch location with the matching interception shim.
   */
 
   ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
   switch (running_game_version) {
-    case ::d2::GameVersion::k1_12A: {
+    case ::d2::GameVersion::kLod1_14C: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x5615A
+              0x78E90
           ),
-          0x5617C - 0x5615A
+          0x78EBC - 0x78E90
       );
     }
 
-    case ::d2::GameVersion::k1_13C: {
+    case ::d2::GameVersion::kLod1_14D: {
       return PatchAddressAndSize(
           ::mapi::GameAddress::FromOffset(
               ::d2::DefaultLibrary::kD2Client,
-              0x662AA
+              0x7D0A0
           ),
-          0x662CC - 0x662AA
-      );
-    }
-
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0xC454A
-          ),
-          0xC456C - 0xC454A
+          0x7D0CC - 0x7D0A0
       );
     }
   }

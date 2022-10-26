@@ -43,32 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_LOD_1_14C_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_LOD_1_14C_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_HPP_
 
-#include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-class SetResolutionRegistryPatch_Lod1_14C
-    : public AbstractVersionPatch {
+class SetResolutionRegistryPatch
+    : public AbstractMultiversionPatch {
  public:
-  SetResolutionRegistryPatch_Lod1_14C();
+  SetResolutionRegistryPatch();
 
  private:
-  enum {
-    kPatchesCount = 1
-  };
-
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
 } // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_LOD_1_14C_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_RESOLUTION_REGISTRY_PATCH_HPP_
