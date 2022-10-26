@@ -43,17 +43,55 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_SHIM_H_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_SHIM_H_
+#include "replacement.hpp"
 
-#ifdef __cplusplus
-extern "C" {
-#endif  /* __cplusplus */
+#include <windows.h>
 
-void __cdecl D2Client_SetTileCullingBoundPatch_1_07_InterceptionFunc01();
+#include <mdc/std/stdint.h>
 
-#ifdef __cplusplus
-}  /* extern "C" */
-#endif  /* __cplusplus */
+#include "../../../../sgd2mapi_extension/game_variable/d2gfx/is_perspective_mode_enabled.hpp"
 
-#endif  /* SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_SHIM_H_ */
+namespace sgd2fr::patches {
+namespace {
+
+using ::d2::d2gfx::GetIsPerspectiveModeEnabled;
+using ::d2::d2client::GetGeneralDisplayHeight;
+using ::d2::d2client::GetGeneralDisplayWidth;
+
+}  // namespace
+
+struct CullingSpec {
+  uint32_t flags;
+  RECT draw_window_rect;
+  RECT tile_culling_window;
+};
+
+static_assert(offsetof(CullingSpec, flags) == 0);
+static_assert(offsetof(CullingSpec, draw_window_rect) == 4);
+static_assert(offsetof(CullingSpec, tile_culling_window) == 20);
+
+void __cdecl Sgd2fr_D2Client_SetTileCullingBound(
+    CullingSpec* culling_spec, int left, int top, int right, int bottom) {
+  if (culling_spec == NULL) {
+    return;
+  }
+
+  SetRect(&culling_spec->draw_window_rect, left, top, right, bottom);
+
+  RECT* tile_culling_rect = &culling_spec->tile_culling_window;
+  SetRect(
+      tile_culling_rect,
+      -160,
+      -160,
+      GetGeneralDisplayWidth() + 160,
+      GetGeneralDisplayHeight() + 160);
+  if (GetIsPerspectiveModeEnabled()) {
+    tile_culling_rect->top -= 160;
+    tile_culling_rect->left -= 320;
+    tile_culling_rect->right += 320;
+  }
+
+  culling_spec->flags |= 0x1;
+}
+
+}  // namespace sgd2fr::patches

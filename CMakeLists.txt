@@ -90,10 +90,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch_1_07.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch_1_11.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_09d.cc"
@@ -110,8 +106,6 @@ set(CPP_FILES
 
 set(NASM_FILES
     "${PROJECT_DIR}/src/helper/cel_file_collection_asm.asm"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch_1_07_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch_1_11_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_09d_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch_1_13c_shim.asm"
 )

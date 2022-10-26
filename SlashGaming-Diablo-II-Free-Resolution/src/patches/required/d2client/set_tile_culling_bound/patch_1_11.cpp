@@ -43,15 +43,15 @@
  *  work.
  */
 
-#include "d2client_set_tile_culling_bound_patch_1_07.hpp"
+#include "patch_1_11.hpp"
 
 #include <stddef.h>
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
-#include "d2client_set_tile_culling_bound_patch_1_07_shim.h"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
+#include "patch_1_11_shim.h"
 
 namespace sgd2fr {
 namespace d2client {
@@ -67,27 +67,26 @@ using ::sgd2fr::PatchAddressAndSize;
 
 }  // namespace
 
-SetTileCullingBoundPatch_1_07::SetTileCullingBoundPatch_1_07()
+SetTileCullingBoundPatch_1_11::SetTileCullingBoundPatch_1_11()
     : AbstractVersionPatch(this->patches_, kPatchesCount) {
   PatchAddressAndSize patch_address_and_size_01 =
       GetPatchAddressAndSize01();
   GamePatch patch_01 = GamePatch::MakeGameBranchPatch(
       patch_address_and_size_01.first,
       BranchType::kJump,
-      &D2Client_SetTileCullingBoundPatch_1_07_InterceptionFunc01,
+      &D2Client_SetTileCullingBoundPatch_1_11_InterceptionFunc01,
       patch_address_and_size_01.second);
   this->patches_[0].Swap(patch_01);
 }
 
-PatchAddressAndSize SetTileCullingBoundPatch_1_07::GetPatchAddressAndSize01() {
+PatchAddressAndSize SetTileCullingBoundPatch_1_11::GetPatchAddressAndSize01() {
   /*
    * How to find patch locations:
    * 1. Start a game with any character.
    * 2. Search for the address of the string "Perspective" in
    *    D2Client.dll.
-   * 3. Search for all usages of the string "Perspective". There will
-   *    be more than one. Choose the one surrounded by other text that
-   *    is related to the Video Options.
+   * 3. Search for all usages of the string "Perspective". If there is
+   *    more than one string, try all of them.
    * 3. Go to the code location where the string is used.
    * 4. Enter the first called function that is in D2Client.dll
    *    address space. That is the target address.
@@ -99,90 +98,45 @@ PatchAddressAndSize SetTileCullingBoundPatch_1_07::GetPatchAddressAndSize01() {
   size_t size;
 
   switch (running_game_version) {
-    case GameVersion::k1_07Beta: {
-      offset = 0x15EE0;
-      size = 0x15EE5 - 0x15EE0;
+    case GameVersion::k1_11: {
+      offset = 0x5B560;
+      size = 0x5B565 - 0x5B560;
       break;
     }
 
-    case GameVersion::k1_07: {
-      offset = 0x165C0;
-      size = 0x165C5 - 0x165C0;
+    case GameVersion::k1_11B: {
+      offset = 0x927A0;
+      size = 0x927A5 - 0x927A0;
       break;
     }
 
-    case GameVersion::k1_08: {
-      offset = 0x15E70;
-      size = 0x15E75 - 0x15E70;
+    case GameVersion::k1_12A: {
+      offset = 0xBA990;
+      size = 0xBA995 - 0xBA990;
       break;
     }
 
-    case GameVersion::k1_09:
-    case GameVersion::k1_09B: {
-      offset = 0x16010;
-      size = 0x16015 - 0x16010;
+    case GameVersion::k1_13ABeta: {
+      offset = 0x3F490;
+      size = 0x3F495 - 0x3F490;
       break;
     }
 
-    case GameVersion::k1_09D: {
-      offset = 0x16000;
-      size = 0x16005 - 0x16000;
+    case GameVersion::k1_13C: {
+      offset = 0x8A4D0;
+      size = 0x8A4D5 - 0x8A4D0;
       break;
     }
 
-    case GameVersion::k1_10Beta: {
-      offset = 0x16CE0;
-      size = 0x16CE5 - 0x16CE0;
-      break;
-    }
-
-    case GameVersion::k1_10SBeta: {
-      offset = 0x16C80;
-      size = 0x16C85 - 0x16C80;
-      break;
-    }
-
-    case GameVersion::k1_10: {
-      offset = 0x17100;
-      size = 0x17105 - 0x17100;
-      break;
-    }
-
-    case GameVersion::kClassic1_14A: {
-      offset = 0x4C7F0;
-      size = 0x4C7F5 - 0x4C7F0;
+    case GameVersion::k1_13D: {
+      offset = 0xB5330;
+      size = 0xB5335 - 0xB5330;
       break;
     }
 
     case GameVersion::kLod1_14A: {
-      offset = 0x4C8D0;
-      size = 0x4C8D5 - 0x4C8D0;
-      break;
-    }
-
-    case GameVersion::kClassic1_14B:
-    case GameVersion::kClassic1_14C: {
-      offset = 0x63910;
-      size = 0x63915 - 0x63910;
-      break;
-    }
-
-    case GameVersion::kLod1_14B:
-    case GameVersion::kLod1_14C: {
-      offset = 0x71D30;
-      size = 0x71D35 - 0x71D30;
-      break;
-    }
-
-    case GameVersion::kClassic1_14D: {
-      offset = 0x67850;
-      size = 0x67855 - 0x67850;
-      break;
-    }
-
-    case GameVersion::kLod1_14D: {
-      offset = 0x76000;
-      size = 0x76005 - 0x76000;
+      offset = 0xB5330;
+      size = 0xB5335 - 0xB5330;
       break;
     }
   }

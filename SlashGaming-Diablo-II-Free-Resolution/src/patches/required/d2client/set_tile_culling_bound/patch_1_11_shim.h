@@ -43,26 +43,17 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_SHIM_H_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_SHIM_H_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-namespace sgd2fr {
-namespace d2client {
+void __cdecl D2Client_SetTileCullingBoundPatch_1_11_InterceptionFunc01();
 
-class SetTileCullingBoundPatch
-    : public AbstractMultiversionPatch {
- public:
-  SetTileCullingBoundPatch();
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
-
-}  // namespace d2client
-}  // namespace sgd2fr
-
-#endif  // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_HPP_
+#endif  /* SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_SHIM_H_ */

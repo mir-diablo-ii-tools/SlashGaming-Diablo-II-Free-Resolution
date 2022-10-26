@@ -43,13 +43,13 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_HPP_
 
 #include <sgd2mapi.hpp>
 
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
@@ -72,4 +72,4 @@ class SetTileCullingBoundPatch_1_11
 }  // namespace sgd2fr
 }  // namespace d2client
 
-#endif  // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_HPP_
+#endif  // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_HPP_

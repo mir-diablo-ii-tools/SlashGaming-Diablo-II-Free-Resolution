@@ -53,7 +53,7 @@
 #include "d2client/set_resolution_from_options_menu/patch.hpp"
 #include "d2client/set_resolution_registry/patch.hpp"
 #include "d2client/set_screen_shift/patch.hpp"
-#include "d2client_set_tile_culling_bound_patch/d2client_set_tile_culling_bound_patch.hpp"
+#include "d2client/set_tile_culling_bound/patch.hpp"
 #include "d2client_unload_cel_file_collection_patch/d2client_unload_cel_file_collection_patch.hpp"
 #include "d2ddraw/set_bit_block_width_and_height/patch.hpp"
 #include "d2ddraw/set_cel_display_left_and_right/patch.hpp"

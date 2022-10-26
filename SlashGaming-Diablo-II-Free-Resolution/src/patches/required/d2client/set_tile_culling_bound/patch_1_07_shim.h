@@ -43,73 +43,17 @@
  *  work.
  */
 
-/*
- * Thanks goes to PhrozenKeep, specifically Szumigajowy, for providing
- * the starting point for this patch.
- */
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_SHIM_H_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_SHIM_H_
 
-#include "d2client_set_tile_culling_bound_patch.hpp"
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-#include <stddef.h>
+void __cdecl D2Client_SetTileCullingBoundPatch_1_07_InterceptionFunc01();
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
-#include "d2client_set_tile_culling_bound_patch_1_07.hpp"
-#include "d2client_set_tile_culling_bound_patch_1_11.hpp"
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-namespace sgd2fr {
-namespace d2client {
-namespace {
-
-using ::d2::GameVersion;
-using ::d2::game_version::GetRunning;
-
-}  // namespace
-
-SetTileCullingBoundPatch::SetTileCullingBoundPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
-
-bool SetTileCullingBoundPatch::IsApplicable() {
-  return true;
-}
-
-AbstractVersionPatch* SetTileCullingBoundPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
-  GameVersion running_game_version = GetRunning();
-  switch (running_game_version) {
-    case GameVersion::k1_07Beta:
-    case GameVersion::k1_07:
-    case GameVersion::k1_08:
-    case GameVersion::k1_09:
-    case GameVersion::k1_09B:
-    case GameVersion::k1_09D:
-    case GameVersion::k1_10Beta:
-    case GameVersion::k1_10SBeta:
-    case GameVersion::k1_10:
-    case GameVersion::kClassic1_14A:
-    case GameVersion::kLod1_14A:
-    case GameVersion::kClassic1_14B:
-    case GameVersion::kLod1_14B:
-    case GameVersion::kClassic1_14C:
-    case GameVersion::kLod1_14C:
-    case GameVersion::kClassic1_14D:
-    case GameVersion::kLod1_14D: {
-      return new SetTileCullingBoundPatch_1_07();
-    }
-
-    case GameVersion::k1_11:
-    case GameVersion::k1_12A:
-    case GameVersion::k1_13ABeta:
-    case GameVersion::k1_13C:
-    case GameVersion::k1_13D: {
-      return new SetTileCullingBoundPatch_1_11();
-    }
-  }
-}
-
-}  // namespace d2client
-}  // namespace sgd2fr
+#endif  /* SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_SHIM_H_ */

@@ -43,33 +43,16 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_REPLACEMENT_HPP_
 
-#include <sgd2mapi.hpp>
+namespace sgd2fr::patches {
 
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+struct CullingSpec;
 
-namespace sgd2fr {
-namespace d2client {
+extern "C" void __cdecl Sgd2fr_D2Client_SetTileCullingBound(
+    CullingSpec* culling_spec, int left, int top, int right, int bottom);
 
-class SetTileCullingBoundPatch_1_07
-    : public ::sgd2fr::AbstractVersionPatch {
- public:
-  SetTileCullingBoundPatch_1_07();
+}  // namespace sgd2fr::patches
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
-
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static ::sgd2fr::PatchAddressAndSize GetPatchAddressAndSize01();
-};
-
-}  // namespace sgd2fr
-}  // namespace d2client
-
-#endif  // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_HPP_
+#endif  // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_REPLACEMENT_HPP_

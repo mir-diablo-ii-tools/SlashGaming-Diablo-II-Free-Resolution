@@ -43,17 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_SHIM_H_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_SHIM_H_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif  /* __cplusplus */
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
-void __cdecl D2Client_SetTileCullingBoundPatch_1_11_InterceptionFunc01();
+namespace sgd2fr {
+namespace d2client {
 
-#ifdef __cplusplus
-}  /* extern "C" */
-#endif  /* __cplusplus */
+class SetTileCullingBoundPatch
+    : public AbstractMultiversionPatch {
+ public:
+  SetTileCullingBoundPatch();
 
-#endif  /* SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_11_SHIM_H_ */
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
+
+}  // namespace d2client
+}  // namespace sgd2fr
+
+#endif  // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_HPP_

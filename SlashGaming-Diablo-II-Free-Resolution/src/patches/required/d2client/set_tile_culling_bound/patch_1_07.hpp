@@ -43,55 +43,33 @@
  *  work.
  */
 
-#include "d2client_set_tile_culling_bound.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_HPP_
 
-#include <windows.h>
+#include <sgd2mapi.hpp>
 
-#include <mdc/std/stdint.h>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
-#include "../../../sgd2mapi_extension/game_variable/d2gfx/is_perspective_mode_enabled.hpp"
+namespace sgd2fr {
+namespace d2client {
 
-namespace sgd2fr::patches {
-namespace {
+class SetTileCullingBoundPatch_1_07
+    : public ::sgd2fr::AbstractVersionPatch {
+ public:
+  SetTileCullingBoundPatch_1_07();
 
-using ::d2::d2gfx::GetIsPerspectiveModeEnabled;
-using ::d2::d2client::GetGeneralDisplayHeight;
-using ::d2::d2client::GetGeneralDisplayWidth;
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-}  // namespace
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-struct CullingSpec {
-  uint32_t flags;
-  RECT draw_window_rect;
-  RECT tile_culling_window;
+  static ::sgd2fr::PatchAddressAndSize GetPatchAddressAndSize01();
 };
 
-static_assert(offsetof(CullingSpec, flags) == 0);
-static_assert(offsetof(CullingSpec, draw_window_rect) == 4);
-static_assert(offsetof(CullingSpec, tile_culling_window) == 20);
+}  // namespace sgd2fr
+}  // namespace d2client
 
-void __cdecl Sgd2fr_D2Client_SetTileCullingBound(
-    CullingSpec* culling_spec, int left, int top, int right, int bottom) {
-  if (culling_spec == NULL) {
-    return;
-  }
-
-  SetRect(&culling_spec->draw_window_rect, left, top, right, bottom);
-
-  RECT* tile_culling_rect = &culling_spec->tile_culling_window;
-  SetRect(
-      tile_culling_rect,
-      -160,
-      -160,
-      GetGeneralDisplayWidth() + 160,
-      GetGeneralDisplayHeight() + 160);
-  if (GetIsPerspectiveModeEnabled()) {
-    tile_culling_rect->top -= 160;
-    tile_culling_rect->left -= 320;
-    tile_culling_rect->right += 320;
-  }
-
-  culling_spec->flags |= 0x1;
-}
-
-}  // namespace sgd2fr::patches
+#endif  // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_TILE_CULLING_BOUND_PATCH_1_07_HPP_
