@@ -41,7 +41,14 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
-add_subdirectory(inventory)
-add_subdirectory(required)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "patch.cpp"
+        "patch.hpp"
+
+        "patch_1_09d.cpp"
+        "patch_1_09d.hpp"
+
+        "patch_1_13c.cpp"
+        "patch_1_13c.hpp"
+)

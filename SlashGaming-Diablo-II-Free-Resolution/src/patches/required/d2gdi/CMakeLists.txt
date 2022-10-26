@@ -41,7 +41,5 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
-add_subdirectory(inventory)
-add_subdirectory(required)
+add_subdirectory(set_bit_block_width_and_height)
+add_subdirectory(set_cel_display_left_and_right)

@@ -41,7 +41,12 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(draw)
-add_subdirectory(interface_bar)
-add_subdirectory(inventory)
-add_subdirectory(required)
+add_subdirectory(disable_mouse_click_on_screen)
+add_subdirectory(draw_resolution_text)
+add_subdirectory(get_resolution_registry)
+add_subdirectory(set_general_display_width_and_height)
+add_subdirectory(set_resolution_from_options_menu)
+add_subdirectory(set_resolution_registry)
+add_subdirectory(set_screen_shift)
+add_subdirectory(set_tile_culling_bound)
+add_subdirectory(unload_cel_file_collection)
