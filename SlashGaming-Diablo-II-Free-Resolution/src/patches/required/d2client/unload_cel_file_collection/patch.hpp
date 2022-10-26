@@ -43,84 +43,26 @@
  *  work.
  */
 
-#include "d2client_unload_cel_file_collection_patch_1_13c.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
 
-#include <stddef.h>
-
-extern "C" {
-
-void __cdecl
-D2Client_UnloadCelFileCollectionPatch_1_13C_InterceptionFunc01();
-
-} // extern "C"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-UnloadCelFileCollectionPatch_1_13C::UnloadCelFileCollectionPatch_1_13C()
-    : AbstractVersionPatch(this->patches_, kPatchesCount) {
-  PatchAddressAndSize patch_address_and_size_01 =
-      GetPatchAddressAndSize01();
-  ::mapi::GamePatch patch_01 = ::mapi::GamePatch::MakeGameBranchPatch(
-      patch_address_and_size_01.first,
-      ::mapi::BranchType::kJump,
-      &D2Client_UnloadCelFileCollectionPatch_1_13C_InterceptionFunc01,
-      patch_address_and_size_01.second
-  );
-  this->patches_[0].Swap(patch_01);
-}
+class UnloadCelFileCollectionPatch
+    : public AbstractMultiversionPatch {
+ public:
+  UnloadCelFileCollectionPatch();
 
-PatchAddressAndSize
-UnloadCelFileCollectionPatch_1_13C::GetPatchAddressAndSize01() {
-  /*
-  * How to find patch locations:
-  * 1. Start a game with any character.
-  * 2. Locate the variable for a CelFile that is associated with the
-  *    text "Panel\CtrlPnl7".
-  * 3. Set a write breakpoint on the variable.
-  * 4. Save and Exit the current game. Do not stop/exit/kill the game
-  *    process.
-  * 5. The write breakpoint list should now contain a location in the
-  *    function containing the patch location.
-  * 6. Scroll down to the bottom of the function to find the patch
-  *    location.
-  */
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_12A: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x8159B
-          ),
-          5
-      );
-    }
-
-
-    case ::d2::GameVersion::k1_13C: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x26F9B
-          ),
-          5
-      );
-    }
-
-    case ::d2::GameVersion::k1_13D: {
-      return PatchAddressAndSize(
-          ::mapi::GameAddress::FromOffset(
-              ::d2::DefaultLibrary::kD2Client,
-              0x6D08B
-          ),
-          5
-      );
-    }
-  }
-}
+ private:
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
+};
 
 } // namespace d2client
 } // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_UNLOAD_CEL_FILE_COLLECTION_PATCH_HPP_
