@@ -43,32 +43,33 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr {
-namespace d2client {
+#include "../../../../helper/game_resolution.hpp"
 
-class SetGeneralDisplayWidthAndHeightPatch_1_09D
-    : public AbstractVersionPatch {
- public:
-  SetGeneralDisplayWidthAndHeightPatch_1_09D();
+namespace sgd2fr::patches {
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
+    std::size_t resolution_mode
+) {
+  std::tuple<int, int> resolution = GetIngameResolutionFromId(
+      resolution_mode
+  );
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+  int width = std::get<0>(resolution);
+  int height = std::get<1>(resolution);
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
+  ::d2::d2client::SetGeneralDisplayWidth(width);
+  ::d2::d2client::SetGeneralDisplayHeight(height);
 
-} // namespace d2client
-} // namespace sgd2fr
+  // Workaround to prevent inventory arrangement from "transferring".
+  // Overflow is a non-issue and intentional.
+  static unsigned int inventory_arrange_mode = 0;
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+  ::d2::d2client::SetInventoryArrangeMode(inventory_arrange_mode);
+  inventory_arrange_mode += 1;
+}
+
+} // namespace sgd2fr::patches

@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_set_general_display_width_and_height_patch_1_09.hpp"
+#include "patch_1_09.hpp"
 
 #include <stddef.h>
 

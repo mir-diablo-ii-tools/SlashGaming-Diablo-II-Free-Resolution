@@ -43,44 +43,17 @@
  *  work.
  */
 
-#include "d2client_set_general_display_width_and_height_patch.hpp"
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_
 
-#include <stddef.h>
+#include <cstddef>
 
-#include <sgd2mapi.hpp>
-#include "d2client_set_general_display_width_and_height_patch_1_09.hpp"
+namespace sgd2fr::patches {
 
-namespace sgd2fr {
-namespace d2client {
+extern "C" void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
+    std::size_t resolution_mode
+);
 
-SetGeneralDisplayWidthAndHeightPatch::SetGeneralDisplayWidthAndHeightPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+} // namespace sgd2fr::patches
 
-bool SetGeneralDisplayWidthAndHeightPatch::IsApplicable() {
-  return true;
-}
-
-AbstractVersionPatch*
-SetGeneralDisplayWidthAndHeightPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
-
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
-
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new SetGeneralDisplayWidthAndHeightPatch_1_09D();
-    }
-  }
-}
-
-} // namespace d2client
-} // namespace sgd2fr
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_REPLACEMENT_HPP_

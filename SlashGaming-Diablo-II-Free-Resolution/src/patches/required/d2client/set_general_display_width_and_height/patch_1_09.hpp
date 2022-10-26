@@ -43,17 +43,32 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
 
-#include <cstddef>
+#include <sgd2mapi.hpp>
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
+namespace d2client {
 
-extern "C" void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
-    std::size_t resolution_mode
-);
+class SetGeneralDisplayWidthAndHeightPatch_1_09D
+    : public AbstractVersionPatch {
+ public:
+  SetGeneralDisplayWidthAndHeightPatch_1_09D();
 
-} // namespace sgd2fr::patches
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_HPP_
+  ::mapi::GamePatch patches_[kPatchesCount];
+
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
+
+} // namespace d2client
+} // namespace sgd2fr
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_GENERAL_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
