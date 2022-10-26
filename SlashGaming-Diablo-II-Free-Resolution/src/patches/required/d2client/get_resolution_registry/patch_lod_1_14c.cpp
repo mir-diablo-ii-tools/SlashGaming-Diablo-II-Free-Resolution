@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_get_resolution_registry_patch_lod_1_14c.hpp"
+#include "patch_lod_1_14c.hpp"
 
 #include <stddef.h>
 

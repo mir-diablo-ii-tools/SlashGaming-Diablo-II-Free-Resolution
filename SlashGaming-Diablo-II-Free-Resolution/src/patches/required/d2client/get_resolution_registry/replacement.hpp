@@ -43,26 +43,18 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_HPP_
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_REPLACEMENT_HPP_
 
-#include "../../../helper/abstract_multiversion_patch.hpp"
-#include "../../../helper/abstract_version_patch.hpp"
+#include <cstdint>
 
-namespace sgd2fr {
-namespace d2client {
+namespace sgd2fr::patches {
 
-class GetResolutionRegistryPatch
-    : public AbstractMultiversionPatch {
- public:
-  GetResolutionRegistryPatch();
+extern "C" void __cdecl Sgd2fr_D2Client_GetResolutionRegistry(
+    std::uint32_t* reg_resolution_mode,
+    std::uint32_t* ingame_resolution_mode
+);
 
- private:
-  static bool IsApplicable();
-  static AbstractVersionPatch* InitPatch();
-};
+} // namespace sgd2fr::patches
 
-} // namespace d2client
-} // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_D2CLIENT_GET_RESOLUTION_REGISTRY_PATCH_HPP_
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_GET_RESOLUTION_REGISTRY_REPLACEMENT_HPP_

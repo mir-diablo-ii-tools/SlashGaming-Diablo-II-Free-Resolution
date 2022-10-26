@@ -90,11 +90,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch_1_09d.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch_1_13c.cc"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch_lod_1_14c.cpp"
     "${PROJECT_DIR}/src/patches/required/d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height_patch.cc"
     "${PROJECT_DIR}/src/patches/required/d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height_patch_1_09.cc"
@@ -130,9 +125,6 @@ set(CPP_FILES
 
 set(NASM_FILES
     "${PROJECT_DIR}/src/helper/cel_file_collection_asm.asm"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch_1_09d_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch_1_13c_shim.asm"
-    "${PROJECT_DIR}/src/patches/required/d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch_lod_1_14c_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height_patch_1_09_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch_1_09_shim.asm"
     "${PROJECT_DIR}/src/patches/required/d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch_1_13c_shim.asm"

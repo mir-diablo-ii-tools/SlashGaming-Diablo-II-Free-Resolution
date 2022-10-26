@@ -48,7 +48,7 @@
 
 #include "d2client/disable_mouse_click_on_screen/patch.hpp"
 #include "d2client/draw_resolution_text/patch.hpp"
-#include "d2client_get_resolution_registry_patch/d2client_get_resolution_registry_patch.hpp"
+#include "d2client/get_resolution_registry/patch.hpp"
 #include "d2client_set_general_display_width_and_height_patch/d2client_set_general_display_width_and_height_patch.hpp"
 #include "d2client_set_resolution_from_options_menu_patch/d2client_set_resolution_from_options_menu_patch.hpp"
 #include "d2client_set_resolution_registry_patch/d2client_set_resolution_registry_patch.hpp"
