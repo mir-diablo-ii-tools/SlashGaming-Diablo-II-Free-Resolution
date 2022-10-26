@@ -43,44 +43,32 @@
  *  work.
  */
 
-#include "d2client_set_screen_shift_patch.hpp"
-
-#include <stddef.h>
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
 
 #include <sgd2mapi.hpp>
-#include "d2client_set_screen_shift_patch_1_09d.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
+#include "../../../../helper/patch_address_and_size.hpp"
 
 namespace sgd2fr {
 namespace d2client {
 
-SetScreenShiftPatch::SetScreenShiftPatch()
-    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
-}
+class SetScreenShiftPatch_1_09D
+    : public AbstractVersionPatch {
+ public:
+  SetScreenShiftPatch_1_09D();
 
-bool SetScreenShiftPatch::IsApplicable() {
-  return true;
-}
+ private:
+  enum {
+    kPatchesCount = 1
+  };
 
-AbstractVersionPatch*
-SetScreenShiftPatch::InitPatch() {
-  if (!IsApplicable()) {
-    return NULL;
-  }
+  ::mapi::GamePatch patches_[kPatchesCount];
 
-  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
+  static PatchAddressAndSize GetPatchAddressAndSize01();
+};
 
-  switch (running_game_version) {
-    case ::d2::GameVersion::k1_09D:
-    case ::d2::GameVersion::k1_10:
-    case ::d2::GameVersion::k1_12A:
-    case ::d2::GameVersion::k1_13C:
-    case ::d2::GameVersion::k1_13D:
-    case ::d2::GameVersion::kLod1_14C:
-    case ::d2::GameVersion::kLod1_14D: {
-      return new SetScreenShiftPatch_1_09D();
-    }
-  }
-}
-
-} // namespace d2client
 } // namespace sgd2fr
+} // namespace d2client
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_

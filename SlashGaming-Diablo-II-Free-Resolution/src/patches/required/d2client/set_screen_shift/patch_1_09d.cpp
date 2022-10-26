@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "d2client_set_screen_shift_patch_1_09d.hpp"
+#include "patch_1_09d.hpp"
 
 #include <stddef.h>
 

@@ -41,10 +41,15 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(disable_mouse_click_on_screen)
-add_subdirectory(draw_resolution_text)
-add_subdirectory(get_resolution_registry)
-add_subdirectory(set_general_display_width_and_height)
-add_subdirectory(set_resolution_from_options_menu)
-add_subdirectory(set_resolution_registry)
-add_subdirectory(set_screen_shift)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "patch.cpp"
+        "patch.hpp"
+
+        "patch_1_09d.cpp"
+        "patch_1_09d.hpp"
+        "patch_1_09d_shim_d2client_set_screen_shift.asm"
+
+        "replacement.cpp"
+        "replacement.hpp"
+)

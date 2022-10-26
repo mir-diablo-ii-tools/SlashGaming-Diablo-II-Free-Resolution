@@ -43,22 +43,13 @@
  *  work.
  */
 
-#include "d2client_set_screen_shift.hpp"
-
-#include <sgd2mapi.hpp>
-#include <format>
+#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_REPLACEMENT_HPP_
 
 namespace sgd2fr::patches {
 
-void __cdecl Sgd2fr_D2Client_SetScreenShift() {
-  int general_display_width = ::d2::d2client::GetGeneralDisplayWidth();
-  int general_display_height = ::d2::d2client::GetGeneralDisplayHeight();
-
-  int screen_shift_x = (general_display_width / 2) - (640 / 2);
-  int screen_shift_y = -((general_display_height / 2) - (480 / 2));
-
-  ::d2::d2client::SetScreenShiftX(screen_shift_x);
-  ::d2::d2client::SetScreenShiftY(screen_shift_y);
-}
+extern "C" void __cdecl Sgd2fr_D2Client_SetScreenShift();
 
 } // namespace sgd2fr::patches
+
+#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_REPLACEMENT_HPP_

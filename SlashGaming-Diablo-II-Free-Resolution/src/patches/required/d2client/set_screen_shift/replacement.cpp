@@ -43,32 +43,22 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_D2CLIENT_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_D2CLIENT_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
+#include "replacement.hpp"
 
 #include <sgd2mapi.hpp>
-#include "../../../helper/abstract_version_patch.hpp"
-#include "../../../helper/patch_address_and_size.hpp"
+#include <format>
 
-namespace sgd2fr {
-namespace d2client {
+namespace sgd2fr::patches {
 
-class SetScreenShiftPatch_1_09D
-    : public AbstractVersionPatch {
- public:
-  SetScreenShiftPatch_1_09D();
+void __cdecl Sgd2fr_D2Client_SetScreenShift() {
+  int general_display_width = ::d2::d2client::GetGeneralDisplayWidth();
+  int general_display_height = ::d2::d2client::GetGeneralDisplayHeight();
 
- private:
-  enum {
-    kPatchesCount = 1
-  };
+  int screen_shift_x = (general_display_width / 2) - (640 / 2);
+  int screen_shift_y = -((general_display_height / 2) - (480 / 2));
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+  ::d2::d2client::SetScreenShiftX(screen_shift_x);
+  ::d2::d2client::SetScreenShiftY(screen_shift_y);
+}
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-};
-
-} // namespace sgd2fr
-} // namespace d2client
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2CLIENT_SET_SCREEN_SHIFT_PATCH_D2CLIENT_SET_SCREEN_SHIFT_PATCH_1_09D_HPP_
+} // namespace sgd2fr::patches
