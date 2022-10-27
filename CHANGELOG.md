@@ -7,6 +7,12 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.3.1 (October 27, 2022)
+- Extended the tile culling even more, to lessen the tile culling
+  problem in D2DX with motion prediction enabled.
+- Fix issue preventing Windows 7 from loading the library.
+- Add Diablo2Online server to the supported server list.
+
 ## SGD2FreeRes 3.0.3.0 (October 17, 2022)
 - Add support for 1.10 and 1.12A. Credits to Jarcho for the ports.
 - Fix a New Stats and New Skill button 800x600 alignment issue in
