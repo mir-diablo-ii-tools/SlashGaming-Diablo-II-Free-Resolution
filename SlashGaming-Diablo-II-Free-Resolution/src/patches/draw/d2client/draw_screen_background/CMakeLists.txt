@@ -43,13 +43,13 @@
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        "patch.cc"
+        "patch.cpp"
         "patch.hpp"
 
-        "patch_1_09d.cc"
+        "patch_1_09d.cpp"
         "patch_1_09d.hpp"
-        "draw_d2client_dsb_patch_1_09d_shim.asm"
+        "patch_1_09d_shim_d2client_draw_screen_background.asm"
 
-        "replacement.cc"
+        "replacement.cpp"
         "replacement.hpp"
 )
