@@ -43,21 +43,21 @@
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        "patch.cc"
+        "patch.cpp"
         "patch.hpp"
 
-        "patch_1_09d.cc"
+        "patch_1_09d.cpp"
         "patch_1_09d.hpp"
-        "interface_bar_d2client_e8ib_patch_1_09d_shim.asm"
+        "patch_1_09d_shim_d2client_enable_800_interface_bar.asm"
 
-        "patch_1_12a.cc"
+        "patch_1_12a.cpp"
         "patch_1_12a.hpp"
-        "interface_bar_d2client_e8ib_patch_1_12a_shim.asm"
+        "patch_1_12a_shim_d2client_enable_800_interface_bar.asm"
 
-        "patch_1_13c.cc"
+        "patch_1_13c.cpp"
         "patch_1_13c.hpp"
-        "interface_bar_d2client_e8ib_patch_1_13c_shim.asm"
+        "patch_1_13c_shim_d2client_enable_800_interface_bar.asm"
 
-        "replacement.cc"
+        "replacement.cpp"
         "replacement.hpp"
 )

@@ -43,9 +43,9 @@
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        "patch.cc"
+        "patch.cpp"
         "patch.hpp"
 
-        "patch_1_07.cc"
+        "patch_1_07.cpp"
         "patch_1_07.hpp"
 )
