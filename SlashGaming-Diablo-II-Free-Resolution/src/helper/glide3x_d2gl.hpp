@@ -43,40 +43,17 @@
  *  work.
  */
 
-#include "replacement.hpp"
+#include <stdint.h>
 
-#include <sgd2mapi.hpp>
+namespace sgd2fr {
+namespace d2gl_glide {
 
-#include "../../../../helper/game_resolution.hpp"
-#include "../../../../helper/glide3x_d2dx.hpp"
-#include "../../../../helper/glide3x_d2gl.hpp"
-#include "../../../../helper/glide3x_version.hpp"
+bool IsD2glGlideWrapper(const wchar_t* path);
 
-namespace sgd2fr::patches {
+void SetCustomScreenSize(
+	uint32_t width,
+	uint32_t height
+);
 
-void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
-    std::uint32_t resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height,
-    std::uint32_t* glide_res_id
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
-
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
-
-  ::d2::d2glide::SetDisplayWidth(*width);
-  ::d2::d2glide::SetDisplayHeight(*height);
-
-  // Values starting at 0x1000 will cause a jump to the custom code.
-  // This needs to be undone before getting the game resolution.
-  *glide_res_id = resolution_mode + 0x1000;
-
-  if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
-    d2dx_glide::SetCustomResolution(*width, *height);
-  } else if (glide3x_version::GetRunning() == Glide3xVersion::kD2gl) {
-    d2gl_glide::SetCustomScreenSize(*width, *height);
-  }
-}
-
-} // namespace sgd2fr::patches
+} // namespace d2gl_glide
+} // namespace sgd2fr
