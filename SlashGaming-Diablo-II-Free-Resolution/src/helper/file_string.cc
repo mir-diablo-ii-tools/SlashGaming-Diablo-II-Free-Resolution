@@ -86,8 +86,9 @@ struct FileStringTableEntryCompareKey {
 
 static constexpr const std::array<
     FileStringTableEntry,
-    1
+    2
 > kFileStringSortedTable = {{
+    { L"D2GL", DDrawVersion::kD2gl },
     { L"cnc-ddraw", DDrawVersion::kCnC },
 }};
 

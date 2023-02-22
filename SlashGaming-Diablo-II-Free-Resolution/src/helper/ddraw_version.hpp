@@ -53,6 +53,7 @@ namespace sgd2fr {
 enum class DDrawVersion {
   kWindowsDefault,
   kCnC,
+  kD2gl,
 };
 
 namespace ddraw_version {

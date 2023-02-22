@@ -364,7 +364,8 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
 
         if (current_video_mode == ::d2::VideoMode::kDirect3D
             || (current_video_mode == ::d2::VideoMode::kDirectDraw
-                && ddraw_version::GetRunning() != DDrawVersion::kCnC)) {
+                && ddraw_version::GetRunning() != DDrawVersion::kCnC
+                && ddraw_version::GetRunning() != DDrawVersion::kD2gl)) {
           std::copy_if(
               selected_ingame_resolutions.cbegin(),
               selected_ingame_resolutions.cend(),
