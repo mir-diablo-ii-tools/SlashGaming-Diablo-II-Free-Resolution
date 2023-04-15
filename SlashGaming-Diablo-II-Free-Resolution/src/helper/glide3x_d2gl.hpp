@@ -43,34 +43,17 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-
-#include <sgd2mapi.hpp>
-#include "../../../../helper/abstract_version_patch.hpp"
-#include "../../../../helper/patch_address_and_size.hpp"
+#include <stdint.h>
 
 namespace sgd2fr {
-namespace d2glide {
+namespace d2gl_glide {
 
-class SetDisplayWidthAndHeightPatch_1_09D
-    : public AbstractVersionPatch {
- public:
-  SetDisplayWidthAndHeightPatch_1_09D();
+bool IsD2glGlideWrapper(const wchar_t* path);
 
- private:
-  enum {
-    kPatchesCount = 3
-  };
+void SetCustomScreenSize(
+	uint32_t width,
+	uint32_t height
+);
 
-  ::mapi::GamePatch patches_[kPatchesCount];
-
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
-};
-
-} // namespace d2glide
+} // namespace d2gl_glide
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_

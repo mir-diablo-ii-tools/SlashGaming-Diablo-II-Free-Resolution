@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2022  Mir Drualga
+ * Copyright (C) 2019-2023  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -49,6 +49,7 @@
 
 #include "../../../../helper/game_resolution.hpp"
 #include "../../../../helper/glide3x_d2dx.hpp"
+#include "../../../../helper/glide3x_d2gl.hpp"
 #include "../../../../helper/glide3x_version.hpp"
 
 namespace sgd2fr::patches {
@@ -73,6 +74,8 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
 
   if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
     d2dx_glide::SetCustomResolution(*width, *height);
+  } else if (glide3x_version::GetRunning() == Glide3xVersion::kD2gl) {
+    d2gl_glide::SetCustomScreenSize(*width, *height);
   }
 }
 

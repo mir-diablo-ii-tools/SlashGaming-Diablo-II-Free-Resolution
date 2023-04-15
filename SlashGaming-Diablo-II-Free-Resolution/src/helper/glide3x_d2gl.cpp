@@ -43,34 +43,73 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
-#define SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_
+#include <filesystem>
 
-#include <sgd2mapi.hpp>
-#include "../../../../helper/abstract_version_patch.hpp"
-#include "../../../../helper/patch_address_and_size.hpp"
+#include <mdc/wchar_t/filew.h>
+#include <mdc/error/exit_on_error.hpp>
+
 
 namespace sgd2fr {
-namespace d2glide {
+namespace d2gl_glide {
+namespace {
 
-class SetDisplayWidthAndHeightPatch_1_09D
-    : public AbstractVersionPatch {
- public:
-  SetDisplayWidthAndHeightPatch_1_09D();
+typedef void(__stdcall *SetCustomScreenSizeFuncType)(
+	uint32_t width,
+	uint32_t height
+);
 
- private:
-  enum {
-    kPatchesCount = 3
-  };
+static const char* const kSetCustomScreenSizeFuncName =
+    "_setCustomScreenSize@8";
 
-  ::mapi::GamePatch patches_[kPatchesCount];
+static SetCustomScreenSizeFuncType D2glSetCustomScreenSize;
 
-  static PatchAddressAndSize GetPatchAddressAndSize01();
-  static PatchAddressAndSize GetPatchAddressAndSize02();
-  static PatchAddressAndSize GetPatchAddressAndSize03();
-};
+} // namespace
 
-} // namespace d2glide
+bool IsD2glGlideWrapper(const wchar_t* path) {
+  if (!::std::filesystem::exists(path)) {
+    return false;
+  }
+
+  HMODULE glide3x_handle = GetModuleHandleW(path);
+  bool is_library_already_loaded = (glide3x_handle != nullptr);
+
+  if (!is_library_already_loaded) {
+    glide3x_handle = LoadLibraryW(path);
+  }
+
+  if (glide3x_handle == nullptr) {
+    ::mdc::error::ExitOnWindowsFunctionError(
+        __FILEW__,
+        __LINE__,
+        is_library_already_loaded
+            ? L"GetModuleHandleW"
+            : L"LoadLibraryW",
+        GetLastError()
+    );
+
+    return false;
+  }
+
+  FARPROC raw_func_ptr = GetProcAddress(
+      glide3x_handle,
+      kSetCustomScreenSizeFuncName
+  );
+
+  if (!is_library_already_loaded) {
+    FreeLibrary(glide3x_handle);
+  }
+
+  D2glSetCustomScreenSize = reinterpret_cast<SetCustomScreenSizeFuncType>(raw_func_ptr);
+
+  return (raw_func_ptr != nullptr);
+}
+
+void SetCustomScreenSize(
+	uint32_t width,
+	uint32_t height
+) {
+  return D2glSetCustomScreenSize(width, height);
+}
+
+} // namespace d2gl_glide
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_REQUIRED_D2GLIDE_SET_DISPLAY_WIDTH_AND_HEIGHT_PATCH_1_09D_HPP_

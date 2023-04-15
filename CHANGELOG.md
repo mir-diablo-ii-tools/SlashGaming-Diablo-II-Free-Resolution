@@ -7,6 +7,19 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0 (April 15, 2023)
+- Add support for the D2GL Glide and DDraw wrappers. Credits to
+  bayaraa for the implementation.
+
+## SGD2FreeRes 3.0.3.1d (April 15, 2023)
+- Add NOWD server to the supported server list.
+
+## SGD2FreeRes 3.0.3.1c (April 15, 2023)
+- Add D2infinitum server to the supported server list.
+
+## SGD2FreeRes 3.0.3.1b (November 11, 2022)
+- Add Firesnake's ESR servers to the supported server list.
+
 ## SGD2FreeRes 3.0.3.1 (October 27, 2022)
 - Extended the tile culling even more, to lessen the tile culling
   problem in D2DX with motion prediction enabled.

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2022  Mir Drualga
+ * Copyright (C) 2019-2023  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -86,8 +86,9 @@ struct FileStringTableEntryCompareKey {
 
 static constexpr const std::array<
     FileStringTableEntry,
-    1
+    2
 > kFileStringSortedTable = {{
+    { L"D2GL", DDrawVersion::kD2gl },
     { L"cnc-ddraw", DDrawVersion::kCnC },
 }};
 

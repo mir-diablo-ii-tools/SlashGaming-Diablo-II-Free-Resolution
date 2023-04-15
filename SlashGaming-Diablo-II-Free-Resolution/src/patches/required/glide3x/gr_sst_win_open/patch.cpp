@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2022  Mir Drualga
+ * Copyright (C) 2019-2023  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -65,7 +65,7 @@ bool GrSstWinOpenPatch::IsApplicable() {
 
   // The D2DX API extensions are used instead.
   Glide3xVersion running_glide3x_version = glide3x_version::GetRunning();
-  return (running_glide3x_version != Glide3xVersion::kD2dx);
+  return (running_glide3x_version != Glide3xVersion::kD2dx && running_glide3x_version != Glide3xVersion::kD2gl);
 }
 
 AbstractVersionPatch*
@@ -90,9 +90,11 @@ GrSstWinOpenPatch::InitPatch() {
       return new GrSstWinOpenPatch_NGlide_3_10_0_658();
     }
 
-    case Glide3xVersion::kD2dx: {
+    case Glide3xVersion::kD2dx:
+    case Glide3xVersion::kD2gl: {
       return NULL;
     }
+
   }
 }
 

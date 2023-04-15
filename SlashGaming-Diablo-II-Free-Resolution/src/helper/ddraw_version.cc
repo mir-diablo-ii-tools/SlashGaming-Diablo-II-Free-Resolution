@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2022  Mir Drualga
+ * Copyright (C) 2019-2023  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -59,6 +59,10 @@ namespace sgd2fr::ddraw_version {
 
     case DDrawVersion::kCnC: {
       return "CnC-DDraw";
+    }
+
+    case DDrawVersion::kD2gl: {
+      return "D2GL";
     }
 
     default: {
