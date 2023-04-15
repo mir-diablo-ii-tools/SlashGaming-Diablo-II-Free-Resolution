@@ -34,7 +34,7 @@ Servers that permit SGD2FreeRes:
 - And more...
 
 ## Contribution
-SGD2FreeRes is coded in C++20. It currently is intended to compile with Visual Studio 2019.
+SGD2FreeRes is coded in C++20. It currently is intended to compile with Visual Studio 2022.
 
 When you submit a pull request, you certify that the code in the pull request is AGPLv3+ compatible. You also certify that you have authorization to submit the pull request with the code changes. You certify that the merging of the pull request with those changes is authorized under the license terms of the AGPLv3+. Finally, you certify that the contribution is licensed under the AGPLv3+.
 

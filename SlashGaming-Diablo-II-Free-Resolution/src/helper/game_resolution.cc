@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2022  Mir Drualga
+ * Copyright (C) 2019-2023  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -94,10 +94,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
     std::string_view ipv4_address
 ) {
   // Warning: This needs to be sorted lexicographically!
-  static const ::std::array<
-      Ipv4HashResolutionTableEntry,
-      17
-  > kSortedIpv4ResolutionTable = {{
+  static const Ipv4HashResolutionTableEntry kSortedIpv4ResolutionTable[] = {
 
       // timer's server (old)
       Ipv4HashResolutionTableEntry(
@@ -173,6 +170,18 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }),
 
+      // Firesnake's ESR
+      Ipv4HashResolutionTableEntry(
+          "70C115B399B78827EEA39A045129771230C28F36",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1024, 768),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720),
+          }),
+
       // Casual Nostalgia
       Ipv4HashResolutionTableEntry(
           "7233C41BD36281AD8D0251D74F5E84984F35AC3E",
@@ -182,6 +191,27 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(856, 480),
               std::make_tuple(1024, 768),
               std::make_tuple(1068, 600)
+          }),
+
+      // D2infinitum
+      Ipv4HashResolutionTableEntry(
+          "746F9216D84745B78A9777E3A8FC27B20A1C8C51",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1068, 600)
+          }),
+
+      // Firesnake's ESR (beta)
+      Ipv4HashResolutionTableEntry(
+          "830C87608053315439D453BC28B75EE7B4DA73C9",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1024, 768),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720),
           }),
 
       // ip.d2lod.net
@@ -261,6 +291,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
+      // NOWD
+      Ipv4HashResolutionTableEntry(
+          "E1E7602929238D53EC59F7F4DF4F497BFCA3C4BC",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
       // evnt.slashdiablo.net (old)
       Ipv4HashResolutionTableEntry(
           "F067533C94707F1DE2DBB0AFA1334F8EBE276450",
@@ -281,7 +322,13 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1244, 700),
           }
       ),
-  }};
+  };
+
+  enum {
+    kSortedIpv4ResolutionTableCount =
+        sizeof(kSortedIpv4ResolutionTable)
+            / sizeof(kSortedIpv4ResolutionTable[0])
+  };
 
   static const std::vector default_resolutions = {
       kResolution640x480,
@@ -291,14 +338,18 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   char sha1_str[Sha1_kLength + 1];
   Sha1_GenerateHash(sha1_str, ipv4_address.data(), ipv4_address.length());
 
+  const Ipv4HashResolutionTableEntry* table_begin =
+      &kSortedIpv4ResolutionTable[0];
+  const Ipv4HashResolutionTableEntry* table_end =
+      &kSortedIpv4ResolutionTable[kSortedIpv4ResolutionTableCount];
   ::std::pair search_range = ::std::equal_range(
-      kSortedIpv4ResolutionTable.cbegin(),
-      kSortedIpv4ResolutionTable.cend(),
+      table_begin,
+      table_end,
       sha1_str,
       Ipv4HashResolutionTableEntryCompareKey()
   );
 
-  if (search_range.first == kSortedIpv4ResolutionTable.cend()
+  if (search_range.first == table_end
       || search_range.first == search_range.second) {
     return default_resolutions;
   }
