@@ -56,6 +56,7 @@ enum class Glide3xVersion {
   kSven1_4_8_3,
   kNGlide3_10_0_658,
   kD2dx,
+  kD2gl,
 };
 
 namespace glide3x_version {

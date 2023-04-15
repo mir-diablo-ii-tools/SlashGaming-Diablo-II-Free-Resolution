@@ -43,40 +43,73 @@
  *  work.
  */
 
-#include "replacement.hpp"
+#include <filesystem>
 
-#include <sgd2mapi.hpp>
+#include <mdc/wchar_t/filew.h>
+#include <mdc/error/exit_on_error.hpp>
 
-#include "../../../../helper/game_resolution.hpp"
-#include "../../../../helper/glide3x_d2dx.hpp"
-#include "../../../../helper/glide3x_d2gl.hpp"
-#include "../../../../helper/glide3x_version.hpp"
 
-namespace sgd2fr::patches {
+namespace sgd2fr {
+namespace d2gl_glide {
+namespace {
 
-void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
-    std::uint32_t resolution_mode,
-    std::int32_t* width,
-    std::int32_t* height,
-    std::uint32_t* glide_res_id
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+typedef void(__stdcall *SetCustomScreenSizeFuncType)(
+	uint32_t width,
+	uint32_t height
+);
 
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
+static const char* const kSetCustomScreenSizeFuncName =
+    "_setCustomScreenSize@8";
 
-  ::d2::d2glide::SetDisplayWidth(*width);
-  ::d2::d2glide::SetDisplayHeight(*height);
+static SetCustomScreenSizeFuncType D2glSetCustomScreenSize;
 
-  // Values starting at 0x1000 will cause a jump to the custom code.
-  // This needs to be undone before getting the game resolution.
-  *glide_res_id = resolution_mode + 0x1000;
+} // namespace
 
-  if (glide3x_version::GetRunning() == Glide3xVersion::kD2dx) {
-    d2dx_glide::SetCustomResolution(*width, *height);
-  } else if (glide3x_version::GetRunning() == Glide3xVersion::kD2gl) {
-    d2gl_glide::SetCustomScreenSize(*width, *height);
+bool IsD2glGlideWrapper(const wchar_t* path) {
+  if (!::std::filesystem::exists(path)) {
+    return false;
   }
+
+  HMODULE glide3x_handle = GetModuleHandleW(path);
+  bool is_library_already_loaded = (glide3x_handle != nullptr);
+
+  if (!is_library_already_loaded) {
+    glide3x_handle = LoadLibraryW(path);
+  }
+
+  if (glide3x_handle == nullptr) {
+    ::mdc::error::ExitOnWindowsFunctionError(
+        __FILEW__,
+        __LINE__,
+        is_library_already_loaded
+            ? L"GetModuleHandleW"
+            : L"LoadLibraryW",
+        GetLastError()
+    );
+
+    return false;
+  }
+
+  FARPROC raw_func_ptr = GetProcAddress(
+      glide3x_handle,
+      kSetCustomScreenSizeFuncName
+  );
+
+  if (!is_library_already_loaded) {
+    FreeLibrary(glide3x_handle);
+  }
+
+  D2glSetCustomScreenSize = reinterpret_cast<SetCustomScreenSizeFuncType>(raw_func_ptr);
+
+  return (raw_func_ptr != nullptr);
 }
 
-} // namespace sgd2fr::patches
+void SetCustomScreenSize(
+	uint32_t width,
+	uint32_t height
+) {
+  return D2glSetCustomScreenSize(width, height);
+}
+
+} // namespace d2gl_glide
+} // namespace sgd2fr

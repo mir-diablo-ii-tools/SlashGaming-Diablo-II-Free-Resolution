@@ -87,6 +87,7 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/helper/file_version.cc"
     "${PROJECT_DIR}/src/helper/game_resolution.cc"
     "${PROJECT_DIR}/src/helper/glide3x_d2dx.cpp"
+    "${PROJECT_DIR}/src/helper/glide3x_d2gl.cpp"
     "${PROJECT_DIR}/src/helper/glide3x_version.cc"
     "${PROJECT_DIR}/src/helper/patch_address_and_size.cpp"
     "${PROJECT_DIR}/src/helper/position_realignment.cc"

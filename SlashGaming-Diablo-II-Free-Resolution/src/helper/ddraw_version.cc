@@ -61,6 +61,10 @@ namespace sgd2fr::ddraw_version {
       return "CnC-DDraw";
     }
 
+    case DDrawVersion::kD2gl: {
+      return "D2GL";
+    }
+
     default: {
       ::mdc::error::ExitOnConstantMappingError(
           __FILEW__,

@@ -49,6 +49,7 @@
 #include <mdc/wchar_t/filew.h>
 #include "file_version.hpp"
 #include "glide3x_d2dx.hpp"
+#include "glide3x_d2gl.hpp"
 
 namespace sgd2fr::glide3x_version {
 namespace {
@@ -58,6 +59,10 @@ static const wchar_t* const kGlide3xPath = L"glide3x.dll";
 static Glide3xVersion DetermineGlide3xVersion() {
   if (d2dx_glide::IsD2dxGlideWrapper(kGlide3xPath)) {
     return Glide3xVersion::kD2dx;
+  }
+
+  if (d2gl_glide::IsD2glGlideWrapper(kGlide3xPath)) {
+    return Glide3xVersion::kD2gl;
   }
 
   return FileVersion::GuessGlide3xVersion(kGlide3xPath);
