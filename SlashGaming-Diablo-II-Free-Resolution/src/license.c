@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2022  Mir Drualga
+ * Copyright (C) 2019-2023  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -50,7 +50,7 @@
 
 static const char* const kLicenseLines[] = {
     "SlashGaming Diablo II Free Resolution",
-    "Copyright (C) 2019-2022  Mir Drualga",
+    "Copyright (C) 2019-2023  Mir Drualga",
     "",
     "This program is free software: you can redistribute it and/or modify",
     "it under the terms of the GNU Affero General Public License as published",
