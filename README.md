@@ -11,8 +11,8 @@ This is a project aimed at modding Diablo II to support any resolution.
 - Supports multiple video modes.
   - Supports standard GDI mode. Resolutions are unrestricted.
   - Supports standard DirectDraw and Direct3D modes, restricted to "standard" resolutions.
-  - Supports CnC-DDraw wrapper. Resolutions are unrestricted.
-  - Supports [Sven's Glide wrapper](http://www.svenswrapper.de/english/), [nGlide](https://www.zeus-software.com/), and [D2DX](https://github.com/bolrog/d2dx) Glide wrapper. Resolutions are unrestricted.
+  - Supports CnC-DDraw wrapper and [D2GL DDraw Wrapper](https://github.com/bayaraa/d2gl). Resolutions are unrestricted.
+  - Supports [Sven's Glide wrapper](http://www.svenswrapper.de/english/), [nGlide](https://www.zeus-software.com/), [D2DX](https://github.com/bolrog/d2dx), and [D2GL Glide Wrapper](https://github.com/bayaraa/d2gl). Resolutions are unrestricted.
 - Compatibility with select modsystems.
   - [PlugY](http://plugy.free.fr/en/index.html)
   - [D2SE](https://snej.org/forum/index2.php?topic=18954.msg459574#msg459574)
@@ -30,7 +30,6 @@ Servers that permit SGD2FreeRes:
 - [SlashDiablo](https://slashdiablo.net/): 640x480, 800x600, 856x480, 1068x600
 - [Resurgence](https://resurgence.slashgaming.net/): 640x480, 800x600, 856x480, 1068x600
 - [Project Diablo 2](https://www.projectdiablo2.com/): 640x480, 800x600, 856x480, 1068x600
-- [D2LOD.NET](http://d2lod.net/): 640x480, 800x600, 856x480, 1024x768, 1068x600
 - And more...
 
 ## Contribution
@@ -45,6 +44,7 @@ When you submit a pull request, you certify that the code in the pull request is
 - [Jarcho](https://github.com/Jarcho): For adding support for 1.10 and 1.12A.
 - Szumigajowy: For supplying the starting point for the tile culling boundary patch.
 - Necrolis: All-round code editing genius. Provides good advice.
+- [bayaraa](https://github.com/bayaraa): For creating D2GL and directly adding support for it.
 
 ## Legal
 The project is licensed under the terms of the Affero General Public License, version 3 or higher, with exceptions. Components may be licensed under other terms, so check LICENSE for more details. If you wish to apply for a proprietary license exception, please contact Mir Drualga on the SlashDiablo Discord channel.
