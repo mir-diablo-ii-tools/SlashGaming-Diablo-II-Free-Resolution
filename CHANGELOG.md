@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.3.1d (April 15, 2022)
+- Add NOWD server to the supported server list.
+
 ## SGD2FreeRes 3.0.3.1c (April 15, 2022)
 - Add D2infinitum server to the supported server list.
 

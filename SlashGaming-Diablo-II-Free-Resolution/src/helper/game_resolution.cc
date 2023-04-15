@@ -291,6 +291,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
+      // NOWD
+      Ipv4HashResolutionTableEntry(
+          "E1E7602929238D53EC59F7F4DF4F497BFCA3C4BC",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }
+      ),
+
       // evnt.slashdiablo.net (old)
       Ipv4HashResolutionTableEntry(
           "F067533C94707F1DE2DBB0AFA1334F8EBE276450",
