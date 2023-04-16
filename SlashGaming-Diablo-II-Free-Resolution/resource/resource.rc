@@ -81,7 +81,7 @@ VS_VERSION_INFO    VERSIONINFO
       VALUE "LegalTrademarks",  "All rights reserved."
       VALUE "PrivateBuild",     ""
       VALUE "ProductName",      "Diablo II Free Resolution"
-      VALUE "ProductVersion",   "3.0.4.0"
+      VALUE "ProductVersion",   "3.0.4.0b"
       VALUE "SpecialBuild",     ""
       VALUE "Support",          "reddit.com/r/SlashDiablo"
     } // BLOCK "040904E4"

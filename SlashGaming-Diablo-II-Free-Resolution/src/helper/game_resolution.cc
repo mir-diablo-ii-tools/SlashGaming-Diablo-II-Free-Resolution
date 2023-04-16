@@ -199,7 +199,9 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           {
               kResolution640x480,
               kResolution800x600,
-              std::make_tuple(1068, 600)
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700)
           }),
 
       // Firesnake's ESR (beta)

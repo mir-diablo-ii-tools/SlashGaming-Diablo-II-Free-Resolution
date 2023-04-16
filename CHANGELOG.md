@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0b (April 15, 2023)
+- Add 856x480 and 1344x700 to D2infinitum.
+
 ## SGD2FreeRes 3.0.4.0 (April 15, 2023)
 - Add support for the D2GL Glide and DDraw wrappers. Credits to
   bayaraa for the implementation.
