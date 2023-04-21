@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0d (April 21, 2023)
+- Add D2 Blacksoul to the supported server list.
+
 ## SGD2FreeRes 3.0.4.0c (April 16, 2023)
 - Add 1344x700 to NOWD.
 

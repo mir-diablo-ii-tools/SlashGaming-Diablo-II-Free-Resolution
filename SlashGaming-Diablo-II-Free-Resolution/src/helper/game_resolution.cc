@@ -239,6 +239,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
+      // D2 Blacksoul
+      Ipv4HashResolutionTableEntry(
+          "A3383DA756A8D9AD74A2B7A712C3BE4A15745574",
+          {
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720),
+              std::make_tuple(1600, 900)
+          }),
+
       // Project Diablo 2
       Ipv4HashResolutionTableEntry(
           "AB3C21D075AFC5B3A07EEF579576454D89C998E4",
