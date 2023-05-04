@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0e (May 3, 2023)
+- Remove 1344x700 from D2infinitum.
+
 ## SGD2FreeRes 3.0.4.0d (April 21, 2023)
 - Add D2 Blacksoul to the supported server list.
 
