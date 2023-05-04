@@ -244,8 +244,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           "A3383DA756A8D9AD74A2B7A712C3BE4A15745574",
           {
               std::make_tuple(1068, 600),
-              std::make_tuple(1280, 720),
-              std::make_tuple(1600, 900)
+              std::make_tuple(1280, 720)
           }),
 
       // Project Diablo 2
