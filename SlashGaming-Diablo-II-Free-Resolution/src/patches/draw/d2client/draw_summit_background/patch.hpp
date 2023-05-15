@@ -43,35 +43,26 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
-#define SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SUMMIT_BACKGROUND_PATCH_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SUMMIT_BACKGROUND_PATCH_HPP_
 
-#include "d2client/disable_scroll_of_inifuss_rect/patch.hpp"
-#include "d2client/draw_interface_bar_background/patch.hpp"
-#include "d2client/draw_screen_background/patch.hpp"
-#include "d2client/draw_summit_background/patch.hpp"
+#include "../../../../helper/abstract_multiversion_patch.hpp"
+#include "../../../../helper/abstract_version_patch.hpp"
 
 namespace sgd2fr {
+namespace d2client {
 
-class DrawPatches {
+class DrawSummitBackgroundPatch
+    : public AbstractMultiversionPatch {
  public:
-  void Apply();
-  void Remove();
+  DrawSummitBackgroundPatch();
 
  private:
-  d2client::DisableScrollOfInifussRectPatch
-      d2client_disable_scroll_of_inifuss_rect_patch_;
-
-  d2client::DrawInterfaceBarBackgroundPatch
-      d2client_draw_interface_bar_background_patch_;
-
-  d2client::DrawScreenBackgroundPatch
-      d2client_draw_screen_background_patch_;
-
-  d2client::DrawSummitBackgroundPatch
-      d2client_draw_summit_background_patch_;
+  static bool IsApplicable();
+  static AbstractVersionPatch* InitPatch();
 };
 
+} // namespace d2client
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SUMMIT_BACKGROUND_PATCH_HPP_
