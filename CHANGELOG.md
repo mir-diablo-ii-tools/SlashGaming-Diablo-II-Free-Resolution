@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0g (May 22, 2023)
+- Update NOWD server IP.
+
 ## SGD2FreeRes 3.0.4.0f (May 18, 2023)
 - Add Ale-'s second server.
 

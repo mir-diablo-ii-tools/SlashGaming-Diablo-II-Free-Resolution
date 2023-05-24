@@ -96,6 +96,18 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const Ipv4HashResolutionTableEntry kSortedIpv4ResolutionTable[] = {
 
+      // NOWD
+      Ipv4HashResolutionTableEntry(
+          "14F5ECFBCD56780D47BCC134FD021BFC15B5D168",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700)
+          }
+      ),
+
       // timer's server (old)
       Ipv4HashResolutionTableEntry(
           "1EF04EB4585C6521BDD6F644D0AB3D2020EC4600",
@@ -307,18 +319,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution800x600,
               std::make_tuple(856, 480),
               std::make_tuple(1068, 600)
-          }
-      ),
-
-      // NOWD
-      Ipv4HashResolutionTableEntry(
-          "E1E7602929238D53EC59F7F4DF4F497BFCA3C4BC",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600),
-              std::make_tuple(1344, 700)
           }
       ),
 
