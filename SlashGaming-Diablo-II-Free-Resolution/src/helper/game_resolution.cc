@@ -108,6 +108,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
+      // MXL Ultimative Challenge
+      Ipv4HashResolutionTableEntry(
+          "1A76FC3AA22DB2C650596C6B71DBCF78895FE551",
+          {
+              kResolution800x600,
+              std::make_tuple(1024, 768)
+          }),
+
       // timer's server (old)
       Ipv4HashResolutionTableEntry(
           "1EF04EB4585C6521BDD6F644D0AB3D2020EC4600",
