@@ -223,6 +223,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }),
 
+      // D2 Fan Club (D2FC)
+      Ipv4HashResolutionTableEntry(
+          "723C49D377EE3B9D65EBF499D99E094766F59999",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720)
+          }),
+
       // D2infinitum
       Ipv4HashResolutionTableEntry(
           "746F9216D84745B78A9777E3A8FC27B20A1C8C51",

@@ -7,8 +7,12 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0i (August 3, 2023)
+- Add D2FC server with 640x480, 800x600, 856x480, 1068x600, and
+  1280x720.
+
 ## SGD2FreeRes 3.0.4.0h (June 15, 2023)
-- Add MXL Ultimative Challenge server wiith 800x600 and 1024x768.
+- Add MXL Ultimative Challenge server with 800x600 and 1024x768.
 
 ## SGD2FreeRes 3.0.4.0g (May 22, 2023)
 - Update NOWD server IP.
