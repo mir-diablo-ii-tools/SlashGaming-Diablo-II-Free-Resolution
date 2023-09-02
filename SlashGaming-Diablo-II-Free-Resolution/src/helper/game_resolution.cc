@@ -256,6 +256,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1280, 720),
           }),
 
+      // SlashDiablo PTR
+      Ipv4HashResolutionTableEntry(
+          "89A5CCAECFD137BB7963C2A7524CFDBF9950D617",
+          {
+              kResolution640x480,
+              kResolution800x600,
+          }),
+
       // ip.d2lod.net
       Ipv4HashResolutionTableEntry(
           "8FD8A2923B012C29A1427B3972B16752AFB8FF0F",
