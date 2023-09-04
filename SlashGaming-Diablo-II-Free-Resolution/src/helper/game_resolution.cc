@@ -200,6 +200,13 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }),
 
+      // LatinBattle
+      Ipv4HashResolutionTableEntry(
+          "5FCF44DD3523B4C23E6B5E0E380C4D1FACFB58C1",
+          {
+              std::make_tuple(1068, 600),
+          }),
+
       // Firesnake's ESR
       Ipv4HashResolutionTableEntry(
           "70C115B399B78827EEA39A045129771230C28F36",

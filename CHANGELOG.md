@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0k (September 2, 2023)
+- Add LatinBattle server with 800x600 and 1068x600.
+
 ## SGD2FreeRes 3.0.4.0j (August 5, 2023)
 - Add SlashDiablo PTR server.
 
