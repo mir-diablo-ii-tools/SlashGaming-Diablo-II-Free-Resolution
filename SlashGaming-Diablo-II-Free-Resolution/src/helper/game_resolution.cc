@@ -96,6 +96,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const Ipv4HashResolutionTableEntry kSortedIpv4ResolutionTable[] = {
 
+      // Diablo 2 Revenge
+      Ipv4HashResolutionTableEntry(
+          "0FD346A24DE0A3B4BF318306EEB5FB49F78D72A6",
+          {
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720),
+              std::make_tuple(1600, 900),
+          }),
+
       // NOWD
       Ipv4HashResolutionTableEntry(
           "14F5ECFBCD56780D47BCC134FD021BFC15B5D168",
@@ -204,6 +214,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4HashResolutionTableEntry(
           "5FCF44DD3523B4C23E6B5E0E380C4D1FACFB58C1",
           {
+              kResolution800x600,
               std::make_tuple(1068, 600),
           }),
 
