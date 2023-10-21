@@ -313,6 +313,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1280, 720)
           }),
 
+      // Ale-'s server 3
+      Ipv4HashResolutionTableEntry(
+          "A9E0318F5C64E47352A3577E72D96EB5627CF43C",
+          {
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+          }),
+
       // Project Diablo 2
       Ipv4HashResolutionTableEntry(
           "AB3C21D075AFC5B3A07EEF579576454D89C998E4",
