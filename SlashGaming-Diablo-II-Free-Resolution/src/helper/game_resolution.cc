@@ -126,6 +126,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1024, 768)
           }),
 
+      // Diablo II: Hellforged
+      Ipv4HashResolutionTableEntry(
+          "1B3F4809C15C160594694B0E65A08F598B5110F6",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }),
+
       // timer's server (old)
       Ipv4HashResolutionTableEntry(
           "1EF04EB4585C6521BDD6F644D0AB3D2020EC4600",
