@@ -315,14 +315,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
-      // D2 Blacksoul
-      Ipv4HashResolutionTableEntry(
-          "A3383DA756A8D9AD74A2B7A712C3BE4A15745574",
-          {
-              std::make_tuple(1068, 600),
-              std::make_tuple(1280, 720)
-          }),
-
       // Ale-'s server 3
       Ipv4HashResolutionTableEntry(
           "A9E0318F5C64E47352A3577E72D96EB5627CF43C",
@@ -360,6 +352,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution640x480,
               kResolution800x600,
               // Do not add 856x480, by WOLF's request
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720)
+          }),
+
+      // D2 DarkSide
+      Ipv4HashResolutionTableEntry(
+          "C09B74DAEE688BFB659A86DB995228B1FCCEA919",
+          {
               std::make_tuple(1068, 600),
               std::make_tuple(1280, 720)
           }),

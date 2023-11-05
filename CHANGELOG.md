@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0p (November 5, 2023)
+- Move D2 Blacksoul to D2 DarkSide
+
 ## SGD2FreeRes 3.0.4.0o (October 25, 2023)
 - Add 1280x720 to Diablo2Online.
 
