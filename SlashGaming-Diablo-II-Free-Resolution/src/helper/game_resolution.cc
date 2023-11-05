@@ -360,7 +360,8 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution640x480,
               kResolution800x600,
               // Do not add 856x480, by WOLF's request
-              std::make_tuple(1068, 600)
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720)
           }),
 
       // play.slashdiablo.net
