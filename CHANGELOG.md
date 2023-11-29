@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0r (November 29, 2023)
+- Add 1344x700 to SlashDiablo and update gateway.
+
 ## SGD2FreeRes 3.0.4.0q (November 20, 2023)
 - Add 1172x660 and 1280x720 to Ale-'s third server.
 

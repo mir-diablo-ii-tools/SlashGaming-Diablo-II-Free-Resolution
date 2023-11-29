@@ -96,6 +96,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   // Warning: This needs to be sorted lexicographically!
   static const Ipv4HashResolutionTableEntry kSortedIpv4ResolutionTable[] = {
 
+      // play.slashdiablo.net
+      Ipv4HashResolutionTableEntry(
+          "04A1C66D539703687E165507DB619EAE38C8640A",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700)
+          }),
+
       // Diablo 2 Revenge
       Ipv4HashResolutionTableEntry(
           "0FD346A24DE0A3B4BF318306EEB5FB49F78D72A6",
@@ -290,6 +301,9 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           {
               kResolution640x480,
               kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700)
           }),
 
       // ip.d2lod.net
@@ -365,17 +379,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
               std::make_tuple(1280, 720)
           }),
-
-      // play.slashdiablo.net
-      Ipv4HashResolutionTableEntry(
-          "C311F388012034C4ACB91AC573965302CF5711E0",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
 
       // evnt.slashdiablo.net
       Ipv4HashResolutionTableEntry(
