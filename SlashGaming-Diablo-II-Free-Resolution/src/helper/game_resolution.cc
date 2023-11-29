@@ -321,6 +321,8 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           {
               kResolution800x600,
               std::make_tuple(1068, 600),
+              std::make_tuple(1172, 660),
+              std::make_tuple(1280, 720),
           }),
 
       // Project Diablo 2
