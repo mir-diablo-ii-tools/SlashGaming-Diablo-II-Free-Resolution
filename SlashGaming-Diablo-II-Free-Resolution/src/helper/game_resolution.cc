@@ -338,6 +338,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1344, 700)
           }),
 
+      // Ph4nt0m's Go Server
+      Ipv4HashResolutionTableEntry(
+          "A04FE186EB662147E80B28EFFA1B14F8DC51DA00",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1344, 700)
+          }),
+
       // Ale-'s server 3
       Ipv4HashResolutionTableEntry(
           "A9E0318F5C64E47352A3577E72D96EB5627CF43C",
