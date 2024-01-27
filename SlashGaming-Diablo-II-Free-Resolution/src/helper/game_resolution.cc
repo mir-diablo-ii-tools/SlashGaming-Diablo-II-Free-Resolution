@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2023  Mir Drualga
+ * Copyright (C) 2019-2024  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -328,6 +328,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }
       ),
+
+      // HIDDENDIABLO
+      Ipv4HashResolutionTableEntry(
+          "9C9D1D42770DACA45BB0082E590A5C96C0E71034",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1344, 700)
+          }),
 
       // Ale-'s server 3
       Ipv4HashResolutionTableEntry(

@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0r (January 25, 2024)
+- Add HIDDENDIABLO server with 640x480, 800x600, and 1344x700.
+
 ## SGD2FreeRes 3.0.4.0r (November 29, 2023)
 - Add 1344x700 to SlashDiablo and update gateway.
 
