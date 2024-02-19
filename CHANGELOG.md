@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0u (February 19, 2024)
+- Change resolutions to 800x600 and 1172x660 for D2Revenge.
+
 ## SGD2FreeRes 3.0.4.0t (January 27, 2024)
 - Add Ph4nt0m's Go server with 640x480, 800x600, and 1344x700.
 
@@ -17,7 +20,7 @@
 - Add 1344x700 to SlashDiablo and update gateway.
 
 ## SGD2FreeRes 3.0.4.0q (November 20, 2023)
-- Add 1172x660 and 1280x720 to Ale-'s third server.
+- Add 1172x660 and 1280x720 to D2Revenge.
 
 ## SGD2FreeRes 3.0.4.0p (November 5, 2023)
 - Move D2 Blacksoul to D2 DarkSide.
