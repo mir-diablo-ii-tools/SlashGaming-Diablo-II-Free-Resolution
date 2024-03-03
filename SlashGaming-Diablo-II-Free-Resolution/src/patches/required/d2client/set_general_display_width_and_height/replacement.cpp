@@ -52,17 +52,11 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Client_SetGeneralDisplayWidthAndHeight(
-    std::size_t resolution_mode
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(
-      resolution_mode
-  );
+    std::size_t resolution_mode) {
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  int width = std::get<0>(resolution);
-  int height = std::get<1>(resolution);
-
-  ::d2::d2client::SetGeneralDisplayWidth(width);
-  ::d2::d2client::SetGeneralDisplayHeight(height);
+  d2::d2client::SetGeneralDisplayWidth(resolution.width);
+  d2::d2client::SetGeneralDisplayHeight(resolution.height);
 
   // Workaround to prevent inventory arrangement from "transferring".
   // Overflow is a non-issue and intentional.

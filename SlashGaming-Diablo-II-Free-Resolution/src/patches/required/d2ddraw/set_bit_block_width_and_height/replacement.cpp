@@ -54,15 +54,14 @@ namespace sgd2fr::patches {
 void __cdecl Sgd2fr_D2DDraw_SetBitBlockWidthAndHeight(
     std::uint32_t resolution_mode,
     std::int32_t* width,
-    std::int32_t* height
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+    std::int32_t* height) {
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
+  *width = resolution.width;
+  *height = resolution.height;
 
-  ::d2::d2ddraw::SetBitBlockWidth(*width);
-  ::d2::d2ddraw::SetBitBlockHeight(*height);
+  d2::d2ddraw::SetBitBlockWidth(*width);
+  d2::d2ddraw::SetBitBlockHeight(*height);
 }
 
 } // namespace sgd2fr::patches

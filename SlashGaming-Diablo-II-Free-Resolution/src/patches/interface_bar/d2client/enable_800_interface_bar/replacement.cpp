@@ -77,12 +77,10 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
   ).GetHeight();
 
   // Determine the start draw positions of the interface bar.
-  const std::tuple display_width_and_height = GetIngameResolutionFromId(
-      ::d2::d2gfx::GetResolutionMode()
-  );
+  Resolution resolution =
+      GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
 
-  int draw_position_x =
-      (std::get<0>(display_width_and_height) - interface_bar_width) / 2;
+  int draw_position_x = (resolution.width - interface_bar_width) / 2;
 
   // Draw the interface bar. Note that only frames 1 - 4 should be drawn.
   ::d2::DrawCelFileFrameOptions frame_options;
@@ -93,13 +91,13 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_Draw800InterfaceBar(
 
   ::mapi::bool32 total_result = true;
   for (unsigned int frame = 1; frame <= 4; frame += 1) {
-    bool result = cel_file_wrapper.DrawFrame(
-        draw_position_x,
-        std::get<1>(display_width_and_height),
-        0,
-        frame,
-        frame_options
-    );
+    bool result =
+        cel_file_wrapper.DrawFrame(
+            draw_position_x,
+            resolution.height,
+            0,
+            frame,
+            frame_options);
 
     ::d2::Cel_View cel_view(cel_file_wrapper.GetCel(0, frame));
     draw_position_x += cel_view.GetWidth();

@@ -628,9 +628,7 @@ mjsoni::RapidJsonConfigReader& GetConfigReader() {
   return config_reader;
 }
 
-std::tuple<int, int> GetResolutionFromString(
-    std::string_view resolution_str
-) {
+Resolution GetResolutionFromString(std::string_view resolution_str) {
   std::string::size_type split_index = resolution_str.find('x');
 
   int resolution_width = std::atoi(
@@ -641,13 +639,13 @@ std::tuple<int, int> GetResolutionFromString(
       resolution_str.substr(split_index + 1).data()
   );
 
-  return std::make_tuple(resolution_width, resolution_height);
+  return { resolution_width, resolution_height };
 }
 
 } // namespace
 
-const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
-  static std::vector<std::tuple<int, int>> ingame_resolutions;
+const std::vector<Resolution>& GetIngameResolutions() {
+  static std::vector<Resolution> ingame_resolutions;
   static const std::vector<std::string> default_ingame_resolutions_str(
       kDefaultIngameResolutions.cbegin(),
       kDefaultIngameResolutions.cend()
@@ -663,7 +661,7 @@ const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
                 kIngameResolutionsKey
             );
 
-        std::set<std::tuple<int, int>> sorted_distinct_ingame_resolutions;
+        std::set<Resolution> sorted_distinct_ingame_resolutions;
 
         for (const std::string& resolution_str : ingame_resolutions_str) {
           sorted_distinct_ingame_resolutions.insert(
@@ -681,8 +679,8 @@ const std::vector<std::tuple<int, int>>& GetIngameResolutions() {
   return ingame_resolutions;
 }
 
-std::tuple<int, int> GetMainMenuResolution() {
-  static std::tuple<int, int> main_menu_resolution;
+Resolution GetMainMenuResolution() {
+  static Resolution main_menu_resolution;
 
   std::call_once(
       GetOnceFlag(kMainEntryKey, kMainMenuResolutionKey),

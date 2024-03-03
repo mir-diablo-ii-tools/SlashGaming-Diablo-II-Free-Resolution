@@ -183,16 +183,15 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_DrawResolutionText(
   ::std::array<char8_t, 256> resolution_text_u8;
 
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
-  std::tuple resolution = GetIngameResolutionFromId(resolution_mode);
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
   ::std::snprintf(
       // Acceptable cast. Numbers are in the ASCII range.
       reinterpret_cast<char*>(resolution_text_u8.data()),
       resolution_text_u8.size(),
       "%dx%d",
-      std::get<0>(resolution),
-      std::get<1>(resolution)
-  );
+      resolution.width,
+      resolution.height);
 
   ::d2::UnicodeString_Api text_unicode = ::d2::UnicodeString_Api::FromUtf8String(
       resolution_text_u8.data()

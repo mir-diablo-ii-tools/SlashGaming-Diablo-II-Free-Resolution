@@ -43,27 +43,30 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
-#define SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
-
-#include <sgd2mapi.hpp>
-
-#include "common/position.hpp"
-#include "game_resolution.hpp"
+#ifndef SGD2FR_COMMON_RESOLUTION_HPP_
+#define SGD2FR_COMMON_RESOLUTION_HPP_
 
 namespace sgd2fr {
+namespace common {
 
-unsigned int Get800InterfaceBarEnabledValue();
+struct Resolution {
+  int width;
+  int height;
 
-d2::PositionalRectangle_Api GetNewStatsButtonPosition();
-d2::PositionalRectangle_Api GetNewSkillButtonPosition();
+  inline Resolution(int width, int height) : width(width), height(height) {}
 
-common::Position GetNewStatsPopupTextPosition();
-common::Position GetNewSkillPopupTextPosition();
+  friend inline bool operator==(const Resolution& lhs, const Resolution& rhs) {
+    return lhs.width == rhs.width && lhs.height == rhs.height;
+  }
 
-bool IsMouseOverNewStatsButton();
-bool IsMouseOverNewSkillButton();
+  friend inline bool operator<(const Resolution& lhs, const Resolution& rhs) {
+    return lhs.Compare(rhs);
+  }
 
-} // namespace sgd2fr
+  int Compare(const Resolution& other) const;
+};
 
-#endif // SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
+}  // namespace common
+}  // namespace sgd2fr
+
+#endif  // SGD2FR_COMMON_RESOLUTION_HPP_

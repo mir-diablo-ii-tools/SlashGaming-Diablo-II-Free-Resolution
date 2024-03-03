@@ -62,10 +62,9 @@
 namespace sgd2fr {
 namespace {
 
-using Ipv4HashResolutionTableEntry = ::std::pair<
-    ::std::string_view,
-    ::std::vector<::std::tuple<int, int>>
->;
+using Ipv4HashResolutionTableEntry = std::pair<
+    std::string_view,
+    std::vector<Resolution>>;
 
 struct Ipv4HashResolutionTableEntryCompareKey {
   constexpr bool operator()(
@@ -90,9 +89,8 @@ struct Ipv4HashResolutionTableEntryCompareKey {
   }
 };
 
-const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
-    std::string_view ipv4_address
-) {
+static const std::vector<Resolution>& GetResolutionsFromIpV4(
+    std::string_view ipv4_address) {
   // Warning: This needs to be sorted lexicographically!
   static const Ipv4HashResolutionTableEntry kSortedIpv4ResolutionTable[] = {
 
@@ -100,228 +98,216 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4HashResolutionTableEntry(
           "1EF04EB4585C6521BDD6F644D0AB3D2020EC4600",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600),
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 },
+          }),
 
       // ptr.diablo09.com (old)
       Ipv4HashResolutionTableEntry(
           "22A3E5D23BD68EED6A8163EB1F17F0A74EA3D119",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
           }),
 
       // Rebirth D2
       Ipv4HashResolutionTableEntry(
           "3F37A6BE5E02055D3E57D45353338FFD0EFA58BC",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1024, 768),
-              std::make_tuple(1068, 600),
-              std::make_tuple(1280, 768)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1024, 768 },
+            { 1068, 600 },
+            { 1280, 768 }
+          }),
 
       // timer's server
       Ipv4HashResolutionTableEntry(
           "44EBC5EE6B0C2D5474233AD3370161FA5CFE560D",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600),
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 },
+          }),
 
       // Diablo II Evolution
       Ipv4HashResolutionTableEntry(
           "4A0C205D82F5A1089606505350B5096829E9182C",
           {
-              kResolution800x600,
-              std::make_tuple(1068, 600),
-              std::make_tuple(1280, 720),
+            kResolution800x600,
+            { 1068, 600 },
+            { 1280, 720 }
           }),
 
       // Vahsify's "The Fury Within 1.02"
       Ipv4HashResolutionTableEntry(
           "4B3B6D3727A0004E04DFF49E41D497C001C7DFCF",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
           }),
 
       // ptr.diablo09.com
       Ipv4HashResolutionTableEntry(
           "4FEE7F8C74CB7EC0096D8653ED9D964EBEBBBDA2",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
           }),
 
       // Firesnake's ESR
       Ipv4HashResolutionTableEntry(
           "70C115B399B78827EEA39A045129771230C28F36",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1024, 768),
-              std::make_tuple(1068, 600),
-              std::make_tuple(1280, 720),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1024, 768 },
+            { 1068, 600 },
+            { 1280, 720 }
           }),
 
       // Casual Nostalgia
       Ipv4HashResolutionTableEntry(
           "7233C41BD36281AD8D0251D74F5E84984F35AC3E",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1024, 768),
-              std::make_tuple(1068, 600)
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1024, 768 },
+            { 1068, 600 }
           }),
 
       // D2infinitum
       Ipv4HashResolutionTableEntry(
           "746F9216D84745B78A9777E3A8FC27B20A1C8C51",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(1068, 600)
+            kResolution640x480,
+            kResolution800x600,
+            { 1068, 600 }
           }),
 
       // Firesnake's ESR (beta)
       Ipv4HashResolutionTableEntry(
           "830C87608053315439D453BC28B75EE7B4DA73C9",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1024, 768),
-              std::make_tuple(1068, 600),
-              std::make_tuple(1280, 720),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1024, 768 },
+            { 1068, 600 },
+            { 1280, 720 }
           }),
 
       // ip.d2lod.net
       Ipv4HashResolutionTableEntry(
           "8FD8A2923B012C29A1427B3972B16752AFB8FF0F",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1024, 768),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1024, 768 },
+            { 1068, 600 }
+          }),
 
       // realm.diablo09.com
       Ipv4HashResolutionTableEntry(
           "9A2517D7A8CC25A05F76C263DB923725157CC275",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
+          }),
 
       // Project Diablo 2
       Ipv4HashResolutionTableEntry(
           "AB3C21D075AFC5B3A07EEF579576454D89C998E4",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
+          }),
 
       // ZombiesRUs
       Ipv4HashResolutionTableEntry(
           "B0DE98F5C01859485AD9DE0902AC929AAE8FFEA4",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
+          }),
 
       // Diablo2Online
       Ipv4HashResolutionTableEntry(
           "B754F27105498EACFAFE10B5B4C48C2C572B64F1",
           {
-              kResolution640x480,
-              kResolution800x600,
-              // Do not add 856x480, by WOLF's request
-              std::make_tuple(1068, 600)
+            kResolution640x480,
+            kResolution800x600,
+            // Do not add 856x480, by WOLF's request
+            { 1068, 600 }
           }),
 
       // play.slashdiablo.net
       Ipv4HashResolutionTableEntry(
           "C311F388012034C4ACB91AC573965302CF5711E0",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
+          }),
 
       // evnt.slashdiablo.net
       Ipv4HashResolutionTableEntry(
           "E1625F180F649ED2E4C98B4210012B6C52D9361F",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
+          }),
 
       // NOWD
       Ipv4HashResolutionTableEntry(
           "E1E7602929238D53EC59F7F4DF4F497BFCA3C4BC",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
+          }),
 
       // evnt.slashdiablo.net (old)
       Ipv4HashResolutionTableEntry(
           "F067533C94707F1DE2DBB0AFA1334F8EBE276450",
           {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600)
-          }
-      ),
+            kResolution640x480,
+            kResolution800x600,
+            { 856, 480 },
+            { 1068, 600 }
+          }),
 
       // 1.09 DiabloFans
       Ipv4HashResolutionTableEntry(
           "FCCB6017F496BD14AB7281E963E969D94C176568",
           {
-              kResolution800x600,
-              std::make_tuple(1024, 768),
-              std::make_tuple(1244, 700),
-          }
-      ),
+            kResolution800x600,
+            { 1024, 768 },
+            { 1244, 700 }
+          })
   };
 
   enum {
@@ -331,8 +317,8 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   };
 
   static const std::vector default_resolutions = {
-      kResolution640x480,
-      kResolution800x600
+    kResolution640x480,
+    kResolution800x600
   };
 
   char sha1_str[Sha1_kLength + 1];
@@ -357,7 +343,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
   return search_range.first->second;
 }
 
-const std::vector<std::tuple<int, int>>& SelectLocalOrOnlineResolutions() {
+const std::vector<Resolution>& SelectLocalOrOnlineResolutions() {
   if (d2::d2client::GetGameType() == ::d2::ClientGameType::kBattleNetJoin) {
     return GetResolutionsFromIpV4(d2::bnclient::GetGatewayIpV4Address());
   } else {
@@ -365,9 +351,9 @@ const std::vector<std::tuple<int, int>>& SelectLocalOrOnlineResolutions() {
   }
 }
 
-const std::set<std::tuple<int, int>>& GetStandardResolutions() {
+const std::set<Resolution>& GetStandardResolutions() {
   static std::once_flag init_once_flag;
-  static std::set<std::tuple<int, int>> standard_resolutions;
+  static std::set<Resolution> standard_resolutions;
 
   std::call_once(
       init_once_flag,
@@ -376,12 +362,11 @@ const std::set<std::tuple<int, int>>& GetStandardResolutions() {
         dev_mode.dmSize = sizeof(dev_mode);
 
         for (DWORD i = 0; EnumDisplaySettingsW(nullptr, i, &dev_mode); i += 1) {
-            standard_resolutions.insert(
-                std::make_tuple(
-                    static_cast<int>(dev_mode.dmPelsWidth),
-                    static_cast<int>(dev_mode.dmPelsHeight)
-                )
-            );
+          Resolution resolution = {
+            static_cast<int>(dev_mode.dmPelsWidth),
+            static_cast<int>(dev_mode.dmPelsHeight)
+          };
+          standard_resolutions.insert(resolution);
         }
       }
   );
@@ -389,12 +374,12 @@ const std::set<std::tuple<int, int>>& GetStandardResolutions() {
   return standard_resolutions;
 }
 
-const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
+const std::vector<Resolution>& GetNonCrashingIngameResolutions() {
   static std::mutex check_mutex;
   static std::unique_ptr init_once_flag = std::make_unique<std::once_flag>();
   static ::d2::ClientGameType selected_game_type =
       ::d2::d2client::GetGameType();
-  static std::vector<std::tuple<int, int>> non_crashing_ingame_resolutions;
+  static std::vector<Resolution> non_crashing_ingame_resolutions;
   static ::std::string gateway_ipv4_address;
 
   std::lock_guard lock(check_mutex);
@@ -408,7 +393,7 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
       *init_once_flag,
       [&] () {
         ::d2::VideoMode current_video_mode = ::d2::d2gfx::GetVideoMode();
-        const std::vector<std::tuple<int, int>>& selected_ingame_resolutions =
+        const std::vector<Resolution>& selected_ingame_resolutions =
             SelectLocalOrOnlineResolutions();
 
         non_crashing_ingame_resolutions.clear();
@@ -437,6 +422,9 @@ const std::vector<std::tuple<int, int>>& GetNonCrashingIngameResolutions() {
 
 } // namespace
 
+const Resolution kResolution640x480 = { 640, 480 };
+const Resolution kResolution800x600 = { 800, 600 };
+
 std::size_t GetMinConfigResolutionId() {
   return GetNonCrashingIngameResolutions().at(0) == kResolution640x480
       ? 0
@@ -461,7 +449,7 @@ std::size_t GetNumIngameResolutions() {
   return GetNonCrashingIngameResolutions().size();
 }
 
-std::tuple<int, int> GetIngameResolutionFromId(std::size_t id) {
+Resolution GetIngameResolutionFromId(std::size_t id) {
   if (id == 0) {
     return kResolution640x480;
   } else if (id == 1) {
@@ -477,51 +465,43 @@ std::tuple<int, int> GetIngameResolutionFromId(std::size_t id) {
   return ingame_resolutions.at(ingame_resolution_index);
 }
 
-bool IsStandardResolution(const std::tuple<int, int>& width_and_height) {
-  return GetStandardResolutions().contains(width_and_height);
+bool IsStandardResolution(const Resolution& resolution) {
+  return GetStandardResolutions().contains(resolution);
 }
 
-::std::tuple<int, int> GetVideoModeDisplayResolution() {
+Resolution GetVideoModeDisplayResolution() {
   ::d2::VideoMode running_video_mode = ::d2::d2gfx::GetVideoMode();
 
   switch (running_video_mode) {
-    case ::d2::VideoMode::kGdi: {
-      return ::std::make_tuple(
-          ::d2::d2gdi::GetBitBlockWidth(),
-          ::d2::d2gdi::GetBitBlockHeight()
-      );
-    }
+    case ::d2::VideoMode::kGdi:
+      return {
+        ::d2::d2gdi::GetBitBlockWidth(),
+        ::d2::d2gdi::GetBitBlockHeight()
+      };
 
-    case ::d2::VideoMode::kDirectDraw: {
-      return ::std::make_tuple(
-          ::d2::d2ddraw::GetDisplayWidth(),
-          ::d2::d2ddraw::GetDisplayHeight()
-      );
-    }
+    case ::d2::VideoMode::kDirectDraw:
+      return {
+        ::d2::d2ddraw::GetDisplayWidth(),
+        ::d2::d2ddraw::GetDisplayHeight()
+      };
 
-    case ::d2::VideoMode::kGlide: {
-      return ::std::make_tuple(
-          ::d2::d2glide::GetDisplayWidth(),
-          ::d2::d2glide::GetDisplayHeight()
-      );
-    }
+    case ::d2::VideoMode::kGlide:
+      return {
+        ::d2::d2glide::GetDisplayWidth(),
+        ::d2::d2glide::GetDisplayHeight()
+      };
 
-    case ::d2::VideoMode::kDirect3D: {
-      return ::std::make_tuple(
-          ::d2::d2direct3d::GetDisplayWidth(),
-          ::d2::d2direct3d::GetDisplayHeight()
-      );
-    }
+    case ::d2::VideoMode::kDirect3D:
+      return {
+        ::d2::d2direct3d::GetDisplayWidth(),
+        ::d2::d2direct3d::GetDisplayHeight()
+      };
 
-    default: {
+    default:
       ::mdc::error::ExitOnConstantMappingError(
-          __FILEW__,
-          __LINE__,
-          static_cast<int>(running_video_mode)
-      );
+          __FILEW__, __LINE__, static_cast<int>(running_video_mode));
 
-      return ::std::make_tuple(0, 0);
-    }
+      return { 0, 0 };
   }
 }
 
@@ -533,25 +513,21 @@ unsigned int GetSourceInventoryArrangeMode() {
 
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
 
-  ::std::tuple<int, int> current_resolution = GetIngameResolutionFromId(
-      resolution_mode
-  );
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  if (current_resolution == kResolution640x480) {
+  if (resolution == kResolution640x480) {
     return 0;
-  } else if (current_resolution == kResolution800x600) {
+  } else if (resolution == kResolution800x600) {
     return 1;
   } else {
     return kDefaultSourceInventoryArrangeMode;
   }
 }
 
-const ::std::tuple<int, int>& GetSourceInventoryArrangeResolution() {
+Resolution GetSourceInventoryArrangeResolution() {
   unsigned int resolution_mode = ::d2::d2gfx::GetResolutionMode();
 
-  ::std::tuple<int, int> current_resolution = GetIngameResolutionFromId(
-      resolution_mode
-  );
+  Resolution current_resolution = GetIngameResolutionFromId(resolution_mode);
 
   if (current_resolution == kResolution640x480) {
     return kResolution640x480;

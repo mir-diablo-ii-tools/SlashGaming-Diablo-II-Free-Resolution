@@ -47,12 +47,34 @@
 #define SGD2FR_HELPER_GAME_RESOLUTION_HPP_
 
 #include <cstddef>
-#include <tuple>
 
 namespace sgd2fr {
 
-constexpr const ::std::tuple<int, int> kResolution640x480(640, 480);
-constexpr const ::std::tuple<int, int> kResolution800x600(800, 600);
+struct Resolution {
+  int width;
+  int height;
+
+  friend inline bool operator==(const Resolution& lhs, const Resolution& rhs) {
+    return lhs.width == rhs.width && lhs.height == rhs.height;
+  }
+
+  
+  friend inline bool operator<(const Resolution& lhs, const Resolution& rhs) {
+    return lhs.compare(rhs) < 0;
+  }
+
+  inline int compare(const Resolution& other) const {
+    int cmp_result = width - other.width;
+    if (cmp_result != 0) {
+      return cmp_result;
+    }
+
+    return height - other.height;
+  }
+};
+
+extern const Resolution kResolution640x480;
+extern const Resolution kResolution800x600;
 
 std::size_t GetMinConfigResolutionId();
 std::size_t GetMaxConfigResolutionId();
@@ -61,18 +83,18 @@ std::size_t GetMinIngameResolutionId();
 std::size_t GetMaxIngameResolutionId();
 
 std::size_t GetNumIngameResolutions();
-std::tuple<int, int> GetIngameResolutionFromId(std::size_t id);
-bool IsStandardResolution(const std::tuple<int, int>& width_and_height);
+Resolution GetIngameResolutionFromId(std::size_t id);
+bool IsStandardResolution(const Resolution& resolution);
 
 /**
  * Returns the display resolution using the global variables
  * corresponding to the current video mode.
  */
-::std::tuple<int, int> GetVideoModeDisplayResolution();
+Resolution GetVideoModeDisplayResolution();
 
 unsigned int GetSourceInventoryArrangeMode();
 
-const ::std::tuple<int, int>& GetSourceInventoryArrangeResolution();
+Resolution GetSourceInventoryArrangeResolution();
 
 } // namespace sgd2fr
 
