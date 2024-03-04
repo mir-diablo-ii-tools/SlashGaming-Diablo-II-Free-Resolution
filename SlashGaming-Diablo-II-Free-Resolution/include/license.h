@@ -46,17 +46,17 @@
 #ifndef SGD2FR_LICENSE_H_
 #define SGD2FR_LICENSE_H_
 
-#include "dllexport_define.inc"
+#include "common/dllapi_define.inc"
 
 #ifdef __cplusplus
 extern "C" {
 #endif /* __cplusplus */
 
-__declspec(dllexport) void PrintLicenseNotice(void);
+DLLAPI void PrintLicenseNotice(void);
 
 #ifdef __cplusplus
 } /* extern "C" */
 #endif /* __cplusplus */
 
-#include "dllexport_undefine.inc"
+#include "common/dllapi_undef.inc"
 #endif  /* SGD2FR_LICENSE_H_ */
