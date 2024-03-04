@@ -120,6 +120,8 @@ set(SOURCE_FILES
     ${NASM_FILES}
 )
 
+add_subdirectory("src")
+
 # Output DLL
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 target_precompile_headers(${PROJECT_NAME} PRIVATE
@@ -133,12 +135,14 @@ add_dependencies(${PROJECT_NAME}
     libMDCc
     libMDCcpp98
     libSGD2MAPI
+    SGD2FreeRes.Common
     rapidjson
     mjsoni)
 target_link_libraries(${PROJECT_NAME} PUBLIC
     libMDCc
     libMDCcpp98
     libSGD2MAPI
+    SGD2FreeRes.Common
     rapidjson
     mjsoni)
 get_target_property(SOURCE_FILES ${PROJECT_NAME} SOURCES)

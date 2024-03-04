@@ -55,7 +55,8 @@ namespace sgd2fr {
       int32_t start_x,
       int32_t, int32_t, int32_t, int32_t)
   {
-    std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+    Resolution resolution =
+        GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
     d2::CelContext_Wrapper cel_wrapper(cel_context);
 
     uint32_t start_frame = cel_wrapper.GetFrameIndex();
@@ -66,12 +67,12 @@ namespace sgd2fr {
     }
 
     for (int32_t y = 0, frame = start_frame, frame_shift = 0;
-         y < std::get<1>(width_and_height);
+         y < resolution.height;
          frame = start_frame, frame_shift = (frame_shift + 4) % 12)
     {
       y += 256;
       for (int32_t x = start_x;
-           x < std::get<0>(width_and_height);
+           x < resolution.width;
            x += 256, frame = (frame + 1) & 3)
       {
         cel_wrapper.SetFrameIndex(frame | frame_shift);

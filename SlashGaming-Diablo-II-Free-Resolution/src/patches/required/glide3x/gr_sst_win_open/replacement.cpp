@@ -47,8 +47,6 @@
 
 #include <stddef.h>
 
-#include <tuple>
-
 #include <mdc/std/stdint.h>
 #include <sgd2mapi.hpp>
 
@@ -129,10 +127,11 @@ void __cdecl Sgd2fr_Glide3x_SetWindowWidthAndHeight(
   int32_t* width_ptr = GetWidthPtr();
   int32_t* height_ptr = GetHeightPtr();
 
-  std::tuple<int, int> resolution =
+  Resolution resolution =
       GetIngameResolutionFromId(glide_resolution_mode - 0x1000);
 
-  std::tie(*width_ptr, *height_ptr) = resolution;
+  *width_ptr = resolution.width;
+  *height_ptr = resolution.height;
 }
 
 }  // namespace sgd2fr::patches

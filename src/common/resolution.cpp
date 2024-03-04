@@ -43,27 +43,25 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
-#define SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
+#include "common/resolution.hpp"
 
-#include <sgd2mapi.hpp>
-
-#include "common/position.hpp"
-#include "game_resolution.hpp"
+/**
+ * External
+ */
 
 namespace sgd2fr {
+namespace common {
 
-unsigned int Get800InterfaceBarEnabledValue();
+int Resolution::Compare(const Resolution& other) const {
+  int cmp_result;
+  
+  cmp_result = width - other.width;
+  if (cmp_result != 0) {
+    return cmp_result;
+  }
 
-d2::PositionalRectangle_Api GetNewStatsButtonPosition();
-d2::PositionalRectangle_Api GetNewSkillButtonPosition();
+  return height - other.height;
+}
 
-common::Position GetNewStatsPopupTextPosition();
-common::Position GetNewSkillPopupTextPosition();
-
-bool IsMouseOverNewStatsButton();
-bool IsMouseOverNewSkillButton();
-
-} // namespace sgd2fr
-
-#endif // SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
+}  // namespace common
+}  // namespace sgd2fr

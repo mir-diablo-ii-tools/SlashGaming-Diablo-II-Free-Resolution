@@ -52,15 +52,11 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2Direct3D_SetDisplayWidthAndHeight(
-    std::uint32_t resolution_mode
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+    std::uint32_t resolution_mode) {
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  int width = std::get<0>(resolution);
-  int height = std::get<1>(resolution);
-
-  ::d2::d2direct3d::SetDisplayWidth(width);
-  ::d2::d2direct3d::SetDisplayHeight(height);
+  d2::d2direct3d::SetDisplayWidth(resolution.width);
+  d2::d2direct3d::SetDisplayHeight(resolution.height);
 }
 
 } // namespace sgd2fr::patches

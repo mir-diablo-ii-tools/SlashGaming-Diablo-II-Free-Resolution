@@ -52,30 +52,20 @@
 namespace sgd2fr::patches {
 
 void __cdecl Sgd2fr_D2GDI_GetBitBlockWidthAndHeight(
-    ::std::size_t resolution_mode,
-    ::std::int32_t* width,
-    ::std::int32_t* height
-) {
-  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
-      resolution_mode
-  );
+    std::size_t resolution_mode,
+    std::int32_t* width,
+    std::int32_t* height) {
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  *width = ::std::get<0>(resolution);
-  *height = ::std::get<1>(resolution);
+  *width = resolution.width;
+  *height = resolution.height;
 }
 
-void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(
-    ::std::size_t resolution_mode
-) {
-  ::std::tuple<int, int> resolution = GetIngameResolutionFromId(
-      resolution_mode
-  );
+void __cdecl Sgd2fr_D2GDI_SetBitBlockWidthAndHeight(size_t resolution_mode) {
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  int bit_block_width = ::std::get<0>(resolution);
-  int bit_block_height = ::std::get<1>(resolution);
-
-  ::d2::d2gdi::SetBitBlockWidth(bit_block_width);
-  ::d2::d2gdi::SetBitBlockHeight(bit_block_height);
+  d2::d2gdi::SetBitBlockWidth(resolution.width);
+  d2::d2gdi::SetBitBlockHeight(resolution.height);
 }
 
 } // namespace sgd2fr::patches

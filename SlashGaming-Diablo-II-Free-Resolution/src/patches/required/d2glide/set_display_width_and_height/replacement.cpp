@@ -58,12 +58,11 @@ void __cdecl Sgd2fr_D2Glide_SetDisplayWidthAndHeight(
     std::uint32_t resolution_mode,
     std::int32_t* width,
     std::int32_t* height,
-    std::uint32_t* glide_res_id
-) {
-  std::tuple<int, int> resolution = GetIngameResolutionFromId(resolution_mode);
+    std::uint32_t* glide_res_id) {
+  Resolution resolution = GetIngameResolutionFromId(resolution_mode);
 
-  *width = std::get<0>(resolution);
-  *height = std::get<1>(resolution);
+  *width = resolution.width;
+  *height = resolution.height;
 
   ::d2::d2glide::SetDisplayWidth(*width);
   ::d2::d2glide::SetDisplayHeight(*height);

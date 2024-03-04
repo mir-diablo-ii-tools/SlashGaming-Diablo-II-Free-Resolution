@@ -72,13 +72,13 @@ int __cdecl Sgd2fr_D2GFX_IsNeedRestoreDownWindowPatch() {
     return false;
   }
 
-  ::std::tuple ingame_resolution = GetVideoModeDisplayResolution();
+  Resolution ingame_resolution = GetVideoModeDisplayResolution();
 
   int client_width = client_rect.right - client_rect.left;
   int client_height = client_rect.bottom - client_rect.top;
 
-  return (client_width <= ::std::get<0>(ingame_resolution)
-      && client_height <= ::std::get<1>(ingame_resolution));
+  return (client_width <= ingame_resolution.width
+      && client_height <= ingame_resolution.height);
 }
 
 } // namespace sgd2fr::patches

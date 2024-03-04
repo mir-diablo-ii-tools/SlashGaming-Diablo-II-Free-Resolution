@@ -43,27 +43,30 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
-#define SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
-
-#include <sgd2mapi.hpp>
-
-#include "common/position.hpp"
-#include "game_resolution.hpp"
+#ifndef SGD2FR_COMMON_POSITION_HPP_
+#define SGD2FR_COMMON_POSITION_HPP_
 
 namespace sgd2fr {
+namespace common {
 
-unsigned int Get800InterfaceBarEnabledValue();
+struct Position {
+  int x;
+  int y;
 
-d2::PositionalRectangle_Api GetNewStatsButtonPosition();
-d2::PositionalRectangle_Api GetNewSkillButtonPosition();
+  inline Position(int x, int y) : x(x), y(y) {}
 
-common::Position GetNewStatsPopupTextPosition();
-common::Position GetNewSkillPopupTextPosition();
+  friend inline bool operator==(const Position& lhs, const Position& rhs) {
+    return lhs.x == rhs.x && lhs.y == rhs.y;
+  }
 
-bool IsMouseOverNewStatsButton();
-bool IsMouseOverNewSkillButton();
+  friend inline bool operator<(const Position& lhs, const Position& rhs) {
+    return lhs.Compare(rhs);
+  }
 
-} // namespace sgd2fr
+  int Compare(const Position& other) const;
+};
 
-#endif // SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
+}  // namespace common
+}  // namespace sgd2fr
+
+#endif  // SGD2FR_COMMON_POSITION_HPP_
