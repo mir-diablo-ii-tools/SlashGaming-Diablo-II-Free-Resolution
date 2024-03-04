@@ -79,16 +79,55 @@ void __cdecl Sgd2fr_D2Client_SetTileCullingBound(
   SetRect(&culling_spec->draw_window_rect, left, top, right, bottom);
 
   RECT* tile_culling_rect = &culling_spec->tile_culling_window;
+  int width = GetGeneralDisplayWidth();
+  int height = GetGeneralDisplayHeight();
   SetRect(
       tile_culling_rect,
-      -160,
-      -160,
-      GetGeneralDisplayWidth() + 160,
-      GetGeneralDisplayHeight() + 160);
+      -80,
+      -80,
+      width + 80,
+      height + 40);
   if (GetIsPerspectiveModeEnabled()) {
-    tile_culling_rect->top -= 160;
-    tile_culling_rect->left -= 320;
-    tile_culling_rect->right += 320;
+    // Perspective mode works by multiplying an objects distance from the center
+    // of the camera by a factor of it's distance along the camera's y-axis
+    // (vertical along the screen).
+    //
+    // Equation for the factor is approximately `3000 / (3000 - 42y/3)` where `y`
+    // is the distance in unit space with positive numbers heading towards the
+    // bottom of the screen. Two things to note:
+    // * This function is done with a precalculated table with rounding errors.
+    // * The table is filled for the range (-204.375, 204.375). It is, however
+    //   padded with the final value for double that range.
+    //
+    // This results in everything above the player rendering closer to the center
+    // of the screen, and everything below the player rendering further away from
+    // the center. To account for this we calculate approximately how much this
+    // affects the top line of pixels rendered in order to avoid culling things on
+    // the screen. As an optimization we also calculate this for the bottom row of
+    // pixels in order to cull things which can no longer appear on the screen.
+
+    int height2 = static_cast<double>(height) / 2;
+    int width2 = static_cast<double>(width) / 2;
+    double ratio;
+
+    // `866` pixels up is equal to `-204.375` in unit space.
+    if (height2 < 866.0) {
+      // This slightly overshoots the games calculation, but converges at
+      // `866`. After which it would start undershooting.
+      ratio = 1732.0 / (1732.0 - height2) - 1.0;
+    } else {
+      ratio = 1.0;
+    }
+
+    tile_culling_rect->top -= static_cast<int>(height2 * ratio);
+    tile_culling_rect->left -= static_cast<int>(width2 * ratio);
+    tile_culling_rect->right += static_cast<int>(width2 * ratio);
+
+    // This is close at any reasonable resolution, but wildly undershoots at
+    // high resolutions. It also overshoots starting at 4.5 million height.
+    ratio = 1.0 - 1500.0 / (1500.0 + height2);
+
+    tile_culling_rect->bottom -= static_cast<int>(height2 * ratio);
   }
 
   culling_spec->flags |= 0x1;
