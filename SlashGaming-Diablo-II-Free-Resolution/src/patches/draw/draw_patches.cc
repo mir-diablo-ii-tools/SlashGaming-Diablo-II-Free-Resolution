@@ -51,9 +51,11 @@ void DrawPatches::Apply() {
   this->d2client_disable_scroll_of_inifuss_rect_patch_.Apply();
   this->d2client_draw_interface_bar_background_patch_.Apply();
   this->d2client_draw_screen_background_patch_.Apply();
+  this->d2client_draw_summit_background_patch_.Apply();
 }
 
 void DrawPatches::Remove() {
+  this->d2client_draw_summit_background_patch_.Remove();
   this->d2client_draw_screen_background_patch_.Remove();
   this->d2client_draw_interface_bar_background_patch_.Remove();
   this->d2client_disable_scroll_of_inifuss_rect_patch_.Remove();

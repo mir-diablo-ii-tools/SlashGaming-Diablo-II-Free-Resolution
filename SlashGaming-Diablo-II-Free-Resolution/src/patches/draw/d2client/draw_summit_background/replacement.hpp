@@ -43,35 +43,18 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
-#define SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
+#ifndef SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SUMMIT_BACKGROUND_REPLACEMENT_HPP_
+#define SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SUMMIT_BACKGROUND_REPLACEMENT_HPP_
 
-#include "d2client/disable_scroll_of_inifuss_rect/patch.hpp"
-#include "d2client/draw_interface_bar_background/patch.hpp"
-#include "d2client/draw_screen_background/patch.hpp"
-#include "d2client/draw_summit_background/patch.hpp"
+#include <sgd2mapi.hpp>
 
 namespace sgd2fr {
 
-class DrawPatches {
- public:
-  void Apply();
-  void Remove();
-
- private:
-  d2client::DisableScrollOfInifussRectPatch
-      d2client_disable_scroll_of_inifuss_rect_patch_;
-
-  d2client::DrawInterfaceBarBackgroundPatch
-      d2client_draw_interface_bar_background_patch_;
-
-  d2client::DrawScreenBackgroundPatch
-      d2client_draw_screen_background_patch_;
-
-  d2client::DrawSummitBackgroundPatch
-      d2client_draw_summit_background_patch_;
-};
+extern "C" void __stdcall Sgd2fr_D2Client_DrawSummitBackground(
+  d2::CelContext *cel_context,
+  int32_t start_x,
+  int32_t, int32_t, int32_t, int32_t);
 
 } // namespace sgd2fr
 
-#endif // SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
+#endif // SGD2FR_PATCHES_DRAW_D2CLIENT_DRAW_SUMMIT_BACKGROUND_REPLACEMENT_HPP_

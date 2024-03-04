@@ -41,7 +41,15 @@
 # this Program grant you additional permission to convey the resulting
 # work.
 
-add_subdirectory(disable_scroll_of_inifuss_rect)
-add_subdirectory(draw_interface_bar_background)
-add_subdirectory(draw_screen_background)
-add_subdirectory(draw_summit_background)
+target_sources(${PROJECT_NAME}
+    PRIVATE
+        "patch.cpp"
+        "patch.hpp"
+
+        "patch_1_09d.cpp"
+        "patch_1_09d.hpp"
+        "patch_1_09d_shim_d2client_draw_summit_background.asm"
+
+        "replacement.cpp"
+        "replacement.hpp"
+)

@@ -43,35 +43,41 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
-#define SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
+#include "replacement.hpp"
 
-#include "d2client/disable_scroll_of_inifuss_rect/patch.hpp"
-#include "d2client/draw_interface_bar_background/patch.hpp"
-#include "d2client/draw_screen_background/patch.hpp"
-#include "d2client/draw_summit_background/patch.hpp"
+#include <sgd2mapi.hpp>
+#include "../../../../helper/game_resolution.hpp"
 
 namespace sgd2fr {
 
-class DrawPatches {
- public:
-  void Apply();
-  void Remove();
+  extern "C" void __stdcall Sgd2fr_D2Client_DrawSummitBackground(
+      d2::CelContext *cel_context,
+      int32_t start_x,
+      int32_t, int32_t, int32_t, int32_t)
+  {
+    std::tuple width_and_height = GetIngameResolutionFromId(d2::d2gfx::GetResolutionMode());
+    d2::CelContext_Wrapper cel_wrapper(cel_context);
 
- private:
-  d2client::DisableScrollOfInifussRectPatch
-      d2client_disable_scroll_of_inifuss_rect_patch_;
+    uint32_t start_frame = cel_wrapper.GetFrameIndex();
 
-  d2client::DrawInterfaceBarBackgroundPatch
-      d2client_draw_interface_bar_background_patch_;
+    if (start_x > 0) {
+      start_x = start_x - 256;
+      start_frame = (start_frame - 1) & 3;
+    }
 
-  d2client::DrawScreenBackgroundPatch
-      d2client_draw_screen_background_patch_;
-
-  d2client::DrawSummitBackgroundPatch
-      d2client_draw_summit_background_patch_;
-};
+    for (int32_t y = 0, frame = start_frame, frame_shift = 0;
+         y < std::get<1>(width_and_height);
+         frame = start_frame, frame_shift = (frame_shift + 4) % 12)
+    {
+      y += 256;
+      for (int32_t x = start_x;
+           x < std::get<0>(width_and_height);
+           x += 256, frame = (frame + 1) & 3)
+      {
+        cel_wrapper.SetFrameIndex(frame | frame_shift);
+        cel_wrapper.DrawFrame(x, y);
+      }
+    }
+  }
 
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_

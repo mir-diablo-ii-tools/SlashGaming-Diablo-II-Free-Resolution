@@ -43,35 +43,44 @@
  *  work.
  */
 
-#ifndef SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
-#define SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
+#include "patch.hpp"
 
-#include "d2client/disable_scroll_of_inifuss_rect/patch.hpp"
-#include "d2client/draw_interface_bar_background/patch.hpp"
-#include "d2client/draw_screen_background/patch.hpp"
-#include "d2client/draw_summit_background/patch.hpp"
+#include <stddef.h>
+
+#include <sgd2mapi.hpp>
+#include "patch_1_09d.hpp"
 
 namespace sgd2fr {
+namespace d2client {
 
-class DrawPatches {
- public:
-  void Apply();
-  void Remove();
+DrawSummitBackgroundPatch::DrawSummitBackgroundPatch()
+    : AbstractMultiversionPatch(IsApplicable(), InitPatch()) {
+}
 
- private:
-  d2client::DisableScrollOfInifussRectPatch
-      d2client_disable_scroll_of_inifuss_rect_patch_;
+bool DrawSummitBackgroundPatch::IsApplicable() {
+  return true;
+}
 
-  d2client::DrawInterfaceBarBackgroundPatch
-      d2client_draw_interface_bar_background_patch_;
+AbstractVersionPatch*
+DrawSummitBackgroundPatch::InitPatch() {
+  if (!IsApplicable()) {
+    return NULL;
+  }
 
-  d2client::DrawScreenBackgroundPatch
-      d2client_draw_screen_background_patch_;
+  ::d2::GameVersion running_game_version = ::d2::game_version::GetRunning();
 
-  d2client::DrawSummitBackgroundPatch
-      d2client_draw_summit_background_patch_;
-};
+  switch (running_game_version) {
+    case ::d2::GameVersion::k1_09D:
+    case ::d2::GameVersion::k1_10:
+    case ::d2::GameVersion::k1_12A:
+    case ::d2::GameVersion::k1_13C:
+    case ::d2::GameVersion::k1_13D:
+    case ::d2::GameVersion::kLod1_14C:
+    case ::d2::GameVersion::kLod1_14D: {
+      return new DrawSummitBackgroundPatch_1_09D();
+    }
+  }
+}
 
+} // namespace d2client
 } // namespace sgd2fr
-
-#endif // SGD2FR_PATCHES_DRAW_DRAW_PATCHES_HPP_
