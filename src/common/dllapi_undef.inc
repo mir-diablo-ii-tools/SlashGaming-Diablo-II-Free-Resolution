@@ -43,10 +43,4 @@
  *  work.
  */
 
-#if defined(SGD2FR_DLLEXPORT)
-#define DLLEXPORT __declspec(dllexport)
-#elif defined(SGD2FR_DLLIMPORT)
-#define DLLEXPORT __declspec(dllimport)
-#else
-#define DLLEXPORT
-#endif
+#undef DLLAPI

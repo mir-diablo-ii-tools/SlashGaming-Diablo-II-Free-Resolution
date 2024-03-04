@@ -25,6 +25,9 @@ target_sources(${PROJECT_NAME}
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/position.cpp"
     PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/dllapi_define.inc"
+        "${CMAKE_CURRENT_SOURCE_DIR}/dllapi_undef.inc"
+
         "${CMAKE_CURRENT_SOURCE_DIR}/position.hpp")
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)

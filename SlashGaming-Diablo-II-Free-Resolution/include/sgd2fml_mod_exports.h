@@ -46,22 +46,22 @@
 #ifndef SGD2FR_SGD2FML_MOD_EXPORTS_H_
 #define SGD2FR_SGD2FML_MOD_EXPORTS_H_
 
-#include "dllexport_define.inc"
+#include "common/dllapi_define.inc"
 
 #ifdef __cplusplus
 extern "C" {
 #endif // __cplusplus
 
-DLLEXPORT long Sgd2fml_Mod_GetMinRequiredApiVersion(void);
+DLLAPI long Sgd2fml_Mod_GetMinRequiredApiVersion(void);
 
-DLLEXPORT void Sgd2fml_Mod_OnLoadMpqs(void);
-DLLEXPORT void Sgd2fml_Mod_OnUnloadMpqs(void);
+DLLAPI void Sgd2fml_Mod_OnLoadMpqs(void);
+DLLAPI void Sgd2fml_Mod_OnUnloadMpqs(void);
 
-DLLEXPORT void Sgd2fml_Mod_ReloadConfig(void);
+DLLAPI void Sgd2fml_Mod_ReloadConfig(void);
 
 #ifdef __cplusplus
 } // extern "C"
 #endif // __cplusplus
 
-#include "dllexport_undefine.inc"
+#include "common/dllapi_undef.inc"
 #endif // SGD2FR_SGD2FML_MOD_EXPORTS_H_
