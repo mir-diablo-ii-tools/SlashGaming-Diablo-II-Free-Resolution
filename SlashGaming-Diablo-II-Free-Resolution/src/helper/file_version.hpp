@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2023  Mir Drualga
+ * Copyright (C) 2019-2024  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Modding API for C++. It
  * has been copied and retooled for reading glide3x.dll.

@@ -1,6 +1,6 @@
 /**
  * SlashGaming Diablo II Free Resolution
- * Copyright (C) 2019-2023  Mir Drualga
+ * Copyright (C) 2019-2024  Mir Drualga
  *
  * This file is part of SlashGaming Diablo II Free Resolution.
  *
@@ -77,7 +77,7 @@ VS_VERSION_INFO    VERSIONINFO
       VALUE "Developer",        "Mir Drualga"
       VALUE "FileDescription",  "Enables customized video resolutions in Diablo II."
       VALUE "InternalName",     "SlashGaming Diablo II Free Resolution"
-      VALUE "LegalCopyright",   "Copyright (C) 2019 - 2023  Mir Drualga"
+      VALUE "LegalCopyright",   "Copyright (C) 2019 - 2024  Mir Drualga"
       VALUE "LegalTrademarks",  "All rights reserved."
       VALUE "PrivateBuild",     ""
       VALUE "ProductName",      "Diablo II Free Resolution"
