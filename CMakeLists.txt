@@ -96,7 +96,6 @@ set(CPP_FILES
     "${PROJECT_DIR}/src/sgd2mapi_extension/game_variable/d2gfx/is_perspective_mode_enabled.cpp"
     "${PROJECT_DIR}/src/config.cc"
     "${PROJECT_DIR}/src/dll_main.cc"
-    "${PROJECT_DIR}/src/license.c"
     "${PROJECT_DIR}/src/sgd2fml_mod_exports.cc"
     "${PROJECT_DIR}/src/helper/checksum_hash.c"
 )
@@ -120,14 +119,14 @@ set(SOURCE_FILES
     ${NASM_FILES}
 )
 
-add_subdirectory("src")
-
 # Output DLL
 add_library(${PROJECT_NAME} SHARED ${SOURCE_FILES})
 target_precompile_headers(${PROJECT_NAME} PRIVATE
     "$<$<COMPILE_LANGUAGE:C>:${PCH_C_FILES}>"
     "$<$<COMPILE_LANGUAGE:CXX>:${PCH_CXX_FILES}>"
 )
+
+add_subdirectory("src")
 
 add_subdirectory(${PROJECT_DIR})
 
