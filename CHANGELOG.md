@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0v (March 12, 2024)
+- Add Dubai server with 1344x700.
+
 ## SGD2FreeRes 3.0.4.0u (February 19, 2024)
 - Change resolutions to 800x600 and 1172x660 for D2Revenge.
 
