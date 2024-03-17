@@ -69,8 +69,8 @@ void EnforceTimeLimit(void) {
   struct tm dead_tm = { 0 };
   time_t dead_time;
 
-  dead_tm.tm_year = 2021 - 1900;
-  dead_tm.tm_mon = 4;
+  dead_tm.tm_year = 2024 - 1900;
+  dead_tm.tm_mon = 4 - 1;
   dead_tm.tm_mday = 1;
 
   dead_time = mktime(&dead_tm);

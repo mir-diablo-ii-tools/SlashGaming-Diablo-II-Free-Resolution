@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0w (March 15, 2024)
+- Update gateway IP of Ale's server.
+
 ## SGD2FreeRes 3.0.4.0v (March 12, 2024)
 - Add Dubai server with 1344x700.
 

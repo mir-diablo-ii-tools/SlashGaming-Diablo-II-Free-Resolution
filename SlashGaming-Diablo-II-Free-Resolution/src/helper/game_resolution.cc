@@ -168,16 +168,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }),
 
-      // Ale-'s server 2
-      Ipv4HashResolutionTableEntry(
-          "38B7CA6876F3FA76229720B6B0B94925F64FC790",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600),
-          }),
-
       // Rebirth D2
       Ipv4HashResolutionTableEntry(
           "3F37A6BE5E02055D3E57D45353338FFD0EFA58BC",
@@ -318,6 +308,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
+      // Ale's Server (Argentina D2Revenge server)
+      Ipv4HashResolutionTableEntry(
+          "99482A30763811D9792A6F0FCAD18C406BA4B060",
+          {
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+              std::make_tuple(1172, 660)
+          }),
+
       // realm.diablo09.com
       Ipv4HashResolutionTableEntry(
           "9A2517D7A8CC25A05F76C263DB923725157CC275",
@@ -345,14 +344,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution640x480,
               kResolution800x600,
               std::make_tuple(1344, 700)
-          }),
-
-      // D2Revenge (Ale-'s server 3)
-      Ipv4HashResolutionTableEntry(
-          "A9E0318F5C64E47352A3577E72D96EB5627CF43C",
-          {
-              kResolution800x600,
-              std::make_tuple(1172, 660),
           }),
 
       // Project Diablo 2
