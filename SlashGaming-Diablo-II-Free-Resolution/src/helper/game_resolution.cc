@@ -229,6 +229,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
           }),
 
+      // HiddenGamers Diablo (Chile server)
+      Ipv4HashResolutionTableEntry(
+          "636C332D8DBCE3F043264AF6D7ED01FA2D0330A1",
+          {
+              std::make_tuple(1068, 600),
+              std::make_tuple(1366, 768)
+          }),
+
       // Firesnake's ESR
       Ipv4HashResolutionTableEntry(
           "70C115B399B78827EEA39A045129771230C28F36",
@@ -309,6 +317,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       ),
 
       // Ale's Server (Argentina D2Revenge server)
+#if 0
       Ipv4HashResolutionTableEntry(
           "99482A30763811D9792A6F0FCAD18C406BA4B060",
           {
@@ -316,6 +325,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
               std::make_tuple(1172, 660)
           }),
+#endif
 
       // realm.diablo09.com
       Ipv4HashResolutionTableEntry(
