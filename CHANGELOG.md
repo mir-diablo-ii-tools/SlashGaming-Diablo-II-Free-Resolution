@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0w3 (March 19, 2024)
+- Add 800x600 to HiddenGamers Diablo server.
+
 ## SGD2FreeRes 3.0.4.0w2 (March 17, 2024)
 - Add HiddenGamers Diablo server with 1068x600 and 1366x768.
 - Temporarily disable gateway IP of Ale's server.

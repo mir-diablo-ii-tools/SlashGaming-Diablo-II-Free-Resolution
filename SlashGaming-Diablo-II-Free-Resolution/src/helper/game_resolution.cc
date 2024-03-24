@@ -233,6 +233,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       Ipv4HashResolutionTableEntry(
           "636C332D8DBCE3F043264AF6D7ED01FA2D0330A1",
           {
+              kResolution800x600,
               std::make_tuple(1068, 600),
               std::make_tuple(1366, 768)
           }),

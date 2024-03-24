@@ -71,7 +71,7 @@ VS_VERSION_INFO    VERSIONINFO
   {
     BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
     {
-      VALUE "Build",            "2024-03-17"
+      VALUE "Build",            "2024-03-19"
       VALUE "Comments",         "Licensed under Affero GPL v3+."
       VALUE "CompanyName",      "SlashGaming"
       VALUE "Developer",        "Mir Drualga"
@@ -81,7 +81,7 @@ VS_VERSION_INFO    VERSIONINFO
       VALUE "LegalTrademarks",  "All rights reserved."
       VALUE "PrivateBuild",     ""
       VALUE "ProductName",      "Diablo II Free Resolution"
-      VALUE "ProductVersion",   "3.0.4.0w2"
+      VALUE "ProductVersion",   "3.0.4.0w3"
       VALUE "SpecialBuild",     ""
       VALUE "Support",          "reddit.com/r/SlashDiablo"
     } // BLOCK "040904E4"
