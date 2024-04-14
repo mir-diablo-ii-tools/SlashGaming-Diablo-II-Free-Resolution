@@ -318,7 +318,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
       ),
 
       // Ale's Server (Argentina D2Revenge server)
-#if 0
       Ipv4HashResolutionTableEntry(
           "99482A30763811D9792A6F0FCAD18C406BA4B060",
           {
@@ -326,7 +325,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
               std::make_tuple(1172, 660)
           }),
-#endif
 
       // realm.diablo09.com
       Ipv4HashResolutionTableEntry(
