@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0y (May 4, 2024)
+- Add D2Infinite server with 640x480, 800x600, 856x480, and 1068x600.
+
 ## SGD2FreeRes 3.0.4.0x (April 14, 2024)
 - Add Tetsuya's server with 640x480, 800x600, 856x480, and 1068x600.
 
