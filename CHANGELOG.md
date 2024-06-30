@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0027 (June 17, 2024)
+- Update D2 Darkside server IP.
+
 ## SGD2FreeRes 3.0.4.0z (June 2, 2024)
 - Update D2 Darkside server IP.
 
