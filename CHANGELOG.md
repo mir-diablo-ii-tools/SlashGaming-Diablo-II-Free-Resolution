@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0028 (June 30, 2024)
+- Add Malcolm's server with 800x600, 1068x600, 1280x720, and 1366x768.
+
 ## SGD2FreeRes 3.0.4.0.0027 (June 17, 2024)
 - Update D2 Darkside server IP.
 
