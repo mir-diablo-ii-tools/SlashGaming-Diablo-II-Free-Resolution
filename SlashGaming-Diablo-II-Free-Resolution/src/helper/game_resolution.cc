@@ -249,6 +249,13 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
           }),
 
+      // Inhuman's Auratum Server
+      Ipv4HashResolutionTableEntry(
+          "60D86513ED30B757E7294A8C3B09E57DC229267E",
+          {
+              std::make_tuple(1280, 720),
+          }),
+
       // HiddenGamers Diablo (Chile server)
       Ipv4HashResolutionTableEntry(
           "636C332D8DBCE3F043264AF6D7ED01FA2D0330A1",
