@@ -390,6 +390,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1344, 700)
           }),
 
+      // MykoticTTV's Kotic Server
+      Ipv4HashResolutionTableEntry(
+          "A44FB5941768698394C98AD115B7EB647A2AF357",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1280, 720)
+          }),
+
       // Project Diablo 2
       Ipv4HashResolutionTableEntry(
           "AB3C21D075AFC5B3A07EEF579576454D89C998E4",

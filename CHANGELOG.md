@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0030 (September 10, 2024)
+- Add MykoticTTV's Kotic server with 800x600, 1068x600, and 1280x720.
+
 ## SGD2FreeRes 3.0.4.0.0029 (August 9, 2024)
 - Add Inhuman's Auratum server with 1280x720.
 
