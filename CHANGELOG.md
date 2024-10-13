@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0032 (September 28, 2024)
+- Update IP of D2Revenge.
+
 ## SGD2FreeRes 3.0.4.0.0031 (September 22, 2024)
 - Update IP of D2Revenge.
 
