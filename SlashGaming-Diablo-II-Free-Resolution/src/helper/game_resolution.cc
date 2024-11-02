@@ -117,6 +117,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1600, 900),
           }),
 
+      // Yoti's Server
+      Ipv4HashResolutionTableEntry(
+          "113088B50A3D081D901CF3FE3952A28E3B391272",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700),
+              std::make_tuple(1600, 900),
+          }),
+
       // NOWD
       Ipv4HashResolutionTableEntry(
           "14F5ECFBCD56780D47BCC134FD021BFC15B5D168",
