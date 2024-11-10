@@ -114,4 +114,11 @@ if (MINGW)
     target_compile_options(${PROJECT_NAME} PRIVATE "-std=c++20")
 endif (MINGW)
 
+# Tests
+option(ENABLE_SGD2FREERES_TESTS "Enable tests" OFF)
+if (ENABLE_SGD2FREERES_TESTS)
+    enable_testing()
+    add_subdirectory("tests")
+endif (ENABLE_SGD2FREERES_TESTS)
+
 install(TARGETS ${PROJECT_NAME})

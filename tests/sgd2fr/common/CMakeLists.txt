@@ -1,0 +1,31 @@
+cmake_minimum_required(VERSION 3.20)
+
+project("Tests.SGD2FreeRes.Common")
+
+# Define requirements for C
+set(CMAKE_C_STANDARD 90)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+unset(CMAKE_CXX_STANDARD)
+unset(CMAKE_CXX_STANDARD_REQUIRED)
+
+# Remove MinGW compiled binary "lib" prefix
+if (MINGW)
+    set(CMAKE_IMPORT_LIBRARY_PREFIX "")
+    set(CMAKE_SHARED_LIBRARY_PREFIX "")
+    set(CMAKE_STATIC_LIBRARY_PREFIX "")
+endif (MINGW)
+
+# Define test targets
+add_executable(${PROJECT_NAME}.CommonTests
+    "common_tests.c"
+    "resolution_test.c")
+target_compile_definitions(${PROJECT_NAME}.CommonTests PRIVATE NOMINMAX)
+target_include_directories(${PROJECT_NAME}.CommonTests
+    PRIVATE
+        "${CMAKE_SOURCE_DIR}/src"
+        "${CMAKE_SOURCE_DIR}/tests"
+        "${CMAKE_SOURCE_DIR}/external/cutest-1.5")
+target_link_libraries(${PROJECT_NAME}.CommonTests PRIVATE SGD2FreeRes.Common CuTest)
+add_test(NAME ${PROJECT_NAME}.CommonTests
+    COMMAND ${PROJECT_NAME}.CommonTests)
