@@ -43,20 +43,25 @@
  *  work.
  */
 
-#ifndef SGD2FR_LICENSE_H_
-#define SGD2FR_LICENSE_H_
+#include "sgd2fr/common/resolution.hpp"
 
-#include "common/dllapi_define.inc"
+/**
+ * External
+ */
 
-#ifdef __cplusplus
-extern "C" {
-#endif  /* __cplusplus */
+namespace sgd2fr {
+namespace common {
 
-DLLAPI void PrintLicenseNotice(void);
+int Resolution::Compare(const Resolution& other) const {
+  int cmp_result;
 
-#ifdef __cplusplus
-}  /* extern "C" */
-#endif  /* __cplusplus */
+  cmp_result = width - other.width;
+  if (cmp_result != 0) {
+    return cmp_result;
+  }
 
-#include "common/dllapi_undef.inc"
-#endif  /* SGD2FR_LICENSE_H_ */
+  return height - other.height;
+}
+
+}  // namespace common
+}  // namespace sgd2fr

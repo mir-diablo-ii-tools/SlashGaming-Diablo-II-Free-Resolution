@@ -47,7 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../../../../helper/800_interface_bar.hpp"
-#include "common/position.hpp"
+#include "sgd2fr/common/position.hpp"
 
 using sgd2fr::common::Position;
 
