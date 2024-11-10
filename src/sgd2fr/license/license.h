@@ -43,25 +43,20 @@
  *  work.
  */
 
-#include "common/position.hpp"
+#ifndef SGD2FR_LICENSE_H_
+#define SGD2FR_LICENSE_H_
 
-/**
- * External
- */
+#include "sgd2fr/common/dllapi_define.inc"
 
-namespace sgd2fr {
-namespace common {
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-int Position::Compare(const Position& other) const {
-  int cmp_result;
-  
-  cmp_result = x - other.x;
-  if (cmp_result != 0) {
-    return cmp_result;
-  }
+DLLAPI void PrintLicenseNotice(void);
 
-  return y - other.y;
-}
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-}  // namespace common
-}  // namespace sgd2fr
+#include "sgd2fr/common/dllapi_undef.inc"
+#endif  /* SGD2FR_LICENSE_H_ */

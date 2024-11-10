@@ -49,7 +49,7 @@
 #include "../config.hpp"
 #include "game_resolution.hpp"
 
-#include "common/position.hpp"
+#include "sgd2fr/common/position.hpp"
 
 using sgd2fr::common::Position;
 

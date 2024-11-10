@@ -48,7 +48,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "common/position.hpp"
+#include "sgd2fr/common/position.hpp"
 #include "game_resolution.hpp"
 
 namespace sgd2fr {

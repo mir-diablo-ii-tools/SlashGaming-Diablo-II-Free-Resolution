@@ -46,7 +46,7 @@
 #ifndef SGD2FR_SGD2FML_MOD_EXPORTS_H_
 #define SGD2FR_SGD2FML_MOD_EXPORTS_H_
 
-#include "common/dllapi_define.inc"
+#include "sgd2fr/common/dllapi_define.inc"
 
 #ifdef __cplusplus
 extern "C" {
@@ -63,5 +63,5 @@ DLLAPI void Sgd2fml_Mod_ReloadConfig(void);
 } // extern "C"
 #endif // __cplusplus
 
-#include "common/dllapi_undef.inc"
+#include "sgd2fr/common/dllapi_undef.inc"
 #endif // SGD2FR_SGD2FML_MOD_EXPORTS_H_
