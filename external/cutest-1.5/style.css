@@ -1,0 +1,21 @@
+BODY { 
+	font-family: "Verdana,Arial,sans-serif";
+	font-size: 10pt;
+}
+PRE.LIST {
+	background: #CFD9FF;
+	border: 1ex solid #AAAAE6;
+	padding: 1ex;
+}
+
+PRE.SNIP {
+	background: #CFD9FF;
+	padding: 1ex;
+}
+
+PRE.CONSOLE {
+	color: #CCCCCC;
+	background: #000000;
+	font-family: "Courier New,Courier";
+	padding: 1ex;
+}
