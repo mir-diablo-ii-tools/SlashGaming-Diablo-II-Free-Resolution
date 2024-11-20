@@ -43,27 +43,34 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_COMMON_POSITION_H_
+#define SGD2FR_COMMON_POSITION_H_
 
-#include <CuTest.h>
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-#include "sgd2fr/common/position_test.h"
-#include "sgd2fr/common/resolution_test.h"
+struct Position {
+  int x;
+  int y;
+};
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+/**
+ * Returns a compare value based on a comparison of the x and y fields of the
+ * two positions.
+ */
+int Position_Compare(
+    const struct Position* lhs, const struct Position* rhs);
 
-  CuSuiteAddSuite(suite, Position_GetTestSuite());
-  CuSuiteAddSuite(suite, Resolution_GetTestSuite());
+/**
+ * Returns a non-zero value if the two positions are equal. Otherwise returns
+ * zero.
+ */
+int Position_Equals(
+    const struct Position* lhs, const struct Position* rhs);
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+#endif  /* SGD2FR_COMMON_POSITION_H_ */

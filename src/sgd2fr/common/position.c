@@ -43,27 +43,46 @@
  *  work.
  */
 
-#include <stdio.h>
+#include "sgd2fr/common/position.h"
 
-#include <CuTest.h>
+#include <assert.h>
 
-#include "sgd2fr/common/position_test.h"
-#include "sgd2fr/common/resolution_test.h"
+/**
+ * External
+ */
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+int Position_Compare(
+    const struct Position* lhs, const struct Position* rhs) {
+  assert(lhs != NULL);
+  assert(rhs != NULL);
 
-  CuSuiteAddSuite(suite, Position_GetTestSuite());
-  CuSuiteAddSuite(suite, Resolution_GetTestSuite());
+  if (lhs == rhs) {
+    return 0;
+  }
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
+  if (lhs->x < rhs->x) {
+    return -1;
+  } else if (lhs->x > rhs->x) {
+    return 1;
+  }
+
+  if (lhs->y < rhs->y) {
+    return -1;
+  } else if (lhs->y > rhs->y) {
+    return 1;
+  }
+
+  return 0;
 }
 
-int main() {
-  RunAllTests();
-  return 0;
+int Position_Equals(
+    const struct Position* lhs, const struct Position* rhs) {
+  assert(lhs != NULL);
+  assert(rhs != NULL);
+
+  if (lhs == rhs) {
+    return 1;
+  }
+
+  return lhs->x == rhs->x && lhs->y == rhs->y;
 }

@@ -23,13 +23,13 @@ add_library(${PROJECT_NAME} STATIC)
 
 target_sources(${PROJECT_NAME}
     PRIVATE
-        "${CMAKE_CURRENT_SOURCE_DIR}/position.cpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/position.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/resolution.c"
     PUBLIC
         "${CMAKE_CURRENT_SOURCE_DIR}/dllapi_define.inc"
         "${CMAKE_CURRENT_SOURCE_DIR}/dllapi_undef.inc"
 
-        "${CMAKE_CURRENT_SOURCE_DIR}/position.hpp"
+        "${CMAKE_CURRENT_SOURCE_DIR}/position.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/resolution.h")
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)

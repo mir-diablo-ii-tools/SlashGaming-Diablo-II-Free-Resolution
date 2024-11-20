@@ -19,6 +19,7 @@ endif (MINGW)
 # Define test targets
 add_executable(${PROJECT_NAME}.CommonTests
     "common_tests.c"
+    "position_test.c"
     "resolution_test.c")
 target_compile_definitions(${PROJECT_NAME}.CommonTests PRIVATE NOMINMAX)
 target_include_directories(${PROJECT_NAME}.CommonTests
