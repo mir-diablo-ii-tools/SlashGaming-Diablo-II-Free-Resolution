@@ -47,12 +47,14 @@
 
 #include <CuTest.h>
 
+#include "sgd2fr/common/position_test.h"
 #include "sgd2fr/common/resolution_test.h"
 
 static void RunAllTests(void) {
   CuString *output = CuStringNew();
   CuSuite* suite = CuSuiteNew();
 
+  CuSuiteAddSuite(suite, Position_GetTestSuite());
   CuSuiteAddSuite(suite, Resolution_GetTestSuite());
 
   CuSuiteRun(suite);

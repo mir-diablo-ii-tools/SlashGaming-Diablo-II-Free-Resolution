@@ -43,25 +43,19 @@
  *  work.
  */
 
-#include "sgd2fr/common/position.hpp"
+#ifndef SGD2FR_COMMON_POSITION_TEST_H_
+#define SGD2FR_COMMON_POSITION_TEST_H_
 
-/**
- * External
- */
+#include <CuTest.h>
 
-namespace sgd2fr {
-namespace common {
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-int Position::Compare(const Position& other) const {
-  int cmp_result;
+CuSuite* Position_GetTestSuite();
 
-  cmp_result = x - other.x;
-  if (cmp_result != 0) {
-    return cmp_result;
-  }
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-  return y - other.y;
-}
-
-}  // namespace common
-}  // namespace sgd2fr
+#endif  /* SGD2FR_COMMON_POSITION_TEST_H_ */

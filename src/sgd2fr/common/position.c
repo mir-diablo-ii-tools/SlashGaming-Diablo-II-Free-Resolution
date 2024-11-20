@@ -43,27 +43,46 @@
  *  work.
  */
 
-#ifndef SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
-#define SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
-
-#include <sgd2mapi.hpp>
-
 #include "sgd2fr/common/position.h"
-#include "game_resolution.hpp"
 
-namespace sgd2fr {
+#include <assert.h>
 
-unsigned int Get800InterfaceBarEnabledValue();
+/**
+ * External
+ */
 
-d2::PositionalRectangle_Api GetNewStatsButtonPosition();
-d2::PositionalRectangle_Api GetNewSkillButtonPosition();
+int Position_Compare(
+    const struct Position* lhs, const struct Position* rhs) {
+  assert(lhs != NULL);
+  assert(rhs != NULL);
 
-struct Position GetNewStatsPopupTextPosition();
-struct Position GetNewSkillPopupTextPosition();
+  if (lhs == rhs) {
+    return 0;
+  }
 
-bool IsMouseOverNewStatsButton();
-bool IsMouseOverNewSkillButton();
+  if (lhs->x < rhs->x) {
+    return -1;
+  } else if (lhs->x > rhs->x) {
+    return 1;
+  }
 
-} // namespace sgd2fr
+  if (lhs->y < rhs->y) {
+    return -1;
+  } else if (lhs->y > rhs->y) {
+    return 1;
+  }
 
-#endif // SGD2FR_HELPER_800_INTERFACE_BAR_HPP_
+  return 0;
+}
+
+int Position_Equals(
+    const struct Position* lhs, const struct Position* rhs) {
+  assert(lhs != NULL);
+  assert(rhs != NULL);
+
+  if (lhs == rhs) {
+    return 1;
+  }
+
+  return lhs->x == rhs->x && lhs->y == rhs->y;
+}

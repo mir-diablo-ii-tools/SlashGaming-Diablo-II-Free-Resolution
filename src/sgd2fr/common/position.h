@@ -43,30 +43,34 @@
  *  work.
  */
 
-#ifndef SGD2FR_COMMON_POSITION_HPP_
-#define SGD2FR_COMMON_POSITION_HPP_
+#ifndef SGD2FR_COMMON_POSITION_H_
+#define SGD2FR_COMMON_POSITION_H_
 
-namespace sgd2fr {
-namespace common {
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
 struct Position {
   int x;
   int y;
-
-  inline Position(int x, int y) : x(x), y(y) {}
-
-  friend inline bool operator==(const Position& lhs, const Position& rhs) {
-    return lhs.x == rhs.x && lhs.y == rhs.y;
-  }
-
-  friend inline bool operator<(const Position& lhs, const Position& rhs) {
-    return lhs.Compare(rhs);
-  }
-
-  int Compare(const Position& other) const;
 };
 
-}  // namespace common
-}  // namespace sgd2fr
+/**
+ * Returns a compare value based on a comparison of the x and y fields of the
+ * two positions.
+ */
+int Position_Compare(
+    const struct Position* lhs, const struct Position* rhs);
 
-#endif  // SGD2FR_COMMON_POSITION_HPP_
+/**
+ * Returns a non-zero value if the two positions are equal. Otherwise returns
+ * zero.
+ */
+int Position_Equals(
+    const struct Position* lhs, const struct Position* rhs);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_COMMON_POSITION_H_ */
