@@ -47,9 +47,7 @@
 
 #include <sgd2mapi.hpp>
 #include "../../../../helper/800_interface_bar.hpp"
-#include "sgd2fr/common/position.hpp"
-
-using sgd2fr::common::Position;
+#include "sgd2fr/common/position.h"
 
 namespace sgd2fr::patches {
 
@@ -67,7 +65,7 @@ mapi::bool32 __cdecl Sgd2fr_D2Client_IsMouseOver800NewStatsButton() {
 
 void __cdecl Sgd2fr_D2Client_Set800NewStatsPopupText() {
   const ::d2::UnicodeChar* new_stats_text = ::d2::d2lang::GetStringByIndex(3986);
-  Position popup_text_position = GetNewStatsPopupTextPosition();
+  struct Position popup_text_position = GetNewStatsPopupTextPosition();
 
   ::d2::d2win::SetPopUpUnicodeText(
       new_stats_text,

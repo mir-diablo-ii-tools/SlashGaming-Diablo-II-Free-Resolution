@@ -48,7 +48,7 @@
 
 #include <sgd2mapi.hpp>
 
-#include "sgd2fr/common/position.hpp"
+#include "sgd2fr/common/position.h"
 #include "game_resolution.hpp"
 
 namespace sgd2fr {
@@ -58,8 +58,8 @@ unsigned int Get800InterfaceBarEnabledValue();
 d2::PositionalRectangle_Api GetNewStatsButtonPosition();
 d2::PositionalRectangle_Api GetNewSkillButtonPosition();
 
-common::Position GetNewStatsPopupTextPosition();
-common::Position GetNewSkillPopupTextPosition();
+struct Position GetNewStatsPopupTextPosition();
+struct Position GetNewSkillPopupTextPosition();
 
 bool IsMouseOverNewStatsButton();
 bool IsMouseOverNewSkillButton();

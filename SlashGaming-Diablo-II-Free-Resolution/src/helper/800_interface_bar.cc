@@ -49,9 +49,7 @@
 #include "../config.hpp"
 #include "game_resolution.hpp"
 
-#include "sgd2fr/common/position.hpp"
-
-using sgd2fr::common::Position;
+#include "sgd2fr/common/position.h"
 
 namespace sgd2fr {
 namespace {
@@ -178,7 +176,7 @@ d2::PositionalRectangle_Api GetNewSkillButtonPosition() {
   return button_position;
 }
 
-Position GetNewStatsPopupTextPosition() {
+struct Position GetNewStatsPopupTextPosition() {
   enum {
     kDistanceFromPositionXToDisplayCenter =
         (kSourceDisplayWidth / 2) - kSourceNewStatsTextPositionX,
@@ -197,7 +195,7 @@ Position GetNewStatsPopupTextPosition() {
   };
 }
 
-Position GetNewSkillPopupTextPosition() {
+struct Position GetNewSkillPopupTextPosition() {
   enum {
     kDistanceFromPositionXToDisplayCenter =
         (kSourceDisplayWidth / 2) - kSourceNewSkillTextPositionX,
