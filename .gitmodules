@@ -10,3 +10,6 @@
 [submodule "external/SlashGaming-Diablo-II-API"]
 	path = external/SlashGaming-Diablo-II-API
 	url = https://github.com/mir-diablo-ii-tools/SlashGaming-Diablo-II-API.git
+[submodule "external/cJSON"]
+	path = external/cJSON
+	url = https://github.com/DaveGamble/cJSON.git
