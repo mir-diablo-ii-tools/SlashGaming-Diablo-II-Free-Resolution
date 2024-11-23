@@ -17,16 +17,15 @@ if (MINGW)
 endif (MINGW)
 
 # Define test targets
-add_executable(${PROJECT_NAME}.CommonTests
+add_executable(${PROJECT_NAME}
     "common_tests.c"
     "position_test.c"
     "resolution_test.c")
-target_compile_definitions(${PROJECT_NAME}.CommonTests PRIVATE NOMINMAX)
-target_include_directories(${PROJECT_NAME}.CommonTests
+target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
+target_include_directories(${PROJECT_NAME}
     PRIVATE
         "${CMAKE_SOURCE_DIR}/src"
         "${CMAKE_SOURCE_DIR}/tests"
         "${CMAKE_SOURCE_DIR}/external/cutest-1.5")
-target_link_libraries(${PROJECT_NAME}.CommonTests PRIVATE SGD2FreeRes.Common CuTest)
-add_test(NAME ${PROJECT_NAME}.CommonTests
-    COMMAND ${PROJECT_NAME}.CommonTests)
+target_link_libraries(${PROJECT_NAME} PRIVATE SGD2FreeRes.Common CuTest)
+add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
