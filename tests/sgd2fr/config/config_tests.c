@@ -47,13 +47,13 @@
 
 #include <CuTest.h>
 
-#include "sgd2fr/config/entries/globals/indent_width_test.h"
+#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
 
 static void RunAllTests(void) {
   CuString *output = CuStringNew();
   CuSuite* suite = CuSuiteNew();
 
-  CuSuiteAddSuite(suite, IndentWidth_GetTestSuite());
+  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
 
   CuSuiteRun(suite);
   CuSuiteSummary(suite, output);
