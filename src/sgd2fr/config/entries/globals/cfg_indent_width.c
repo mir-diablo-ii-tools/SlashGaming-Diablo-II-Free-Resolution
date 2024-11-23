@@ -81,6 +81,10 @@ struct CfgIndentWidth* CfgIndentWidth_FromJson(
   return indent_width;
 }
 
+void CfgIndentWidth_RemoveFromJson(cJSON* object) {
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgIndentWidth_kKey);
+}
+
 cJSON* CfgIndentWidth_AddToJson(cJSON* object, const struct CfgIndentWidth* indent_width) {
   cJSON* added_entry;
 

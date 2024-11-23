@@ -63,6 +63,8 @@ const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void);
 cJSON* CfgIndentWidth_AddToJson(
     cJSON* object, const struct CfgIndentWidth* indent_width);
 
+void CfgIndentWidth_RemoveFromJson(cJSON* object);
+
 struct CfgIndentWidth* CfgIndentWidth_FromJson(
     struct CfgIndentWidth* indent_width, const cJSON* value);
 
