@@ -68,7 +68,7 @@ static void AddToJson_AddsEntry(CuTest* tc) {
   entry = cJSON_GetObjectItem(object, CfgIndentWidth_kKey);
   CuAssertIntEquals(tc, 42, cJSON_GetNumberValue(entry));
 
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgIndentWidth_kKey);
+  CfgIndentWidth_RemoveFromJson(object);
   cJSON_Delete(object);
 }
 
