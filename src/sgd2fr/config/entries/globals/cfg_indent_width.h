@@ -43,55 +43,31 @@
  *  work.
  */
 
-#include "sgd2fr/config/entries/globals/indent_width.h"
-
-#include <assert.h>
-#include <stddef.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_H_
+#define SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_H_
 
 #include <cJSON.h>
 
-const char IndentWidth_kKey[] = "Config Tab Width";
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-/**
- * External
- */
+struct CfgIndentWidth {
+  int value;
+};
 
-const struct IndentWidth IndentWidth_kDefault = { 4 };
+extern const char CfgIndentWidth_kKey[];
 
-struct IndentWidth* IndentWidth_FromJson(
-    struct IndentWidth* indent_width, const cJSON* value) {
-  assert(indent_width != NULL);
-  assert(value != NULL);
+const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void);
 
-  if (!cJSON_IsNumber(value)) {
-    *indent_width = IndentWidth_kDefault;
-    return indent_width;
-  }
+cJSON* CfgIndentWidth_AddToJson(
+    cJSON* object, const struct CfgIndentWidth* indent_width);
 
-  if (value->valueint <= 0) {
-    *indent_width = IndentWidth_kDefault;
-    return indent_width;
-  }
+struct CfgIndentWidth* CfgIndentWidth_FromJson(
+    struct CfgIndentWidth* indent_width, const cJSON* value);
 
-  indent_width->value = value->valueint;
-  return indent_width;
-}
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-cJSON* IndentWidth_AddToJson(cJSON* object, const struct IndentWidth* indent_width) {
-  cJSON* added_entry;
-
-  assert(object != NULL);
-  assert(indent_width != NULL);
-
-  added_entry =
-      cJSON_AddNumberToObject(
-          object, IndentWidth_kKey, indent_width->value);
-  if (added_entry == NULL) {
-    goto error;
-  }
-
-  return object;
-
-error:
-  return NULL;
-}
+#endif  // SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_H_
