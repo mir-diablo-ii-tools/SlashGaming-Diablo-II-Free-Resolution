@@ -43,27 +43,89 @@
  *  work.
  */
 
-#include <stdio.h>
+#include "sgd2fr/config/entries/cfg_globals.h"
 
-#include <CuTest.h>
+#include <cJSON.h>
 
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
+#include "sgd2fr/config/entries/globals/cfg_indent_width.h"
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+static struct CfgGlobals kDefault;
 
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
+static void InitDefault(void) {
+  static int inited = 0;
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
+  if (inited) {
+    return;
+  }
+
+  kDefault.indent_width = *CfgIndentWidth_GetDefault();
+
+  inited = 1;
 }
 
-int main() {
-  RunAllTests();
-  return 0;
+/**
+ * External
+ */
+
+const char CfgGlobals_kKey[] = "!!!Globals!!!";
+
+const struct CfgGlobals* CfgGlobals_GetDefault(void) {
+  InitDefault();
+  return &kDefault;
+}
+
+cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals) {
+  cJSON* globals_json;
+  cJSON* indent_width_add_result;
+
+  globals_json = cJSON_AddObjectToObject(object, CfgGlobals_kKey);
+  if (globals_json == NULL) {
+    goto error;
+  }
+
+  indent_width_add_result =
+      CfgIndentWidth_AddToJson(globals_json, &globals->indent_width);
+  if (indent_width_add_result == NULL) {
+    goto error_remove_globals_json;
+  }
+
+  return object;
+
+error_remove_globals_json:
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_kKey);
+
+error:
+  return NULL;
+}
+
+void CfgGlobals_RemoveFromJson(cJSON* object) {
+  CfgIndentWidth_RemoveFromJson(object);
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_kKey);
+}
+
+struct CfgGlobals* CfgGlobals_FromJson(
+    struct CfgGlobals* globals, const cJSON* object) {
+  const cJSON* indent_width_json;
+  struct CfgIndentWidth* indent_width_from_json_result;
+
+  if (!cJSON_IsObject(object)) {
+    *globals = *CfgGlobals_GetDefault();
+    return globals;
+  }
+
+  indent_width_json =
+      cJSON_GetObjectItemCaseSensitive(object, CfgIndentWidth_kKey);
+  if (indent_width_json == NULL) {
+    globals->indent_width = *CfgIndentWidth_GetDefault();
+    return globals;
+  }
+
+  indent_width_from_json_result =
+      CfgIndentWidth_FromJson(&globals->indent_width, indent_width_json);
+  if (indent_width_from_json_result == NULL) {
+    globals->indent_width = *CfgIndentWidth_GetDefault();
+    return globals;
+  }
+
+  return globals;
 }

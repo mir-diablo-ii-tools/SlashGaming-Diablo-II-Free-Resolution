@@ -43,27 +43,32 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_H_
 
-#include <CuTest.h>
+#include "sgd2fr/config/entries/globals/cfg_indent_width.h"
 
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+struct CfgGlobals {
+  struct CfgIndentWidth indent_width;
+};
 
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
+extern const char CfgGlobals_kKey[];
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+const struct CfgGlobals* CfgGlobals_GetDefault(void);
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals);
+
+void CfgGlobals_RemoveFromJson(cJSON* object);
+
+struct CfgGlobals* CfgGlobals_FromJson(
+    struct CfgGlobals* globals, const cJSON* object);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_H_ */

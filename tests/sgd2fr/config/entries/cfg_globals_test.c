@@ -43,11 +43,12 @@
  *  work.
  */
 
-#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
+#include "sgd2fr/config/entries/cfg_globals_test.h"
 
-#include <cJSON.h>
 #include <CuTest.h>
 
+#include "cJSON.h"
+#include "sgd2fr/config/entries/cfg_globals.h"
 #include "sgd2fr/config/entries/globals/cfg_indent_width.h"
 
 /**
@@ -55,91 +56,84 @@
  */
 
 static void AddToJson_AddsEntry(CuTest* tc) {
-  struct CfgIndentWidth indent_width = { 42 };
+  struct CfgGlobals globals;
   cJSON* object;
   cJSON* result;
-  cJSON* entry;
+  cJSON* globals_json;
+  cJSON* indent_width_json;
 
+  globals.indent_width.value = 42;
   object = cJSON_CreateObject();
 
-  result = CfgIndentWidth_AddToJson(object, &indent_width);
+  result = CfgGlobals_AddToJson(object, &globals);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgIndentWidth_kKey));
-  entry = cJSON_GetObjectItem(object, CfgIndentWidth_kKey);
-  CuAssertIntEquals(tc, 42, cJSON_GetNumberValue(entry));
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgGlobals_kKey));
+  globals_json = cJSON_GetObjectItem(object, CfgGlobals_kKey);
+  CuAssertTrue(tc, cJSON_HasObjectItem(globals_json, CfgIndentWidth_kKey));
+  indent_width_json = cJSON_GetObjectItem(globals_json, CfgIndentWidth_kKey);
+  CuAssertIntEquals(tc, 42, cJSON_GetNumberValue(indent_width_json));
 
-  CfgIndentWidth_RemoveFromJson(object);
+  CfgGlobals_RemoveFromJson(object);
   cJSON_Delete(object);
 }
 
 static void FromJson_Valid_Converts(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
+  cJSON* global_json;
+  struct CfgGlobals globals;
+  struct CfgGlobals* result;
 
-  value = cJSON_CreateNumber(42);
+  global_json = cJSON_CreateObject();
+  cJSON_AddNumberToObject(global_json, CfgIndentWidth_kKey, 42);
 
-  result = CfgIndentWidth_FromJson(&indent_width, value);
+  result = CfgGlobals_FromJson(&globals, global_json);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, 42, indent_width.value);
+  CuAssertIntEquals(tc, 42, globals.indent_width.value);
 
-  cJSON_Delete(value);
+  cJSON_DeleteItemFromObjectCaseSensitive(global_json, CfgIndentWidth_kKey);
+  cJSON_Delete(global_json);
 }
 
-static void FromJson_Negative_SetsToDefault(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
+static void FromJson_MissingEntries_SetsEntriesToDefault(CuTest* tc) {
+  cJSON* global_json;
+  struct CfgGlobals globals;
+  struct CfgGlobals* result;
 
-  value = cJSON_CreateNumber(-42);
+  global_json = cJSON_CreateObject();
 
-  result = CfgIndentWidth_FromJson(&indent_width, value);
-
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, CfgIndentWidth_GetDefault()->value, indent_width.value);
-
-  cJSON_Delete(value);
-}
-
-static void FromJson_Zero_SetsToDefault(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
-
-  value = cJSON_CreateNumber(0);
-
-  result = CfgIndentWidth_FromJson(&indent_width, value);
+  result = CfgGlobals_FromJson(&globals, global_json);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, CfgIndentWidth_GetDefault()->value, indent_width.value);
+  CuAssertIntEquals(
+      tc, CfgIndentWidth_GetDefault()->value, globals.indent_width.value);
 
-  cJSON_Delete(value);
+  cJSON_Delete(global_json);
 }
 
 static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
+  cJSON* global_json;
+  struct CfgGlobals globals;
+  struct CfgGlobals* result;
 
-  value = cJSON_CreateString("42");
+  global_json = cJSON_CreateNumber(42);
 
-  result = CfgIndentWidth_FromJson(&indent_width, value);
+  result = CfgGlobals_FromJson(&globals, global_json);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, CfgIndentWidth_GetDefault()->value, indent_width.value);
+  CuAssertIntEquals(
+      tc,
+      CfgGlobals_GetDefault()->indent_width.value,
+      globals.indent_width.value);
 
-  cJSON_Delete(value);
+  cJSON_Delete(global_json);
 }
 
-CuSuite* CfgIndentWidth_GetTestSuite() {
+CuSuite* CfgGlobals_GetTestSuite(void) {
   CuSuite* suite = CuSuiteNew();
 
   SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
   SUITE_ADD_TEST(suite, FromJson_Valid_Converts);
-  SUITE_ADD_TEST(suite, FromJson_Negative_SetsToDefault);
-  SUITE_ADD_TEST(suite, FromJson_Zero_SetsToDefault);
   SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
 
   return suite;
