@@ -83,6 +83,34 @@ static void AddToJson_AddsEntry(CuTest* tc) {
   cJSON_Delete(object);
 }
 
+static void Equals_SameGlobals_ReturnsTrue(CuTest* tc) {
+  struct CfgGlobals lhs;
+
+  lhs.indent_width.value = 4;
+
+  CuAssertTrue(tc, CfgGlobals_Equals(&lhs, &lhs));
+}
+
+static void Equals_EqualGlobals_ReturnsTrue(CuTest* tc) {
+  struct CfgGlobals lhs;
+  struct CfgGlobals rhs;
+
+  lhs.indent_width.value = 4;
+  rhs.indent_width.value = 4;
+
+  CuAssertTrue(tc, CfgGlobals_Equals(&lhs, &rhs));
+}
+
+static void Equals_DifferentGlobals_ReturnsFalse(CuTest* tc) {
+  struct CfgGlobals lhs;
+  struct CfgGlobals rhs;
+
+  lhs.indent_width.value = 4;
+  rhs.indent_width.value = 8;
+
+  CuAssertTrue(tc, !CfgGlobals_Equals(&lhs, &rhs));
+}
+
 static void FromJson_Valid_Converts(CuTest* tc) {
   cJSON* global_json;
   struct CfgGlobals globals;
@@ -111,8 +139,7 @@ static void FromJson_MissingEntries_SetsEntriesToDefault(CuTest* tc) {
   result = CfgGlobals_FromJson(&globals, global_json);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(
-      tc, CfgIndentWidth_GetDefault()->value, globals.indent_width.value);
+  CuAssertTrue(tc, CfgGlobals_Equals(&globals, CfgGlobals_GetDefault()));
 
   cJSON_Delete(global_json);
 }
@@ -127,16 +154,21 @@ static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
   result = CfgGlobals_FromJson(&globals, global_json);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(
-      tc,
-      CfgGlobals_GetDefault()->indent_width.value,
-      globals.indent_width.value);
+  CuAssertTrue(tc, CfgGlobals_Equals(&globals, CfgGlobals_GetDefault()));
 
   cJSON_Delete(global_json);
 }
 
-static void GetDefault_NotNull(CuTest* tc) {
-  CuAssertPtrNotNull(tc, CfgGlobals_GetDefault());
+static void GetDefault_SubEntryAreDefaults(CuTest* tc) {
+  const struct CfgGlobals* default_globals;
+
+  default_globals = CfgGlobals_GetDefault();
+
+  CuAssertPtrNotNull(tc, default_globals);
+  CuAssertTrue(
+      tc,
+      CfgIndentWidth_Equals(
+          &default_globals->indent_width, CfgIndentWidth_GetDefault()));
 }
 
 static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
@@ -162,9 +194,16 @@ CuSuite* CfgGlobals_GetTestSuite(void) {
   CuSuite* suite = CuSuiteNew();
 
   SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
+
+  SUITE_ADD_TEST(suite, Equals_SameGlobals_ReturnsTrue);
+  SUITE_ADD_TEST(suite, Equals_EqualGlobals_ReturnsTrue);
+  SUITE_ADD_TEST(suite, Equals_DifferentGlobals_ReturnsFalse);
+
   SUITE_ADD_TEST(suite, FromJson_Valid_Converts);
   SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
-  SUITE_ADD_TEST(suite, GetDefault_NotNull);
+
+  SUITE_ADD_TEST(suite, GetDefault_SubEntryAreDefaults);
+
   SUITE_ADD_TEST(suite, GetJsonKey_WithLength_ReturnsJsonKey);
   SUITE_ADD_TEST(suite, GetJsonKey_WithNullLength_ReturnsJsonKey);
 

@@ -70,8 +70,14 @@ void CfgIndentWidth_RemoveFromJson(cJSON* object);
 struct CfgIndentWidth* CfgIndentWidth_FromJson(
     struct CfgIndentWidth* indent_width, const cJSON* value);
 
+int CfgIndentWidth_Compare(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs);
+
+int CfgIndentWidth_Equals(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs);
+
 #ifdef __cplusplus
 }  /* extern "C" */
 #endif  /* __cplusplus */
 
-#endif  // SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_H_
+#endif  /* SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_H_ */
