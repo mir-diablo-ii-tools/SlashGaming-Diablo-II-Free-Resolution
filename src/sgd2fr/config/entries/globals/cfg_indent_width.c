@@ -111,3 +111,27 @@ cJSON* CfgIndentWidth_AddToJson(cJSON* object, const struct CfgIndentWidth* inde
 error:
   return NULL;
 }
+
+int CfgIndentWidth_Compare(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs) {
+  if (lhs == rhs) {
+    return 0;
+  }
+
+  if (lhs->value < rhs->value) {
+    return -1;
+  } else if (lhs->value > rhs->value) {
+    return 1;
+  } else {
+    return 0;
+  }
+}
+
+int CfgIndentWidth_Equals(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs) {
+  if (lhs == rhs) {
+    return 1;
+  }
+
+  return lhs->value == rhs->value;
+}

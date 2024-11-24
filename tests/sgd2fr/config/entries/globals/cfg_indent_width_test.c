@@ -77,6 +77,53 @@ static void AddToJson_AddsEntry(CuTest* tc) {
   cJSON_Delete(object);
 }
 
+static void Compare_SameIndentWidths_ReturnsZero(CuTest* tc) {
+  struct CfgIndentWidth lhs = { 4 };
+
+  CuAssertIntEquals(tc, 0, CfgIndentWidth_Compare(&lhs, &lhs));
+}
+
+static void Compare_EqualIndentWidths_ReturnsZero(CuTest* tc) {
+  struct CfgIndentWidth lhs = { 4 };
+  struct CfgIndentWidth rhs = { 4 };
+
+  CuAssertIntEquals(tc, 0, CfgIndentWidth_Compare(&lhs, &rhs));
+}
+
+static void Compare_LtIndentWidths_ReturnsNegative(CuTest* tc) {
+  struct CfgIndentWidth lhs = { 4 };
+  struct CfgIndentWidth rhs = { 8 };
+
+  CuAssertTrue(tc, CfgIndentWidth_Compare(&lhs, &rhs) < 0);
+}
+
+static void Compare_GtIndentWidths_ReturnsPositive(CuTest* tc) {
+  struct CfgIndentWidth lhs = { 8 };
+  struct CfgIndentWidth rhs = { 4 };
+
+  CuAssertTrue(tc, CfgIndentWidth_Compare(&lhs, &rhs) > 0);
+}
+
+static void Equals_SameIndentWidths_ReturnsTrue(CuTest* tc) {
+  struct CfgIndentWidth lhs = { 4 };
+
+  CuAssertTrue(tc, CfgIndentWidth_Equals(&lhs, &lhs));
+}
+
+static void Equals_EqualIndentWidths_ReturnsTrue(CuTest* tc) {
+  struct CfgIndentWidth lhs = { 4 };
+  struct CfgIndentWidth rhs = { 4 };
+
+  CuAssertTrue(tc, CfgIndentWidth_Equals(&lhs, &rhs));
+}
+
+static void Equals_DifferentIndentWidths_ReturnsFalse(CuTest* tc) {
+  struct CfgIndentWidth lhs = { 4 };
+  struct CfgIndentWidth rhs = { 8 };
+
+  CuAssertTrue(tc, !CfgIndentWidth_Equals(&lhs, &rhs));
+}
+
 static void FromJson_Valid_Converts(CuTest* tc) {
   cJSON* value;
   struct CfgIndentWidth indent_width;
@@ -164,11 +211,23 @@ CuSuite* CfgIndentWidth_GetTestSuite() {
   CuSuite* suite = CuSuiteNew();
 
   SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
+
+  SUITE_ADD_TEST(suite, Compare_SameIndentWidths_ReturnsZero);
+  SUITE_ADD_TEST(suite, Compare_EqualIndentWidths_ReturnsZero);
+  SUITE_ADD_TEST(suite, Compare_LtIndentWidths_ReturnsNegative);
+  SUITE_ADD_TEST(suite, Compare_GtIndentWidths_ReturnsPositive);
+
+  SUITE_ADD_TEST(suite, Equals_SameIndentWidths_ReturnsTrue);
+  SUITE_ADD_TEST(suite, Equals_EqualIndentWidths_ReturnsTrue);
+  SUITE_ADD_TEST(suite, Equals_DifferentIndentWidths_ReturnsFalse);
+
   SUITE_ADD_TEST(suite, FromJson_Valid_Converts);
   SUITE_ADD_TEST(suite, FromJson_Negative_SetsToDefault);
   SUITE_ADD_TEST(suite, FromJson_Zero_SetsToDefault);
   SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
+
   SUITE_ADD_TEST(suite, GetDefault_NotNull);
+
   SUITE_ADD_TEST(suite, GetJsonKey_WithLength_ReturnsJsonKey);
   SUITE_ADD_TEST(suite, GetJsonKey_WithNullLength_ReturnsJsonKey);
 

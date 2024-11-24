@@ -67,6 +67,9 @@ void CfgGlobals_RemoveFromJson(cJSON* object);
 struct CfgGlobals* CfgGlobals_FromJson(
     struct CfgGlobals* globals, const cJSON* object);
 
+int CfgGlobals_Equals(
+    const struct CfgGlobals* lhs, const struct CfgGlobals* rhs);
+
 #ifdef __cplusplus
 }  /* extern "C" */
 #endif  /* __cplusplus */

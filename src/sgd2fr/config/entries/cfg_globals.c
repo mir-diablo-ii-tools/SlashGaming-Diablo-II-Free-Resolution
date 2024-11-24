@@ -137,3 +137,8 @@ struct CfgGlobals* CfgGlobals_FromJson(
 
   return globals;
 }
+
+int CfgGlobals_Equals(
+    const struct CfgGlobals* lhs, const struct CfgGlobals* rhs) {
+  return CfgIndentWidth_Equals(&lhs->indent_width, &rhs->indent_width);
+}
