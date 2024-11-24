@@ -50,16 +50,23 @@
 
 #include <cJSON.h>
 
-const char CfgIndentWidth_kKey[] = "Config Tab Width";
-
 /**
  * External
  */
 
-
 const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void) {
   static const struct CfgIndentWidth kDefault = { 4 };
   return &kDefault;
+}
+
+const char* CfgIndentWidth_GetJsonKey(size_t* length) {
+  static const char kKey[] = "Config Tab Width";
+
+  if (length != NULL) {
+    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+  }
+
+  return kKey;
 }
 
 struct CfgIndentWidth* CfgIndentWidth_FromJson(
@@ -82,7 +89,8 @@ struct CfgIndentWidth* CfgIndentWidth_FromJson(
 }
 
 void CfgIndentWidth_RemoveFromJson(cJSON* object) {
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgIndentWidth_kKey);
+  cJSON_DeleteItemFromObjectCaseSensitive(
+      object, CfgIndentWidth_GetJsonKey(NULL));
 }
 
 cJSON* CfgIndentWidth_AddToJson(cJSON* object, const struct CfgIndentWidth* indent_width) {
@@ -93,7 +101,7 @@ cJSON* CfgIndentWidth_AddToJson(cJSON* object, const struct CfgIndentWidth* inde
 
   added_entry =
       cJSON_AddNumberToObject(
-          object, CfgIndentWidth_kKey, indent_width->value);
+          object, CfgIndentWidth_GetJsonKey(NULL), indent_width->value);
   if (added_entry == NULL) {
     goto error;
   }

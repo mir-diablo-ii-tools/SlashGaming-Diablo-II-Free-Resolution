@@ -56,9 +56,9 @@ struct CfgGlobals {
   struct CfgIndentWidth indent_width;
 };
 
-extern const char CfgGlobals_kKey[];
-
 const struct CfgGlobals* CfgGlobals_GetDefault(void);
+
+const char* CfgGlobals_GetJsonKey(size_t* length);
 
 cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals);
 
