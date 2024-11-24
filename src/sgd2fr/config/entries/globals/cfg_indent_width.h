@@ -46,6 +46,8 @@
 #ifndef SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_H_
 #define SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_H_
 
+#include <stddef.h>
+
 #include <cJSON.h>
 
 #ifdef __cplusplus
@@ -56,9 +58,9 @@ struct CfgIndentWidth {
   int value;
 };
 
-extern const char CfgIndentWidth_kKey[];
-
 const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void);
+
+const char* CfgIndentWidth_GetJsonKey(size_t* length);
 
 cJSON* CfgIndentWidth_AddToJson(
     cJSON* object, const struct CfgIndentWidth* indent_width);

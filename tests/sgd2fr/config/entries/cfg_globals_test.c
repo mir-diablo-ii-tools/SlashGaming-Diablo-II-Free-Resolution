@@ -45,9 +45,12 @@
 
 #include "sgd2fr/config/entries/cfg_globals_test.h"
 
+#include <stddef.h>
+#include <string.h>
+
+#include <cJSON.h>
 #include <CuTest.h>
 
-#include "cJSON.h"
 #include "sgd2fr/config/entries/cfg_globals.h"
 #include "sgd2fr/config/entries/globals/cfg_indent_width.h"
 
@@ -68,10 +71,12 @@ static void AddToJson_AddsEntry(CuTest* tc) {
   result = CfgGlobals_AddToJson(object, &globals);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgGlobals_kKey));
-  globals_json = cJSON_GetObjectItem(object, CfgGlobals_kKey);
-  CuAssertTrue(tc, cJSON_HasObjectItem(globals_json, CfgIndentWidth_kKey));
-  indent_width_json = cJSON_GetObjectItem(globals_json, CfgIndentWidth_kKey);
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgGlobals_GetJsonKey(NULL)));
+  globals_json = cJSON_GetObjectItem(object, CfgGlobals_GetJsonKey(NULL));
+  CuAssertTrue(
+      tc, cJSON_HasObjectItem(globals_json, CfgIndentWidth_GetJsonKey(NULL)));
+  indent_width_json =
+      cJSON_GetObjectItem(globals_json, CfgIndentWidth_GetJsonKey(NULL));
   CuAssertIntEquals(tc, 42, cJSON_GetNumberValue(indent_width_json));
 
   CfgGlobals_RemoveFromJson(object);
@@ -84,14 +89,15 @@ static void FromJson_Valid_Converts(CuTest* tc) {
   struct CfgGlobals* result;
 
   global_json = cJSON_CreateObject();
-  cJSON_AddNumberToObject(global_json, CfgIndentWidth_kKey, 42);
+  cJSON_AddNumberToObject(global_json, CfgIndentWidth_GetJsonKey(NULL), 42);
 
   result = CfgGlobals_FromJson(&globals, global_json);
 
   CuAssertPtrNotNull(tc, result);
   CuAssertIntEquals(tc, 42, globals.indent_width.value);
 
-  cJSON_DeleteItemFromObjectCaseSensitive(global_json, CfgIndentWidth_kKey);
+  cJSON_DeleteItemFromObjectCaseSensitive(
+      global_json, CfgIndentWidth_GetJsonKey(NULL));
   cJSON_Delete(global_json);
 }
 
@@ -129,12 +135,38 @@ static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
   cJSON_Delete(global_json);
 }
 
+static void GetDefault_NotNull(CuTest* tc) {
+  CuAssertPtrNotNull(tc, CfgGlobals_GetDefault());
+}
+
+static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
+  const char* result;
+  size_t length;
+
+  result = CfgGlobals_GetJsonKey(&length);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, strlen(result) == length);
+}
+
+static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
+  const char* result;
+
+  result = CfgGlobals_GetJsonKey(NULL);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, strlen(result) > 0);
+}
+
 CuSuite* CfgGlobals_GetTestSuite(void) {
   CuSuite* suite = CuSuiteNew();
 
   SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
   SUITE_ADD_TEST(suite, FromJson_Valid_Converts);
   SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
+  SUITE_ADD_TEST(suite, GetDefault_NotNull);
+  SUITE_ADD_TEST(suite, GetJsonKey_WithLength_ReturnsJsonKey);
+  SUITE_ADD_TEST(suite, GetJsonKey_WithNullLength_ReturnsJsonKey);
 
   return suite;
 }

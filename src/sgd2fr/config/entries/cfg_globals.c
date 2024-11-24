@@ -67,18 +67,26 @@ static void InitDefault(void) {
  * External
  */
 
-const char CfgGlobals_kKey[] = "!!!Globals!!!";
-
 const struct CfgGlobals* CfgGlobals_GetDefault(void) {
   InitDefault();
   return &kDefault;
+}
+
+const char* CfgGlobals_GetJsonKey(size_t* length) {
+  static const char kKey[] = "!!!Globals!!!";
+
+  if (length != NULL) {
+    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+  }
+
+  return kKey;
 }
 
 cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals) {
   cJSON* globals_json;
   cJSON* indent_width_add_result;
 
-  globals_json = cJSON_AddObjectToObject(object, CfgGlobals_kKey);
+  globals_json = cJSON_AddObjectToObject(object, CfgGlobals_GetJsonKey(NULL));
   if (globals_json == NULL) {
     goto error;
   }
@@ -92,7 +100,7 @@ cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals) {
   return object;
 
 error_remove_globals_json:
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_kKey);
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
 
 error:
   return NULL;
@@ -100,7 +108,7 @@ error:
 
 void CfgGlobals_RemoveFromJson(cJSON* object) {
   CfgIndentWidth_RemoveFromJson(object);
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_kKey);
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
 }
 
 struct CfgGlobals* CfgGlobals_FromJson(
@@ -114,7 +122,7 @@ struct CfgGlobals* CfgGlobals_FromJson(
   }
 
   indent_width_json =
-      cJSON_GetObjectItemCaseSensitive(object, CfgIndentWidth_kKey);
+      cJSON_GetObjectItemCaseSensitive(object, CfgIndentWidth_GetJsonKey(NULL));
   if (indent_width_json == NULL) {
     globals->indent_width = *CfgIndentWidth_GetDefault();
     return globals;

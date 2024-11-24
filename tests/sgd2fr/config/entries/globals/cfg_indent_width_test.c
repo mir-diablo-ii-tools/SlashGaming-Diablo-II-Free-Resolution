@@ -45,6 +45,9 @@
 
 #include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
 
+#include <stddef.h>
+#include <string.h>
+
 #include <cJSON.h>
 #include <CuTest.h>
 
@@ -65,8 +68,9 @@ static void AddToJson_AddsEntry(CuTest* tc) {
   result = CfgIndentWidth_AddToJson(object, &indent_width);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgIndentWidth_kKey));
-  entry = cJSON_GetObjectItem(object, CfgIndentWidth_kKey);
+  CuAssertTrue(
+      tc, cJSON_HasObjectItem(object, CfgIndentWidth_GetJsonKey(NULL)));
+  entry = cJSON_GetObjectItem(object, CfgIndentWidth_GetJsonKey(NULL));
   CuAssertIntEquals(tc, 42, cJSON_GetNumberValue(entry));
 
   CfgIndentWidth_RemoveFromJson(object);
@@ -133,6 +137,29 @@ static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
   cJSON_Delete(value);
 }
 
+static void GetDefault_NotNull(CuTest* tc) {
+  CuAssertPtrNotNull(tc, CfgIndentWidth_GetDefault());
+}
+
+static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
+  const char* result;
+  size_t length;
+
+  result = CfgIndentWidth_GetJsonKey(&length);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, strlen(result) == length);
+}
+
+static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
+  const char* result;
+
+  result = CfgIndentWidth_GetJsonKey(NULL);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, strlen(result) > 0);
+}
+
 CuSuite* CfgIndentWidth_GetTestSuite() {
   CuSuite* suite = CuSuiteNew();
 
@@ -141,6 +168,9 @@ CuSuite* CfgIndentWidth_GetTestSuite() {
   SUITE_ADD_TEST(suite, FromJson_Negative_SetsToDefault);
   SUITE_ADD_TEST(suite, FromJson_Zero_SetsToDefault);
   SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
+  SUITE_ADD_TEST(suite, GetDefault_NotNull);
+  SUITE_ADD_TEST(suite, GetJsonKey_WithLength_ReturnsJsonKey);
+  SUITE_ADD_TEST(suite, GetJsonKey_WithNullLength_ReturnsJsonKey);
 
   return suite;
 }
