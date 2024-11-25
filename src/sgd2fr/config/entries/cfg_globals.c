@@ -45,6 +45,8 @@
 
 #include "sgd2fr/config/entries/cfg_globals.h"
 
+#include <stddef.h>
+
 #include <cJSON.h>
 
 #include "sgd2fr/config/entries/globals/cfg_indent_width.h"
