@@ -46,6 +46,10 @@
 #ifndef SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_H_
 #define SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_H_
 
+#include <stddef.h>
+
+#include <cJSON.h>
+
 #include "sgd2fr/config/entries/globals/cfg_indent_width.h"
 
 #ifdef __cplusplus
