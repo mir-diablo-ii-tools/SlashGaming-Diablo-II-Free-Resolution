@@ -43,29 +43,53 @@
  *  work.
  */
 
-#include <stdio.h>
+#include "sgd2fr/common/semantic_version.h"
 
-#include <CuTest.h>
+/**
+ * External
+ */
 
-#include "sgd2fr/common/position_test.h"
-#include "sgd2fr/common/resolution_test.h"
-#include "sgd2fr/common/semantic_version_test.h"
+int SemanticVersion_Compare(
+    const struct SemanticVersion* lhs, const struct SemanticVersion* rhs) {
+  if (lhs == rhs) {
+    return 0;
+  }
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+  if (lhs->major_version < rhs->major_version) {
+    return -1;
+  } else if (lhs->major_version > rhs->major_version) {
+    return 1;
+  }
 
-  CuSuiteAddSuite(suite, Position_GetTestSuite());
-  CuSuiteAddSuite(suite, Resolution_GetTestSuite());
-  CuSuiteAddSuite(suite, SemanticVersion_GetTestSuite());
+  if (lhs->minor_version < rhs->minor_version) {
+    return -1;
+  } else if (lhs->minor_version > rhs->minor_version) {
+    return 1;
+  }
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
+  if (lhs->patch_version < rhs->patch_version) {
+    return -1;
+  } else if (lhs->patch_version > rhs->patch_version) {
+    return 1;
+  }
+
+  if (lhs->build_version < rhs->build_version) {
+    return -1;
+  } else if (lhs->build_version > rhs->build_version) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
-int main() {
-  RunAllTests();
-  return 0;
+int SemanticVersion_Equals(
+    const struct SemanticVersion* lhs, const struct SemanticVersion* rhs) {
+  if (lhs == rhs) {
+    return 1;
+  }
+
+  return lhs->major_version == rhs->major_version
+      && lhs->minor_version == rhs->minor_version
+      && lhs->patch_version == rhs->patch_version
+      && lhs->build_version == rhs->build_version;
 }

@@ -43,29 +43,19 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_COMMON_SEMANTIC_VERSION_TEST_H_
+#define SGD2FR_COMMON_SEMANTIC_VERSION_TEST_H_
 
 #include <CuTest.h>
 
-#include "sgd2fr/common/position_test.h"
-#include "sgd2fr/common/resolution_test.h"
-#include "sgd2fr/common/semantic_version_test.h"
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+CuSuite* SemanticVersion_GetTestSuite(void);
 
-  CuSuiteAddSuite(suite, Position_GetTestSuite());
-  CuSuiteAddSuite(suite, Resolution_GetTestSuite());
-  CuSuiteAddSuite(suite, SemanticVersion_GetTestSuite());
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
-
-int main() {
-  RunAllTests();
-  return 0;
-}
+#endif  /* SGD2FR_COMMON_SEMANTIC_VERSION_TEST_H_ */

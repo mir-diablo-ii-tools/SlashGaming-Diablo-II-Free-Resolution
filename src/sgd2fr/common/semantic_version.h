@@ -43,29 +43,28 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_COMMON_SEMANTIC_VERSION_H_
+#define SGD2FR_COMMON_SEMANTIC_VERSION_H_
 
-#include <CuTest.h>
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-#include "sgd2fr/common/position_test.h"
-#include "sgd2fr/common/resolution_test.h"
-#include "sgd2fr/common/semantic_version_test.h"
+struct SemanticVersion {
+  int major_version;
+  int minor_version;
+  int patch_version;
+  int build_version;
+};
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+int SemanticVersion_Compare(
+    const struct SemanticVersion* lhs, const struct SemanticVersion* rhs);
 
-  CuSuiteAddSuite(suite, Position_GetTestSuite());
-  CuSuiteAddSuite(suite, Resolution_GetTestSuite());
-  CuSuiteAddSuite(suite, SemanticVersion_GetTestSuite());
+int SemanticVersion_Equals(
+    const struct SemanticVersion* lhs, const struct SemanticVersion* rhs);
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+#endif  /* SGD2FR_COMMON_SEMANTIC_VERSION_H_ */
