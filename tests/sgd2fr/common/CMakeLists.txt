@@ -20,7 +20,8 @@ endif (MINGW)
 add_executable(${PROJECT_NAME}
     "common_tests.c"
     "position_test.c"
-    "resolution_test.c")
+    "resolution_test.c"
+    "semantic_version_test.c")
 target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
 target_include_directories(${PROJECT_NAME}
     PRIVATE
