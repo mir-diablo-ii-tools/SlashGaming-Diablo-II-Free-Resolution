@@ -46,6 +46,9 @@
 #ifndef SGD2FR_COMMON_SEMANTIC_VERSION_H_
 #define SGD2FR_COMMON_SEMANTIC_VERSION_H_
 
+#include <stddef.h>
+#include <wchar.h>
+
 #ifdef __cplusplus
 extern "C" {
 #endif  /* __cplusplus */
@@ -57,11 +60,59 @@ struct SemanticVersion {
   int build_version;
 };
 
+enum {
+  /* Min length is based on "0.0.0.0". */
+  SemanticVersion_kMinLength = 7,
+  /* Max length is based on "2147483647.2147483647.2147483647.2147483647". */
+  SemanticVersion_kMaxLength = 43
+};
+
+/**
+ * Returns a compare value based on a comparison of the fields of the two
+ * versions.
+ */
 int SemanticVersion_Compare(
     const struct SemanticVersion* lhs, const struct SemanticVersion* rhs);
 
+/**
+ * Returns a non-zero value if the two versions are equal. Otherwise returns
+ * zero.
+ */
 int SemanticVersion_Equals(
     const struct SemanticVersion* lhs, const struct SemanticVersion* rhs);
+
+/**
+ * Initializes a new version object with the given string parameter. Returns
+ * the given resolution object on success. Otherwise, returns NULL.
+ *
+ * The string format for a version must match "MAJOR.MINOR.PATCH.BUILD". The
+ * values for each portion must fit in a positive 31-bit unsigned integer
+ * value. Otherwise, the function returns NULL.
+ */
+struct SemanticVersion* SemanticVersion_FromString(
+    struct SemanticVersion* version, const char* str, size_t length);
+
+/**
+ * Converts the version values into string format, i.e.
+ * "MAJOR.MINOR.PATCH.BUILD".
+ *
+ * The buffer must be capable of storing 44 characters for guaranteed safe
+ * usage. If length is NULL, then the length of the resulting string will not
+ * be written.
+ */
+char* SemanticVersion_ToString(
+    const struct SemanticVersion* version, char* buffer, size_t* length);
+
+/**
+ * Converts the version values into string format, i.e.
+ * "MAJOR.MINOR.PATCH.BUILD".
+ *
+ * The buffer must be capable of storing 44 characters for guaranteed safe
+ * usage. If length is NULL, then the length of the resulting string will not
+ * be written.
+ */
+wchar_t* SemanticVersion_ToWString(
+    const struct SemanticVersion* version, wchar_t* buffer, size_t* length);
 
 #ifdef __cplusplus
 }  /* extern "C" */

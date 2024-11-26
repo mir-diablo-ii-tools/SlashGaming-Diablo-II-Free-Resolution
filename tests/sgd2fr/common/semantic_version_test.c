@@ -45,6 +45,11 @@
 
 #include "sgd2fr/common/semantic_version_test.h"
 
+#include <limits.h>
+#include <stddef.h>
+#include <stdio.h>
+#include <string.h>
+
 #include <CuTest.h>
 
 #include "sgd2fr/common/semantic_version.h"
@@ -173,6 +178,457 @@ static void Compare_DifferentAll_ReturnsNonZero(CuTest* tc) {
   CuAssertTrue(tc, SemanticVersion_Compare(&lhs, &rhs) != 0);
 }
 
+static void FromString_ValidString_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 2468, 321, 42 };
+  const char kStr[] = "1234.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_ValidSubString_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 2468, 321, 4 };
+  const char kStr[] = "1234.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr) - 1);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_SubstringOfTerminateStringPeriod_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 2468, 321, 42 };
+  const char kStr[] = "1234.2468.321.42.";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr) - 1);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_MajorZero_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 0, 2468, 321, 42 };
+  const char kStr[] = "0.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_MinorZero_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 0, 321, 42 };
+  const char kStr[] = "1234.0.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_PatchZero_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 2468, 0, 42 };
+  const char kStr[] = "1234.2468.0.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_BuildZero_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 2468, 321, 0 };
+  const char kStr[] = "1234.2468.321.0";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_MajorIntMax_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { INT_MAX, 2468, 321, 42 };
+  char kStr[64];
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  sprintf(kStr, "%d.%d.%d.%d", INT_MAX, 2468, 321, 42);
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_MinorIntMax_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, INT_MAX, 321, 42 };
+  char kStr[64];
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  sprintf(kStr, "%d.%d.%d.%d", 1234, INT_MAX, 321, 42);
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_PatchIntMax_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 2468, INT_MAX, 42 };
+  char kStr[64];
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  sprintf(kStr, "%d.%d.%d.%d", 1234, 2468, INT_MAX, 42);
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_BuildIntMax_ReturnsVersion(CuTest* tc) {
+  const struct SemanticVersion kExpected = { 1234, 2468, 321, INT_MAX };
+  char kStr[64];
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  sprintf(kStr, "%d.%d.%d.%d", 1234, 2468, 321, INT_MAX);
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(tc, SemanticVersion_Equals(&actual, &kExpected));
+}
+
+static void FromString_TerminateStringPeriod_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.42.";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MajorNegative_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "-1234.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MinorNegative_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.-2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_PatchNegative_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.-321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_BuildNegative_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.-42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MissingMajor_ReturnsNull(CuTest* tc) {
+  const char kStr[] = ".2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MissingMinor_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234..321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MissingPatch_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468..42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MissingBuild_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_PrefixMajorNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "      1234.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_SuffixMajorNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234     .2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_PrefixMinorNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.      2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_SuffixMinorNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468     .321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_PrefixPatchNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.      321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_SuffixPatchNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321     .42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_PrefixBuildNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.      42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_SuffixBuildNonDigit_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.42     ";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_SubstringOfValid_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr) - 2);
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_CommaDelimiters_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234,2468,321,42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MajorLeadingZeros_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "01234.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MinorLeadingZeros_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.02468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_PatchLeadingZeros_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.0321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_BuildLeadingZeros_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.042";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MajorAboveIntMax_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.2468.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_MinorAboveIntMax_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.321.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_PatchAboveIntMax_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.42";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void FromString_BuildAboveIntMax_ReturnsNull(CuTest* tc) {
+  const char kStr[] = "1234.2468.321.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999";
+  struct SemanticVersion actual;
+  struct SemanticVersion* result;
+
+  result = SemanticVersion_FromString(&actual, kStr, strlen(kStr));
+
+  CuAssertPtrEquals(tc, NULL, result);
+}
+
+static void ToString_Valid_ReturnsString(CuTest* tc) {
+  struct SemanticVersion kVersion = { 1, 2, 3, 4 };
+  char buffer[SemanticVersion_kMaxLength];
+  size_t length;
+
+  SemanticVersion_ToString(&kVersion, buffer, &length);
+  CuAssertStrEquals(tc, "1.2.3.4", buffer);
+  CuAssertIntEquals(tc, 7, length);
+}
+
+static void ToString_AllIntMax_ReturnsString(CuTest* tc) {
+  struct SemanticVersion kVersion = { INT_MAX, INT_MAX, INT_MAX, INT_MAX };
+  char buffer[SemanticVersion_kMaxLength];
+  size_t length;
+
+  SemanticVersion_ToString(&kVersion, buffer, &length);
+  CuAssertStrEquals(tc, "2147483647.2147483647.2147483647.2147483647", buffer);
+  CuAssertIntEquals(tc, SemanticVersion_kMaxLength, length);
+}
+
+static void ToWString_Valid_ReturnsString(CuTest* tc) {
+  struct SemanticVersion kVersion = { 1, 2, 3, 4 };
+  wchar_t buffer[SemanticVersion_kMaxLength];
+  size_t length;
+
+  SemanticVersion_ToWString(&kVersion, buffer, &length);
+  CuAssertIntEquals(tc, 0, wcscmp(buffer, L"1.2.3.4"));
+  CuAssertIntEquals(tc, 7, length);
+}
+
+static void ToWString_AllIntMax_ReturnsString(CuTest* tc) {
+  struct SemanticVersion kVersion = { INT_MAX, INT_MAX, INT_MAX, INT_MAX };
+  wchar_t buffer[SemanticVersion_kMaxLength];
+  size_t length;
+
+  SemanticVersion_ToWString(&kVersion, buffer, &length);
+  CuAssertIntEquals(
+      tc, 0, wcscmp(buffer, L"2147483647.2147483647.2147483647.2147483647"));
+  CuAssertIntEquals(tc, SemanticVersion_kMaxLength, length);
+}
+
 /**
  * External
  */
@@ -199,6 +655,51 @@ CuSuite* SemanticVersion_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, Compare_LtBuild_ReturnsNegative);
   SUITE_ADD_TEST(suite, Compare_GtBuild_ReturnsPositive);
   SUITE_ADD_TEST(suite, Compare_DifferentAll_ReturnsNonZero);
+
+  SUITE_ADD_TEST(suite, FromString_ValidString_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_ValidSubString_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_SubstringOfTerminateStringPeriod_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_MajorZero_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_MinorZero_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_PatchZero_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_BuildZero_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_MajorIntMax_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_MinorIntMax_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_PatchIntMax_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_BuildIntMax_ReturnsVersion);
+  SUITE_ADD_TEST(suite, FromString_TerminateStringPeriod_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MajorNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MinorNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_PatchNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_BuildNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MissingMajor_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MissingMinor_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MissingPatch_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MissingBuild_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_PrefixMajorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_SuffixMajorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_PrefixMinorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_SuffixMinorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_PrefixPatchNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_SuffixPatchNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_PrefixBuildNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_SuffixBuildNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_SubstringOfValid_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_CommaDelimiters_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MajorLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MinorLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_PatchLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_BuildLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MajorAboveIntMax_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_MinorAboveIntMax_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_PatchAboveIntMax_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromString_BuildAboveIntMax_ReturnsNull);
+
+  SUITE_ADD_TEST(suite, ToString_Valid_ReturnsString);
+  SUITE_ADD_TEST(suite, ToString_AllIntMax_ReturnsString);
+
+  SUITE_ADD_TEST(suite, ToWString_Valid_ReturnsString);
+  SUITE_ADD_TEST(suite, ToWString_AllIntMax_ReturnsString);
 
   return suite;
 }
