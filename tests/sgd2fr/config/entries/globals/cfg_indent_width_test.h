@@ -52,7 +52,7 @@
 extern "C" {
 #endif  /* __cplusplus */
 
-CuSuite* CfgIndentWidth_GetTestSuite();
+CuSuite* CfgIndentWidth_GetTestSuite(void);
 
 #ifdef __cplusplus
 }  /* extern "C" */

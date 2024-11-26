@@ -93,11 +93,12 @@ void CfgIndentWidth_RemoveFromJson(cJSON* object) {
       object, CfgIndentWidth_GetJsonKey(NULL));
 }
 
-cJSON* CfgIndentWidth_AddToJson(cJSON* object, const struct CfgIndentWidth* indent_width) {
+cJSON* CfgIndentWidth_AddToJson(
+    const struct CfgIndentWidth* indent_width, cJSON* object) {
   cJSON* added_entry;
 
-  assert(object != NULL);
   assert(indent_width != NULL);
+  assert(object != NULL);
 
   added_entry =
       cJSON_AddNumberToObject(

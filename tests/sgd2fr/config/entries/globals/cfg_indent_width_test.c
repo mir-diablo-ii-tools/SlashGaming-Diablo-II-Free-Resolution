@@ -65,7 +65,7 @@ static void AddToJson_AddsEntry(CuTest* tc) {
 
   object = cJSON_CreateObject();
 
-  result = CfgIndentWidth_AddToJson(object, &indent_width);
+  result = CfgIndentWidth_AddToJson(&indent_width, object);
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
@@ -207,7 +207,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   CuAssertTrue(tc, strlen(result) > 0);
 }
 
-CuSuite* CfgIndentWidth_GetTestSuite() {
+CuSuite* CfgIndentWidth_GetTestSuite(void) {
   CuSuite* suite = CuSuiteNew();
 
   SUITE_ADD_TEST(suite, AddToJson_AddsEntry);

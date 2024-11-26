@@ -84,7 +84,7 @@ const char* CfgGlobals_GetJsonKey(size_t* length) {
   return kKey;
 }
 
-cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals) {
+cJSON* CfgGlobals_AddToJson(const struct CfgGlobals* globals, cJSON* object) {
   cJSON* globals_json;
   cJSON* indent_width_add_result;
 
@@ -94,7 +94,7 @@ cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals) {
   }
 
   indent_width_add_result =
-      CfgIndentWidth_AddToJson(globals_json, &globals->indent_width);
+      CfgIndentWidth_AddToJson(&globals->indent_width, globals_json);
   if (indent_width_add_result == NULL) {
     goto error_remove_globals_json;
   }
