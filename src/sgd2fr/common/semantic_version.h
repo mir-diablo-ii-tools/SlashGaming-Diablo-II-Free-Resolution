@@ -103,6 +103,17 @@ struct SemanticVersion* SemanticVersion_FromString(
 char* SemanticVersion_ToString(
     const struct SemanticVersion* version, char* buffer, size_t* length);
 
+/**
+ * Converts the version values into string format, i.e.
+ * "MAJOR.MINOR.PATCH.BUILD".
+ *
+ * The buffer must be capable of storing 44 characters for guaranteed safe
+ * usage. If length is NULL, then the length of the resulting string will not
+ * be written.
+ */
+wchar_t* SemanticVersion_ToWString(
+    const struct SemanticVersion* version, wchar_t* buffer, size_t* length);
+
 #ifdef __cplusplus
 }  /* extern "C" */
 #endif  /* __cplusplus */

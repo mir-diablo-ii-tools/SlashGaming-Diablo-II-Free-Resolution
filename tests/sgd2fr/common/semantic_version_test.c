@@ -608,6 +608,27 @@ static void ToString_AllIntMax_ReturnsString(CuTest* tc) {
   CuAssertIntEquals(tc, SemanticVersion_kMaxLength, length);
 }
 
+static void ToWString_Valid_ReturnsString(CuTest* tc) {
+  struct SemanticVersion kVersion = { 1, 2, 3, 4 };
+  wchar_t buffer[SemanticVersion_kMaxLength];
+  size_t length;
+
+  SemanticVersion_ToWString(&kVersion, buffer, &length);
+  CuAssertIntEquals(tc, 0, wcscmp(buffer, L"1.2.3.4"));
+  CuAssertIntEquals(tc, 7, length);
+}
+
+static void ToWString_AllIntMax_ReturnsString(CuTest* tc) {
+  struct SemanticVersion kVersion = { INT_MAX, INT_MAX, INT_MAX, INT_MAX };
+  wchar_t buffer[SemanticVersion_kMaxLength];
+  size_t length;
+
+  SemanticVersion_ToWString(&kVersion, buffer, &length);
+  CuAssertIntEquals(
+      tc, 0, wcscmp(buffer, L"2147483647.2147483647.2147483647.2147483647"));
+  CuAssertIntEquals(tc, SemanticVersion_kMaxLength, length);
+}
+
 /**
  * External
  */
@@ -676,6 +697,9 @@ CuSuite* SemanticVersion_GetTestSuite(void) {
 
   SUITE_ADD_TEST(suite, ToString_Valid_ReturnsString);
   SUITE_ADD_TEST(suite, ToString_AllIntMax_ReturnsString);
+
+  SUITE_ADD_TEST(suite, ToWString_Valid_ReturnsString);
+  SUITE_ADD_TEST(suite, ToWString_AllIntMax_ReturnsString);
 
   return suite;
 }
