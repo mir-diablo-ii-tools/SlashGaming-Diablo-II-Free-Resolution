@@ -68,7 +68,7 @@ static void AddToJson_AddsEntry(CuTest* tc) {
   globals.indent_width.value = 42;
   object = cJSON_CreateObject();
 
-  result = CfgGlobals_AddToJson(object, &globals);
+  result = CfgGlobals_AddToJson(&globals, object);
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgGlobals_GetJsonKey(NULL)));

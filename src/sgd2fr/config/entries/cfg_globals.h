@@ -64,7 +64,7 @@ const struct CfgGlobals* CfgGlobals_GetDefault(void);
 
 const char* CfgGlobals_GetJsonKey(size_t* length);
 
-cJSON* CfgGlobals_AddToJson(cJSON* object, const struct CfgGlobals* globals);
+cJSON* CfgGlobals_AddToJson(const struct CfgGlobals* globals, cJSON* object);
 
 void CfgGlobals_RemoveFromJson(cJSON* object);
 
