@@ -97,7 +97,7 @@ struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
     return NULL;
   }
 
-  inner_version_ptr = &temp_version.version;
+  inner_version_ptr = &temp_version.value;
 
   inner_version_ptr->major_version = cJSON_GetNumberValue(major_json);
   inner_version_ptr->minor_version = cJSON_GetNumberValue(minor_json);
@@ -126,7 +126,7 @@ struct CfgConfigVersion* CfgConfigVersion_FromV2Json(
 
   from_string_result =
       SemanticVersion_FromString(
-          &version->version, version_json, strlen(version_json));
+          &version->value, version_json, strlen(version_json));
   if (from_string_result == NULL) {
     *version = *CfgConfigVersion_GetDefault();
     return version;
@@ -150,7 +150,7 @@ cJSON* CfgConfigVersion_AddToJson(
   }
 
   version_to_string_result =
-      SemanticVersion_ToString(&version->version, version_str, NULL);
+      SemanticVersion_ToString(&version->value, version_str, NULL);
   if (version_to_string_result == NULL) {
     goto error;
   }
@@ -170,12 +170,12 @@ error:
 
 int CfgConfigVersion_Compare(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs) {
-  return SemanticVersion_Compare(&lhs->version, &rhs->version);
+  return SemanticVersion_Compare(&lhs->value, &rhs->value);
 }
 
 int CfgConfigVersion_Equals(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs) {
-  return SemanticVersion_Equals(&lhs->version, &rhs->version);
+  return SemanticVersion_Equals(&lhs->value, &rhs->value);
 }
 
 const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void) {
