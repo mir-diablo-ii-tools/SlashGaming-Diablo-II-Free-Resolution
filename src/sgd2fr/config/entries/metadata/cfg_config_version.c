@@ -104,8 +104,7 @@ struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
   inner_version_ptr->patch_version = cJSON_GetNumberValue(patch_json);
   inner_version_ptr->build_version = cJSON_GetNumberValue(build_json);
 
-  if (CfgConfigVersion_Compare(&temp_version, &kConfigV1Min) < 0
-      || CfgConfigVersion_Compare(&temp_version, &kConfigV1Max) > 0) {
+  if (!CfgConfigVersion_IsV1Config(&temp_version)) {
     return NULL;
   }
 
@@ -193,6 +192,11 @@ const char* CfgConfigVersion_GetJsonKey(size_t* length) {
   }
 
   return kKey;
+}
+
+int CfgConfigVersion_IsV1Config(const struct CfgConfigVersion* version) {
+  return CfgConfigVersion_Compare(version, &kConfigV1Min) >= 0
+      && CfgConfigVersion_Compare(version, &kConfigV1Max) <= 0;
 }
 
 void CfgConfigVersion_RemoveFromJson(cJSON* object) {
