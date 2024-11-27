@@ -68,6 +68,17 @@ enum {
 };
 
 /**
+ * Initializes a new version object with the given string parameter. Returns
+ * the given resolution object on success. Otherwise, returns NULL.
+ *
+ * The string format for a version must match "MAJOR.MINOR.PATCH.BUILD". The
+ * values for each portion must fit in a positive 31-bit unsigned integer
+ * value. Otherwise, the function returns NULL.
+ */
+struct SemanticVersion* SemanticVersion_FromString(
+    struct SemanticVersion* version, const char* str, size_t length);
+
+/**
  * Returns a compare value based on a comparison of the fields of the two
  * versions.
  */
@@ -80,17 +91,6 @@ int SemanticVersion_Compare(
  */
 int SemanticVersion_Equals(
     const struct SemanticVersion* lhs, const struct SemanticVersion* rhs);
-
-/**
- * Initializes a new version object with the given string parameter. Returns
- * the given resolution object on success. Otherwise, returns NULL.
- *
- * The string format for a version must match "MAJOR.MINOR.PATCH.BUILD". The
- * values for each portion must fit in a positive 31-bit unsigned integer
- * value. Otherwise, the function returns NULL.
- */
-struct SemanticVersion* SemanticVersion_FromString(
-    struct SemanticVersion* version, const char* str, size_t length);
 
 /**
  * Converts the version values into string format, i.e.

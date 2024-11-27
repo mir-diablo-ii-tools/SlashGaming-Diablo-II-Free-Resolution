@@ -69,50 +69,6 @@ static void InitDefault(void) {
  * External
  */
 
-const struct CfgGlobals* CfgGlobals_GetDefault(void) {
-  InitDefault();
-  return &kDefault;
-}
-
-const char* CfgGlobals_GetJsonKey(size_t* length) {
-  static const char kKey[] = "!!!Globals!!!";
-
-  if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
-  }
-
-  return kKey;
-}
-
-cJSON* CfgGlobals_AddToJson(const struct CfgGlobals* globals, cJSON* object) {
-  cJSON* globals_json;
-  cJSON* indent_width_add_result;
-
-  globals_json = cJSON_AddObjectToObject(object, CfgGlobals_GetJsonKey(NULL));
-  if (globals_json == NULL) {
-    goto error;
-  }
-
-  indent_width_add_result =
-      CfgIndentWidth_AddToJson(&globals->indent_width, globals_json);
-  if (indent_width_add_result == NULL) {
-    goto error_remove_globals_json;
-  }
-
-  return object;
-
-error_remove_globals_json:
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
-
-error:
-  return NULL;
-}
-
-void CfgGlobals_RemoveFromJson(cJSON* object) {
-  CfgIndentWidth_RemoveFromJson(object);
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
-}
-
 struct CfgGlobals* CfgGlobals_FromJson(
     struct CfgGlobals* globals, const cJSON* object) {
   const cJSON* indent_width_json;
@@ -140,7 +96,51 @@ struct CfgGlobals* CfgGlobals_FromJson(
   return globals;
 }
 
+cJSON* CfgGlobals_AddToJson(const struct CfgGlobals* globals, cJSON* object) {
+  cJSON* globals_json;
+  cJSON* indent_width_add_result;
+
+  globals_json = cJSON_AddObjectToObject(object, CfgGlobals_GetJsonKey(NULL));
+  if (globals_json == NULL) {
+    goto error;
+  }
+
+  indent_width_add_result =
+      CfgIndentWidth_AddToJson(&globals->indent_width, globals_json);
+  if (indent_width_add_result == NULL) {
+    goto error_remove_globals_json;
+  }
+
+  return object;
+
+error_remove_globals_json:
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
+
+error:
+  return NULL;
+}
+
 int CfgGlobals_Equals(
     const struct CfgGlobals* lhs, const struct CfgGlobals* rhs) {
   return CfgIndentWidth_Equals(&lhs->indent_width, &rhs->indent_width);
+}
+
+const struct CfgGlobals* CfgGlobals_GetDefault(void) {
+  InitDefault();
+  return &kDefault;
+}
+
+const char* CfgGlobals_GetJsonKey(size_t* length) {
+  static const char kKey[] = "!!!Globals!!!";
+
+  if (length != NULL) {
+    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+  }
+
+  return kKey;
+}
+
+void CfgGlobals_RemoveFromJson(cJSON* object) {
+  CfgIndentWidth_RemoveFromJson(object);
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
 }

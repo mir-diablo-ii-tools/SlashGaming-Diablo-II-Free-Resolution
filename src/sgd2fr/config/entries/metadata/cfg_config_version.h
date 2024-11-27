@@ -60,15 +60,6 @@ struct CfgConfigVersion {
   struct SemanticVersion version;
 };
 
-const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void);
-
-const char* CfgConfigVersion_GetJsonKey(size_t* length);
-
-cJSON* CfgConfigVersion_AddToJson(
-    const struct CfgConfigVersion* version, cJSON* object);
-
-void CfgConfigVersion_RemoveFromJson(cJSON* object);
-
 /**
  * Parses, sets, and returns the config version from JSON using the format from
  * config versions in the range [3.0.1.0, 3.0.4.X]. Returns NULL if the
@@ -85,11 +76,20 @@ struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
 struct CfgConfigVersion* CfgConfigVersion_FromV2Json(
     struct CfgConfigVersion* version, const cJSON* object);
 
+cJSON* CfgConfigVersion_AddToJson(
+    const struct CfgConfigVersion* version, cJSON* object);
+
 int CfgConfigVersion_Compare(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs);
 
 int CfgConfigVersion_Equals(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs);
+
+const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void);
+
+const char* CfgConfigVersion_GetJsonKey(size_t* length);
+
+void CfgConfigVersion_RemoveFromJson(cJSON* object);
 
 #ifdef __cplusplus
 }  /* extern "C" */

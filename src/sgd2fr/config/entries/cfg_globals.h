@@ -60,19 +60,19 @@ struct CfgGlobals {
   struct CfgIndentWidth indent_width;
 };
 
+struct CfgGlobals* CfgGlobals_FromJson(
+    struct CfgGlobals* globals, const cJSON* object);
+
+cJSON* CfgGlobals_AddToJson(const struct CfgGlobals* globals, cJSON* object);
+
+int CfgGlobals_Equals(
+    const struct CfgGlobals* lhs, const struct CfgGlobals* rhs);
+
 const struct CfgGlobals* CfgGlobals_GetDefault(void);
 
 const char* CfgGlobals_GetJsonKey(size_t* length);
 
-cJSON* CfgGlobals_AddToJson(const struct CfgGlobals* globals, cJSON* object);
-
 void CfgGlobals_RemoveFromJson(cJSON* object);
-
-struct CfgGlobals* CfgGlobals_FromJson(
-    struct CfgGlobals* globals, const cJSON* object);
-
-int CfgGlobals_Equals(
-    const struct CfgGlobals* lhs, const struct CfgGlobals* rhs);
 
 #ifdef __cplusplus
 }  /* extern "C" */

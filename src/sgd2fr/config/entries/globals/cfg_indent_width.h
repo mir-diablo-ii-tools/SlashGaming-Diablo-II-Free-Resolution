@@ -58,23 +58,23 @@ struct CfgIndentWidth {
   int value;
 };
 
-const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void);
-
-const char* CfgIndentWidth_GetJsonKey(size_t* length);
+struct CfgIndentWidth* CfgIndentWidth_FromJson(
+    struct CfgIndentWidth* indent_width, const cJSON* value);
 
 cJSON* CfgIndentWidth_AddToJson(
     const struct CfgIndentWidth* indent_width, cJSON* object);
-
-void CfgIndentWidth_RemoveFromJson(cJSON* object);
-
-struct CfgIndentWidth* CfgIndentWidth_FromJson(
-    struct CfgIndentWidth* indent_width, const cJSON* value);
 
 int CfgIndentWidth_Compare(
     const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs);
 
 int CfgIndentWidth_Equals(
     const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs);
+
+const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void);
+
+const char* CfgIndentWidth_GetJsonKey(size_t* length);
+
+void CfgIndentWidth_RemoveFromJson(cJSON* object);
 
 #ifdef __cplusplus
 }  /* extern "C" */
