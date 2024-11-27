@@ -1009,6 +1009,18 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   CuAssertTrue(tc, strlen(result) > 0);
 }
 
+static void IsV1Config_V1Config_ReturnsTrue(CuTest* tc) {
+  const struct CfgConfigVersion version = { { 3, 0, 4, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_IsV1Config(&version));
+}
+
+static void IsV1Config_V2Config_ReturnsFalse(CuTest* tc) {
+  const struct CfgConfigVersion version = { { 3, 1, 0, 0 } };
+
+  CuAssertTrue(tc, !CfgConfigVersion_IsV1Config(&version));
+}
+
 /**
  * External
  */
@@ -1088,6 +1100,9 @@ CuSuite* CfgConfigVersion_GetTestSuite(void) {
 
   SUITE_ADD_TEST(suite, GetJsonKey_WithLength_ReturnsJsonKey);
   SUITE_ADD_TEST(suite, GetJsonKey_WithNullLength_ReturnsJsonKey);
+
+  SUITE_ADD_TEST(suite, IsV1Config_V1Config_ReturnsTrue);
+  SUITE_ADD_TEST(suite, IsV1Config_V2Config_ReturnsFalse);
 
   return suite;
 }

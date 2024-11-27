@@ -89,6 +89,8 @@ const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void);
 
 const char* CfgConfigVersion_GetJsonKey(size_t* length);
 
+int CfgConfigVersion_IsV1Config(const struct CfgConfigVersion* version);
+
 void CfgConfigVersion_RemoveFromJson(cJSON* object);
 
 #ifdef __cplusplus
