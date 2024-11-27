@@ -43,19 +43,41 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_TEST_H_
-#define SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_TEST_H_
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_INDENT_WIDTH_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_INDENT_WIDTH_H_
 
-#include <CuTest.h>
+#include <stddef.h>
+
+#include <cJSON.h>
 
 #ifdef __cplusplus
 extern "C" {
 #endif  /* __cplusplus */
 
-CuSuite* CfgGlobals_GetTestSuite(void);
+struct CfgIndentWidth {
+  int value;
+};
+
+struct CfgIndentWidth* CfgIndentWidth_FromJson(
+    struct CfgIndentWidth* indent_width, const cJSON* value);
+
+cJSON* CfgIndentWidth_AddToJson(
+    const struct CfgIndentWidth* indent_width, cJSON* object);
+
+int CfgIndentWidth_Compare(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs);
+
+int CfgIndentWidth_Equals(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs);
+
+const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void);
+
+const char* CfgIndentWidth_GetJsonKey(size_t* length);
+
+void CfgIndentWidth_RemoveFromJson(cJSON* object);
 
 #ifdef __cplusplus
 }  /* extern "C" */
 #endif  /* __cplusplus */
 
-#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_GLOBALS_TEST_H_ */
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_INDENT_WIDTH_H_ */

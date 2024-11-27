@@ -47,8 +47,7 @@
 
 #include <CuTest.h>
 
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
+#include "sgd2fr/config/entries/cfg_indent_width_test.h"
 #include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
 
 static void RunAllTests(void) {
@@ -56,7 +55,6 @@ static void RunAllTests(void) {
   CuSuite* suite = CuSuiteNew();
 
   CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
   CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
 
   CuSuiteRun(suite);

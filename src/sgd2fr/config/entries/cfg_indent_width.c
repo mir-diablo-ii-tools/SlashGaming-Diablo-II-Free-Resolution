@@ -43,95 +43,87 @@
  *  work.
  */
 
-#include "sgd2fr/config/entries/cfg_globals.h"
+#include "sgd2fr/config/entries/cfg_indent_width.h"
 
+#include <assert.h>
 #include <stddef.h>
 
 #include <cJSON.h>
-
-#include "sgd2fr/config/entries/globals/cfg_indent_width.h"
-
-static struct CfgGlobals kDefault;
-
-static void InitDefault(void) {
-  static int inited = 0;
-
-  if (inited) {
-    return;
-  }
-
-  kDefault.indent_width = *CfgIndentWidth_GetDefault();
-
-  inited = 1;
-}
 
 /**
  * External
  */
 
-struct CfgGlobals* CfgGlobals_FromJson(
-    struct CfgGlobals* globals, const cJSON* object) {
-  const cJSON* indent_width_json;
-  struct CfgIndentWidth* indent_width_from_json_result;
+struct CfgIndentWidth* CfgIndentWidth_FromJson(
+    struct CfgIndentWidth* indent_width, const cJSON* value) {
+  assert(indent_width != NULL);
+  assert(value != NULL);
 
-  if (!cJSON_IsObject(object)) {
-    *globals = *CfgGlobals_GetDefault();
-    return globals;
+  if (!cJSON_IsNumber(value)) {
+    *indent_width = *CfgIndentWidth_GetDefault();
+    return indent_width;
   }
 
-  indent_width_json =
-      cJSON_GetObjectItemCaseSensitive(object, CfgIndentWidth_GetJsonKey(NULL));
-  if (indent_width_json == NULL) {
-    globals->indent_width = *CfgIndentWidth_GetDefault();
-    return globals;
+  if (value->valueint <= 0) {
+    *indent_width = *CfgIndentWidth_GetDefault();
+    return indent_width;
   }
 
-  indent_width_from_json_result =
-      CfgIndentWidth_FromJson(&globals->indent_width, indent_width_json);
-  if (indent_width_from_json_result == NULL) {
-    globals->indent_width = *CfgIndentWidth_GetDefault();
-    return globals;
-  }
-
-  return globals;
+  indent_width->value = value->valueint;
+  return indent_width;
 }
 
-cJSON* CfgGlobals_AddToJson(const struct CfgGlobals* globals, cJSON* object) {
-  cJSON* globals_json;
-  cJSON* indent_width_add_result;
+cJSON* CfgIndentWidth_AddToJson(
+    const struct CfgIndentWidth* indent_width, cJSON* object) {
+  cJSON* added_entry;
 
-  globals_json = cJSON_AddObjectToObject(object, CfgGlobals_GetJsonKey(NULL));
-  if (globals_json == NULL) {
+  assert(indent_width != NULL);
+  assert(object != NULL);
+
+  added_entry =
+      cJSON_AddNumberToObject(
+          object, CfgIndentWidth_GetJsonKey(NULL), indent_width->value);
+  if (added_entry == NULL) {
     goto error;
   }
 
-  indent_width_add_result =
-      CfgIndentWidth_AddToJson(&globals->indent_width, globals_json);
-  if (indent_width_add_result == NULL) {
-    goto error_remove_globals_json;
-  }
-
   return object;
-
-error_remove_globals_json:
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
 
 error:
   return NULL;
 }
 
-int CfgGlobals_Equals(
-    const struct CfgGlobals* lhs, const struct CfgGlobals* rhs) {
-  return CfgIndentWidth_Equals(&lhs->indent_width, &rhs->indent_width);
+int CfgIndentWidth_Compare(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs) {
+  if (lhs == rhs) {
+    return 0;
+  }
+
+  if (lhs->value < rhs->value) {
+    return -1;
+  } else if (lhs->value > rhs->value) {
+    return 1;
+  } else {
+    return 0;
+  }
 }
 
-const struct CfgGlobals* CfgGlobals_GetDefault(void) {
-  InitDefault();
+int CfgIndentWidth_Equals(
+    const struct CfgIndentWidth* lhs, const struct CfgIndentWidth* rhs) {
+  if (lhs == rhs) {
+    return 1;
+  }
+
+  return lhs->value == rhs->value;
+}
+
+const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void) {
+  static const struct CfgIndentWidth kDefault = { 4 };
   return &kDefault;
 }
 
-const char* CfgGlobals_GetJsonKey(size_t* length) {
-  static const char kKey[] = "!!!Globals!!!";
+const char* CfgIndentWidth_GetJsonKey(size_t* length) {
+  static const char kKey[] = "Config Tab Width";
 
   if (length != NULL) {
     *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
@@ -140,7 +132,7 @@ const char* CfgGlobals_GetJsonKey(size_t* length) {
   return kKey;
 }
 
-void CfgGlobals_RemoveFromJson(cJSON* object) {
-  CfgIndentWidth_RemoveFromJson(object);
-  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
+void CfgIndentWidth_RemoveFromJson(cJSON* object) {
+  cJSON_DeleteItemFromObjectCaseSensitive(
+      object, CfgIndentWidth_GetJsonKey(NULL));
 }
