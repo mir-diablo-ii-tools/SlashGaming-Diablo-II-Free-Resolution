@@ -54,21 +54,6 @@
  * External
  */
 
-const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void) {
-  static const struct CfgIndentWidth kDefault = { 4 };
-  return &kDefault;
-}
-
-const char* CfgIndentWidth_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Config Tab Width";
-
-  if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
-  }
-
-  return kKey;
-}
-
 struct CfgIndentWidth* CfgIndentWidth_FromJson(
     struct CfgIndentWidth* indent_width, const cJSON* value) {
   assert(indent_width != NULL);
@@ -86,11 +71,6 @@ struct CfgIndentWidth* CfgIndentWidth_FromJson(
 
   indent_width->value = value->valueint;
   return indent_width;
-}
-
-void CfgIndentWidth_RemoveFromJson(cJSON* object) {
-  cJSON_DeleteItemFromObjectCaseSensitive(
-      object, CfgIndentWidth_GetJsonKey(NULL));
 }
 
 cJSON* CfgIndentWidth_AddToJson(
@@ -135,4 +115,24 @@ int CfgIndentWidth_Equals(
   }
 
   return lhs->value == rhs->value;
+}
+
+const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void) {
+  static const struct CfgIndentWidth kDefault = { 4 };
+  return &kDefault;
+}
+
+const char* CfgIndentWidth_GetJsonKey(size_t* length) {
+  static const char kKey[] = "Config Tab Width";
+
+  if (length != NULL) {
+    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+  }
+
+  return kKey;
+}
+
+void CfgIndentWidth_RemoveFromJson(cJSON* object) {
+  cJSON_DeleteItemFromObjectCaseSensitive(
+      object, CfgIndentWidth_GetJsonKey(NULL));
 }

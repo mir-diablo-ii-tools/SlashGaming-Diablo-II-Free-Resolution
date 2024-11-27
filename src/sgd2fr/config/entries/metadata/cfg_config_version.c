@@ -60,60 +60,6 @@ static struct CfgConfigVersion kConfigV1Max = { { 3, 0, 4, 0 } };
  * External
  */
 
-const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void) {
-  static struct CfgConfigVersion version = { { 3, 2, 0, 0 }};
-
-  return &version;
-}
-
-const char* CfgConfigVersion_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Config Version";
-
-  if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
-  }
-
-  return kKey;
-}
-
-cJSON* CfgConfigVersion_AddToJson(
-    const struct CfgConfigVersion* version, cJSON* object) {
-  char* version_to_string_result;
-  cJSON* add_version_str_result;
-
-  char version_str[SemanticVersion_kMaxLength + 1];
-
-  assert(version != NULL);
-  assert(object != NULL);
-
-  if (!cJSON_IsObject(object)) {
-    goto error;
-  }
-
-  version_to_string_result =
-      SemanticVersion_ToString(&version->version, version_str, NULL);
-  if (version_to_string_result == NULL) {
-    goto error;
-  }
-
-  add_version_str_result =
-      cJSON_AddStringToObject(
-          object, CfgConfigVersion_GetJsonKey(NULL), version_str);
-  if (add_version_str_result == NULL) {
-    goto error;
-  }
-
-  return object;
-
-error:
-  return NULL;
-}
-
-void CfgConfigVersion_RemoveFromJson(cJSON* object) {
-  cJSON_DeleteItemFromObjectCaseSensitive(
-      object, CfgConfigVersion_GetJsonKey(NULL));
-}
-
 struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
     struct CfgConfigVersion* version, const cJSON* object) {
   static const char kMajorKey[] = "Major Version A";
@@ -190,6 +136,39 @@ struct CfgConfigVersion* CfgConfigVersion_FromV2Json(
   return version;
 }
 
+cJSON* CfgConfigVersion_AddToJson(
+    const struct CfgConfigVersion* version, cJSON* object) {
+  char* version_to_string_result;
+  cJSON* add_version_str_result;
+
+  char version_str[SemanticVersion_kMaxLength + 1];
+
+  assert(version != NULL);
+  assert(object != NULL);
+
+  if (!cJSON_IsObject(object)) {
+    goto error;
+  }
+
+  version_to_string_result =
+      SemanticVersion_ToString(&version->version, version_str, NULL);
+  if (version_to_string_result == NULL) {
+    goto error;
+  }
+
+  add_version_str_result =
+      cJSON_AddStringToObject(
+          object, CfgConfigVersion_GetJsonKey(NULL), version_str);
+  if (add_version_str_result == NULL) {
+    goto error;
+  }
+
+  return object;
+
+error:
+  return NULL;
+}
+
 int CfgConfigVersion_Compare(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs) {
   return SemanticVersion_Compare(&lhs->version, &rhs->version);
@@ -198,4 +177,25 @@ int CfgConfigVersion_Compare(
 int CfgConfigVersion_Equals(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs) {
   return SemanticVersion_Equals(&lhs->version, &rhs->version);
+}
+
+const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void) {
+  static struct CfgConfigVersion version = { { 3, 2, 0, 0 }};
+
+  return &version;
+}
+
+const char* CfgConfigVersion_GetJsonKey(size_t* length) {
+  static const char kKey[] = "Config Version";
+
+  if (length != NULL) {
+    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+  }
+
+  return kKey;
+}
+
+void CfgConfigVersion_RemoveFromJson(cJSON* object) {
+  cJSON_DeleteItemFromObjectCaseSensitive(
+      object, CfgConfigVersion_GetJsonKey(NULL));
 }
