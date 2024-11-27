@@ -57,7 +57,7 @@ extern "C" {
 #endif  /* __cplusplus */
 
 struct CfgConfigVersion {
-  struct SemanticVersion version;
+  struct SemanticVersion value;
 };
 
 /**
