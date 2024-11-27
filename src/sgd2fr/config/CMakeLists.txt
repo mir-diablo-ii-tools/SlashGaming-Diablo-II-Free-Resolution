@@ -26,7 +26,6 @@ target_sources(${PROJECT_NAME}
     PUBLIC)
 
 add_subdirectory("entries")
-add_subdirectory("types")
 
 target_compile_definitions(${PROJECT_NAME} PRIVATE NOMINMAX)
 target_include_directories(${PROJECT_NAME}
