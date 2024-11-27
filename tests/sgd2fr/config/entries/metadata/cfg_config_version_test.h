@@ -43,29 +43,19 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_METADATA_CFG_CONFIG_VERSION_TEST_H_
+#define SGD2FR_CONFIG_ENTRIES_METADATA_CFG_CONFIG_VERSION_TEST_H_
 
 #include <CuTest.h>
 
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+CuSuite* CfgConfigVersion_GetTestSuite(void);
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
-
-int main() {
-  RunAllTests();
-  return 0;
-}
+#endif  /* SGD2FR_CONFIG_ENTRIES_METADATA_CFG_CONFIG_VERSION_TEST_H_ */

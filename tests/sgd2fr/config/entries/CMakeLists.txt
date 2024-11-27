@@ -5,3 +5,4 @@ target_sources(${PROJECT_NAME}
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_globals_test.h")
 
 add_subdirectory("globals")
+add_subdirectory("metadata")

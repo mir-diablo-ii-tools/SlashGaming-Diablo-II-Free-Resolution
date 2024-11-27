@@ -43,29 +43,56 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_METADATA_CFG_CONFIG_VERSION_H_
+#define SGD2FR_CONFIG_ENTRIES_METADATA_CFG_CONFIG_VERSION_H_
 
-#include <CuTest.h>
+#include <stddef.h>
 
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include <cJSON.h>
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#include "sgd2fr/common/semantic_version.h"
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+struct CfgConfigVersion {
+  struct SemanticVersion version;
+};
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void);
+
+const char* CfgConfigVersion_GetJsonKey(size_t* length);
+
+cJSON* CfgConfigVersion_AddToJson(
+    const struct CfgConfigVersion* version, cJSON* object);
+
+void CfgConfigVersion_RemoveFromJson(cJSON* object);
+
+/**
+ * Parses, sets, and returns the config version from JSON using the format from
+ * config versions in the range [3.0.1.0, 3.0.4.X]. Returns NULL if the
+ * function fails. Does not set the version if the function fails.
+ */
+struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
+    struct CfgConfigVersion* version, const cJSON* object);
+
+/**
+ * Parses, sets, and returns the config version from JSON using the current
+ * config version format. Returns the default if the function fails. Does not
+ * set the version if the function fails.
+ */
+struct CfgConfigVersion* CfgConfigVersion_FromV2Json(
+    struct CfgConfigVersion* version, const cJSON* object);
+
+int CfgConfigVersion_Compare(
+    const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs);
+
+int CfgConfigVersion_Equals(
+    const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_ENTRIES_METADATA_CFG_CONFIG_VERSION_H_ */
