@@ -43,8 +43,8 @@
  *  work.
  */
 
-#ifndef SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_TEST_H_
-#define SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_TEST_H_
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_INDENT_WIDTH_TEST_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_INDENT_WIDTH_TEST_H_
 
 #include <CuTest.h>
 
@@ -58,4 +58,4 @@ CuSuite* CfgIndentWidth_GetTestSuite(void);
 }  /* extern "C" */
 #endif  /* __cplusplus */
 
-#endif  /* SGD2FR_CONFIG_ENTRIES_GLOBALS_CFG_INDENT_WIDTH_TEST_H_ */
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_INDENT_WIDTH_TEST_H_ */

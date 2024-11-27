@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "sgd2fr/config/entries/globals/cfg_indent_width_test.h"
+#include "sgd2fr/config/entries/cfg_indent_width_test.h"
 
 #include <stddef.h>
 #include <string.h>
@@ -51,7 +51,7 @@
 #include <cJSON.h>
 #include <CuTest.h>
 
-#include "sgd2fr/config/entries/globals/cfg_indent_width.h"
+#include "sgd2fr/config/entries/cfg_indent_width.h"
 
 /**
  * External
