@@ -70,8 +70,8 @@ struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
 
 /**
  * Parses, sets, and returns the config version from JSON using the current
- * config version format. Returns the default if the function fails. Does not
- * set the version if the function fails.
+ * config version format. Returns and sets the value to the default if the
+ * function fails.
  */
 struct CfgConfigVersion* CfgConfigVersion_FromV2Json(
     struct CfgConfigVersion* version, const cJSON* object);
