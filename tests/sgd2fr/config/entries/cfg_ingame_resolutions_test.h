@@ -43,29 +43,19 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_INGAME_RESOLUTIONS_TEST_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_INGAME_RESOLUTIONS_TEST_H_
 
 #include <CuTest.h>
 
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+CuSuite* CfgIngameResolutions_GetTestSuite(void);
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
-
-int main() {
-  RunAllTests();
-  return 0;
-}
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_INGAME_RESOLUTIONS_TEST_H_ */
