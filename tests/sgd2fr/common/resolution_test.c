@@ -359,7 +359,7 @@ static void Compare_DifferentWidthsAndHeights_ReturnsNonZero(CuTest* tc) {
 }
 
 static void ToString_ReturnsString(CuTest* tc) {
-  char buffer[Resolution_kMaxLength];
+  char buffer[Resolution_kMaxLength + 1];
   size_t length;
 
   Resolution_ToString(&Resolution_k640x480, buffer, &length);
@@ -368,7 +368,7 @@ static void ToString_ReturnsString(CuTest* tc) {
 }
 
 static void ToWString_ReturnsString(CuTest* tc) {
-  wchar_t buffer[Resolution_kMaxLength];
+  wchar_t buffer[Resolution_kMaxLength + 1];
   size_t length;
 
   Resolution_ToWString(&Resolution_k640x480, buffer, &length);
