@@ -53,9 +53,81 @@
 
 #include "sgd2fr/config/entries/cfg_indent_width.h"
 
+static struct CfgIndentWidth kDefaultIndentWidth = { 4 };
+
 /**
- * External
+ * Test
  */
+
+static void InitDefault_ReturnsDefault(CuTest* tc) {
+  struct CfgIndentWidth actual;
+  struct CfgIndentWidth* result;
+
+  result = CfgIndentWidth_InitDefault(&actual);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, kDefaultIndentWidth.value, actual.value);
+}
+
+static void FromJson_Valid_Converts(CuTest* tc) {
+  cJSON* value;
+  struct CfgIndentWidth indent_width;
+  struct CfgIndentWidth* result;
+
+  value = cJSON_CreateNumber(42);
+
+  result = CfgIndentWidth_FromJson(&indent_width, value);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 42, indent_width.value);
+
+  cJSON_Delete(value);
+}
+
+static void FromJson_Negative_SetsToDefault(CuTest* tc) {
+  cJSON* value;
+  struct CfgIndentWidth indent_width;
+  struct CfgIndentWidth* result;
+
+  value = cJSON_CreateNumber(-42);
+
+  result = CfgIndentWidth_FromJson(&indent_width, value);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, kDefaultIndentWidth.value, indent_width.value);
+
+  cJSON_Delete(value);
+}
+
+static void FromJson_Zero_SetsToDefault(CuTest* tc) {
+  cJSON* value;
+  struct CfgIndentWidth indent_width;
+  struct CfgIndentWidth* result;
+
+  value = cJSON_CreateNumber(0);
+
+  result = CfgIndentWidth_FromJson(&indent_width, value);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, kDefaultIndentWidth.value, indent_width.value);
+
+  cJSON_Delete(value);
+}
+
+static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
+  cJSON* value;
+  struct CfgIndentWidth indent_width;
+  struct CfgIndentWidth* result;
+
+  value = cJSON_CreateString("42");
+
+  result = CfgIndentWidth_FromJson(&indent_width, value);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, kDefaultIndentWidth.value, indent_width.value);
+
+  cJSON_Delete(value);
+}
 
 static void AddToJson_AddsEntry(CuTest* tc) {
   struct CfgIndentWidth indent_width = { 42 };
@@ -124,70 +196,6 @@ static void Equals_DifferentIndentWidths_ReturnsFalse(CuTest* tc) {
   CuAssertTrue(tc, !CfgIndentWidth_Equals(&lhs, &rhs));
 }
 
-static void FromJson_Valid_Converts(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
-
-  value = cJSON_CreateNumber(42);
-
-  result = CfgIndentWidth_FromJson(&indent_width, value);
-
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, 42, indent_width.value);
-
-  cJSON_Delete(value);
-}
-
-static void FromJson_Negative_SetsToDefault(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
-
-  value = cJSON_CreateNumber(-42);
-
-  result = CfgIndentWidth_FromJson(&indent_width, value);
-
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, CfgIndentWidth_GetDefault()->value, indent_width.value);
-
-  cJSON_Delete(value);
-}
-
-static void FromJson_Zero_SetsToDefault(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
-
-  value = cJSON_CreateNumber(0);
-
-  result = CfgIndentWidth_FromJson(&indent_width, value);
-
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, CfgIndentWidth_GetDefault()->value, indent_width.value);
-
-  cJSON_Delete(value);
-}
-
-static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
-  cJSON* value;
-  struct CfgIndentWidth indent_width;
-  struct CfgIndentWidth* result;
-
-  value = cJSON_CreateString("42");
-
-  result = CfgIndentWidth_FromJson(&indent_width, value);
-
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, CfgIndentWidth_GetDefault()->value, indent_width.value);
-
-  cJSON_Delete(value);
-}
-
-static void GetDefault_NotNull(CuTest* tc) {
-  CuAssertPtrNotNull(tc, CfgIndentWidth_GetDefault());
-}
-
 static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   const char* result;
   size_t length;
@@ -207,8 +215,19 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   CuAssertTrue(tc, strlen(result) > 0);
 }
 
+/**
+ * External
+ */
+
 CuSuite* CfgIndentWidth_GetTestSuite(void) {
   CuSuite* suite = CuSuiteNew();
+
+  SUITE_ADD_TEST(suite, InitDefault_ReturnsDefault);
+
+  SUITE_ADD_TEST(suite, FromJson_Valid_Converts);
+  SUITE_ADD_TEST(suite, FromJson_Negative_SetsToDefault);
+  SUITE_ADD_TEST(suite, FromJson_Zero_SetsToDefault);
+  SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
 
   SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
 
@@ -220,13 +239,6 @@ CuSuite* CfgIndentWidth_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, Equals_SameIndentWidths_ReturnsTrue);
   SUITE_ADD_TEST(suite, Equals_EqualIndentWidths_ReturnsTrue);
   SUITE_ADD_TEST(suite, Equals_DifferentIndentWidths_ReturnsFalse);
-
-  SUITE_ADD_TEST(suite, FromJson_Valid_Converts);
-  SUITE_ADD_TEST(suite, FromJson_Negative_SetsToDefault);
-  SUITE_ADD_TEST(suite, FromJson_Zero_SetsToDefault);
-  SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
-
-  SUITE_ADD_TEST(suite, GetDefault_NotNull);
 
   SUITE_ADD_TEST(suite, GetJsonKey_WithLength_ReturnsJsonKey);
   SUITE_ADD_TEST(suite, GetJsonKey_WithNullLength_ReturnsJsonKey);
