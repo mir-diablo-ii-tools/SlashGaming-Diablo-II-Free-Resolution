@@ -156,8 +156,8 @@ error:
 }
 
 int CfgIngameResolution_Compare(
-    const struct CfgIngameResolution *lhs,
-    const struct CfgIngameResolution *rhs) {
+    const struct CfgIngameResolution* lhs,
+    const struct CfgIngameResolution* rhs) {
   assert(lhs != NULL);
   assert(rhs != NULL);
 
