@@ -87,6 +87,10 @@ cJSON* CfgIndentWidth_AddToJson(
   assert(indent_width != NULL);
   assert(object != NULL);
 
+  if (!cJSON_IsObject(object)) {
+    goto error;
+  }
+
   added_entry =
       cJSON_AddNumberToObject(
           object, CfgIndentWidth_GetJsonKey(NULL), indent_width->value);
