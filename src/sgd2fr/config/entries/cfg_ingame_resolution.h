@@ -43,31 +43,61 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_INGAME_RESOLUTION_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_INGAME_RESOLUTION_H_
 
-#include <CuTest.h>
+#include <stddef.h>
 
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include <cJSON.h>
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#include "sgd2fr/common/resolution.h"
+#include "sgd2fr/config/entries/cfg_ingame_resolutions.h"
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+struct CfgIngameResolution {
+  struct Resolution value;
+};
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+/**
+ * Parses, sets, and returns the ingame resolution using the format from
+ * config versions in the range [3.0.1.0, 3.0.4.X]. Returns NULL if the
+ * function fails. Does not set the version if the function fails.
+ */
+struct CfgIngameResolution* CfgIngameResolution_FromV1Json(
+    struct CfgIngameResolution* resolution,
+    const cJSON* value,
+    const struct CfgIngameResolutions* resolutions);
+
+/**
+ * Parses, sets, and returns the ingame resolution using the current config
+ * format. Returns and sets the value to the first ingame resolution if the
+ * function fails.
+ */
+struct CfgIngameResolution* CfgIngameResolution_FromV2Json(
+    struct CfgIngameResolution* resolution,
+    const cJSON* value,
+    const struct CfgIngameResolutions* resolutions);
+
+cJSON* CfgIngameResolution_AddToJson(
+    const struct CfgIngameResolution* resolution, cJSON* object);
+
+int CfgIngameResolution_Compare(
+    const struct CfgIngameResolution* lhs,
+    const struct CfgIngameResolution* rhs);
+
+int CfgIngameResolution_Equals(
+    const struct CfgIngameResolution* lhs,
+    const struct CfgIngameResolution* rhs);
+
+const char* CfgIngameResolution_GetJsonKey(size_t* length);
+
+void CfgIngameResolution_RemoveFromJson(cJSON* object);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_INGAME_RESOLUTION_H_ */
