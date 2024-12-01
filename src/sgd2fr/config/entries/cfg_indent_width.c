@@ -69,15 +69,18 @@ struct CfgIndentWidth* CfgIndentWidth_FromJson(
   assert(value != NULL);
 
   if (!cJSON_IsNumber(value)) {
-    return CfgIndentWidth_InitDefault(indent_width);
+    goto error;
   }
 
   if (value->valueint <= 0) {
-    return CfgIndentWidth_InitDefault(indent_width);
+    goto error;
   }
 
   indent_width->value = value->valueint;
   return indent_width;
+
+error:
+  return NULL;
 }
 
 cJSON* CfgIndentWidth_AddToJson(

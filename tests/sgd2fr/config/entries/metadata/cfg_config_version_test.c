@@ -392,7 +392,7 @@ static void FromV2Json_BuildIntMax_ReturnsVersion(CuTest* tc) {
   CuAssertTrue(tc, CfgConfigVersion_Equals(&actual, &kExpected));
 }
 
-static void FromV2Json_TerminateStringPeriod_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_TerminateStringPeriod_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321.42.";
   cJSON* object;
   cJSON* version_json;
@@ -405,12 +405,10 @@ static void FromV2Json_TerminateStringPeriod_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MajorNegative_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MajorNegative_ReturnsNull(CuTest* tc) {
   const char kStr[] = "-1234.2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -423,12 +421,10 @@ static void FromV2Json_MajorNegative_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MinorNegative_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MinorNegative_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.-2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -441,12 +437,10 @@ static void FromV2Json_MinorNegative_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_PatchNegative_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_PatchNegative_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.-321.42";
   cJSON* object;
   cJSON* version_json;
@@ -459,12 +453,10 @@ static void FromV2Json_PatchNegative_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_BuildNegative_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_BuildNegative_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321.-42";
   cJSON* object;
   cJSON* version_json;
@@ -477,12 +469,10 @@ static void FromV2Json_BuildNegative_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MissingMajor_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MissingMajor_ReturnsNull(CuTest* tc) {
   const char kStr[] = ".2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -495,12 +485,10 @@ static void FromV2Json_MissingMajor_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MissingMinor_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MissingMinor_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234..321.42";
   cJSON* object;
   cJSON* version_json;
@@ -513,12 +501,10 @@ static void FromV2Json_MissingMinor_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MissingPatch_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MissingPatch_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468..42";
   cJSON* object;
   cJSON* version_json;
@@ -531,12 +517,10 @@ static void FromV2Json_MissingPatch_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MissingBuild_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MissingBuild_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321.";
   cJSON* object;
   cJSON* version_json;
@@ -549,12 +533,10 @@ static void FromV2Json_MissingBuild_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_PrefixMajorNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_PrefixMajorNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "      1234.2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -567,12 +549,10 @@ static void FromV2Json_PrefixMajorNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_SuffixMajorNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_SuffixMajorNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234     .2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -585,12 +565,10 @@ static void FromV2Json_SuffixMajorNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_PrefixMinorNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_PrefixMinorNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.      2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -603,12 +581,10 @@ static void FromV2Json_PrefixMinorNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_SuffixMinorNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_SuffixMinorNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468     .321.42";
   cJSON* object;
   cJSON* version_json;
@@ -621,12 +597,10 @@ static void FromV2Json_SuffixMinorNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_PrefixPatchNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_PrefixPatchNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.      321.42";
   cJSON* object;
   cJSON* version_json;
@@ -639,12 +613,10 @@ static void FromV2Json_PrefixPatchNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_SuffixPatchNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_SuffixPatchNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321     .42";
   cJSON* object;
   cJSON* version_json;
@@ -657,12 +629,10 @@ static void FromV2Json_SuffixPatchNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_PrefixBuildNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_PrefixBuildNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321.      42";
   cJSON* object;
   cJSON* version_json;
@@ -675,12 +645,10 @@ static void FromV2Json_PrefixBuildNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_SuffixBuildNonDigit_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_SuffixBuildNonDigit_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321.42     ";
   cJSON* object;
   cJSON* version_json;
@@ -693,12 +661,10 @@ static void FromV2Json_SuffixBuildNonDigit_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_CommaDelimiters_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_CommaDelimiters_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234,2468,321,42";
   cJSON* object;
   cJSON* version_json;
@@ -711,12 +677,10 @@ static void FromV2Json_CommaDelimiters_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MajorLeadingZeros_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MajorLeadingZeros_ReturnsNull(CuTest* tc) {
   const char kStr[] = "01234.2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -729,12 +693,10 @@ static void FromV2Json_MajorLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MinorLeadingZeros_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MinorLeadingZeros_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.02468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -747,12 +709,10 @@ static void FromV2Json_MinorLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_PatchLeadingZeros_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_PatchLeadingZeros_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.0321.42";
   cJSON* object;
   cJSON* version_json;
@@ -765,12 +725,10 @@ static void FromV2Json_PatchLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_BuildLeadingZeros_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_BuildLeadingZeros_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321.042";
   cJSON* object;
   cJSON* version_json;
@@ -783,12 +741,10 @@ static void FromV2Json_BuildLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MajorAboveIntMax_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MajorAboveIntMax_ReturnsNull(CuTest* tc) {
   const char kStr[] = "999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.2468.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -801,12 +757,10 @@ static void FromV2Json_MajorAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_MinorAboveIntMax_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_MinorAboveIntMax_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.321.42";
   cJSON* object;
   cJSON* version_json;
@@ -819,12 +773,10 @@ static void FromV2Json_MinorAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_PatchAboveIntMax_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_PatchAboveIntMax_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999.42";
   cJSON* object;
   cJSON* version_json;
@@ -837,12 +789,10 @@ static void FromV2Json_PatchAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
-static void FromV2Json_BuildAboveIntMax_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_BuildAboveIntMax_ReturnsNull(CuTest* tc) {
   const char kStr[] = "1234.2468.321.999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999";
   cJSON* object;
   cJSON* version_json;
@@ -855,9 +805,7 @@ static void FromV2Json_BuildAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   result = CfgConfigVersion_FromV2Json(&actual, version_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
 static void AddToJson_Object_AddsEntry(CuTest* tc) {
@@ -1076,32 +1024,32 @@ CuSuite* CfgConfigVersion_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, FromV2Json_MinorIntMax_ReturnsVersion);
   SUITE_ADD_TEST(suite, FromV2Json_PatchIntMax_ReturnsVersion);
   SUITE_ADD_TEST(suite, FromV2Json_BuildIntMax_ReturnsVersion);
-  SUITE_ADD_TEST(suite, FromV2Json_TerminateStringPeriod_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MajorNegative_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MinorNegative_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_PatchNegative_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_BuildNegative_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MissingMajor_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MissingMinor_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MissingPatch_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MissingBuild_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_PrefixMajorNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_SuffixMajorNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_PrefixMinorNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_SuffixMinorNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_PrefixPatchNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_SuffixPatchNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_PrefixBuildNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_SuffixBuildNonDigit_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_CommaDelimiters_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MajorLeadingZeros_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MinorLeadingZeros_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_PatchLeadingZeros_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_BuildLeadingZeros_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MajorAboveIntMax_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_MinorAboveIntMax_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_PatchAboveIntMax_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_BuildAboveIntMax_ReturnsDefault);
+  SUITE_ADD_TEST(suite, FromV2Json_TerminateStringPeriod_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MajorNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MinorNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_PatchNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_BuildNegative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MissingMajor_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MissingMinor_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MissingPatch_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MissingBuild_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_PrefixMajorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_SuffixMajorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_PrefixMinorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_SuffixMinorNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_PrefixPatchNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_SuffixPatchNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_PrefixBuildNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_SuffixBuildNonDigit_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_CommaDelimiters_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MajorLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MinorLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_PatchLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_BuildLeadingZeros_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MajorAboveIntMax_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_MinorAboveIntMax_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_PatchAboveIntMax_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_BuildAboveIntMax_ReturnsNull);
 
   SUITE_ADD_TEST(suite, AddToJson_Object_AddsEntry);
   SUITE_ADD_TEST(suite, AddToJson_TypeMismatch_ReturnsNull);

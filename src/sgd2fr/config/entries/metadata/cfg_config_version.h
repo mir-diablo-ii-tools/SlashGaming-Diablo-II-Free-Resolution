@@ -65,15 +65,15 @@ struct CfgConfigVersion* CfgConfigVersion_InitDefault(
 
 /**
  * Parses, sets, and returns the config version from JSON using the format from
- * config versions in the range [3.0.1.0, 3.0.4.X]. Returns NULL if the
- * function fails. Does not set the version if the function fails.
+ * config versions in the range [3.0.1.0, 3.0.4.X]. Returns NULL and does not
+ * set the version if the function fails.
  */
 struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
     struct CfgConfigVersion* version, const cJSON* object);
 
 /**
  * Parses, sets, and returns the config version from JSON using the current
- * config version format. Returns and sets the value to the default if the
+ * config version format. Returns NULL and does not set the version if the
  * function fails.
  */
 struct CfgConfigVersion* CfgConfigVersion_FromV2Json(

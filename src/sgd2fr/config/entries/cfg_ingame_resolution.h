@@ -73,8 +73,8 @@ struct CfgIngameResolution* CfgIngameResolution_FromV1Json(
 
 /**
  * Parses, sets, and returns the ingame resolution using the current config
- * format. Returns and sets the value to the first ingame resolution if the
- * function fails.
+ * format. Returns NULL and does not set the ingame resolution if the function
+ * fails.
  */
 struct CfgIngameResolution* CfgIngameResolution_FromV2Json(
     struct CfgIngameResolution* resolution,

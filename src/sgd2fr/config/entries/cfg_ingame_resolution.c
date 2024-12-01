@@ -99,8 +99,7 @@ struct CfgIngameResolution* CfgIngameResolution_FromV2Json(
   assert(resolutions->count > 0);
 
   if (!cJSON_IsString(value)) {
-    resolution->value = resolutions->values[0];
-    return resolution;
+    goto error;
   }
 
   resolution_json = cJSON_GetStringValue(value);
@@ -108,19 +107,20 @@ struct CfgIngameResolution* CfgIngameResolution_FromV2Json(
   from_string_result =
       Resolution_FromString(&temp_resolution.value, resolution_json);
   if (from_string_result == NULL) {
-    resolution->value = resolutions->values[0];
-    return resolution;
+    goto error;
   }
 
   resolution_index =
       CfgIngameResolutions_FindIndex(resolutions, &temp_resolution.value);
   if (resolution_index == resolutions->count) {
-    resolution->value = resolutions->values[0];
-    return resolution;
+    goto error;
   }
 
   *resolution = temp_resolution;
   return resolution;
+
+error:
+  return NULL;
 }
 
 cJSON* CfgIngameResolution_AddToJson(

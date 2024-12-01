@@ -77,7 +77,7 @@ struct CfgMainMenuResolution* CfgMainMenuResolution_FromJson(
   assert(value != NULL);
 
   if (!cJSON_IsString(value)) {
-    return NULL;
+    goto error;
   }
 
   resolution_json = cJSON_GetStringValue(value);
@@ -85,11 +85,14 @@ struct CfgMainMenuResolution* CfgMainMenuResolution_FromJson(
   from_string_result =
       Resolution_FromString(&temp_resolution.value, resolution_json);
   if (from_string_result == NULL) {
-    return NULL;
+    goto error;
   }
 
   *resolution = temp_resolution;
   return resolution;
+
+error:
+  return NULL;
 }
 
 cJSON* CfgMainMenuResolution_AddToJson(
