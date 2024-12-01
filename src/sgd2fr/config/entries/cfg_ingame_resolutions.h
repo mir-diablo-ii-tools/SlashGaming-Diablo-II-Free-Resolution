@@ -68,7 +68,7 @@ struct CfgIngameResolutions* CfgIngameResolutions_InitDefault(
 
 /**
  * Parses, sets, and returns the ingame resolutions from a JSON array. Returns
- * and sets the value to the default if the function fails.
+ * NULL and does not set the ingame resolutions if the function fails.
  */
 struct CfgIngameResolutions* CfgIngameResolutions_FromJson(
     struct CfgIngameResolutions* resolutions, const cJSON* value);

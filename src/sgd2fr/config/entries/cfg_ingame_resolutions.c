@@ -129,12 +129,12 @@ struct CfgIngameResolutions* CfgIngameResolutions_FromJson(
   assert(value != NULL);
 
   if (!cJSON_IsArray(value)) {
-    return CfgIngameResolutions_InitDefault(resolutions);
+    goto error;
   }
 
   resolution_count = cJSON_GetArraySize(value);
   if (resolution_count <= 0) {
-    return CfgIngameResolutions_InitDefault(resolutions);
+    goto error;
   }
 
   temp_resolutions.values =
@@ -173,7 +173,7 @@ error_deinit:
   CfgIngameResolutions_Deinit(&temp_resolutions);
 
 error:
-  return CfgIngameResolutions_InitDefault(resolutions);
+  return NULL;
 }
 
 struct CfgIngameResolutions* CfgIngameResolutions_InitDefault(

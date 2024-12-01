@@ -65,7 +65,8 @@ struct CfgMainMenuResolution* CfgMainMenuResolution_InitDefault(
 
 /**
  * Parses, sets, and returns the main menu resolution using the current config
- * format. Returns NULL if the function fails.
+ * format. Returns NULL and does not set the main menu resolution if the
+ * function fails.
  */
 struct CfgMainMenuResolution* CfgMainMenuResolution_FromJson(
     struct CfgMainMenuResolution* resolution, const cJSON* value);

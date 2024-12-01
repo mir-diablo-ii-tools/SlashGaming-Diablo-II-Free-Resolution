@@ -230,7 +230,7 @@ static void FromV2Json_1024x768_ReturnsResolution(CuTest* tc) {
   cJSON_Delete(resolution_json);
 }
 
-static void FromV2Json_NotExists_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_NotExists_ReturnsNull(CuTest* tc) {
   cJSON* resolution_json;
   struct CfgIngameResolution actual;
   struct CfgIngameResolution* result;
@@ -241,13 +241,12 @@ static void FromV2Json_NotExists_ReturnsDefault(CuTest* tc) {
       CfgIngameResolution_FromV2Json(
           &actual, resolution_json, &kIngameResolutions);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(tc, CfgIngameResolution_Equals(&actual, &kDefaultResolution));
+  CuAssertPtrEquals(tc, NULL, result);
 
   cJSON_Delete(resolution_json);
 }
 
-static void FromV2Json_TypeMismatch_ReturnsDefault(CuTest* tc) {
+static void FromV2Json_TypeMismatch_ReturnsNull(CuTest* tc) {
   cJSON* resolution_json;
   struct CfgIngameResolution actual;
   struct CfgIngameResolution* result;
@@ -258,8 +257,7 @@ static void FromV2Json_TypeMismatch_ReturnsDefault(CuTest* tc) {
       CfgIngameResolution_FromV2Json(
           &actual, resolution_json, &kIngameResolutions);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(tc, CfgIngameResolution_Equals(&actual, &kDefaultResolution));
+  CuAssertPtrEquals(tc, NULL, result);
 
   cJSON_Delete(resolution_json);
 }
@@ -420,8 +418,8 @@ CuSuite* CfgIngameResolution_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, FromV2Json_640x480_ReturnsResolution);
   SUITE_ADD_TEST(suite, FromV2Json_800x600_ReturnsResolution);
   SUITE_ADD_TEST(suite, FromV2Json_1024x768_ReturnsResolution);
-  SUITE_ADD_TEST(suite, FromV2Json_NotExists_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromV2Json_TypeMismatch_ReturnsDefault);
+  SUITE_ADD_TEST(suite, FromV2Json_NotExists_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromV2Json_TypeMismatch_ReturnsNull);
 
   SUITE_ADD_TEST(suite, AddToJson_Object_AddsEntry);
   SUITE_ADD_TEST(suite, AddToJson_TypeMismatch_ReturnsNull);

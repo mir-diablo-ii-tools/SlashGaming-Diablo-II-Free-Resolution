@@ -84,7 +84,7 @@ static void FromJson_Valid_Converts(CuTest* tc) {
   cJSON_Delete(value);
 }
 
-static void FromJson_Negative_SetsToDefault(CuTest* tc) {
+static void FromJson_Negative_ReturnsNull(CuTest* tc) {
   cJSON* value;
   struct CfgIndentWidth indent_width;
   struct CfgIndentWidth* result;
@@ -93,13 +93,12 @@ static void FromJson_Negative_SetsToDefault(CuTest* tc) {
 
   result = CfgIndentWidth_FromJson(&indent_width, value);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, kDefaultIndentWidth.value, indent_width.value);
+  CuAssertPtrEquals(tc, NULL, result);
 
   cJSON_Delete(value);
 }
 
-static void FromJson_Zero_SetsToDefault(CuTest* tc) {
+static void FromJson_Zero_ReturnsNull(CuTest* tc) {
   cJSON* value;
   struct CfgIndentWidth indent_width;
   struct CfgIndentWidth* result;
@@ -108,13 +107,12 @@ static void FromJson_Zero_SetsToDefault(CuTest* tc) {
 
   result = CfgIndentWidth_FromJson(&indent_width, value);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, kDefaultIndentWidth.value, indent_width.value);
+  CuAssertPtrEquals(tc, NULL, result);
 
   cJSON_Delete(value);
 }
 
-static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
+static void FromJson_TypeMismatch_ReturnsNull(CuTest* tc) {
   cJSON* value;
   struct CfgIndentWidth indent_width;
   struct CfgIndentWidth* result;
@@ -123,8 +121,7 @@ static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
 
   result = CfgIndentWidth_FromJson(&indent_width, value);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertIntEquals(tc, kDefaultIndentWidth.value, indent_width.value);
+  CuAssertPtrEquals(tc, NULL, result);
 
   cJSON_Delete(value);
 }
@@ -239,9 +236,9 @@ CuSuite* CfgIndentWidth_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, InitDefault_ReturnsDefault);
 
   SUITE_ADD_TEST(suite, FromJson_Valid_Converts);
-  SUITE_ADD_TEST(suite, FromJson_Negative_SetsToDefault);
-  SUITE_ADD_TEST(suite, FromJson_Zero_SetsToDefault);
-  SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
+  SUITE_ADD_TEST(suite, FromJson_Negative_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromJson_Zero_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromJson_TypeMismatch_ReturnsNull);
 
   SUITE_ADD_TEST(suite, AddToJson_Object_AddsEntry);
   SUITE_ADD_TEST(suite, AddToJson_TypeMismatch_ReturnsNull);

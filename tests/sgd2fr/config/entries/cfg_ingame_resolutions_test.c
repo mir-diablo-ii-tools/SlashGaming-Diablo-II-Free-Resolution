@@ -128,7 +128,7 @@ static void FromJson_Valid_ReturnsResolutions(CuTest* tc) {
   CfgIngameResolutions_Deinit(&actual);
 }
 
-static void FromJson_Empty_ReturnsDefault(CuTest* tc) {
+static void FromJson_Empty_ReturnsNull(CuTest* tc) {
   cJSON* resolutions_json;
   struct CfgIngameResolutions actual;
   struct CfgIngameResolutions* result;
@@ -137,15 +137,12 @@ static void FromJson_Empty_ReturnsDefault(CuTest* tc) {
 
   result = CfgIngameResolutions_FromJson(&actual, resolutions_json);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgIngameResolutions_Equals(&actual, &kDefaultIngameResolutions));
+  CuAssertPtrEquals(tc, NULL, result);
 
-  CfgIngameResolutions_Deinit(&actual);
   cJSON_Delete(resolutions_json);
 }
 
-static void FromJson_TypeMismatch_ReturnsDefault(CuTest* tc) {
+static void FromJson_TypeMismatch_ReturnsNull(CuTest* tc) {
   cJSON* object;
   struct CfgIngameResolutions actual;
   struct CfgIngameResolutions* result;
@@ -154,11 +151,8 @@ static void FromJson_TypeMismatch_ReturnsDefault(CuTest* tc) {
 
   result = CfgIngameResolutions_FromJson(&actual, object);
 
-  CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, CfgIngameResolutions_Equals(&actual, &kDefaultIngameResolutions));
+  CuAssertPtrEquals(tc, NULL, result);
 
-  CfgIngameResolutions_Deinit(&actual);
   cJSON_Delete(object);
 }
 
@@ -329,8 +323,8 @@ CuSuite* CfgIngameResolutions_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, InitDefault_ReturnsDefault);
 
   SUITE_ADD_TEST(suite, FromJson_Valid_ReturnsResolutions);
-  SUITE_ADD_TEST(suite, FromJson_Empty_ReturnsDefault);
-  SUITE_ADD_TEST(suite, FromJson_TypeMismatch_ReturnsDefault);
+  SUITE_ADD_TEST(suite, FromJson_Empty_ReturnsNull);
+  SUITE_ADD_TEST(suite, FromJson_TypeMismatch_ReturnsNull);
   SUITE_ADD_TEST(suite, FromJson_WithDuplicates_ReturnsUniqueResolutions);
   SUITE_ADD_TEST(suite, FromJson_WithUnsorted_ReturnsUniqueResolutions);
 

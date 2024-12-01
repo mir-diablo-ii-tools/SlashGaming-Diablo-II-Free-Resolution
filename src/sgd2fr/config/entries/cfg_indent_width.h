@@ -61,6 +61,10 @@ struct CfgIndentWidth {
 struct CfgIndentWidth* CfgIndentWidth_InitDefault(
     struct CfgIndentWidth* indent_width);
 
+/**
+ * Parses, sets, and returns the indent width using the current config format.
+ * Returns NULL and does not set the indent width if the function fails.
+ */
 struct CfgIndentWidth* CfgIndentWidth_FromJson(
     struct CfgIndentWidth* indent_width, const cJSON* value);
 
