@@ -43,7 +43,7 @@
  *  work.
  */
 
-#include "sgd2fr/config/entries/cfg_ingame_resolution.h"
+#include "sgd2fr/config/entries/cfg_main_menu_resolution.h"
 
 #include <assert.h>
 #include <stddef.h>
@@ -51,56 +51,33 @@
 #include <cJSON.h>
 
 #include "sgd2fr/common/resolution.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions.h"
 
 /**
  * External
  */
 
-struct CfgIngameResolution* CfgIngameResolution_FromV1Json(
-    struct CfgIngameResolution* resolution,
-    const cJSON* value,
-    const struct CfgIngameResolutions* resolutions) {
-  int ingame_resolution_mode;
-
+struct CfgMainMenuResolution* CfgMainMenuResolution_InitDefault(
+    struct CfgMainMenuResolution* resolution) {
   assert(resolution != NULL);
-  assert(value != NULL);
-  assert(resolutions != NULL);
-  assert(resolutions->count > 0);
 
-  if (!cJSON_IsNumber(value)) {
-    return NULL;
-  }
-
-  ingame_resolution_mode = cJSON_GetNumberValue(value);
-
-  if (ingame_resolution_mode < 0
-      || (size_t)ingame_resolution_mode >= resolutions->count) {
-    return NULL;
-  }
-
-  resolution->value = resolutions->values[ingame_resolution_mode];
+  resolution->value.width = 800;
+  resolution->value.height = 600;
 
   return resolution;
 }
 
-struct CfgIngameResolution* CfgIngameResolution_FromV2Json(
-    struct CfgIngameResolution* resolution,
-    const cJSON* value,
-    const struct CfgIngameResolutions* resolutions) {
-  struct CfgIngameResolution temp_resolution;
+struct CfgMainMenuResolution* CfgMainMenuResolution_FromJson(
+    struct CfgMainMenuResolution* resolution, const cJSON* value) {
+  struct CfgMainMenuResolution temp_resolution;
   struct Resolution* from_string_result;
   char* resolution_json;
   size_t resolution_index;
 
   assert(resolution != NULL);
   assert(value != NULL);
-  assert(resolutions != NULL);
-  assert(resolutions->count > 0);
 
   if (!cJSON_IsString(value)) {
-    resolution->value = resolutions->values[0];
-    return resolution;
+    return NULL;
   }
 
   resolution_json = cJSON_GetStringValue(value);
@@ -108,23 +85,15 @@ struct CfgIngameResolution* CfgIngameResolution_FromV2Json(
   from_string_result =
       Resolution_FromString(&temp_resolution.value, resolution_json);
   if (from_string_result == NULL) {
-    resolution->value = resolutions->values[0];
-    return resolution;
-  }
-
-  resolution_index =
-      CfgIngameResolutions_FindIndex(resolutions, &temp_resolution.value);
-  if (resolution_index == resolutions->count) {
-    resolution->value = resolutions->values[0];
-    return resolution;
+    return NULL;
   }
 
   *resolution = temp_resolution;
   return resolution;
 }
 
-cJSON* CfgIngameResolution_AddToJson(
-    const struct CfgIngameResolution* resolution, cJSON* object) {
+cJSON* CfgMainMenuResolution_AddToJson(
+    const struct CfgMainMenuResolution* resolution, cJSON* object) {
   assert(resolution != NULL);
   assert(object != NULL);
 
@@ -144,7 +113,7 @@ cJSON* CfgIngameResolution_AddToJson(
 
   add_string_result =
       cJSON_AddStringToObject(
-          object, CfgIngameResolution_GetJsonKey(NULL), resolution_str);
+          object, CfgMainMenuResolution_GetJsonKey(NULL), resolution_str);
   if (add_string_result == NULL) {
     goto error;
   }
@@ -155,9 +124,9 @@ error:
   return NULL;
 }
 
-int CfgIngameResolution_Compare(
-    const struct CfgIngameResolution* lhs,
-    const struct CfgIngameResolution* rhs) {
+int CfgMainMenuResolution_Compare(
+    const struct CfgMainMenuResolution* lhs,
+    const struct CfgMainMenuResolution* rhs) {
   assert(lhs != NULL);
   assert(rhs != NULL);
 
@@ -168,9 +137,9 @@ int CfgIngameResolution_Compare(
   return Resolution_Compare(&lhs->value, &rhs->value);
 }
 
-int CfgIngameResolution_Equals(
-    const struct CfgIngameResolution* lhs,
-    const struct CfgIngameResolution* rhs) {
+int CfgMainMenuResolution_Equals(
+    const struct CfgMainMenuResolution* lhs,
+    const struct CfgMainMenuResolution* rhs) {
   assert(lhs != NULL);
   assert(rhs != NULL);
 
@@ -181,8 +150,8 @@ int CfgIngameResolution_Equals(
   return Resolution_Equals(&lhs->value, &rhs->value);
 }
 
-const char* CfgIngameResolution_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Ingame Resolution";
+const char* CfgMainMenuResolution_GetJsonKey(size_t* length) {
+  static const char kKey[] = "Main Menu Resolution";
 
   if (length != NULL) {
     *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
@@ -191,9 +160,9 @@ const char* CfgIngameResolution_GetJsonKey(size_t* length) {
   return kKey;
 }
 
-void CfgIngameResolution_RemoveFromJson(cJSON* object) {
+void CfgMainMenuResolution_RemoveFromJson(cJSON* object) {
   assert(object != NULL);
 
   cJSON_DeleteItemFromObjectCaseSensitive(
-      object, CfgIngameResolution_GetJsonKey(NULL));
+      object, CfgMainMenuResolution_GetJsonKey(NULL));
 }
