@@ -341,7 +341,6 @@ static void Compare_LtHeights_ReturnsNegative(CuTest* tc) {
   struct Resolution rhs = { 640, 480 };
 
   CuAssertTrue(tc, Resolution_Compare(&lhs, &rhs) < 0);
-
 }
 
 static void Compare_GtHeights_ReturnsPositive(CuTest* tc) {
