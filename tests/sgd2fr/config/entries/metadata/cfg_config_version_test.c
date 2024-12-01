@@ -860,7 +860,7 @@ static void FromV2Json_BuildAboveIntMax_ReturnsDefault(CuTest* tc) {
       tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
-static void AddToJson_AddsEntry(CuTest* tc) {
+static void AddToJson_Object_AddsEntry(CuTest* tc) {
   cJSON* object;
   cJSON* result;
   cJSON* version_json;
@@ -880,6 +880,17 @@ static void AddToJson_AddsEntry(CuTest* tc) {
 
   CfgConfigVersion_RemoveFromJson(object);
   cJSON_Delete(object);
+}
+
+static void AddToJson_TypeMismatch_ReturnsNull(CuTest* tc) {
+  cJSON* object;
+  cJSON* result;
+
+  object = cJSON_CreateFalse();
+
+  result = CfgConfigVersion_AddToJson(&kConfigVersion, object);
+
+  CuAssertPtrEquals(tc, NULL, result);
 }
 
 static void Compare_SameVersions_ReturnsZero(CuTest* tc) {
@@ -1092,7 +1103,8 @@ CuSuite* CfgConfigVersion_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, FromV2Json_PatchAboveIntMax_ReturnsDefault);
   SUITE_ADD_TEST(suite, FromV2Json_BuildAboveIntMax_ReturnsDefault);
 
-  SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
+  SUITE_ADD_TEST(suite, AddToJson_Object_AddsEntry);
+  SUITE_ADD_TEST(suite, AddToJson_TypeMismatch_ReturnsNull);
 
   SUITE_ADD_TEST(suite, Compare_SameVersions_ReturnsZero);
   SUITE_ADD_TEST(suite, Compare_EqualVersions_ReturnsZero);

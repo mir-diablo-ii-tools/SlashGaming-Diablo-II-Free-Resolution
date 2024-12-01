@@ -129,7 +129,7 @@ static void FromJson_TypeMismatch_SetsToDefault(CuTest* tc) {
   cJSON_Delete(value);
 }
 
-static void AddToJson_AddsEntry(CuTest* tc) {
+static void AddToJson_Object_AddsEntry(CuTest* tc) {
   struct CfgIndentWidth indent_width = { 42 };
   cJSON* object;
   cJSON* result;
@@ -146,6 +146,20 @@ static void AddToJson_AddsEntry(CuTest* tc) {
   CuAssertIntEquals(tc, 42, cJSON_GetNumberValue(entry));
 
   CfgIndentWidth_RemoveFromJson(object);
+  cJSON_Delete(object);
+}
+
+static void AddToJson_TypeMismatch_ReturnsNull(CuTest* tc) {
+  struct CfgIndentWidth indent_width = { 42 };
+  cJSON* object;
+  cJSON* result;
+
+  object = cJSON_CreateNumber(42);
+
+  result = CfgIndentWidth_AddToJson(&indent_width, object);
+
+  CuAssertPtrEquals(tc, NULL, result);
+
   cJSON_Delete(object);
 }
 
@@ -229,7 +243,8 @@ CuSuite* CfgIndentWidth_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, FromJson_Zero_SetsToDefault);
   SUITE_ADD_TEST(suite, FromJson_TypeMismatch_SetsToDefault);
 
-  SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
+  SUITE_ADD_TEST(suite, AddToJson_Object_AddsEntry);
+  SUITE_ADD_TEST(suite, AddToJson_TypeMismatch_ReturnsNull);
 
   SUITE_ADD_TEST(suite, Compare_SameIndentWidths_ReturnsZero);
   SUITE_ADD_TEST(suite, Compare_EqualIndentWidths_ReturnsZero);
