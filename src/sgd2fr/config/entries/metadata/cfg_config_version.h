@@ -60,6 +60,9 @@ struct CfgConfigVersion {
   struct SemanticVersion value;
 };
 
+struct CfgConfigVersion* CfgConfigVersion_InitDefault(
+    struct CfgConfigVersion* version);
+
 /**
  * Parses, sets, and returns the config version from JSON using the format from
  * config versions in the range [3.0.1.0, 3.0.4.X]. Returns NULL if the
@@ -84,8 +87,6 @@ int CfgConfigVersion_Compare(
 
 int CfgConfigVersion_Equals(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs);
-
-const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void);
 
 const char* CfgConfigVersion_GetJsonKey(size_t* length);
 
