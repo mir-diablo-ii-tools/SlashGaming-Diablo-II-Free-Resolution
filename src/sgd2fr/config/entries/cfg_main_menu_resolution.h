@@ -43,33 +43,50 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_MAIN_MENU_RESOLUTION_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_MAIN_MENU_RESOLUTION_H_
 
-#include <CuTest.h>
+#include <stddef.h>
 
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/cfg_main_menu_resolution_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include <cJSON.h>
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#include "sgd2fr/common/resolution.h"
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMainMenuResolution_GetTestSuite());
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+struct CfgMainMenuResolution {
+  struct Resolution value;
+};
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+struct CfgMainMenuResolution* CfgMainMenuResolution_InitDefault(
+    struct CfgMainMenuResolution* resolution);
+
+/**
+ * Parses, sets, and returns the main menu resolution using the current config
+ * format. Returns NULL if the function fails.
+ */
+struct CfgMainMenuResolution* CfgMainMenuResolution_FromJson(
+    struct CfgMainMenuResolution* resolution, const cJSON* value);
+
+cJSON* CfgMainMenuResolution_AddToJson(
+    const struct CfgMainMenuResolution* resolution, cJSON* object);
+
+int CfgMainMenuResolution_Compare(
+    const struct CfgMainMenuResolution* lhs,
+    const struct CfgMainMenuResolution* rhs);
+
+int CfgMainMenuResolution_Equals(
+    const struct CfgMainMenuResolution* lhs,
+    const struct CfgMainMenuResolution* rhs);
+
+const char* CfgMainMenuResolution_GetJsonKey(size_t* length);
+
+void CfgMainMenuResolution_RemoveFromJson(cJSON* object);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_MAIN_MENU_RESOLUTION_H_ */
