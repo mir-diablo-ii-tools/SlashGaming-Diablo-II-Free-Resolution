@@ -60,6 +60,18 @@ static struct CfgConfigVersion kConfigV1Max = { { 3, 0, 4, 0 } };
  * External
  */
 
+struct CfgConfigVersion* CfgConfigVersion_InitDefault(
+    struct CfgConfigVersion* version) {
+  assert(version != NULL);
+
+  version->value.major_version = 3;
+  version->value.minor_version = 2;
+  version->value.patch_version = 0;
+  version->value.build_version = 0;
+
+  return version;
+}
+
 struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
     struct CfgConfigVersion* version, const cJSON* object) {
   static const char kMajorKey[] = "Major Version A";
@@ -118,8 +130,7 @@ struct CfgConfigVersion* CfgConfigVersion_FromV2Json(
   struct SemanticVersion* from_string_result;
 
   if (!cJSON_IsString(value)) {
-    *version = *CfgConfigVersion_GetDefault();
-    return version;
+    return CfgConfigVersion_InitDefault(version);
   }
 
   version_json = cJSON_GetStringValue(value);
@@ -128,8 +139,7 @@ struct CfgConfigVersion* CfgConfigVersion_FromV2Json(
       SemanticVersion_FromString(
           &version->value, version_json, strlen(version_json));
   if (from_string_result == NULL) {
-    *version = *CfgConfigVersion_GetDefault();
-    return version;
+    return CfgConfigVersion_InitDefault(version);
   }
 
   return version;
@@ -176,12 +186,6 @@ int CfgConfigVersion_Compare(
 int CfgConfigVersion_Equals(
     const struct CfgConfigVersion* lhs, const struct CfgConfigVersion* rhs) {
   return SemanticVersion_Equals(&lhs->value, &rhs->value);
-}
-
-const struct CfgConfigVersion* CfgConfigVersion_GetDefault(void) {
-  static struct CfgConfigVersion version = { { 3, 2, 0, 0 }};
-
-  return &version;
 }
 
 const char* CfgConfigVersion_GetJsonKey(size_t* length) {

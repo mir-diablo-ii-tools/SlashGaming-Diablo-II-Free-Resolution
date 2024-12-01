@@ -54,19 +54,26 @@
  * External
  */
 
+struct CfgIndentWidth* CfgIndentWidth_InitDefault(
+    struct CfgIndentWidth* indent_width) {
+  assert(indent_width != NULL);
+
+  indent_width->value = 4;
+
+  return indent_width;
+}
+
 struct CfgIndentWidth* CfgIndentWidth_FromJson(
     struct CfgIndentWidth* indent_width, const cJSON* value) {
   assert(indent_width != NULL);
   assert(value != NULL);
 
   if (!cJSON_IsNumber(value)) {
-    *indent_width = *CfgIndentWidth_GetDefault();
-    return indent_width;
+    return CfgIndentWidth_InitDefault(indent_width);
   }
 
   if (value->valueint <= 0) {
-    *indent_width = *CfgIndentWidth_GetDefault();
-    return indent_width;
+    return CfgIndentWidth_InitDefault(indent_width);
   }
 
   indent_width->value = value->valueint;
@@ -115,11 +122,6 @@ int CfgIndentWidth_Equals(
   }
 
   return lhs->value == rhs->value;
-}
-
-const struct CfgIndentWidth* CfgIndentWidth_GetDefault(void) {
-  static const struct CfgIndentWidth kDefault = { 4 };
-  return &kDefault;
 }
 
 const char* CfgIndentWidth_GetJsonKey(size_t* length) {

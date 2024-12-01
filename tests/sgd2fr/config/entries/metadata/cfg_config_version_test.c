@@ -60,153 +60,27 @@ static const char kV1MinorKey[] = "Major Version B";
 static const char kV1PatchKey[] = "Minor Version A";
 static const char kV1BuildKey[] = "Minor Version B";
 
-static const struct CfgConfigVersion kConfigVersion = { { 123, 2468, 321, 42 } };
+static const struct CfgConfigVersion kConfigVersion = {
+  { 123, 2468, 321, 42 }
+};
+static const struct CfgConfigVersion kDefaultConfigVersion = {
+  { 3, 2, 0, 0 }
+};
+
 static const char kConfigVersionStr[] = "123.2468.321.42";
 
-static void AddToJson_AddsEntry(CuTest* tc) {
-  cJSON* object;
-  cJSON* result;
-  cJSON* version_json;
+/**
+ * Tests
+ */
 
-  object = cJSON_CreateObject();
+static void InitDefault_ReturnsDefault(CuTest* tc) {
+  struct CfgConfigVersion actual;
+  struct CfgConfigVersion* result;
 
-  result = CfgConfigVersion_AddToJson(&kConfigVersion, object);
+  result = CfgConfigVersion_InitDefault(&actual);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, cJSON_HasObjectItem(object, CfgConfigVersion_GetJsonKey(NULL)));
-  version_json =
-      cJSON_GetObjectItemCaseSensitive(
-          object, CfgConfigVersion_GetJsonKey(NULL));
-  CuAssertTrue(tc, cJSON_IsString(version_json));
-  CuAssertStrEquals(tc, kConfigVersionStr, cJSON_GetStringValue(version_json));
-
-  CfgConfigVersion_RemoveFromJson(object);
-  cJSON_Delete(object);
-}
-
-static void Compare_SameVersions_ReturnsZero(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-
-  CuAssertIntEquals(tc, 0, CfgConfigVersion_Compare(&lhs, &lhs));
-}
-
-static void Compare_EqualVersions_ReturnsZero(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 0, 0 } };
-
-  CuAssertIntEquals(tc, 0, CfgConfigVersion_Compare(&lhs, &rhs));
-}
-
-static void Compare_LtMajor_ReturnsNegative(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 2, 0, 0, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
-}
-
-static void Compare_GtMajor_ReturnsPositive(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 2, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 0, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
-}
-
-static void Compare_LtMinor_ReturnsNegative(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 1, 0, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
-}
-
-static void Compare_GtMinor_ReturnsPositive(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 2, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 1, 0, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
-}
-
-static void Compare_LtPatch_ReturnsNegative(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 1, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
-}
-
-static void Compare_GtPatch_ReturnsPositive(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 2, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 1, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
-}
-
-static void Compare_LtBuild_ReturnsNegative(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 0, 1 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
-}
-
-static void Compare_GtBuild_ReturnsPositive(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 2 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 0, 1 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
-}
-
-static void Compare_DifferentAll_ReturnsNonZero(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 2, 3, 4 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) != 0);
-}
-
-static void Equals_SameVersions_ReturnsTrue(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Equals(&lhs, &lhs));
-}
-
-static void Equals_EqualVersions_ReturnsTrue(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 0, 0 } };
-
-  CuAssertTrue(tc, CfgConfigVersion_Equals(&lhs, &rhs));
-}
-
-static void Equals_DifferentMajor_ReturnsFalse(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 2, 0, 0, 0 } };
-
-  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
-}
-
-static void Equals_DifferentMinor_ReturnsFalse(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 1, 0, 0 } };
-
-  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
-}
-
-static void Equals_DifferentPatch_ReturnsFalse(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 1, 0 } };
-
-  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
-}
-
-static void Equals_DifferentBuild_ReturnsFalse(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 0, 0, 1 } };
-
-  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
-}
-
-static void Equals_DifferentAll_ReturnsFalse(CuTest* tc) {
-  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
-  struct CfgConfigVersion rhs = { { 1, 2, 3, 4 } };
-
-  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
+  CuAssertTrue(tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV1Json_Valid_ReturnsVersion(CuTest* tc) {
@@ -533,7 +407,7 @@ static void FromV2Json_TerminateStringPeriod_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MajorNegative_ReturnsDefault(CuTest* tc) {
@@ -551,7 +425,7 @@ static void FromV2Json_MajorNegative_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MinorNegative_ReturnsDefault(CuTest* tc) {
@@ -569,7 +443,7 @@ static void FromV2Json_MinorNegative_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_PatchNegative_ReturnsDefault(CuTest* tc) {
@@ -587,7 +461,7 @@ static void FromV2Json_PatchNegative_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_BuildNegative_ReturnsDefault(CuTest* tc) {
@@ -605,7 +479,7 @@ static void FromV2Json_BuildNegative_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MissingMajor_ReturnsDefault(CuTest* tc) {
@@ -623,7 +497,7 @@ static void FromV2Json_MissingMajor_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MissingMinor_ReturnsDefault(CuTest* tc) {
@@ -641,7 +515,7 @@ static void FromV2Json_MissingMinor_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MissingPatch_ReturnsDefault(CuTest* tc) {
@@ -659,7 +533,7 @@ static void FromV2Json_MissingPatch_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MissingBuild_ReturnsDefault(CuTest* tc) {
@@ -677,7 +551,7 @@ static void FromV2Json_MissingBuild_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_PrefixMajorNonDigit_ReturnsDefault(CuTest* tc) {
@@ -695,7 +569,7 @@ static void FromV2Json_PrefixMajorNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_SuffixMajorNonDigit_ReturnsDefault(CuTest* tc) {
@@ -713,7 +587,7 @@ static void FromV2Json_SuffixMajorNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_PrefixMinorNonDigit_ReturnsDefault(CuTest* tc) {
@@ -731,7 +605,7 @@ static void FromV2Json_PrefixMinorNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_SuffixMinorNonDigit_ReturnsDefault(CuTest* tc) {
@@ -749,7 +623,7 @@ static void FromV2Json_SuffixMinorNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_PrefixPatchNonDigit_ReturnsDefault(CuTest* tc) {
@@ -767,7 +641,7 @@ static void FromV2Json_PrefixPatchNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_SuffixPatchNonDigit_ReturnsDefault(CuTest* tc) {
@@ -785,7 +659,7 @@ static void FromV2Json_SuffixPatchNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_PrefixBuildNonDigit_ReturnsDefault(CuTest* tc) {
@@ -803,7 +677,7 @@ static void FromV2Json_PrefixBuildNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_SuffixBuildNonDigit_ReturnsDefault(CuTest* tc) {
@@ -821,7 +695,7 @@ static void FromV2Json_SuffixBuildNonDigit_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_CommaDelimiters_ReturnsDefault(CuTest* tc) {
@@ -839,7 +713,7 @@ static void FromV2Json_CommaDelimiters_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MajorLeadingZeros_ReturnsDefault(CuTest* tc) {
@@ -857,7 +731,7 @@ static void FromV2Json_MajorLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MinorLeadingZeros_ReturnsDefault(CuTest* tc) {
@@ -875,7 +749,7 @@ static void FromV2Json_MinorLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_PatchLeadingZeros_ReturnsDefault(CuTest* tc) {
@@ -893,7 +767,7 @@ static void FromV2Json_PatchLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_BuildLeadingZeros_ReturnsDefault(CuTest* tc) {
@@ -911,7 +785,7 @@ static void FromV2Json_BuildLeadingZeros_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MajorAboveIntMax_ReturnsDefault(CuTest* tc) {
@@ -929,7 +803,7 @@ static void FromV2Json_MajorAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_MinorAboveIntMax_ReturnsDefault(CuTest* tc) {
@@ -947,7 +821,7 @@ static void FromV2Json_MinorAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_PatchAboveIntMax_ReturnsDefault(CuTest* tc) {
@@ -965,7 +839,7 @@ static void FromV2Json_PatchAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
 static void FromV2Json_BuildAboveIntMax_ReturnsDefault(CuTest* tc) {
@@ -983,11 +857,153 @@ static void FromV2Json_BuildAboveIntMax_ReturnsDefault(CuTest* tc) {
 
   CuAssertPtrNotNull(tc, result);
   CuAssertTrue(
-      tc, CfgConfigVersion_Equals(&actual, CfgConfigVersion_GetDefault()));
+      tc, CfgConfigVersion_Equals(&actual, &kDefaultConfigVersion));
 }
 
-static void GetDefault_NotNull(CuTest* tc) {
-  CuAssertPtrNotNull(tc, CfgConfigVersion_GetDefault());
+static void AddToJson_AddsEntry(CuTest* tc) {
+  cJSON* object;
+  cJSON* result;
+  cJSON* version_json;
+
+  object = cJSON_CreateObject();
+
+  result = CfgConfigVersion_AddToJson(&kConfigVersion, object);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(
+      tc, cJSON_HasObjectItem(object, CfgConfigVersion_GetJsonKey(NULL)));
+  version_json =
+      cJSON_GetObjectItemCaseSensitive(
+          object, CfgConfigVersion_GetJsonKey(NULL));
+  CuAssertTrue(tc, cJSON_IsString(version_json));
+  CuAssertStrEquals(tc, kConfigVersionStr, cJSON_GetStringValue(version_json));
+
+  CfgConfigVersion_RemoveFromJson(object);
+  cJSON_Delete(object);
+}
+
+static void Compare_SameVersions_ReturnsZero(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+
+  CuAssertIntEquals(tc, 0, CfgConfigVersion_Compare(&lhs, &lhs));
+}
+
+static void Compare_EqualVersions_ReturnsZero(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 0, 0 } };
+
+  CuAssertIntEquals(tc, 0, CfgConfigVersion_Compare(&lhs, &rhs));
+}
+
+static void Compare_LtMajor_ReturnsNegative(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 2, 0, 0, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
+}
+
+static void Compare_GtMajor_ReturnsPositive(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 2, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 0, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
+}
+
+static void Compare_LtMinor_ReturnsNegative(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 1, 0, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
+}
+
+static void Compare_GtMinor_ReturnsPositive(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 2, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 1, 0, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
+}
+
+static void Compare_LtPatch_ReturnsNegative(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 1, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
+}
+
+static void Compare_GtPatch_ReturnsPositive(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 2, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 1, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
+}
+
+static void Compare_LtBuild_ReturnsNegative(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 0, 1 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) < 0);
+}
+
+static void Compare_GtBuild_ReturnsPositive(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 2 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 0, 1 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) > 0);
+}
+
+static void Compare_DifferentAll_ReturnsNonZero(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 2, 3, 4 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Compare(&lhs, &rhs) != 0);
+}
+
+static void Equals_SameVersions_ReturnsTrue(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Equals(&lhs, &lhs));
+}
+
+static void Equals_EqualVersions_ReturnsTrue(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 0, 0 } };
+
+  CuAssertTrue(tc, CfgConfigVersion_Equals(&lhs, &rhs));
+}
+
+static void Equals_DifferentMajor_ReturnsFalse(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 2, 0, 0, 0 } };
+
+  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
+}
+
+static void Equals_DifferentMinor_ReturnsFalse(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 1, 0, 0 } };
+
+  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
+}
+
+static void Equals_DifferentPatch_ReturnsFalse(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 1, 0 } };
+
+  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
+}
+
+static void Equals_DifferentBuild_ReturnsFalse(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 0, 0, 1 } };
+
+  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
+}
+
+static void Equals_DifferentAll_ReturnsFalse(CuTest* tc) {
+  struct CfgConfigVersion lhs = { { 1, 0, 0, 0 } };
+  struct CfgConfigVersion rhs = { { 1, 2, 3, 4 } };
+
+  CuAssertTrue(tc, !CfgConfigVersion_Equals(&lhs, &rhs));
 }
 
 static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
@@ -1028,27 +1044,7 @@ static void IsV1Config_V2Config_ReturnsFalse(CuTest* tc) {
 CuSuite* CfgConfigVersion_GetTestSuite(void) {
   CuSuite* suite = CuSuiteNew();
 
-  SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
-
-  SUITE_ADD_TEST(suite, Compare_SameVersions_ReturnsZero);
-  SUITE_ADD_TEST(suite, Compare_EqualVersions_ReturnsZero);
-  SUITE_ADD_TEST(suite, Compare_LtMajor_ReturnsNegative);
-  SUITE_ADD_TEST(suite, Compare_GtMajor_ReturnsPositive);
-  SUITE_ADD_TEST(suite, Compare_LtMinor_ReturnsNegative);
-  SUITE_ADD_TEST(suite, Compare_GtMinor_ReturnsPositive);
-  SUITE_ADD_TEST(suite, Compare_LtPatch_ReturnsNegative);
-  SUITE_ADD_TEST(suite, Compare_GtPatch_ReturnsPositive);
-  SUITE_ADD_TEST(suite, Compare_LtBuild_ReturnsNegative);
-  SUITE_ADD_TEST(suite, Compare_GtBuild_ReturnsPositive);
-  SUITE_ADD_TEST(suite, Compare_DifferentAll_ReturnsNonZero);
-
-  SUITE_ADD_TEST(suite, Equals_SameVersions_ReturnsTrue);
-  SUITE_ADD_TEST(suite, Equals_EqualVersions_ReturnsTrue);
-  SUITE_ADD_TEST(suite, Equals_DifferentMajor_ReturnsFalse);
-  SUITE_ADD_TEST(suite, Equals_DifferentMinor_ReturnsFalse);
-  SUITE_ADD_TEST(suite, Equals_DifferentPatch_ReturnsFalse);
-  SUITE_ADD_TEST(suite, Equals_DifferentBuild_ReturnsFalse);
-  SUITE_ADD_TEST(suite, Equals_DifferentAll_ReturnsFalse);
+  SUITE_ADD_TEST(suite, InitDefault_ReturnsDefault);
 
   SUITE_ADD_TEST(suite, FromV1Json_Valid_ReturnsVersion);
   SUITE_ADD_TEST(suite, FromV1Json_MajorBelowMin_ReturnsNull);
@@ -1096,7 +1092,27 @@ CuSuite* CfgConfigVersion_GetTestSuite(void) {
   SUITE_ADD_TEST(suite, FromV2Json_PatchAboveIntMax_ReturnsDefault);
   SUITE_ADD_TEST(suite, FromV2Json_BuildAboveIntMax_ReturnsDefault);
 
-  SUITE_ADD_TEST(suite, GetDefault_NotNull);
+  SUITE_ADD_TEST(suite, AddToJson_AddsEntry);
+
+  SUITE_ADD_TEST(suite, Compare_SameVersions_ReturnsZero);
+  SUITE_ADD_TEST(suite, Compare_EqualVersions_ReturnsZero);
+  SUITE_ADD_TEST(suite, Compare_LtMajor_ReturnsNegative);
+  SUITE_ADD_TEST(suite, Compare_GtMajor_ReturnsPositive);
+  SUITE_ADD_TEST(suite, Compare_LtMinor_ReturnsNegative);
+  SUITE_ADD_TEST(suite, Compare_GtMinor_ReturnsPositive);
+  SUITE_ADD_TEST(suite, Compare_LtPatch_ReturnsNegative);
+  SUITE_ADD_TEST(suite, Compare_GtPatch_ReturnsPositive);
+  SUITE_ADD_TEST(suite, Compare_LtBuild_ReturnsNegative);
+  SUITE_ADD_TEST(suite, Compare_GtBuild_ReturnsPositive);
+  SUITE_ADD_TEST(suite, Compare_DifferentAll_ReturnsNonZero);
+
+  SUITE_ADD_TEST(suite, Equals_SameVersions_ReturnsTrue);
+  SUITE_ADD_TEST(suite, Equals_EqualVersions_ReturnsTrue);
+  SUITE_ADD_TEST(suite, Equals_DifferentMajor_ReturnsFalse);
+  SUITE_ADD_TEST(suite, Equals_DifferentMinor_ReturnsFalse);
+  SUITE_ADD_TEST(suite, Equals_DifferentPatch_ReturnsFalse);
+  SUITE_ADD_TEST(suite, Equals_DifferentBuild_ReturnsFalse);
+  SUITE_ADD_TEST(suite, Equals_DifferentAll_ReturnsFalse);
 
   SUITE_ADD_TEST(suite, GetJsonKey_WithLength_ReturnsJsonKey);
   SUITE_ADD_TEST(suite, GetJsonKey_WithNullLength_ReturnsJsonKey);
