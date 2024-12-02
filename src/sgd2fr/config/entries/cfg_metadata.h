@@ -43,37 +43,51 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_METADATA_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_METADATA_H_
 
-#include <CuTest.h>
+#include <stddef.h>
 
-#include "sgd2fr/config/entries/cfg_custom_mpq_file_path_test.h"
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/cfg_main_menu_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_metadata_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include <cJSON.h>
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#include "sgd2fr/config/entries/metadata/cfg_config_version.h"
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgCustomMpqFilePath_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMainMenuResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMetadata_GetTestSuite());
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+struct CfgMetadata {
+  struct CfgConfigVersion version;
+};
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+struct CfgMetadata* CfgMetadata_InitDefault(struct CfgMetadata* metadata);
+
+/**
+ * Parses, sets, and returns the metadata using the current config format.
+ * Returns NULL and does not set the metadata if the function fails.
+ */
+struct CfgMetadata* CfgMetadata_FromV1Json(
+    struct CfgMetadata* metadata, const cJSON* value);
+
+/**
+ * Parses, sets, and returns the metadata using the current config format.
+ * Returns NULL and does not set the metadata if the function fails.
+ */
+struct CfgMetadata* CfgMetadata_FromV2Json(
+    struct CfgMetadata* metadata, const cJSON* value);
+
+cJSON* CfgMetadata_AddToJson(
+    const struct CfgMetadata* metadata, cJSON* object);
+
+int CfgMetadata_Equals(
+    const struct CfgMetadata* lhs, const struct CfgMetadata* rhs);
+
+const char* CfgMetadata_GetJsonKey(size_t* length);
+
+void CfgMetadata_RemoveFromJson(cJSON* object);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_METADATA_H_ */

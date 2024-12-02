@@ -5,11 +5,13 @@ target_sources(${PROJECT_NAME}
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolution_test.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolutions_test.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_main_menu_resolution_test.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_metadata_test.c"
     PUBLIC
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_custom_mpq_file_path_test.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_indent_width_test.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolution_test.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolutions_test.h"
-        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_main_menu_resolution_test.h")
+        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_main_menu_resolution_test.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_metadata_test.h")
 
 add_subdirectory("metadata")
