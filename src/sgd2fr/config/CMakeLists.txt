@@ -33,4 +33,4 @@ target_include_directories(${PROJECT_NAME}
         "${CMAKE_SOURCE_DIR}/src"
     PRIVATE
         "${CMAKE_SOURCE_DIR}/external/cJSON")
-target_link_libraries(${PROJECT_NAME} PRIVATE SGD2FreeRes.Common cjson-static)
+target_link_libraries(${PROJECT_NAME} PRIVATE libMDCc SGD2FreeRes.Common cjson-static)

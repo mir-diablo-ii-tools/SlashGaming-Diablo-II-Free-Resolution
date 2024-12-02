@@ -43,35 +43,53 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_ENTRIES_CFG_CUSTOM_MPQ_FILE_H_
+#define SGD2FR_CONFIG_ENTRIES_CFG_CUSTOM_MPQ_FILE_H_
 
-#include <CuTest.h>
+#include <stddef.h>
+#include <wchar.h>
+#include <windows.h>
 
-#include "sgd2fr/config/entries/cfg_custom_mpq_file_path_test.h"
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/cfg_main_menu_resolution_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include <cJSON.h>
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgCustomMpqFilePath_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMainMenuResolution_GetTestSuite());
+/** A null-terminated path pointing to the custom MPQ file. */
+struct CfgCustomMpqFilePath {
+  wchar_t str[MAX_PATH];
+  size_t length;
+};
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+struct CfgCustomMpqFilePath* CfgCustomMpqFilePath_InitDefault(
+    struct CfgCustomMpqFilePath* path);
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+/**
+ * Parses, sets, and returns the custom MPQ file path using the current config
+ * format. Returns NULL and does not set the custom MPQ file path if the
+ * function fails.
+ */
+struct CfgCustomMpqFilePath* CfgCustomMpqFilePath_FromJson(
+    struct CfgCustomMpqFilePath* path, const cJSON* value);
+
+cJSON* CfgCustomMpqFilePath_AddToJson(
+    const struct CfgCustomMpqFilePath* path, cJSON* object);
+
+int CfgCustomMpqFilePath_Compare(
+    const struct CfgCustomMpqFilePath* lhs,
+    const struct CfgCustomMpqFilePath* rhs);
+
+int CfgCustomMpqFilePath_Equals(
+    const struct CfgCustomMpqFilePath* lhs,
+    const struct CfgCustomMpqFilePath* rhs);
+
+const char* CfgCustomMpqFilePath_GetJsonKey(size_t* length);
+
+void CfgCustomMpqFilePath_RemoveFromJson(cJSON* object);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_ENTRIES_CFG_CUSTOM_MPQ_FILE_H_ */
