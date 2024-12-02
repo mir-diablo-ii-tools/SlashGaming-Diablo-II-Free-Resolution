@@ -53,6 +53,19 @@
 
 #include "sgd2fr/common/resolution.h"
 
+static const struct Resolution kDefaultResolutions[] = {
+  { 640, 480 }, { 800, 600 }
+};
+enum {
+  kDefaultResolutionCount =
+      sizeof(kDefaultResolutions) / sizeof(kDefaultResolutions[0])
+};
+static const struct CfgIngameResolutions kDefaultIngameResolutions = {
+  (struct Resolution*)kDefaultResolutions,
+  kDefaultResolutionCount,
+  kDefaultResolutionCount
+};
+
 /** Type-safe wrapper of Resolution_Compare for use in qsort and bsearch. */
 static int Resolution_CompareAsVoid(const void* lhs, const void* rhs) {
   return Resolution_Compare(lhs, rhs);
@@ -118,6 +131,15 @@ static void CfgIngameResolutions_Sort(
  * External
  */
 
+struct CfgIngameResolutions* CfgIngameResolutions_InitDefault(
+    struct CfgIngameResolutions* resolutions) {
+  assert(resolutions != NULL);
+
+  *resolutions = kDefaultIngameResolutions;
+
+  return resolutions;
+}
+
 struct CfgIngameResolutions* CfgIngameResolutions_FromJson(
     struct CfgIngameResolutions* resolutions, const cJSON* value) {
   struct CfgIngameResolutions temp_resolutions;
@@ -176,45 +198,11 @@ error:
   return NULL;
 }
 
-struct CfgIngameResolutions* CfgIngameResolutions_InitDefault(
-    struct CfgIngameResolutions* resolutions) {
-  static const struct Resolution kDefaultResolutions[] = {
-    { 640, 480 },
-    { 800, 600 }
-  };
-  enum {
-    kDefaultResolutionCount =
-        sizeof(kDefaultResolutions) / sizeof(kDefaultResolutions[0])
-  };
-
-  size_t i;
-  size_t j;
-  struct CfgIngameResolutions temp_resolutions;
-
-  assert(resolutions != NULL);
-
-  temp_resolutions.values =
-      malloc(kDefaultResolutionCount * sizeof(resolutions->values[0]));
-  if (temp_resolutions.values == NULL) {
-    goto error;
-  }
-  temp_resolutions.capacity = kDefaultResolutionCount;
-
-  /* Add resolutions to the list. */
-  temp_resolutions.count = 0;
-  for (i = 0; i < kDefaultResolutionCount; ++i) {
-    CfgIngameResolutions_PushBackUnchecked(
-        &temp_resolutions, &kDefaultResolutions[i]);
-  }
-
-  *resolutions = temp_resolutions;
-  return resolutions;
-
-error:
-  return NULL;
-}
-
 void CfgIngameResolutions_Deinit(struct CfgIngameResolutions* resolutions) {
+  if (resolutions->values == kDefaultResolutions) {
+    return;
+  }
+
   resolutions->count = 0;
   resolutions->capacity = 0;
   free(resolutions->values);
