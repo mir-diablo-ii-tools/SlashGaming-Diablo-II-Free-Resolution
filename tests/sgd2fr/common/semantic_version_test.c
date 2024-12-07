@@ -629,6 +629,40 @@ static void ToWString_AllIntMax_ReturnsString(CuTest* tc) {
   CuAssertIntEquals(tc, SemanticVersion_kMaxLength, length);
 }
 
+static void Upgrade_Lt_UpgradesDest(CuTest* tc) {
+  struct SemanticVersion dest = { 0, 0, 0, 0 };
+  struct SemanticVersion src = { 1, 1, 1, 1 };
+  int result;
+
+  result = SemanticVersion_Upgrade(&dest, &src);
+
+  CuAssertTrue(tc, result < 0);
+  CuAssertTrue(tc, SemanticVersion_Equals(&dest, &src));
+}
+
+static void Upgrade_Eq_NoUpgrade(CuTest* tc) {
+  struct SemanticVersion dest = { 1, 1, 1, 1 };
+  struct SemanticVersion src = { 1, 1, 1, 1 };
+  int result;
+
+  result = SemanticVersion_Upgrade(&dest, &src);
+
+  CuAssertTrue(tc, result == 0);
+  CuAssertTrue(tc, SemanticVersion_Equals(&dest, &src));
+}
+
+static void Upgrade_Gt_NoUpgrade(CuTest* tc) {
+  struct SemanticVersion expected = { 2, 2, 2, 2 };
+  struct SemanticVersion dest = { 2, 2, 2, 2 };
+  struct SemanticVersion src = { 1, 1, 1, 1 };
+  int result;
+
+  result = SemanticVersion_Upgrade(&dest, &src);
+
+  CuAssertTrue(tc, result > 0);
+  CuAssertTrue(tc, SemanticVersion_Equals(&dest, &expected));
+}
+
 /**
  * External
  */
@@ -700,6 +734,10 @@ CuSuite* SemanticVersion_GetTestSuite(void) {
 
   SUITE_ADD_TEST(suite, ToWString_Valid_ReturnsString);
   SUITE_ADD_TEST(suite, ToWString_AllIntMax_ReturnsString);
+
+  SUITE_ADD_TEST(suite, Upgrade_Lt_UpgradesDest);
+  SUITE_ADD_TEST(suite, Upgrade_Eq_NoUpgrade);
+  SUITE_ADD_TEST(suite, Upgrade_Gt_NoUpgrade);
 
   return suite;
 }

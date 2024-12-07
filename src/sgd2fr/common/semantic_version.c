@@ -224,3 +224,18 @@ wchar_t* SemanticVersion_ToWString(
 
   return buffer;
 }
+
+int SemanticVersion_Upgrade(
+    struct SemanticVersion* dest, const struct SemanticVersion* src) {
+  int compare_result;
+
+  assert(dest != NULL);
+  assert(src != NULL);
+
+  compare_result = SemanticVersion_Compare(dest, src);
+  if (compare_result < 0) {
+    *dest = *src;
+  }
+
+  return compare_result;
+}
