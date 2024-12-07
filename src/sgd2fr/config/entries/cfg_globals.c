@@ -43,39 +43,75 @@
  *  work.
  */
 
-#include <stdio.h>
+#include "sgd2fr/config/entries/cfg_globals.h"
 
-#include <CuTest.h>
+#include <stddef.h>
 
-#include "sgd2fr/config/entries/cfg_custom_mpq_file_path_test.h"
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/cfg_main_menu_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_metadata_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include <cJSON.h>
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#include "sgd2fr/config/entries/cfg_indent_width.h"
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgCustomMpqFilePath_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMainMenuResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMetadata_GetTestSuite());
+/**
+ * External
+ */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
+struct CfgGlobals* CfgGlobals_InitDefault(struct CfgGlobals* globals) {
+  void* result;
+
+  result = CfgIndentWidth_InitDefault(&globals->indent_width);
+  if (result == NULL) {
+    goto error;
+  }
+
+  return globals;
+
+error:
+  return NULL;
 }
 
-int main() {
-  RunAllTests();
-  return 0;
+struct CfgGlobals* CfgGlobals_FromJson(
+    struct CfgGlobals* globals, const cJSON* object) {
+  const cJSON* indent_width_json;
+  struct CfgIndentWidth* indent_width_from_json_result;
+
+  if (!cJSON_IsObject(object)) {
+    goto error;
+  }
+
+  indent_width_json =
+      cJSON_GetObjectItemCaseSensitive(object, CfgIndentWidth_GetJsonKey(NULL));
+  if (indent_width_json == NULL) {
+    goto error;
+  }
+
+  indent_width_from_json_result =
+      CfgIndentWidth_FromJson(&globals->indent_width, indent_width_json);
+  if (indent_width_from_json_result == NULL) {
+    goto error;
+  }
+
+  return globals;
+
+error:
+  return NULL;
+}
+
+int CfgGlobals_Equals(
+    const struct CfgGlobals* lhs, const struct CfgGlobals* rhs) {
+  return CfgIndentWidth_Equals(&lhs->indent_width, &rhs->indent_width);
+}
+
+const char* CfgGlobals_GetJsonKey(size_t* length) {
+  static const char kKey[] = "!!!Globals!!!";
+
+  if (length != NULL) {
+    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+  }
+
+  return kKey;
+}
+
+void CfgGlobals_RemoveFromJson(cJSON* object) {
+  CfgIndentWidth_RemoveFromJson(object);
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgGlobals_GetJsonKey(NULL));
 }

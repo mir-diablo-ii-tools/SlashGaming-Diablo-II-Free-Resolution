@@ -1,6 +1,7 @@
 target_sources(${PROJECT_NAME}
     PRIVATE
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_custom_mpq_file_path.c"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_globals.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_indent_width.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolution.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolutions.c"
@@ -8,6 +9,7 @@ target_sources(${PROJECT_NAME}
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_metadata.c"
     PUBLIC
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_custom_mpq_file_path.h"
+        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_globals.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_indent_width.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolution.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_ingame_resolutions.h"
