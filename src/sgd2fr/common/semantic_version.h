@@ -114,6 +114,14 @@ char* SemanticVersion_ToString(
 wchar_t* SemanticVersion_ToWString(
     const struct SemanticVersion* version, wchar_t* buffer, size_t* length);
 
+/**
+ * Upgrades the destination semantic version to the source version, if the
+ * destination version is lesser than the source version. Returns the compare
+ * value as if calling SemanticVersion_Compare(dest, src).
+ */
+int SemanticVersion_Upgrade(
+    struct SemanticVersion* dest, const struct SemanticVersion* src);
+
 #ifdef __cplusplus
 }  /* extern "C" */
 #endif  /* __cplusplus */
