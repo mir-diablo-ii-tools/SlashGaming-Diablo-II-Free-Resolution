@@ -63,8 +63,9 @@ struct CfgMetadata {
 struct CfgMetadata* CfgMetadata_InitDefault(struct CfgMetadata* metadata);
 
 /**
- * Parses, sets, and returns the metadata using the current config format.
- * Returns NULL and does not set the metadata if the function fails.
+ * Parses, sets, and returns the metadata using the format from config versions
+ * in the range [3.0.1.0, 3.0.4.X]. Returns NULL and does not set the metadata
+ * if the function fails.
  */
 struct CfgMetadata* CfgMetadata_FromV1Json(
     struct CfgMetadata* metadata, const cJSON* value);
