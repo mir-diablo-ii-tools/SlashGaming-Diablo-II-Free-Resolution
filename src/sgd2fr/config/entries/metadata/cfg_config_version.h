@@ -94,6 +94,13 @@ int CfgConfigVersion_IsV1Config(const struct CfgConfigVersion* version);
 
 void CfgConfigVersion_RemoveFromJson(cJSON* object);
 
+/**
+ * Upgrades the config version to the current version, if the
+ * version is lesser than the current version. Returns the compare
+ * value as if calling CfgConfigVersion_Compare(version, current).
+ */
+int CfgConfigVersion_UpgradeToCurrent(struct CfgConfigVersion* version);
+
 #ifdef __cplusplus
 }  /* extern "C" */
 #endif  /* __cplusplus */

@@ -213,3 +213,10 @@ void CfgConfigVersion_RemoveFromJson(cJSON* object) {
   cJSON_DeleteItemFromObjectCaseSensitive(
       object, CfgConfigVersion_GetJsonKey(NULL));
 }
+
+int CfgConfigVersion_UpgradeToCurrent(struct CfgConfigVersion* version) {
+  struct CfgConfigVersion default_version;
+
+  CfgConfigVersion_InitDefault(&default_version);
+  return SemanticVersion_Upgrade(&version->value, &default_version.value);
+}

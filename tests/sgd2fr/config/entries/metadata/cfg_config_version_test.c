@@ -984,6 +984,39 @@ static void IsV1Config_V2Config_ReturnsFalse(CuTest* tc) {
   CuAssertTrue(tc, !CfgConfigVersion_IsV1Config(&version));
 }
 
+static void UpgradeToCurrent_LtVersion_UpgradesVersion(CuTest* tc) {
+  struct CfgConfigVersion version = { { 0, 0, 0, 0 } };
+  int result;
+
+  result = CfgConfigVersion_UpgradeToCurrent(&version);
+
+  CuAssertTrue(tc, result < 0);
+  CuAssertTrue(tc, CfgConfigVersion_Equals(&version, &kDefaultConfigVersion));
+}
+
+static void UpgradeToCurrent_EqVersion_NoUpgrade(CuTest* tc) {
+  struct CfgConfigVersion version = kDefaultConfigVersion;
+  int result;
+
+  result = CfgConfigVersion_UpgradeToCurrent(&version);
+
+  CuAssertTrue(tc, result == 0);
+  CuAssertTrue(tc, CfgConfigVersion_Equals(&version, &kDefaultConfigVersion));
+}
+
+static void UpgradeToCurrent_GtVersion_NoUpgrade(CuTest* tc) {
+  struct CfgConfigVersion expected = {
+    { INT_MAX, INT_MAX, INT_MAX, INT_MAX }
+  };
+  struct CfgConfigVersion version = { { INT_MAX, INT_MAX, INT_MAX, INT_MAX } };
+  int result;
+
+  result = CfgConfigVersion_UpgradeToCurrent(&version);
+
+  CuAssertTrue(tc, result > 0);
+  CuAssertTrue(tc, CfgConfigVersion_Equals(&version, &expected));
+}
+
 /**
  * External
  */
@@ -1073,6 +1106,10 @@ CuSuite* CfgConfigVersion_GetTestSuite(void) {
 
   SUITE_ADD_TEST(suite, IsV1Config_V1Config_ReturnsTrue);
   SUITE_ADD_TEST(suite, IsV1Config_V2Config_ReturnsFalse);
+
+  SUITE_ADD_TEST(suite, UpgradeToCurrent_LtVersion_UpgradesVersion);
+  SUITE_ADD_TEST(suite, UpgradeToCurrent_EqVersion_NoUpgrade);
+  SUITE_ADD_TEST(suite, UpgradeToCurrent_GtVersion_NoUpgrade);
 
   return suite;
 }
