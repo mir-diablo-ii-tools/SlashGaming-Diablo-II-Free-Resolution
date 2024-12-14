@@ -57,6 +57,14 @@
  * External
  */
 
+struct CfgIngameResolution* CfgIngameResolution_InitDefault(
+    struct CfgIngameResolution* resolution,
+    const struct CfgIngameResolutions* resolutions) {
+  resolution->value = resolutions->values[0];
+
+  return resolution;
+}
+
 struct CfgIngameResolution* CfgIngameResolution_FromV1Json(
     struct CfgIngameResolution* resolution,
     const cJSON* value,

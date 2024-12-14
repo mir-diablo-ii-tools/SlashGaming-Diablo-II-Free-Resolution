@@ -74,6 +74,17 @@ static struct CfgIngameResolutions kIngameResolutions = {
  * Test
  */
 
+static void InitDefault_ReturnsDefault(CuTest* tc) {
+  struct CfgIngameResolution resolution;
+  struct CfgIngameResolution* result;
+
+  result = CfgIngameResolution_InitDefault(&resolution, &kIngameResolutions);
+
+  CuAssertPtrNotNull(tc, result);
+  CuAssertTrue(
+      tc, CfgIngameResolution_Equals(&resolution, &kDefaultResolution));
+}
+
 static void FromV1Json_640x480_ReturnsResolution(CuTest* tc) {
   struct CfgIngameResolution expected = { { 640, 480 } };
   cJSON* resolution_json;
@@ -407,6 +418,8 @@ CuSuite* CfgIngameResolution_GetTestSuite(void) {
   CuSuite* suite;
 
   suite = CuSuiteNew();
+
+  SUITE_ADD_TEST(suite, InitDefault_ReturnsDefault);
 
   SUITE_ADD_TEST(suite, FromV1Json_640x480_ReturnsResolution);
   SUITE_ADD_TEST(suite, FromV1Json_800x600_ReturnsResolution);
