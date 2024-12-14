@@ -61,6 +61,10 @@ struct CfgIngameResolution {
   struct Resolution value;
 };
 
+struct CfgIngameResolution* CfgIngameResolution_InitDefault(
+    struct CfgIngameResolution* resolution,
+    const struct CfgIngameResolutions* resolutions);
+
 /**
  * Parses, sets, and returns the ingame resolution using the format from
  * config versions in the range [3.0.1.0, 3.0.4.X]. Returns NULL if the
