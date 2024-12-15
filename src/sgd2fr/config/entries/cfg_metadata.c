@@ -97,7 +97,6 @@ error:
 
 struct CfgMetadata* CfgMetadata_FromV2Json(
     struct CfgMetadata* metadata, const cJSON* value) {
-  const char* version_key;
   cJSON* version_json;
   struct CfgConfigVersion* version_from_json_result;
 
@@ -108,12 +107,12 @@ struct CfgMetadata* CfgMetadata_FromV2Json(
     goto error;
   }
 
-  version_key = CfgConfigVersion_GetJsonKey(NULL);
-  if (!cJSON_HasObjectItem(value, version_key)) {
+  if (!cJSON_HasObjectItem(value, CfgConfigVersion_kV2JsonKey)) {
     goto error;
   }
 
-  version_json = cJSON_GetObjectItemCaseSensitive(value, version_key);
+  version_json =
+      cJSON_GetObjectItemCaseSensitive(value, CfgConfigVersion_kV2JsonKey);
   version_from_json_result =
       CfgConfigVersion_FromV2Json(&metadata->version, version_json);
   if (version_from_json_result == NULL) {

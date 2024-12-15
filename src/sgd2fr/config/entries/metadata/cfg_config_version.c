@@ -60,6 +60,12 @@ static struct CfgConfigVersion kConfigV1Max = { { 3, 0, 4, 0 } };
  * External
  */
 
+const char CfgConfigVersion_kV1MajorJsonKey[] = "Major Version A";
+const char CfgConfigVersion_kV1MinorJsonKey[] = "Major Version B";
+const char CfgConfigVersion_kV1PatchJsonKey[] = "Minor Version A";
+const char CfgConfigVersion_kV1BuildJsonKey[] = "Minor Version B";
+const char CfgConfigVersion_kV2JsonKey[] = "Config Version";
+
 struct CfgConfigVersion* CfgConfigVersion_InitDefault(
     struct CfgConfigVersion* version) {
   assert(version != NULL);
@@ -74,11 +80,6 @@ struct CfgConfigVersion* CfgConfigVersion_InitDefault(
 
 struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
     struct CfgConfigVersion* version, const cJSON* object) {
-  static const char kMajorKey[] = "Major Version A";
-  static const char kMinorKey[] = "Major Version B";
-  static const char kPatchKey[] = "Minor Version A";
-  static const char kBuildKey[] = "Minor Version B";
-
   struct CfgConfigVersion temp_version;
   struct SemanticVersion* inner_version_ptr;
   cJSON* major_json;
@@ -90,17 +91,25 @@ struct CfgConfigVersion* CfgConfigVersion_FromV1Json(
     goto error;
   }
 
-  if (!cJSON_HasObjectItem(object, kMajorKey)
-      || !cJSON_HasObjectItem(object, kMinorKey)
-      || !cJSON_HasObjectItem(object, kPatchKey)
-      || !cJSON_HasObjectItem(object, kBuildKey)) {
+  if (!cJSON_HasObjectItem(object, CfgConfigVersion_kV1MajorJsonKey)
+      || !cJSON_HasObjectItem(object, CfgConfigVersion_kV1MinorJsonKey)
+      || !cJSON_HasObjectItem(object, CfgConfigVersion_kV1PatchJsonKey)
+      || !cJSON_HasObjectItem(object, CfgConfigVersion_kV1BuildJsonKey)) {
     goto error;
   }
 
-  major_json = cJSON_GetObjectItemCaseSensitive(object, kMajorKey);
-  minor_json = cJSON_GetObjectItemCaseSensitive(object, kMinorKey);
-  patch_json = cJSON_GetObjectItemCaseSensitive(object, kPatchKey);
-  build_json = cJSON_GetObjectItemCaseSensitive(object, kBuildKey);
+  major_json =
+      cJSON_GetObjectItemCaseSensitive(
+          object, CfgConfigVersion_kV1MajorJsonKey);
+  minor_json =
+      cJSON_GetObjectItemCaseSensitive(
+          object, CfgConfigVersion_kV1MinorJsonKey);
+  patch_json =
+      cJSON_GetObjectItemCaseSensitive(
+          object, CfgConfigVersion_kV1PatchJsonKey);
+  build_json =
+      cJSON_GetObjectItemCaseSensitive(
+          object, CfgConfigVersion_kV1BuildJsonKey);
 
   if (!cJSON_IsNumber(major_json)
       || !cJSON_IsNumber(minor_json)
@@ -173,7 +182,7 @@ cJSON* CfgConfigVersion_AddToJson(
 
   add_version_str_result =
       cJSON_AddStringToObject(
-          object, CfgConfigVersion_GetJsonKey(NULL), version_str);
+          object, CfgConfigVersion_kV2JsonKey, version_str);
   if (add_version_str_result == NULL) {
     goto error;
   }
@@ -195,13 +204,13 @@ int CfgConfigVersion_Equals(
 }
 
 const char* CfgConfigVersion_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Config Version";
-
   if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+    *length =
+        sizeof(CfgConfigVersion_kV2JsonKey)
+            / sizeof(CfgConfigVersion_kV2JsonKey[0]) - 1;
   }
 
-  return kKey;
+  return CfgConfigVersion_kV2JsonKey;
 }
 
 int CfgConfigVersion_IsV1Config(const struct CfgConfigVersion* version) {
@@ -210,8 +219,7 @@ int CfgConfigVersion_IsV1Config(const struct CfgConfigVersion* version) {
 }
 
 void CfgConfigVersion_RemoveFromJson(cJSON* object) {
-  cJSON_DeleteItemFromObjectCaseSensitive(
-      object, CfgConfigVersion_GetJsonKey(NULL));
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgConfigVersion_kV2JsonKey);
 }
 
 int CfgConfigVersion_UpgradeToCurrent(struct CfgConfigVersion* version) {
