@@ -226,7 +226,6 @@ static void FromV2Json_MissingVersion_ReturnsNull(CuTest* tc) {
 }
 
 static void AddToJson_Object_AddsEntry(CuTest* tc) {
-  const char* metadata_key;
   cJSON* object;
   struct CfgMetadata metadata;
   cJSON* result;
@@ -239,9 +238,9 @@ static void AddToJson_Object_AddsEntry(CuTest* tc) {
   result = CfgMetadata_AddToJson(&metadata, object);
 
   CuAssertPtrNotNull(tc, result);
-  metadata_key = CfgMetadata_GetJsonKey(NULL);
-  CuAssertTrue(tc, cJSON_HasObjectItem(object, metadata_key));
-  metadata_json = cJSON_GetObjectItemCaseSensitive(object, metadata_key);
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgMetadata_kJsonKey));
+  metadata_json =
+      cJSON_GetObjectItemCaseSensitive(object, CfgMetadata_kJsonKey);
   CuAssertTrue(tc, cJSON_IsObject(metadata_json));
   CuAssertTrue(
       tc, cJSON_HasObjectItem(metadata_json, CfgConfigVersion_kV2JsonKey));
@@ -302,6 +301,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgMetadata_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgMetadata_kJsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -311,6 +311,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgMetadata_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgMetadata_kJsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 
