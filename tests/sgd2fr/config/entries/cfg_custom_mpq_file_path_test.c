@@ -144,7 +144,6 @@ static void FromJson_TypeMismatch_ReturnsNull(CuTest* tc) {
 static void AddToJson_Object_AddsEntry(CuTest* tc) {
   cJSON* object;
   cJSON* result;
-  const char* key;
   cJSON* path_json;
 
   object = cJSON_CreateObject();
@@ -152,9 +151,8 @@ static void AddToJson_Object_AddsEntry(CuTest* tc) {
   result = CfgCustomMpqFilePath_AddToJson(&kDefaultPath, object);
 
   CuAssertPtrNotNull(tc, result);
-  key = CfgCustomMpqFilePath_GetJsonKey(NULL);
-  CuAssertTrue(tc, cJSON_HasObjectItem(object, key));
-  path_json = cJSON_GetObjectItem(object, key);
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgCustomMpqFilePath_kJsonKey));
+  path_json = cJSON_GetObjectItem(object, CfgCustomMpqFilePath_kJsonKey);
   CuAssertTrue(tc, cJSON_IsString(path_json));
 
   cJSON_Delete(object);
@@ -260,6 +258,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgCustomMpqFilePath_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgCustomMpqFilePath_kJsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -269,6 +268,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgCustomMpqFilePath_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgCustomMpqFilePath_kJsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 

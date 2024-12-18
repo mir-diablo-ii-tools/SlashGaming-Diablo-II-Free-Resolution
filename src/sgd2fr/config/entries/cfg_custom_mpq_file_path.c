@@ -68,6 +68,8 @@ static const struct CfgCustomMpqFilePath kDefaultMpqFilePath = {
  * External
  */
 
+const char CfgCustomMpqFilePath_kJsonKey[] = "Custom MPQ File";
+
 struct CfgCustomMpqFilePath* CfgCustomMpqFilePath_InitDefault(
     struct CfgCustomMpqFilePath* path) {
   assert(path != NULL);
@@ -129,7 +131,7 @@ cJSON* CfgCustomMpqFilePath_AddToJson(
 
   add_result =
       cJSON_AddStringToObject(
-          object, CfgCustomMpqFilePath_GetJsonKey(NULL), utf8_path);
+          object, CfgCustomMpqFilePath_kJsonKey, utf8_path);
   if (add_result == NULL) {
     goto error;
   }
@@ -174,15 +176,15 @@ int CfgCustomMpqFilePath_Equals(
 }
 
 const char* CfgCustomMpqFilePath_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Custom MPQ File";
-
   if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+    *length =
+        sizeof(CfgCustomMpqFilePath_kJsonKey)
+            / sizeof(CfgCustomMpqFilePath_kJsonKey[0]) - 1;
   }
 
-  return kKey;
+  return CfgCustomMpqFilePath_kJsonKey;
 }
 
 void CfgCustomMpqFilePath_RemoveFromJson(cJSON* object) {
-  cJSON_DeleteItemFromObject(object, CfgCustomMpqFilePath_GetJsonKey(NULL));
+  cJSON_DeleteItemFromObject(object, CfgCustomMpqFilePath_kJsonKey);
 }

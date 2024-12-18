@@ -62,6 +62,8 @@ struct CfgCustomMpqFilePath {
   size_t length;
 };
 
+extern const char CfgCustomMpqFilePath_kJsonKey[];
+
 struct CfgCustomMpqFilePath* CfgCustomMpqFilePath_InitDefault(
     struct CfgCustomMpqFilePath* path);
 
