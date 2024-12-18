@@ -137,9 +137,8 @@ static void AddToJson_Object_AddsEntry(CuTest* tc) {
   result = CfgIndentWidth_AddToJson(&indent_width, object);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, cJSON_HasObjectItem(object, CfgIndentWidth_GetJsonKey(NULL)));
-  entry = cJSON_GetObjectItem(object, CfgIndentWidth_GetJsonKey(NULL));
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgIndentWidth_kJsonKey));
+  entry = cJSON_GetObjectItem(object, CfgIndentWidth_kJsonKey);
   CuAssertIntEquals(tc, 42, cJSON_GetNumberValue(entry));
 
   CfgIndentWidth_RemoveFromJson(object);
@@ -214,6 +213,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgIndentWidth_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgIndentWidth_kJsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -223,6 +223,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgIndentWidth_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgIndentWidth_kJsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 

@@ -79,7 +79,7 @@ struct CfgGlobals* CfgGlobals_FromJson(
   }
 
   indent_width_json =
-      cJSON_GetObjectItemCaseSensitive(object, CfgIndentWidth_GetJsonKey(NULL));
+      cJSON_GetObjectItemCaseSensitive(object, CfgIndentWidth_kJsonKey);
   if (indent_width_json == NULL) {
     goto error;
   }

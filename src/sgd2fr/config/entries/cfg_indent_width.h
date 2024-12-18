@@ -58,6 +58,8 @@ struct CfgIndentWidth {
   int value;
 };
 
+extern const char CfgIndentWidth_kJsonKey[];
+
 struct CfgIndentWidth* CfgIndentWidth_InitDefault(
     struct CfgIndentWidth* indent_width);
 
