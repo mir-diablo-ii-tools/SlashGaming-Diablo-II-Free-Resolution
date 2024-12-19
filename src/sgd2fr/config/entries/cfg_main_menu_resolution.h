@@ -60,6 +60,8 @@ struct CfgMainMenuResolution {
   struct Resolution value;
 };
 
+extern const char CfgMainMenuResolution_kJsonKey[];
+
 struct CfgMainMenuResolution* CfgMainMenuResolution_InitDefault(
     struct CfgMainMenuResolution* resolution);
 

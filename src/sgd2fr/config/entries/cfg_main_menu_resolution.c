@@ -56,6 +56,8 @@
  * External
  */
 
+const char CfgMainMenuResolution_kJsonKey[] = "Main Menu Resolution";
+
 struct CfgMainMenuResolution* CfgMainMenuResolution_InitDefault(
     struct CfgMainMenuResolution* resolution) {
   assert(resolution != NULL);
@@ -116,7 +118,7 @@ cJSON* CfgMainMenuResolution_AddToJson(
 
   add_string_result =
       cJSON_AddStringToObject(
-          object, CfgMainMenuResolution_GetJsonKey(NULL), resolution_str);
+          object, CfgMainMenuResolution_kJsonKey, resolution_str);
   if (add_string_result == NULL) {
     goto error;
   }
@@ -154,18 +156,18 @@ int CfgMainMenuResolution_Equals(
 }
 
 const char* CfgMainMenuResolution_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Main Menu Resolution";
-
   if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+    *length =
+        sizeof(CfgMainMenuResolution_kJsonKey)
+            / sizeof(CfgMainMenuResolution_kJsonKey[0]) - 1;
   }
 
-  return kKey;
+  return CfgMainMenuResolution_kJsonKey;
 }
 
 void CfgMainMenuResolution_RemoveFromJson(cJSON* object) {
   assert(object != NULL);
 
   cJSON_DeleteItemFromObjectCaseSensitive(
-      object, CfgMainMenuResolution_GetJsonKey(NULL));
+      object, CfgMainMenuResolution_kJsonKey);
 }
