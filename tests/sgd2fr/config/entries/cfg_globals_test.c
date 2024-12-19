@@ -164,6 +164,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgGlobals_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgGlobals_kJsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -173,6 +174,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgGlobals_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgGlobals_kJsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 
