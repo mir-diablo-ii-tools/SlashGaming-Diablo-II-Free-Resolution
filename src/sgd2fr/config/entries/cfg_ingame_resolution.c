@@ -57,6 +57,9 @@
  * External
  */
 
+const char CfgIngameResolution_kV1JsonKey[] = "Ingame Resolution Mode";
+const char CfgIngameResolution_kV2JsonKey[] = "Ingame Resolution";
+
 struct CfgIngameResolution* CfgIngameResolution_InitDefault(
     struct CfgIngameResolution* resolution,
     const struct CfgIngameResolutions* resolutions) {
@@ -152,7 +155,7 @@ cJSON* CfgIngameResolution_AddToJson(
 
   add_string_result =
       cJSON_AddStringToObject(
-          object, CfgIngameResolution_GetJsonKey(NULL), resolution_str);
+          object, CfgIngameResolution_kV2JsonKey, resolution_str);
   if (add_string_result == NULL) {
     goto error;
   }
@@ -190,18 +193,18 @@ int CfgIngameResolution_Equals(
 }
 
 const char* CfgIngameResolution_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Ingame Resolution";
-
   if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+    *length =
+        sizeof(CfgIngameResolution_kV2JsonKey)
+            / sizeof(CfgIngameResolution_kV2JsonKey[0]) - 1;
   }
 
-  return kKey;
+  return CfgIngameResolution_kV2JsonKey;
 }
 
 void CfgIngameResolution_RemoveFromJson(cJSON* object) {
   assert(object != NULL);
 
   cJSON_DeleteItemFromObjectCaseSensitive(
-      object, CfgIngameResolution_GetJsonKey(NULL));
+      object, CfgIngameResolution_kV2JsonKey);
 }

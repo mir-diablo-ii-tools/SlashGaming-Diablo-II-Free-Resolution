@@ -60,6 +60,12 @@ struct CfgConfigVersion {
   struct SemanticVersion value;
 };
 
+extern const char CfgConfigVersion_kV1MajorJsonKey[];
+extern const char CfgConfigVersion_kV1MinorJsonKey[];
+extern const char CfgConfigVersion_kV1PatchJsonKey[];
+extern const char CfgConfigVersion_kV1BuildJsonKey[];
+extern const char CfgConfigVersion_kV2JsonKey[];
+
 struct CfgConfigVersion* CfgConfigVersion_InitDefault(
     struct CfgConfigVersion* version);
 

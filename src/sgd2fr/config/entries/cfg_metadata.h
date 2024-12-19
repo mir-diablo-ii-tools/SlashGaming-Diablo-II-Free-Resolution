@@ -60,6 +60,8 @@ struct CfgMetadata {
   struct CfgConfigVersion version;
 };
 
+extern const char CfgMetadata_kJsonKey[];
+
 struct CfgMetadata* CfgMetadata_InitDefault(struct CfgMetadata* metadata);
 
 /**

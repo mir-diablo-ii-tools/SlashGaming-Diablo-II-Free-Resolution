@@ -55,11 +55,6 @@
 
 #include "sgd2fr/config/entries/metadata/cfg_config_version.h"
 
-static const char kV1MajorKey[] = "Major Version A";
-static const char kV1MinorKey[] = "Major Version B";
-static const char kV1PatchKey[] = "Minor Version A";
-static const char kV1BuildKey[] = "Minor Version B";
-
 static const struct CfgConfigVersion kConfigVersion = {
   { 123, 2468, 321, 42 }
 };
@@ -90,10 +85,10 @@ static void FromV1Json_Valid_ReturnsVersion(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 4);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 4);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -107,10 +102,10 @@ static void FromV1Json_MajorBelowMin_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, -1);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 0);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, -1);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -123,10 +118,10 @@ static void FromV1Json_MinorBelowMin_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, -1);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 0);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, -1);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -139,10 +134,10 @@ static void FromV1Json_PatchBelowMin_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, -1);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, -1);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -155,10 +150,10 @@ static void FromV1Json_BuildBelowMin_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 0);
-  cJSON_AddNumberToObject(object, kV1BuildKey, -1);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, -1);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -171,10 +166,10 @@ static void FromV1Json_MajorAboveMax_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 4);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 0);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 4);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -187,10 +182,10 @@ static void FromV1Json_MinorAboveMax_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 1);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 0);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 1);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -203,10 +198,10 @@ static void FromV1Json_PatchAboveMax_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 5);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 5);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -219,10 +214,10 @@ static void FromV1Json_BuildAboveMax_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 4);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 1);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 4);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 1);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -247,10 +242,10 @@ static void FromV1Json_MajorTypeMismatch_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddFalseToObject(object, kV1MajorKey);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 4);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 1);
+  cJSON_AddFalseToObject(object, CfgConfigVersion_kV1MajorJsonKey);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 4);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 1);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -263,10 +258,10 @@ static void FromV1Json_MinorTypeMismatch_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddFalseToObject(object, kV1MinorKey);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 4);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddFalseToObject(object, CfgConfigVersion_kV1MinorJsonKey);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 4);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -279,10 +274,10 @@ static void FromV1Json_PatchTypeMismatch_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddFalseToObject(object, kV1PatchKey);
-  cJSON_AddNumberToObject(object, kV1BuildKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddFalseToObject(object, CfgConfigVersion_kV1PatchJsonKey);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -295,10 +290,10 @@ static void FromV1Json_BuildTypeMismatch_ReturnsNull(CuTest* tc) {
   struct CfgConfigVersion* result;
 
   object = cJSON_CreateObject();
-  cJSON_AddNumberToObject(object, kV1MajorKey, 3);
-  cJSON_AddNumberToObject(object, kV1MinorKey, 0);
-  cJSON_AddNumberToObject(object, kV1PatchKey, 4);
-  cJSON_AddFalseToObject(object, kV1BuildKey);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(object, CfgConfigVersion_kV1PatchJsonKey, 4);
+  cJSON_AddFalseToObject(object, CfgConfigVersion_kV1BuildJsonKey);
 
   result = CfgConfigVersion_FromV1Json(&actual, object);
 
@@ -806,11 +801,9 @@ static void AddToJson_Object_AddsEntry(CuTest* tc) {
   result = CfgConfigVersion_AddToJson(&kConfigVersion, object);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, cJSON_HasObjectItem(object, CfgConfigVersion_GetJsonKey(NULL)));
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgConfigVersion_kV2JsonKey));
   version_json =
-      cJSON_GetObjectItemCaseSensitive(
-          object, CfgConfigVersion_GetJsonKey(NULL));
+      cJSON_GetObjectItemCaseSensitive(object, CfgConfigVersion_kV2JsonKey);
   CuAssertTrue(tc, cJSON_IsString(version_json));
   CuAssertStrEquals(tc, kConfigVersionStr, cJSON_GetStringValue(version_json));
 
@@ -960,6 +953,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgConfigVersion_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgConfigVersion_kV2JsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -969,6 +963,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgConfigVersion_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgConfigVersion_kV2JsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 

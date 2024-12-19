@@ -213,11 +213,9 @@ static void AddToJson_WithObject_AddsEntry(CuTest* tc) {
       CfgIngameResolutions_AddToJson(&kIngameResolutions, object);
 
   CuAssertPtrNotNull(tc, result);
-  CuAssertTrue(
-      tc, cJSON_HasObjectItem(object, CfgIngameResolutions_GetJsonKey(NULL)));
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgIngameResolutions_kJsonKey));
   resolutions_json =
-      cJSON_GetObjectItemCaseSensitive(
-          object, CfgIngameResolutions_GetJsonKey(NULL));
+      cJSON_GetObjectItemCaseSensitive(object, CfgIngameResolutions_kJsonKey);
   CuAssertTrue(tc, cJSON_IsArray(resolutions_json));
   i = 0;
   cJSON_ArrayForEach(resolution_json, resolutions_json) {
@@ -299,6 +297,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgIngameResolutions_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgIngameResolutions_kJsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -308,6 +307,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgIngameResolutions_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgIngameResolutions_kJsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 

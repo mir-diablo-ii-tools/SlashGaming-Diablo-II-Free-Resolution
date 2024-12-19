@@ -63,6 +63,8 @@ struct CfgIngameResolutions {
   size_t count;
 };
 
+extern const char CfgIngameResolutions_kJsonKey[];
+
 struct CfgIngameResolutions* CfgIngameResolutions_InitDefault(
     struct CfgIngameResolutions* resolutions);
 

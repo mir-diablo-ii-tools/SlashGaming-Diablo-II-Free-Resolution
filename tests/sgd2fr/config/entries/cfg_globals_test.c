@@ -145,7 +145,7 @@ static void FromJson_Valid_Converts(CuTest* tc) {
   struct CfgGlobals* result;
 
   global_json = cJSON_CreateObject();
-  cJSON_AddNumberToObject(global_json, CfgIndentWidth_GetJsonKey(NULL), 42);
+  cJSON_AddNumberToObject(global_json, CfgIndentWidth_kJsonKey, 42);
 
   result = CfgGlobals_FromJson(&globals, global_json);
 
@@ -153,7 +153,7 @@ static void FromJson_Valid_Converts(CuTest* tc) {
   CuAssertIntEquals(tc, 42, globals.indent_width.value);
 
   cJSON_DeleteItemFromObjectCaseSensitive(
-      global_json, CfgIndentWidth_GetJsonKey(NULL));
+      global_json, CfgIndentWidth_kJsonKey);
   cJSON_Delete(global_json);
 }
 
@@ -164,6 +164,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgGlobals_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgGlobals_kJsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -173,6 +174,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgGlobals_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgGlobals_kJsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 

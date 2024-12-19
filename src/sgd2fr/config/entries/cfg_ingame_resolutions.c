@@ -131,6 +131,8 @@ static void CfgIngameResolutions_Sort(
  * External
  */
 
+const char CfgIngameResolutions_kJsonKey[] = "Ingame Resolutions";
+
 struct CfgIngameResolutions* CfgIngameResolutions_InitDefault(
     struct CfgIngameResolutions* resolutions) {
   assert(resolutions != NULL);
@@ -222,7 +224,7 @@ cJSON* CfgIngameResolutions_AddToJson(
   }
 
   resolutions_json =
-      cJSON_AddArrayToObject(object, CfgIngameResolutions_GetJsonKey(NULL));
+      cJSON_AddArrayToObject(object, CfgIngameResolutions_kJsonKey);
   for (i = 0; i < resolutions->count; ++i) {
     char resolution_str[Resolution_kMaxLength + 1];
     char* to_string_result;
@@ -291,13 +293,13 @@ size_t CfgIngameResolutions_FindIndex(
 }
 
 const char* CfgIngameResolutions_GetJsonKey(size_t* length) {
-  static const char kKey[] = "Ingame Resolutions";
-
   if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+    *length =
+        sizeof(CfgIngameResolutions_kJsonKey)
+            / sizeof(CfgIngameResolutions_kJsonKey[0]) - 1;
   }
 
-  return kKey;
+  return CfgIngameResolutions_kJsonKey;
 }
 
 void CfgIngameResolutions_RemoveFromJson(cJSON* object) {
@@ -307,7 +309,7 @@ void CfgIngameResolutions_RemoveFromJson(cJSON* object) {
 
   assert(object != NULL);
 
-  key = CfgIngameResolutions_GetJsonKey(NULL);
-  resolutions_json = cJSON_GetObjectItem(object, key);
+  resolutions_json =
+      cJSON_GetObjectItem(object, CfgIngameResolutions_kJsonKey);
   cJSON_Delete(resolutions_json);
 }

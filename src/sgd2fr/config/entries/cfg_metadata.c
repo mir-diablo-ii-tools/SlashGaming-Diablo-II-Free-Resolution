@@ -56,6 +56,8 @@
  * External
  */
 
+const char CfgMetadata_kJsonKey[] = "!!!Metadata (Do not modify)!!!";
+
 struct CfgMetadata* CfgMetadata_InitDefault(struct CfgMetadata* metadata) {
   struct CfgConfigVersion* version_init_result;
 
@@ -97,7 +99,6 @@ error:
 
 struct CfgMetadata* CfgMetadata_FromV2Json(
     struct CfgMetadata* metadata, const cJSON* value) {
-  const char* version_key;
   cJSON* version_json;
   struct CfgConfigVersion* version_from_json_result;
 
@@ -108,12 +109,12 @@ struct CfgMetadata* CfgMetadata_FromV2Json(
     goto error;
   }
 
-  version_key = CfgConfigVersion_GetJsonKey(NULL);
-  if (!cJSON_HasObjectItem(value, version_key)) {
+  if (!cJSON_HasObjectItem(value, CfgConfigVersion_kV2JsonKey)) {
     goto error;
   }
 
-  version_json = cJSON_GetObjectItemCaseSensitive(value, version_key);
+  version_json =
+      cJSON_GetObjectItemCaseSensitive(value, CfgConfigVersion_kV2JsonKey);
   version_from_json_result =
       CfgConfigVersion_FromV2Json(&metadata->version, version_json);
   if (version_from_json_result == NULL) {
@@ -128,7 +129,6 @@ error:
 
 cJSON* CfgMetadata_AddToJson(
     const struct CfgMetadata* metadata, cJSON* object) {
-  const char* key;
   cJSON* metadata_json;
   cJSON* add_config_version_result;
 
@@ -139,8 +139,7 @@ cJSON* CfgMetadata_AddToJson(
     goto error;
   }
 
-  key = CfgMetadata_GetJsonKey(NULL);
-  metadata_json = cJSON_AddObjectToObject(object, key);
+  metadata_json = cJSON_AddObjectToObject(object, CfgMetadata_kJsonKey);
   if (metadata_json == NULL) {
     goto error;
   }
@@ -166,22 +165,20 @@ int CfgMetadata_Equals(
 }
 
 const char* CfgMetadata_GetJsonKey(size_t* length) {
-  static const char kKey[] = "!!!Metadata (Do not modify)!!!";
-
   if (length != NULL) {
-    *length = sizeof(kKey) / sizeof(kKey[0]) - 1;
+    *length =
+        sizeof(CfgMetadata_kJsonKey) / sizeof(CfgMetadata_kJsonKey[0]) - 1;
   }
 
-  return kKey;
+  return CfgMetadata_kJsonKey;
 }
 
 void CfgMetadata_RemoveFromJson(cJSON* object) {
-  const char* key;
   cJSON* metadata_json;
 
-  key = CfgMetadata_GetJsonKey(NULL);
-  metadata_json = cJSON_GetObjectItemCaseSensitive(object, key);
+  metadata_json =
+      cJSON_GetObjectItemCaseSensitive(object, CfgMetadata_kJsonKey);
   CfgConfigVersion_RemoveFromJson(metadata_json);
 
-  cJSON_DeleteItemFromObjectCaseSensitive(object, key);
+  cJSON_DeleteItemFromObjectCaseSensitive(object, CfgMetadata_kJsonKey);
 }

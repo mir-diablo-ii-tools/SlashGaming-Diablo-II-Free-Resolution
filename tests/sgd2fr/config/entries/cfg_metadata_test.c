@@ -54,11 +54,6 @@
 #include "sgd2fr/config/entries/cfg_metadata.h"
 #include "sgd2fr/config/entries/metadata/cfg_config_version.h"
 
-static const char kVersionV1MajorKey[] = "Major Version A";
-static const char kVersionV1MinorKey[] = "Major Version B";
-static const char kVersionV1PatchKey[] = "Minor Version A";
-static const char kVersionV1BuildKey[] = "Minor Version B";
-
 /**
  * Tests
  */
@@ -79,10 +74,10 @@ static void FromV1Json_Valid_ReturnsMetadata(CuTest* tc) {
   cJSON* value;
 
   value = cJSON_CreateObject();
-  cJSON_AddNumberToObject(value, kVersionV1MajorKey, 3);
-  cJSON_AddNumberToObject(value, kVersionV1MinorKey, 0);
-  cJSON_AddNumberToObject(value, kVersionV1PatchKey, 1);
-  cJSON_AddNumberToObject(value, kVersionV1BuildKey, 0);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1PatchJsonKey, 1);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgMetadata_FromV1Json(&actual, value);
 
@@ -112,7 +107,7 @@ static void FromV1Json_V2Metadata_ReturnsNull(CuTest* tc) {
   cJSON* value;
 
   value = cJSON_CreateObject();
-  cJSON_AddStringToObject(value, kVersionV1MajorKey, "3.1.0.0");
+  cJSON_AddStringToObject(value, CfgConfigVersion_kV1MajorJsonKey, "3.1.0.0");
 
   result = CfgMetadata_FromV1Json(&actual, value);
 
@@ -127,10 +122,10 @@ static void FromV1Json_InvalidVersion_ReturnsNull(CuTest* tc) {
   cJSON* value;
 
   value = cJSON_CreateObject();
-  cJSON_AddNumberToObject(value, kVersionV1MajorKey, -1);
-  cJSON_AddNumberToObject(value, kVersionV1MinorKey, -1);
-  cJSON_AddNumberToObject(value, kVersionV1PatchKey, -1);
-  cJSON_AddNumberToObject(value, kVersionV1BuildKey, -1);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1MajorJsonKey, -1);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1MinorJsonKey, -1);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1PatchJsonKey, -1);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1BuildJsonKey, -1);
 
   result = CfgMetadata_FromV1Json(&actual, value);
 
@@ -154,14 +149,12 @@ static void FromV1Json_MissingVersion_ReturnsNull(CuTest* tc) {
 }
 
 static void FromV2Json_Valid_ReturnsMetadata(CuTest* tc) {
-  const char* version_key;
   struct CfgMetadata actual;
   struct CfgMetadata* result;
   cJSON* value;
 
-  version_key = CfgConfigVersion_GetJsonKey(NULL);
   value = cJSON_CreateObject();
-  cJSON_AddStringToObject(value, version_key, "3.1.0.0");
+  cJSON_AddStringToObject(value, CfgConfigVersion_kV2JsonKey, "3.1.0.0");
 
   result = CfgMetadata_FromV2Json(&actual, value);
 
@@ -172,12 +165,10 @@ static void FromV2Json_Valid_ReturnsMetadata(CuTest* tc) {
 }
 
 static void FromV2Json_TypeMismatch_ReturnsNull(CuTest* tc) {
-  const char* version_key;
   struct CfgMetadata actual;
   struct CfgMetadata* result;
   cJSON* value;
 
-  version_key = CfgConfigVersion_GetJsonKey(NULL);
   value = cJSON_CreateFalse();
 
   result = CfgMetadata_FromV2Json(&actual, value);
@@ -193,10 +184,10 @@ static void FromV2Json_V1Metadata_ReturnsNull(CuTest* tc) {
   cJSON* value;
 
   value = cJSON_CreateObject();
-  cJSON_AddNumberToObject(value, kVersionV1MajorKey, 3);
-  cJSON_AddNumberToObject(value, kVersionV1MinorKey, 0);
-  cJSON_AddNumberToObject(value, kVersionV1PatchKey, 1);
-  cJSON_AddNumberToObject(value, kVersionV1BuildKey, 0);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1MajorJsonKey, 3);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1MinorJsonKey, 0);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1PatchJsonKey, 1);
+  cJSON_AddNumberToObject(value, CfgConfigVersion_kV1BuildJsonKey, 0);
 
   result = CfgMetadata_FromV2Json(&actual, value);
 
@@ -206,14 +197,12 @@ static void FromV2Json_V1Metadata_ReturnsNull(CuTest* tc) {
 }
 
 static void FromV2Json_InvalidVersion_ReturnsNull(CuTest* tc) {
-  const char* version_key;
   struct CfgMetadata actual;
   struct CfgMetadata* result;
   cJSON* value;
 
-  version_key = CfgConfigVersion_GetJsonKey(NULL);
   value = cJSON_CreateObject();
-  cJSON_AddStringToObject(value, version_key, "invalid");
+  cJSON_AddStringToObject(value, CfgConfigVersion_kV2JsonKey, "invalid");
 
   result = CfgMetadata_FromV2Json(&actual, value);
 
@@ -223,12 +212,10 @@ static void FromV2Json_InvalidVersion_ReturnsNull(CuTest* tc) {
 }
 
 static void FromV2Json_MissingVersion_ReturnsNull(CuTest* tc) {
-  const char* version_key;
   struct CfgMetadata actual;
   struct CfgMetadata* result;
   cJSON* value;
 
-  version_key = CfgConfigVersion_GetJsonKey(NULL);
   value = cJSON_CreateObject();
 
   result = CfgMetadata_FromV2Json(&actual, value);
@@ -239,8 +226,6 @@ static void FromV2Json_MissingVersion_ReturnsNull(CuTest* tc) {
 }
 
 static void AddToJson_Object_AddsEntry(CuTest* tc) {
-  const char* metadata_key;
-  const char* version_key;
   cJSON* object;
   struct CfgMetadata metadata;
   cJSON* result;
@@ -253,13 +238,15 @@ static void AddToJson_Object_AddsEntry(CuTest* tc) {
   result = CfgMetadata_AddToJson(&metadata, object);
 
   CuAssertPtrNotNull(tc, result);
-  metadata_key = CfgMetadata_GetJsonKey(NULL);
-  CuAssertTrue(tc, cJSON_HasObjectItem(object, metadata_key));
-  metadata_json = cJSON_GetObjectItemCaseSensitive(object, metadata_key);
+  CuAssertTrue(tc, cJSON_HasObjectItem(object, CfgMetadata_kJsonKey));
+  metadata_json =
+      cJSON_GetObjectItemCaseSensitive(object, CfgMetadata_kJsonKey);
   CuAssertTrue(tc, cJSON_IsObject(metadata_json));
-  version_key = CfgConfigVersion_GetJsonKey(NULL);
-  CuAssertTrue(tc, cJSON_HasObjectItem(metadata_json, version_key));
-  version_json = cJSON_GetObjectItemCaseSensitive(metadata_json, version_key);
+  CuAssertTrue(
+      tc, cJSON_HasObjectItem(metadata_json, CfgConfigVersion_kV2JsonKey));
+  version_json =
+      cJSON_GetObjectItemCaseSensitive(
+          metadata_json, CfgConfigVersion_kV2JsonKey);
   CuAssertTrue(tc, cJSON_IsString(version_json));
 
   cJSON_Delete(object);
@@ -314,6 +301,7 @@ static void GetJsonKey_WithLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgMetadata_GetJsonKey(&length);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgMetadata_kJsonKey));
   CuAssertTrue(tc, strlen(result) == length);
 }
 
@@ -323,6 +311,7 @@ static void GetJsonKey_WithNullLength_ReturnsJsonKey(CuTest* tc) {
   result = CfgMetadata_GetJsonKey(NULL);
 
   CuAssertPtrNotNull(tc, result);
+  CuAssertIntEquals(tc, 0, strcmp(result, CfgMetadata_kJsonKey));
   CuAssertTrue(tc, strlen(result) > 0);
 }
 
