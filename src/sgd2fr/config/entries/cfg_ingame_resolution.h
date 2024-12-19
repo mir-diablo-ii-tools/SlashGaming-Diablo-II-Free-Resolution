@@ -61,6 +61,9 @@ struct CfgIngameResolution {
   struct Resolution value;
 };
 
+extern const char CfgIngameResolution_kV1JsonKey[];
+extern const char CfgIngameResolution_kV2JsonKey[];
+
 struct CfgIngameResolution* CfgIngameResolution_InitDefault(
     struct CfgIngameResolution* resolution,
     const struct CfgIngameResolutions* resolutions);
