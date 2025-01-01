@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0034 (November 6, 2024)
+- Add Inhuman's Eastern Sun Realm 1.0 with 1280x720.
+
 ## SGD2FreeRes 3.0.4.0.0033 (October 13, 2024)
 - Add Yoti's server with 640x480, 800x600, 1068x600, 1344x700, and
   1600x900.

@@ -213,6 +213,13 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
+      // Inhuman's Eastern Sun Realm 1.0
+      Ipv4HashResolutionTableEntry(
+          "4516E80DA61F1731C82DDFCFBF326D4E7A64522A",
+          {
+              std::make_tuple(1280, 720),
+          }),
+
       // Diablo II Evolution
       Ipv4HashResolutionTableEntry(
           "4A0C205D82F5A1089606505350B5096829E9182C",
