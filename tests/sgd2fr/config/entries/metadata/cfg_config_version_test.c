@@ -59,7 +59,7 @@ static const struct CfgConfigVersion kConfigVersion = {
   { 123, 2468, 321, 42 }
 };
 static const struct CfgConfigVersion kDefaultConfigVersion = {
-  { 3, 2, 0, 0 }
+  { 3, 1, 0, 0 }
 };
 
 static const char kConfigVersionStr[] = "123.2468.321.42";

@@ -71,7 +71,7 @@ struct CfgConfigVersion* CfgConfigVersion_InitDefault(
   assert(version != NULL);
 
   version->value.major_version = 3;
-  version->value.minor_version = 2;
+  version->value.minor_version = 1;
   version->value.patch_version = 0;
   version->value.build_version = 0;
 
