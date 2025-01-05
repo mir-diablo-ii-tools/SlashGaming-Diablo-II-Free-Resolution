@@ -205,7 +205,6 @@ static void AddToJson_WithObject_AddsEntry(CuTest* tc) {
   cJSON* object;
   cJSON* result;
   cJSON* resolutions_json;
-  cJSON* resolution_json;
 
   object = cJSON_CreateObject();
 
@@ -217,12 +216,15 @@ static void AddToJson_WithObject_AddsEntry(CuTest* tc) {
   resolutions_json =
       cJSON_GetObjectItemCaseSensitive(object, CfgIngameResolutions_kJsonKey);
   CuAssertTrue(tc, cJSON_IsArray(resolutions_json));
-  i = 0;
-  cJSON_ArrayForEach(resolution_json, resolutions_json) {
+  CuAssertIntEquals(
+      tc, kResolutionCount, cJSON_GetArraySize(resolutions_json));
+  for (i = 0; i < kResolutionCount; ++i) {
+    cJSON* resolution_json;
+
+    resolution_json = cJSON_GetArrayItem(resolutions_json, i);
     CuAssertTrue(tc, cJSON_IsString(resolution_json));
     CuAssertStrEquals(
         tc, kResolutionStrs[i], cJSON_GetStringValue(resolution_json));
-    ++i;
   }
 
   cJSON_Delete(object);
