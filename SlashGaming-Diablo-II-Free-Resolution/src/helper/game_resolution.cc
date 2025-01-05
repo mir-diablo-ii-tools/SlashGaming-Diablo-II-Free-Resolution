@@ -335,6 +335,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
           }),
 
+      // RayveeN's Test Server
+      Ipv4HashResolutionTableEntry(
+          "7752B1B3F1267472F0AB21ACD88FF13B0C699F8B",
+          {
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720),
+              std::make_tuple(1600, 900),
+          }),
+
       // Firesnake's ESR (beta)
       Ipv4HashResolutionTableEntry(
           "830C87608053315439D453BC28B75EE7B4DA73C9",
