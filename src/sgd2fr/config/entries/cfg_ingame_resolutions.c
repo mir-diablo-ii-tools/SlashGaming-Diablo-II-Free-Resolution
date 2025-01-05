@@ -234,6 +234,8 @@ cJSON* CfgIngameResolutions_AddToJson(
     if (to_string_result == NULL) {
       goto error_remove_from_json;
     }
+
+    cJSON_AddItemToArray(resolutions_json, cJSON_CreateString(resolution_str));
   }
 
   return object;
