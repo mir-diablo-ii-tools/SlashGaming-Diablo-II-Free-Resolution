@@ -18,6 +18,8 @@ endif (MINGW)
 
 # Define test targets
 add_executable(${PROJECT_NAME}
+    "cfg_entries_test.c"
+    "cfg_entries_test.h"
     "config_tests.c")
 
 add_subdirectory("entries")
