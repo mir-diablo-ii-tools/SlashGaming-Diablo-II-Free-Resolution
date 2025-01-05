@@ -43,41 +43,68 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_CFG_CONFIG_ENTRIES_H_
+#define SGD2FR_CONFIG_CFG_CONFIG_ENTRIES_H_
 
-#include <CuTest.h>
+#include <stddef.h>
 
-#include "sgd2fr/config/cfg_entries_test.h"
-#include "sgd2fr/config/entries/cfg_custom_mpq_file_path_test.h"
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/cfg_main_menu_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_metadata_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include <cJSON.h>
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#include "sgd2fr/config/entries/cfg_custom_mpq_file_path.h"
+#include "sgd2fr/config/entries/cfg_indent_width.h"
+#include "sgd2fr/config/entries/cfg_ingame_resolution.h"
+#include "sgd2fr/config/entries/cfg_ingame_resolutions.h"
+#include "sgd2fr/config/entries/cfg_main_menu_resolution.h"
+#include "sgd2fr/config/entries/cfg_metadata.h"
 
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgCustomMpqFilePath_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgEntries_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMainMenuResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMetadata_GetTestSuite());
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+struct CfgEntries {
+  struct CfgMetadata metadata;
+  struct CfgCustomMpqFilePath custom_mpq_file_path;
+  struct CfgIndentWidth indent_width;
+  struct CfgIngameResolutions ingame_resolutions;
+  struct CfgIngameResolution ingame_resolution;
+  struct CfgMainMenuResolution main_menu_resolution;
+};
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+struct CfgEntries* CfgEntries_InitDefault(struct CfgEntries* entries);
+
+/**
+ * Parses, sets, and returns the config entries using the format from
+ * config versions in the range [3.0.1.0, 3.0.4.X].
+ *
+ * Function fails if the key "SlashGaming Diablo II Free Resolution" is not
+ * present at the root of the config as an object. Otherwise, sets missing
+ * fields to defaults, and indicates success.
+ *
+ * Returns NULL if the function fails. Does not set the config entries if the
+ * function fails.
+ */
+struct CfgEntries* CfgEntries_FromV1Json(
+    struct CfgEntries* entries, const cJSON* value);
+
+/**
+ * Parses, sets, and returns the config entries using the current config
+ * format. Returns NULL and does not set the config entries if the function
+ * fails. Missing fields are set to defaults.
+ */
+struct CfgEntries* CfgEntries_FromV2Json(
+    struct CfgEntries* entries, const cJSON* value);
+
+void CfgEntries_Deinit(struct CfgEntries* entries);
+
+cJSON* CfgEntries_AddToJson(const struct CfgEntries* entries, cJSON* object);
+
+int CfgEntries_Equals(
+    const struct CfgEntries* lhs, const struct CfgEntries* rhs);
+
+void CfgEntries_RemoveFromJson(cJSON* object);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_CFG_CONFIG_ENTRIES_H_ */
