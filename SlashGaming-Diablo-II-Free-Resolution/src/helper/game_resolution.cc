@@ -128,18 +128,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1600, 900),
           }),
 
-      // NOWD
-      Ipv4HashResolutionTableEntry(
-          "14F5ECFBCD56780D47BCC134FD021BFC15B5D168",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(856, 480),
-              std::make_tuple(1068, 600),
-              std::make_tuple(1344, 700)
-          }
-      ),
-
       // MXL Ultimative Challenge
       Ipv4HashResolutionTableEntry(
           "1A76FC3AA22DB2C650596C6B71DBCF78895FE551",
@@ -352,6 +340,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
               std::make_tuple(1280, 720),
               std::make_tuple(1600, 900),
+          }),
+
+      // NOWD / NWD' Server
+      Ipv4HashResolutionTableEntry(
+          "7F7B25A85B919A761910532BBE0520BF8A384C03",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700)
           }),
 
       // Firesnake's ESR (beta)
