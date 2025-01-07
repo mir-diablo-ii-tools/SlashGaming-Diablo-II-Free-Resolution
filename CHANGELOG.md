@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0037 (January 5, 2025)
+- Add 2nd Dubai Server with 640x480, 800x600, 1068x600, and 1344x700.
+
 ## SGD2FreeRes 3.0.4.0.0036 (January 4, 2025)
 - Add RayveeN's Test Server with 1068x600, 1280x720, and 1600x900.
 

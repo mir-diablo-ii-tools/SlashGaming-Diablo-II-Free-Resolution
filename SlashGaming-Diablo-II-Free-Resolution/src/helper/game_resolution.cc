@@ -249,6 +249,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }),
 
+      // 2nd Dubai Server
+      Ipv4HashResolutionTableEntry(
+          "52DE5E29192A579C5FC93EDB18C706670E67C87C",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700)
+          }),
+
       // Tetsuya's server
       Ipv4HashResolutionTableEntry(
           "59E3C8469A329302A8413F683C8820A2E05F4E0F",
