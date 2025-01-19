@@ -325,14 +325,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
           }),
 
-      // Ale's Server (Argentina D2Revenge server)
-      Ipv4HashResolutionTableEntry(
-          "7544F33E2B48EB94AC8F5DC4F6F64D7491EE871F",
-          {
-              kResolution800x600,
-              std::make_tuple(1068, 600),
-          }),
-
       // RayveeN's Test Server
       Ipv4HashResolutionTableEntry(
           "7752B1B3F1267472F0AB21ACD88FF13B0C699F8B",
@@ -484,6 +476,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
               std::make_tuple(1280, 720),
               std::make_tuple(1366, 768)
+          }),
+
+      // Ale's Server (Argentina D2Revenge server)
+      Ipv4HashResolutionTableEntry(
+          "DA456BCEBEBA59CD6D9B115F172D50F3B5DB4166",
+          {
+              kResolution800x600,
+              std::make_tuple(1068, 600),
           }),
 
       // evnt.slashdiablo.net
