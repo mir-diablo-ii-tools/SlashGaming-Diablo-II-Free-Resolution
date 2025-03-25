@@ -128,6 +128,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1600, 900),
           }),
 
+      // Gembee's ChL Server
+      Ipv4HashResolutionTableEntry(
+          "1975979FD08FB91DD0773ABFD6E24134D44D5D7A",
+          {
+              std::make_tuple(1024, 768),
+              std::make_tuple(1068, 600),
+          }),
+
       // MXL Ultimative Challenge
       Ipv4HashResolutionTableEntry(
           "1A76FC3AA22DB2C650596C6B71DBCF78895FE551",

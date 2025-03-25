@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0041 (March 14, 2025)
+- Add Gembee's ChL server with 1024x768 and 1068x600.
+
 ## SGD2FreeRes 3.0.4.0.0040 (January 19, 2025)
 - Add second HiddenGamers server with 640x480, 800x600, 1366x768, and
   1068x600.
