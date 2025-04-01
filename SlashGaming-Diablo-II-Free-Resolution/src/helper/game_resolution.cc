@@ -275,6 +275,18 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }),
 
+      // Icehammer's D2 Blacksoul server
+      Ipv4HashResolutionTableEntry(
+          "5B4EA6EE710FE4BA285827701686C7107FE3925E",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(720, 480),
+              std::make_tuple(1024, 768),
+              std::make_tuple(1280, 720),
+              std::make_tuple(1280, 768),
+          }),
+
       // LatinBattle
       Ipv4HashResolutionTableEntry(
           "5FCF44DD3523B4C23E6B5E0E380C4D1FACFB58C1",
