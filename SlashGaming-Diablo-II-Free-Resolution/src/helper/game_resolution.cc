@@ -255,6 +255,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1344, 700)
           }),
 
+      // Mayhem's Anonymous PVP server
+      Ipv4HashResolutionTableEntry(
+        "53AD2E08150C19736AB23E14F305F6D37FCE153D",
+        {
+            kResolution640x480,
+            kResolution800x600,
+            std::make_tuple(1068, 600),
+        }),
+
       // HiddenGamers Diablo (Chile server; 2nd server)
       Ipv4HashResolutionTableEntry(
           "5768EBE8806F5B57E104A4700F07523B4AEA0C13",

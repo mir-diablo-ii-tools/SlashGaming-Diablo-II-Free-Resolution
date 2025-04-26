@@ -7,6 +7,10 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0043 (April 3, 2025)
+- Add Mayhem's Anonymous PVP server with 640x480, 800x600, and
+  1068x600.
+
 ## SGD2FreeRes 3.0.4.0.0042 (March 25, 2025)
 - Add Icehammer's D2 Blacksoul server with 640x480, 800x600, 720x480,
   1024x768, 1280x720, and 1280x768.
