@@ -7,6 +7,10 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0044 (April 26, 2025)
+- Add Dolphin's Anonymous PVP server with 800x600, 1068x600, and
+  1280x720.
+
 ## SGD2FreeRes 3.0.4.0.0043 (April 3, 2025)
 - Add Mayhem's Anonymous PVP server with 640x480, 800x600, and
   1068x600.
