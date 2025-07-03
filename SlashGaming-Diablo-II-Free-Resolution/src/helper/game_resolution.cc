@@ -225,6 +225,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1280, 720),
           }),
 
+      // EBN (Rexxar aka xHuman's server)
+      Ipv4HashResolutionTableEntry(
+          "47205E3D000D141062BB5226F12D16AF74791D87",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+          }),
+
       // Diablo II Evolution
       Ipv4HashResolutionTableEntry(
           "4A0C205D82F5A1089606505350B5096829E9182C",
@@ -422,6 +432,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(856, 480),
               std::make_tuple(1068, 600),
               std::make_tuple(1344, 700)
+          }),
+
+      // EBN Test Realm (Rexxar aka xHuman's server)
+      Ipv4HashResolutionTableEntry(
+          "8AF6588C8C24A2B5AF43B10A60FF4AA1B977BA3C",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
           }),
 
       // ip.d2lod.net
