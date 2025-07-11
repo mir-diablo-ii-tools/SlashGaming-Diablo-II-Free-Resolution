@@ -280,6 +280,16 @@ static const std::vector<Resolution>& GetResolutionsFromIpV4(
             { 1068, 600 }
           }),
 
+      // DiscoNet
+      Ipv4HashResolutionTableEntry(
+            "E16DA1F824A5655871EC3C1C40F04121F61E6565",
+            {
+              kResolution640x480,
+              kResolution800x600,
+              { 1024, 640 },
+              { 1120, 630 }
+            }),
+
       // NOWD
       Ipv4HashResolutionTableEntry(
           "E1E7602929238D53EC59F7F4DF4F497BFCA3C4BC",
