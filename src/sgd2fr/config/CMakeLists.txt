@@ -23,8 +23,10 @@ add_library(${PROJECT_NAME} STATIC)
 
 target_sources(${PROJECT_NAME}
     PRIVATE
+        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_config.c"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_entries.c"
     PUBLIC
+        "${CMAKE_CURRENT_SOURCE_DIR}/cfg_config.h"
         "${CMAKE_CURRENT_SOURCE_DIR}/cfg_entries.h")
 
 add_subdirectory("entries")
