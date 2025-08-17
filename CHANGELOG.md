@@ -7,6 +7,10 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0046 (August 3, 2025)
+- Add Discordian's DiscoNet servers with 640x480, 800x600, 1024x640,
+  and 1120x630.
+
 ## SGD2FreeRes 3.0.4.0.0045 (June 10, 2025)
 - Add Rexxar's EBN servers with 640x480, 800x600, 856x480, and
   1068x600.

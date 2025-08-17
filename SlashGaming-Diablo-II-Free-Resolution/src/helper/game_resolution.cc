@@ -565,6 +565,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
           }
       ),
 
+      // Discordian's server (DiscoNet)
+      Ipv4HashResolutionTableEntry(
+          "E16DA1F824A5655871EC3C1C40F04121F61E6565",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1024, 640),
+              std::make_tuple(1120, 630)
+          }),
+
       // Dubai Server
       Ipv4HashResolutionTableEntry(
           "E78BE550A4AC9575E11E01F71F038795754F8F97",
