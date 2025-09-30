@@ -315,6 +315,15 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1280, 768),
           }),
 
+      // fernandosys's D2PRIME server
+      Ipv4HashResolutionTableEntry(
+          "5DD4ACF428B3176B8593A48B0E17F17B2EF6EBEB",
+          {
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720),
+          }),
+
       // LatinBattle
       Ipv4HashResolutionTableEntry(
           "5FCF44DD3523B4C23E6B5E0E380C4D1FACFB58C1",
