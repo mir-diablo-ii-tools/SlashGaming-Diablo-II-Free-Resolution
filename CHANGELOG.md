@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0048 (September 19, 2025)
+- Add Rayveen's D2 Darkside Beta server with 1068x600 and 1280x720.
+
 ## SGD2FreeRes 3.0.4.0.0047 (August 17, 2025)
 - Add fernandosys's D2PRIME servers with 800x600, 1024x640, and
   1280x720.

@@ -68,7 +68,7 @@ constexpr bool kIsAssetsPathCustomizable = false;
  * required. Set to false if running a mod where it will be stored in
  * Patch_D2.mpq instead.
  */
-constexpr bool kIsLoadCustomMpq = true;
+constexpr bool kIsLoadCustomMpq = false;
 
 /**
  * If true, the inventory arrangement sources from 800x600 entries in
