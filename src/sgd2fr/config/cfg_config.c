@@ -189,6 +189,10 @@ void CfgConfig_Deinit(struct CfgConfig* config) {
   CfgEntries_Deinit(&config->entries);
 }
 
+int CfgConfig_Equals(const struct CfgConfig* lhs, const struct CfgConfig* rhs) {
+  return CfgEntries_Equals(&lhs->entries, &rhs->entries);
+}
+
 struct CfgConfig* CfgConfig_Read(
     struct CfgConfig* config, const wchar_t* path) {
   void* from_json_result;

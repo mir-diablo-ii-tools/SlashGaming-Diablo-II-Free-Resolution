@@ -62,6 +62,8 @@ struct CfgConfig* CfgConfig_InitDefault(struct CfgConfig* config);
 
 void CfgConfig_Deinit(struct CfgConfig* config);
 
+int CfgConfig_Equals(const struct CfgConfig* lhs, const struct CfgConfig* rhs);
+
 struct CfgConfig* CfgConfig_Read(struct CfgConfig* config, const wchar_t* path);
 
 int CfgConfig_Write(const struct CfgConfig* config, const wchar_t* path);
