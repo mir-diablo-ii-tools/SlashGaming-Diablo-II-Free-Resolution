@@ -231,6 +231,8 @@ struct CfgConfig* CfgConfig_Read(
   free(buffer);
   fclose(file);
 
+  CfgConfigVersion_UpgradeToCurrent(&config->entries.metadata.version);
+
   return config;
 
 error_delete_json_entries:

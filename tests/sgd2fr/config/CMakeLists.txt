@@ -18,9 +18,13 @@ endif (MINGW)
 
 # Define test targets
 add_executable(${PROJECT_NAME}
+    "cfg_config_test.c"
+    "cfg_config_test.h"
     "cfg_entries_test.c"
     "cfg_entries_test.h"
     "config_tests.c")
+
+file(COPY data DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
 
 add_subdirectory("entries")
 
@@ -31,5 +35,5 @@ target_include_directories(${PROJECT_NAME}
         "${CMAKE_SOURCE_DIR}/tests"
         "${CMAKE_SOURCE_DIR}/external/cJSON"
         "${CMAKE_SOURCE_DIR}/external/cutest-1.5")
-target_link_libraries(${PROJECT_NAME} PRIVATE SGD2FreeRes.Common SGD2FreeRes.Config CuTest)
+target_link_libraries(${PROJECT_NAME} PRIVATE SGD2FreeRes.Common SGD2FreeRes.Config CuTest shlwapi)
 add_test(NAME ${PROJECT_NAME} COMMAND ${PROJECT_NAME})
