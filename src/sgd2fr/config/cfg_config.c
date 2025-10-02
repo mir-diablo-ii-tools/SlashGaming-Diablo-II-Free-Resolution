@@ -101,7 +101,7 @@ static FILE* CfgConfig_wfopen_w(const wchar_t* path) {
       GENERIC_WRITE,
       0,
       NULL,
-      OPEN_EXISTING,
+      OPEN_ALWAYS,
       FILE_ATTRIBUTE_NORMAL,
       NULL);
   if (file == INVALID_HANDLE_VALUE) {
@@ -127,7 +127,7 @@ error:
 }
 
 static void* AllocForFile(FILE* file, size_t* file_size) {
-  int fseek_success;
+  int fseek_failed;
   long old_pos;
   long file_size_as_long;
   char* buffer;
@@ -137,8 +137,8 @@ static void* AllocForFile(FILE* file, size_t* file_size) {
     goto error;
   }
 
-  fseek_success = fseek(file, 0, SEEK_END);
-  if (!fseek_success) {
+  fseek_failed = fseek(file, 0, SEEK_END);
+  if (fseek_failed) {
     goto error;
   }
 
@@ -147,8 +147,8 @@ static void* AllocForFile(FILE* file, size_t* file_size) {
     goto error;
   }
 
-  fseek_success = fseek(file, old_pos, SEEK_SET);
-  if (!fseek_success) {
+  fseek_failed = fseek(file, old_pos, SEEK_SET);
+  if (fseek_failed) {
     goto error;
   }
 
@@ -208,7 +208,7 @@ struct CfgConfig* CfgConfig_Read(
     goto error_close_file;
   }
 
-  fread(buffer, file_size, 1, file);
+  fread(buffer, sizeof(buffer[0]), file_size + 1, file);
   if (!feof(file)) {
     goto error_free_buffer;
   }
