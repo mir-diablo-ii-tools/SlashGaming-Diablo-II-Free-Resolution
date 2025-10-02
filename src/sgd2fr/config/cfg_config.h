@@ -43,43 +43,33 @@
  *  work.
  */
 
-#include <stdio.h>
+#ifndef SGD2FR_CONFIG_CFG_CONFIG_H_
+#define SGD2FR_CONFIG_CFG_CONFIG_H_
 
-#include <CuTest.h>
+#include <wchar.h>
 
-#include "sgd2fr/config/cfg_config_test.h"
-#include "sgd2fr/config/cfg_entries_test.h"
-#include "sgd2fr/config/entries/cfg_custom_mpq_file_path_test.h"
-#include "sgd2fr/config/entries/cfg_globals_test.h"
-#include "sgd2fr/config/entries/cfg_indent_width_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_ingame_resolutions_test.h"
-#include "sgd2fr/config/entries/cfg_main_menu_resolution_test.h"
-#include "sgd2fr/config/entries/cfg_metadata_test.h"
-#include "sgd2fr/config/entries/metadata/cfg_config_version_test.h"
+#include "sgd2fr/config/cfg_entries.h"
 
-static void RunAllTests(void) {
-  CuString *output = CuStringNew();
-  CuSuite* suite = CuSuiteNew();
+#ifdef __cplusplus
+extern "C" {
+#endif  /* __cplusplus */
 
-  CuSuiteAddSuite(suite, CfgConfig_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgConfigVersion_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgCustomMpqFilePath_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgEntries_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgGlobals_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIndentWidth_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgIngameResolutions_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMainMenuResolution_GetTestSuite());
-  CuSuiteAddSuite(suite, CfgMetadata_GetTestSuite());
+struct CfgConfig {
+  struct CfgEntries entries;
+};
 
-  CuSuiteRun(suite);
-  CuSuiteSummary(suite, output);
-  CuSuiteDetails(suite, output);
-  printf("%s\n", output->buffer);
-}
+struct CfgConfig* CfgConfig_InitDefault(struct CfgConfig* config);
 
-int main() {
-  RunAllTests();
-  return 0;
-}
+void CfgConfig_Deinit(struct CfgConfig* config);
+
+int CfgConfig_Equals(const struct CfgConfig* lhs, const struct CfgConfig* rhs);
+
+struct CfgConfig* CfgConfig_Read(struct CfgConfig* config, const wchar_t* path);
+
+int CfgConfig_Write(const struct CfgConfig* config, const wchar_t* path);
+
+#ifdef __cplusplus
+}  /* extern "C" */
+#endif  /* __cplusplus */
+
+#endif  /* SGD2FR_CONFIG_CFG_CONFIG_H_ */
