@@ -23,7 +23,7 @@ This JSON config layout was created in response to the difficulty of handling th
         "800x600",
         "1024x768"
     ],
-    "Main Menu Resolution": "800x600",
+    "Main Menu Resolution": "800x600"
 }
 ```
 
