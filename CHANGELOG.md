@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0050 (January 24, 2026)
+- Update IP of Mb's SB Server.
+
 ## SGD2FreeRes 3.0.4.0.0049 (November 28, 2025)
 - Add 3rd Dubai Server with 640x480, 800x600, 1068x600, and 1344x700.
 

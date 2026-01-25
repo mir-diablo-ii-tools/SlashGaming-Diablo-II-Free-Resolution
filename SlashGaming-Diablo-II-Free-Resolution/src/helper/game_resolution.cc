@@ -400,6 +400,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600),
           }),
 
+      // SB Server
+      Ipv4HashResolutionTableEntry(
+          "76A47591C971AE6C6D3E2DD59C92C18801FE9D67",
+          {
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700)
+          }),
+
       // RayveeN's Test Server
       Ipv4HashResolutionTableEntry(
           "7752B1B3F1267472F0AB21ACD88FF13B0C699F8B",
@@ -510,15 +518,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               kResolution800x600,
               std::make_tuple(1280, 720)
           }),
-
-      // SB Server
-      Ipv4HashResolutionTableEntry(
-          "A9FA8BB50C18F5F6670B347FF73C3C1491EE1049",
-          {
-              std::make_tuple(1068, 600),
-              std::make_tuple(1344, 700)
-          }
-      ),
 
       // Project Diablo 2
       Ipv4HashResolutionTableEntry(
