@@ -71,17 +71,17 @@ VS_VERSION_INFO    VERSIONINFO
   {
     BLOCK "040904E4" // Lang=US English, CharSet=Windows Multilingual
     {
-      VALUE "Build",            "2026-01-24"
+      VALUE "Build",            "2026-03-31"
       VALUE "Comments",         "Licensed under Affero GPL v3+."
       VALUE "CompanyName",      "SlashGaming"
       VALUE "Developer",        "Mir Drualga"
       VALUE "FileDescription",  "Enables customized video resolutions in Diablo II."
       VALUE "InternalName",     "SlashGaming Diablo II Free Resolution"
-      VALUE "LegalCopyright",   "Copyright (C) 2019 - 2025  Mir Drualga"
+      VALUE "LegalCopyright",   "Copyright (C) 2019 - 2026  Mir Drualga"
       VALUE "LegalTrademarks",  "All rights reserved."
       VALUE "PrivateBuild",     ""
       VALUE "ProductName",      "Diablo II Free Resolution"
-      VALUE "ProductVersion",   "3.0.4.0.0050"
+      VALUE "ProductVersion",   "3.0.4.0.0051"
       VALUE "SpecialBuild",     ""
       VALUE "Support",          "reddit.com/r/SlashDiablo"
     } // BLOCK "040904E4"
