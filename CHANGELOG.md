@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0052 (April 18, 2026)
+- Update IP of RayveeN's D2 Darkside Server.
+
 ## SGD2FreeRes 3.0.4.0.0051 (March 31, 2026)
 - Update IP of Mayhem's Anonymous Server.
 

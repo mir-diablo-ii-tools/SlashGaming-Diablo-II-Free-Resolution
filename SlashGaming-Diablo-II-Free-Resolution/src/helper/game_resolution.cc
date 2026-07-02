@@ -417,6 +417,14 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1600, 900),
           }),
 
+      // D2 DarkSide
+      Ipv4HashResolutionTableEntry(
+          "7D3B481E1DBE4637A95A47A9AEEC691154BADB51",
+          {
+              std::make_tuple(1068, 600),
+              std::make_tuple(1280, 720)
+          }),
+
       // NOWD / NWD' Server
       Ipv4HashResolutionTableEntry(
           "7F7B25A85B919A761910532BBE0520BF8A384C03",
@@ -438,14 +446,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1024, 768),
               std::make_tuple(1068, 600),
               std::make_tuple(1280, 720),
-          }),
-
-      // D2 DarkSide
-      Ipv4HashResolutionTableEntry(
-          "85033826AF29EE4651D9D9A6B796B71F35ABB937",
-          {
-              std::make_tuple(1068, 600),
-              std::make_tuple(1280, 720)
           }),
 
       // SlashDiablo PTR
