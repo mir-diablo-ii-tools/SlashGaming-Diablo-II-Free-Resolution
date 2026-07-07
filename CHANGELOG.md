@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0055 (July 7, 2025)
+- Update Ale's D2Revenge server IP.
+
 ## SGD2FreeRes 3.0.4.0.0054 (July 4, 2026)
 - Add HIVE Server with 640x480, 800x600, and 960x540.
 

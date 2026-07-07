@@ -573,7 +573,7 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
 
       // Ale's Server (Argentina D2Revenge server)
       Ipv4HashResolutionTableEntry(
-          "DA456BCEBEBA59CD6D9B115F172D50F3B5DB4166",
+          "E12BBD00430787CC1F2D6A665759AB5CC75A7C20",
           {
               kResolution800x600,
               std::make_tuple(1068, 600),
