@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0054 (July 4, 2026)
+- Add HIVE Server with 640x480, 800x600, and 960x540.
+
 ## SGD2FreeRes 3.0.4.0.0053 (July 2, 2026)
 - Add 4th Dubai Server with 640x480, 800x600, 1068x600, and 1344x700.
 
