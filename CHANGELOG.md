@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0056 (July 11, 2025)
+- Add Resurgence test server IP.
+
 ## SGD2FreeRes 3.0.4.0.0055 (July 7, 2025)
 - Update Ale's D2Revenge server IP.
 

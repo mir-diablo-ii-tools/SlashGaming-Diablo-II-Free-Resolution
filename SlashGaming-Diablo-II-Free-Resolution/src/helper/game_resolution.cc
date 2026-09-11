@@ -571,6 +571,16 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(960, 540),
           }),
 
+      // Test Resurgence Server
+      Ipv4HashResolutionTableEntry(
+          "CE9991D3BFF0109B0104F6CA330D7A5EF9E74CEB",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600)
+          }),
+
       // Ale's Server (Argentina D2Revenge server)
       Ipv4HashResolutionTableEntry(
           "E12BBD00430787CC1F2D6A665759AB5CC75A7C20",
