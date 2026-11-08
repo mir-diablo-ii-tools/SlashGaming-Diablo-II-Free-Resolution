@@ -657,6 +657,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1244, 700),
           }
       ),
+
+      // Reborn
+      Ipv4HashResolutionTableEntry(
+          "FD406333EA5893F653CA03E284E3A8C76D478690",
+          {
+              //640 x 480, 800 x 600, 856 x 480, and 1068 x 600
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(856, 480),
+              std::make_tuple(1068, 600),
+          }),
   };
 
   enum {
