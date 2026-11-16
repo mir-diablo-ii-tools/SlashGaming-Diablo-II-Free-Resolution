@@ -313,6 +313,10 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1024, 768),
               std::make_tuple(1280, 720),
               std::make_tuple(1280, 768),
+              std::make_tuple(1360, 768),
+              std::make_tuple(1366, 768),
+              std::make_tuple(1600, 900),
+              std::make_tuple(1920, 1080),
           }),
 
       // D2 DarkSide Beta
