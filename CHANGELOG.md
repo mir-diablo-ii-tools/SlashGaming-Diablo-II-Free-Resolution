@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0059 (November 16, 2026)
+- Remove 800x600 from fernandosys's D2PRIME servers.
+
 ## SGD2FreeRes 3.0.4.0.0058 (November 8, 2026)
 - Add 1360x768, 1366x768, 1600x900, and 1920x1080 to Icehammer's D2
   Blacksoul server.
