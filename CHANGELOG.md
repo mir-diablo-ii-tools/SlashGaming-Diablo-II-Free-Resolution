@@ -7,6 +7,9 @@
   - Remove requirement to install C/C++ runtime files, as they are
     included with every Windows since Windows 95 OSR 2.
 
+## SGD2FreeRes 3.0.4.0.0060 (November 26, 2026)
+- Update Yoti's server IP.
+
 ## SGD2FreeRes 3.0.4.0.0059 (November 16, 2026)
 - Remove 800x600 from fernandosys's D2PRIME servers.
 

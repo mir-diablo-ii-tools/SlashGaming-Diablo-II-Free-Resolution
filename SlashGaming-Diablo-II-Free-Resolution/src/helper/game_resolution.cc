@@ -117,17 +117,6 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1600, 900),
           }),
 
-      // Yoti's Server
-      Ipv4HashResolutionTableEntry(
-          "113088B50A3D081D901CF3FE3952A28E3B391272",
-          {
-              kResolution640x480,
-              kResolution800x600,
-              std::make_tuple(1068, 600),
-              std::make_tuple(1344, 700),
-              std::make_tuple(1600, 900),
-          }),
-
       // Gembee's ChL Server
       Ipv4HashResolutionTableEntry(
           "1975979FD08FB91DD0773ABFD6E24134D44D5D7A",
@@ -483,6 +472,17 @@ const std::vector<std::tuple<int, int>>& GetResolutionsFromIpV4(
               std::make_tuple(1068, 600)
           }
       ),
+
+      // Yoti's Server
+      Ipv4HashResolutionTableEntry(
+          "98517D145A8BE48CE48350F4D02C2CDEF59A16E4",
+          {
+              kResolution640x480,
+              kResolution800x600,
+              std::make_tuple(1068, 600),
+              std::make_tuple(1344, 700),
+              std::make_tuple(1600, 900),
+          }),
 
       // realm.diablo09.com
       Ipv4HashResolutionTableEntry(
